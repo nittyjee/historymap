@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		
+		<!--PAGE TITLE-->
+		<title>Castello Plan: Sidebar</title>
+		
+		<!--META-->
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+		<!--JAVASCRIPT SOURCE-->
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+
+		<!--CSS SOURCE-->
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+		
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159545294-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-159545294-1');
+		</script>
+
+		
+		<!--SIDEBAR STYLE-->
+		
+		<!-- Note: Total width is 430px, subtract padding
+		           Also, for some reason this comment cannot
+				   be added above that line, no idea why.-->
+		<style>
+			#sidebar {
+				position: absolute;
+				top: 82px;
+				left: 0px;
+				margin: 0px;
+				bottom: 0px;
+				overflow: auto;
+				background: rgba(255, 255, 255, 0.8);
+				font-family: "Arial";
+				box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+				width: 400px;
+				padding: 15px;
+				font-size: 18px;
+				text-align: justify;
+			}
+		</style>
+		
+
+		
+		<!-- MAP STYLE-->
+		<style>
+			body { margin:0; padding:0; }
+			#map { position:absolute; top:80px; bottom:0; width:100%; 
+				border-top: 2px solid #b0691d;
+			}
+		</style>
+		
+		<!-- HEADER STYLE-->
+		<style>
+		
+			#header { 
+				position:absolute;
+				top:0;
+				
+				bottom:80px;
+				
+				width:100%;
+				background: #f5f6f7
+				url(body.png)
+				min-width: 100px;
+
+				text-color: #ffffff;
+				text-shadow: #717c9b 0px 1px 3px;
+				font-size: 1.40em;
+			}
+  
+			#link {
+				color: #000000c2;
+				<!-- Other colors: #e0e0e0 #e6e6dc -->
+		
+			}
+			
+		</style>
+
+		<!-- HEADER ELEMENTS STYLES-->
+		
+		<style>
+			
+			.header a {
+			  float: left;
+			  color: black;
+			  text-align: center;
+			  padding: 10px;
+			  text-decoration: none;
+			  font-size: 15px; 
+			  line-height: 25px;
+			  border-radius: 4px;
+			  border: solid black;
+			  font-weight: bold;
+			  margin-top: 3px;
+				margin: 3px;
+							font-family: "Arial";
+			}
+
+
+
+			.header a:hover {
+			  background-color: #ddd;
+			  color: black;
+			}
+
+			.header a.active {
+			  background-color: dodgerblue;
+			  color: white;
+			}
+
+			.header-right {
+				float: right;
+				margin-top: 13px;
+				margin-left: 50px;
+				margin-right: 9px;
+			}
+
+
+			.headerText {
+				display: inline-block;
+				margin-top: 19px;
+				repeat-x 50% 0;
+				text-shadow: #717c9b 0px 1px 3px;
+				font-size: 1.7em;
+				margin-left: 10em;
+				margin-left: 10px;
+				font-family: 'Consolas';  
+			  
+			}
+
+			.header a.encyclopedia {
+			background-color: #e8e1da;
+			/* color: white; */
+			}
+
+			/*Override styling for logo link*/
+			.header>a:first-child {
+				border: none;
+				margin: 0;
+				padding: 0;
+			}
+			.header>a:first-child:hover {
+				background-color: inherit;
+			}
+
+			</style>
+
+
+			<!-- EXTERNAL LINK ICON STYLE -->
+
+
+			<style>
+			.img2 {
+				vertical-align: text-top;
+				padding-left: 2px;
+			}
+			</style>
+		
+	</head>
+	
+	<body>
+	
+		<!-------------------->
+		<!--ADD HEADER DIV---->
+		<!-------------------->
+		
+		<div class="header">
+		
+				<a href="http://newamsterdamhistorycenter.org" class="logo">
+					<img style="padding: 6px 0px 0px 30px; float: left;"
+						src="http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png"
+						height="70" align="middle">
+				</a>
+		  
+			<div id="header_text" class="headerText">
+				| Mapping Early New York
+			</div>
+			   
+			<div class="header-right">
+				<a href="swipe.html">Swipe</a>
+				<a href="explore.html">Explore</a>
+				<a href="timeline.html">Timeline (BETA)</a>
+				<a class="encyclopedia" href="https://nahc-mapping.org/mappingNY/encyclopedia/" target="_blank">Encyclopedia <img class="img2" height="18" src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
+				<a class="active" href="#home">About</a>
+			</div>
+
+		</div>
+	
+		<!-------------------->
+		<!--ADD MAP DIV------->
+		<!-------------------->
+	
+		<div id='map'></div>
+		
+		<!-------------------->
+		<!--ADD SIDEBAR DIV--->
+		<!-------------------->
+
+		
+		<div id='sidebar'>
+
+		
+			<!-------------------->
+			<!--SIDEBAR CONTENT--->
+			<!-------------------->
+			
+			
+			
+			
+			<h1>About</h1>
+			
+			New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>,
+			 the capital of New Netherland. The New Amsterdam History Center
+			 is devoted to documenting and mapping New Amsterdam, its
+			 diverse people, landscapes, institutions and global legacy today.
+			<p>
+			We’ve presented several versions of the <i>Castello Plan</i> and the 
+			 <i>Dutch Grants Map</i> here.
+			 You can see the settlement of houses, farms,
+			 taverns and workshops, surrounded by walls. Over the three
+			 centuries that followed, the area became the Financial District.
+			 The east wall was torn down and named Wall Street. The canals
+			 were paved over and turned into streets and in between developed
+			 skysrapers, and the island was expanded with infill.
+			 Above ground, almost nothing remains of New Amsterdam except the 
+			 original street pattern.  Underground, archeologists have found 
+			 evidence of the plots of houses and gardens, Amsterdam yellow 
+			 brick, and pollen samples of plants.
+			<p>
+			You can swipe the map to compare the Castello Plan in 1660
+			 to the present,
+			 and explore each lot, where it shows what was there and who lived
+			 there. Our next steps are to expand through the full history
+			 of New Amsterdam with a timeline from 1624 to 1664, when it
+			 was taken over
+			 by the English.
+			<p>
+			We need your help to make this work happen. Donate now to
+			 develop the map and expand the research.
+			<p>
+			<b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
+			<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
+				<i>MAPPING EARLY NEW YORK</i>, PHASE 1 AND 2 are made possible by a grant from the SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES.</p>
+
+			
+		</div>
+
+		<!-------------------->
+		<!--ADD MAP----------->
+		<!-------------------->
+		
+		
+		<script>
+		
+			mapboxgl.accessToken = 'pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoid1RmLXpycyJ9.NFk875-Fe6hoRCkGciG8yQ';
+
+			var map = new mapboxgl.Map({
+				container: 'map',
+				style: 'mapbox://styles/nittyjee/cjowjzrig5pje2rmmnjb5b0y2',
+				center: [0, 0],
+				zoom: 0
+			});
+
+		</script>
+		
+	</body>
+	
+</html>
