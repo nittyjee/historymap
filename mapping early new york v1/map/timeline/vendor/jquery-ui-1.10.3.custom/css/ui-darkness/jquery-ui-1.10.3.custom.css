@@ -113,7 +113,8 @@
 }
 
 .ui-slider-horizontal {
-  height: .8em;
+  /* height: .8em; */
+  height: 4.7em;
 }
 .ui-slider-horizontal .ui-slider-handle {
   top: -.3em;
