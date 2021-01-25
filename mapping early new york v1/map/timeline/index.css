@@ -67,15 +67,16 @@ p {
 
 #slider,
 #slider2 {
-                /* width: 240px; */
-	              /* Standard */
-			          width: calc(100% - 30px);
-				        /* Opera */
-                width: -o-calc(100% - 30px);
-				        /* Firefox */
-				        width: -moz-calc(100% - 30px);
-				        /* WebKit */
-                width: -webkit-calc(100% - 30px);
+        /* width: 240px; */
+	/* Standard */
+	width: calc(100% - 30px);
+	/* Opera */
+        width: -o-calc(100% - 30px);
+	/* Firefox */
+	width: -moz-calc(100% - 30px);
+	/* WebKit */
+        width: -webkit-calc(100% - 30px);
+	margin-top: 10px;   
 }
 
 #date {
