@@ -43,7 +43,8 @@ urlHash = window.location.hash;
 
 map.on("load", function () {
 	console.log("load");
-	var sliderVal = $("#date").val();
+	//*A var sliderVal = $("#date").val();
+	var sliderVal = moment($("#date").val()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
 	var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
 
