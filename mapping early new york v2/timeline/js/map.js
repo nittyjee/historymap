@@ -240,7 +240,8 @@ map.on('style.load', function () {
 	//this is necessary because basemaps aren't a concept in Mapbox, all layers are added via the same primitives
 	console.log("style change")
 	switchStyle();
-	var sliderVal = $("#date").val();
+	//*A var sliderVal = $("#date").val();
+	var sliderVal = moment($("#date").val()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
 	var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
 	console.log(sliderVal)
