@@ -45,8 +45,9 @@
 					}
 				});
 
-				$("#date").val($("#slider").slider("values", 0));
-
+				//*A $("#date").val($("#slider").slider("values", 0));
+                                $("#date").val(moment.unix($("#slider").slider("values", 0)).format('MM/DD/YYYY'));
+				
 				$('.footnote').click(function () {
 				$('#footnotediv').toggle('slide');
 				});
@@ -96,7 +97,8 @@
 						display:block;
 						/*top: 61px;*/
 						top:80px;
-						bottom: 0;
+						/* bottom: 0; */
+					        bottom: 100px;
 						width: 100%;
 						border-top: 2px solid #b0691d;
 
@@ -238,6 +240,32 @@
 				}
 				</style>
 			
+		
+		<!-- FOOTER ELEMENTS STYLES-->
+			
+		<style>
+		
+			#footer { 
+					position:absolute;
+					
+					bottom: 0px;
+					
+					width:100%;
+					/* height: 35px; */
+					height: 100px;
+					background: #f5f6f7
+					min-width: 100px;
+
+					border-top: 2px solid #b0691d;
+					
+					font-size: 15px;
+                                        padding-left: 10px;
+					padding-right: 10px;
+				}
+			
+		</style>
+		
+		
 			<!-------------------->
 			<!--ADD HEADER DIV---->
 			<!-------------------->
@@ -293,7 +321,9 @@
 				<br/> +
 				<input type="text" id="date" size="4" class="y2000" value="" /> +
 				</p>
+				<!--
 				<div id="slider"></div>
+                                -->
 				<br>
 				<nav id="legend"></nav>
 				<div>
@@ -320,6 +350,23 @@
 			</div>
 		</div>
 
+	
+	        
+	        <!-------------------->
+		<!--ADD FOOTER DIV---->
+		<!-------------------->
+			
+		<div id="footer">
+		
+			<!-- TIMELINE slider DIV -->
+			
+			<div id="slider"></div>
+
+		
+		</div>
+	
+	
+	
 		<!-- MAP.JS SOURCE -->
 
 		<script src="timeline/js/map.js"></script>
