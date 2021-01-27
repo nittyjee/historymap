@@ -28,6 +28,11 @@
 				var sliderStart = moment("06/02/1643").unix();
 				//var sliderEnd = moment().unix();
 				var sliderEnd = moment("07/04/1675").unix();
+				
+				//*A (sliderStart + sliderEnd)/2 = -9799671480
+				var sliderMiddle = (sliderStart + sliderEnd)/2;
+				var tooltiPos = -100;
+				
 				console.log("start:", sliderStart);
 				console.log("end:", sliderEnd);
 
@@ -37,12 +42,27 @@
 					step: 86400, //24 hrs in unix time, set slider step to 1 day=86400 seconds
 					value: window.name || sliderEnd,
 					slide: function (event, ui) {
+						tooltiPos = ((ui.value < sliderMiddle ) ? 30 : -100);
+					        $(ui.handle).find('.ui-slider-tooltip').css({ left: tooltiPos}).text(moment.unix(ui.value).format('MM/DD/YYYY'));
 						$("#date").val(moment.unix(ui.value).format('MM/DD/YYYY'));
 						changeDate(ui.value);
 						urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
 						// hash.onMapMove();
-					}
+					},
+					create: function( event, ui ) {
+				                var tooltip = $('<div class="ui-slider-tooltip" />').css({
+					              position: 'absolute',
+					              top: 32,
+					              left: tooltiPos,
+					              color: "red",
+					              width: "100px",
+					              size: "1"
+				                }).text(moment.unix(sliderEnd).format('MM/DD/YYYY'));
+
+				                      $(event.target).find('.ui-slider-handle').append(tooltip);
+			                        },
+			                        change: function(event, ui) {}
 				});
 
 				//*A $("#date").val($("#slider").slider("values", 0));
