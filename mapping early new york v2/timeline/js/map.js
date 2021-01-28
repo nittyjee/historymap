@@ -18,7 +18,8 @@ var map = new mapboxgl.Map({
 	hash: true,
 	center: [-74.01229, 40.70545],
 	zoom: 16.7,
-	pitchWithRotate: false
+	pitchWithRotate: false,
+	attributionControl: false
 });
 
 
@@ -182,10 +183,12 @@ function setLayers() {
 	];
 
 	//LEGEND?
+	/*
 	var legend = document.getElementById("legend");
 	while (legend.hasChildNodes()) {
 		legend.removeChild(legend.lastChild);
 	}
+	*/
 
 	//TOGGLING
 	for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -214,10 +217,12 @@ function setLayers() {
 			});
 
 			//NOTE?
+			/*
 			var layers = document.getElementById("legend");
 			layers.appendChild(input);
 			layers.appendChild(label);
 			layers.appendChild(document.createElement("br"));
+			*/
 		})();
 	}
 
