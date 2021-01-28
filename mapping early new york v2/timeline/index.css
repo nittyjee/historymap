@@ -65,6 +65,23 @@ p {
   word-spacing: 1px;
 }
 
+#datepanel {
+  position: absolute;
+  float: right;
+  bottom: 111px;
+  right: 20px;
+  border: solid 1px #ce5c00;
+  border-radius: 8px;
+  background: #2e3436;
+  padding: 5px 20px 5px 0px;
+  font-size: 21px;
+  color: #eeeeec;
+  z-index: 10000;
+  word-spacing: 5px;
+  min-width: 210px;
+  text-align: right;
+}
+
 #slider,
 #slider2 {
   /* width: 240px; */
@@ -80,7 +97,8 @@ p {
 }
 
 #date {
-  font-size: 20px;
+  /* font-size: 20px; */
+  font-size: 34px;
   width: 150px;
   background: none;
   border: 0;
