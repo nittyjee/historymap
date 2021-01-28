@@ -246,7 +246,8 @@ map.on('style.load', function () {
 	console.log("style change")
 	switchStyle();
 	//*A var sliderVal = $("#date").val();
-	var sliderVal = moment($("#date").val()).unix();
+	//*A var sliderVal = moment($("#date").val()).unix();
+	var sliderVal = moment($("#date").text()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
 	var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
 	console.log(sliderVal)
