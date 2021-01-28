@@ -43,8 +43,11 @@
 					value: window.name || sliderEnd,
 					slide: function (event, ui) {
 						tooltiPos = ((ui.value < sliderMiddle ) ? 30 : -100);
+						/*
 					        $(ui.handle).find('.ui-slider-tooltip').css({ left: tooltiPos}).text(moment.unix(ui.value).format('MM/DD/YYYY'));
 						$("#date").val(moment.unix(ui.value).format('MM/DD/YYYY'));
+						*/
+						$("#date").text(moment.unix(ui.value).format('DD MMM YYYY'));
 						changeDate(ui.value);
 						urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
@@ -60,13 +63,14 @@
 					              size: "1"
 				                }).text(moment.unix(sliderEnd).format('MM/DD/YYYY'));
 
-				                      $(event.target).find('.ui-slider-handle').append(tooltip);
+				                      //*A $(event.target).find('.ui-slider-handle').append(tooltip);
 			                        },
 			                        change: function(event, ui) {}
 				});
 
 				//*A $("#date").val($("#slider").slider("values", 0));
-                                $("#date").val(moment.unix($("#slider").slider("values", 0)).format('MM/DD/YYYY'));
+                                //*A $("#date").val(moment.unix($("#slider").slider("values", 0)).format('MM/DD/YYYY'));
+				$("#date").text(moment.unix($("#slider").slider("values", 0)).format('DD MMM YYYY'));
 				
 				$('.footnote').click(function () {
 				$('#footnotediv').toggle('slide');
@@ -330,7 +334,8 @@
 		<div id="styleSwitcher"></div>
 
 		<!-- TIMELINE PANEL DIV -->
-		
+		<div id='datepanel'><b><span id="date"></span></b></div>
+		<!--
 		<div id='sidepanel'>
 		
 			<div id="content">
@@ -341,9 +346,11 @@
 				<br/> +
 				<input type="text" id="date" size="4" class="y2000" value="" /> +
 				</p>
+                                -->
 				<!--
 				<div id="slider"></div>
                                 -->
+		                <!--
 				<br>
 				<nav id="legend"></nav>
 				<div>
@@ -369,7 +376,7 @@
 				</div>
 			</div>
 		</div>
-
+                -->
 	
 	        
 	        <!-------------------->
