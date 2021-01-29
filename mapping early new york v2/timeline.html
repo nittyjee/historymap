@@ -14,8 +14,14 @@
 		<script src="timeline/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script src="timeline/vendor/jquery.ui.touch-punch.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+		<!--
 		<script src='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js'></script>
 		<link href='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
+		-->
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
 		<link href='timeline/index.css' rel='stylesheet' />
 
 		<!-- TIMELINE FUNCTIONALITY -->
@@ -289,6 +295,22 @@
 			
 		</style>
 		
+    
+	<!-- BASEMAP MENU STYLE -->
+
+    <style>
+        #basemapmenuRight {
+            position: absolute;
+            background: #b3b3b3;
+            padding: 10px 18px 10px 10px;
+            font-family: 'Open Sans', sans-serif;
+            border-radius: 5px;
+            bottom: 175px;
+            right: 20px;
+        }
+	</style>
+	
+		
 		
 			<!-------------------->
 			<!--ADD HEADER DIV---->
@@ -326,8 +348,50 @@
 
 
 		<!-- MAP DIV-->
-
+        <!--
 		<div id="map" class="map"></div>
+		-->
+		<div id='before' class='map'></div>
+        <div id='after' class='map'></div>
+
+
+    <!---------------------->
+    <!--ADD BASEMAP TOGGLE-->
+	<!---------------------->
+
+
+    <div id='basemapmenuRight'>
+
+		<!--CASTELLO COLORED (DEFAULT)-->
+		<input id='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
+		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
+
+        <p>
+
+		<!--ORIGINAL CASTELLO-->
+		<input id='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
+		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
+
+        <p>
+
+		<!--STOKES KEY-->
+		<input id='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
+		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
+
+        <p>
+
+		<!--COLORED KEY-->
+		<input id='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
+        <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
+        
+        <p>
+
+        <!--DUTCH GRANTS-->
+        <input id='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
+        <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
+        <!--//ck7xni5u51kur1iqdokpijm0u-->
+	</div>
+
 
 		<!-- BASEMAP SWITHER DIV -->
 
@@ -376,10 +440,10 @@
 				</div>
 			</div>
 		</div>
-                -->
+        -->
 	
 	        
-	        <!-------------------->
+	    <!-------------------->
 		<!--ADD FOOTER DIV---->
 		<!-------------------->
 			
