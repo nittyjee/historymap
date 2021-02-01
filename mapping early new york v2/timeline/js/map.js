@@ -65,22 +65,40 @@ var map = new mapboxgl.Map({
 
 		//RIGHT MENU
 		
-        var layerList = document.getElementById('basemapmenuRight');
-        var inputs = layerList.getElementsByTagName('input');
+        var rightLayerList = document.getElementById('basemapmenuRight');
+        var rightInputs = rightLayerList.getElementsByTagName('input');
 
-        function switchLayer(layer) {
+        function switchRightLayer(layer) {
             //afterMap.removeLayer('c7_dates-ajsksu');
 			//console.warn(afterMap.getStyle().layers);
 			//afterMap.remove();
 			
-            var layerId = layer.target.id;
-            afterMap.setStyle('mapbox://styles/nittyjee/' + layerId);
+            var rightLayerClass = layer.target.className; //*A layer.target.id;
+            afterMap.setStyle('mapbox://styles/nittyjee/' + rightLayerClass);
         }
 
-        for (var i = 0; i < inputs.length; i++) {
-            inputs[i].onclick = switchLayer;
+        for (var i = 0; i < rightInputs.length; i++) {
+            rightInputs[i].onclick = switchRightLayer;
 		}
 
+
+		//LEFT MENU
+		
+        var leftLayerList = document.getElementById('basemapmenuLeft');
+        var leftInputs = leftLayerList.getElementsByTagName('input');
+
+        function switchLeftLayer(layer) {
+            //afterMap.removeLayer('c7_dates-ajsksu');
+			//console.warn(afterMap.getStyle().layers);
+			//afterMap.remove();
+			
+            var leftLayerClass = layer.target.className; //*A layer.target.id;
+            beforeMap.setStyle('mapbox://styles/nittyjee/' + leftLayerClass);
+        }
+
+        for (var i = 0; i < leftInputs.length; i++) {
+            leftInputs[i].onclick = switchLeftLayer;
+		}
 
 
 /////////////////////////////
@@ -416,7 +434,7 @@ function addBeforeLayers(yr, date) {
 	//NAHC POINTS MAP
 	/////////////////
 
-	beforeMap.on('load', function () {
+	//beforeMap.on('load', function () {
 
 		//ADD TAX LOT POINTS
 
@@ -712,7 +730,7 @@ function addBeforeLayers(yr, date) {
 		beforeMap.on('mouseleave', 'c7_dates-ajsksu', function () {
 			beforeMap.getCanvas().style.cursor = '';
 		});
-	});
+	//*A });
 }
 
 
@@ -1018,4 +1036,6 @@ function addAfterLayers(yr, date) {
 
 
 }
+
+
 
