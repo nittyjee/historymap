@@ -81,6 +81,31 @@
 				$('.footnote').click(function () {
 				$('#footnotediv').toggle('slide');
 				});
+				
+				
+				//*A 
+				$("#r-btn").click(function () {
+				    if(!$(this).hasClass("active")) {
+					    if($("#l-btn").hasClass("active"))
+					        $("#l-btn").removeClass("active");
+						$(this).addClass("active");
+						
+						$("#basemapmenuLeft").css("display", "none");
+						$("#basemapmenuRight").css("display", "block");
+					}
+				});
+				
+				$("#l-btn").click(function () {
+				    if(!$(this).hasClass("active")) {
+					    if($("#r-btn").hasClass("active"))
+					        $("#r-btn").removeClass("active");
+						$(this).addClass("active");
+						
+						$("#basemapmenuLeft").css("display", "block");
+						$("#basemapmenuRight").css("display", "none");
+					}
+				});
+				
 			});
 		</script>
 
@@ -128,7 +153,7 @@
 						/*top: 61px;*/
 						top:80px;
 						/* bottom: 0; */
-					        bottom: 100px;
+						bottom: 100px;
 						width: 100%;
 						border-top: 2px solid #b0691d;
 
@@ -268,6 +293,12 @@
 					vertical-align: text-top;
 					padding-left: 2px;
 				}
+				
+				
+				button.active {
+				  background-color: steelblue;
+				  color: white;
+				}
 				</style>
 			
 		
@@ -299,7 +330,7 @@
 	<!-- BASEMAP MENU STYLE -->
 
     <style>
-        #basemapmenuRight {
+        #baseMapMenu {
             position: absolute;
             background: #b3b3b3;
             padding: 10px 18px 10px 10px;
@@ -308,6 +339,14 @@
             bottom: 175px;
             right: 20px;
         }
+		
+		#basemapmenuLeft {
+		    display: none;
+		}
+		
+		#basemapmenuRight {
+		    display: block;
+		}
 	</style>
 	
 		
@@ -358,38 +397,93 @@
     <!---------------------->
     <!--ADD BASEMAP TOGGLE-->
 	<!---------------------->
+    
+	<div id='baseMapMenu'>
 
-
-    <div id='basemapmenuRight'>
+      <button id="l-btn" > Left Map </button><button id="r-btn" class="active" > Right Map </button><br><br>
+      <div id='basemapmenuRight'>
 
 		<!--CASTELLO COLORED (DEFAULT)-->
-		<input id='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
+		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
 		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
 
         <p>
 
 		<!--ORIGINAL CASTELLO-->
-		<input id='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
+		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
 		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
 
         <p>
 
 		<!--STOKES KEY-->
-		<input id='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
+		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
 		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
 
         <p>
 
 		<!--COLORED KEY-->
-		<input id='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
+		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
         <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
         
         <p>
 
         <!--DUTCH GRANTS-->
-        <input id='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
+        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
         <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
         <!--//ck7xni5u51kur1iqdokpijm0u-->
+		
+		<p>
+		
+		<!--CURRENT SATELLITE -->
+		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
+		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
+		
+		
+	  </div>
+
+		
+		
+      <div id='basemapmenuLeft'>
+
+		<!--CASTELLO COLORED (DEFAULT)-->
+		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='ltoggle' value='cjowjzrig5pje2rmmnjb5b0y2'>
+		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
+
+        <p>
+
+		<!--ORIGINAL CASTELLO-->
+		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='ltoggle' value='ck7phs10100951is1p3p4bv9j'>
+		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
+
+        <p>
+
+		<!--STOKES KEY-->
+		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='ltoggle' value='ck7piltib01881ioc5i8bel7m'>
+		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
+
+        <p>
+
+		<!--COLORED KEY-->
+		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='ltoggle' value='ck7pilmus016r1ilbsbiat6zs'>
+        <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
+        
+        <p>
+
+        <!--DUTCH GRANTS-->
+        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
+        <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
+        <!--//ck7xni5u51kur1iqdokpijm0u-->
+		
+		<p>
+		
+		<!--CURRENT SATELLITE -->
+		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
+		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
+		
+		
+	  </div>
+
+
 	</div>
 
 
