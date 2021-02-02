@@ -106,6 +106,53 @@
 					}
 				});
 				
+				
+				
+				$('#castello_points').click(function() {
+				    //console.warn(document.getElementById('castello_points').checked);
+                    if( $( this ).prop('checked') ) {
+					    //if(beforeMap.getLayoutProperty("places", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "places-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("places", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "places-right", "visibility", "visible" ); 
+					} else {
+					    //if(beforeMap.getLayoutProperty("places", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "places-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("places", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "places-right", "visibility", "none" );
+					}
+                });
+				
+				/*
+				$('#circle_point').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    if(beforeMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "visible" ); 
+						if(afterMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "c7_dates-ajsksut", "visibility", "visible" ); 
+					} else {
+					    if(beforeMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "none" ); 
+						if(afterMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "none" );
+					}
+				});
+				
+				$('#rect_point').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    if(beforeMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "visible" ); 
+						if(afterMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "c7_shape-47qiakt", "visibility", "visible" ); 
+					} else {
+					    if(beforeMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "none" ); 
+						if(afterMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "none" );
+					}
+				});
+				*/
+				
 			});
 		</script>
 
@@ -374,9 +421,11 @@
 				</div>
 				   
 				<div class="header-right">
+				    <!--
 					<a href="swipe.html">Swipe</a>
 					<a href="explore.html">Explore</a>
 					<a class="active" href="#home">Timeline (BETA)</a>
+					-->
 					<a class="encyclopedia" href="https://nahc-mapping.org/mappingNY/encyclopedia/" target="_blank">Encyclopedia <img class="img2" height="18" src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
 					<a href="about.html">About</a>
 				</div>
@@ -400,6 +449,19 @@
     
 	<div id='baseMapMenu'>
 
+      <!-- Castello Points -->
+	  <input type="checkbox" id="castello_points" name="castello_points">
+      <label for="castello_points"> Castello Points</label><br>
+	  
+	  <!-- Circle -->
+      <input type="checkbox" id="circle_point" name="circle_point" checked="checked" disabled="disabled">
+      <label for="circle_point"> Circle Point</label>
+	   
+   	  <!-- Rect -->
+	  <input type="checkbox" id="rect_point" name="rect_point" checked="checked" disabled="disabled">
+      <label for="rect_point"> Rect </label>
+	  <br><br>
+	  
       <button id="l-btn" > Left Map </button><button id="r-btn" class="active" > Right Map </button><br><br>
       <div id='basemapmenuRight'>
 
@@ -407,37 +469,37 @@
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
 		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
 
-        <p>
+        <br>
 
 		<!--ORIGINAL CASTELLO-->
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
 		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
 
-        <p>
+        <br>
 
 		<!--STOKES KEY-->
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
 		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
 
-        <p>
+        <br>
 
 		<!--COLORED KEY-->
 		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
         <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
         
-        <p>
+        <br>
 
         <!--DUTCH GRANTS-->
         <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
         <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
         <!--//ck7xni5u51kur1iqdokpijm0u-->
 		
-		<p>
+		<br>
 		
 		<!--CURRENT SATELLITE -->
 		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
 		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
-		
+
 		
 	  </div>
 
@@ -449,37 +511,36 @@
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='ltoggle' value='cjowjzrig5pje2rmmnjb5b0y2'>
 		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
 
-        <p>
+        <br>
 
 		<!--ORIGINAL CASTELLO-->
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='ltoggle' value='ck7phs10100951is1p3p4bv9j'>
 		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
 
-        <p>
+        <br>
 
 		<!--STOKES KEY-->
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='ltoggle' value='ck7piltib01881ioc5i8bel7m'>
 		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
 
-        <p>
+        <br>
 
 		<!--COLORED KEY-->
 		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='ltoggle' value='ck7pilmus016r1ilbsbiat6zs'>
         <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
         
-        <p>
+        <br>
 
         <!--DUTCH GRANTS-->
         <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
         <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
         <!--//ck7xni5u51kur1iqdokpijm0u-->
 		
-		<p>
+		<br>
 		
 		<!--CURRENT SATELLITE -->
 		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
 		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
-		
 		
 	  </div>
 
