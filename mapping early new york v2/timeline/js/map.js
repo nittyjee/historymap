@@ -1,3 +1,6 @@
+
+
+
 /////////////////////////////
 //ACCESS TOKEN
 /////////////////////////////
@@ -130,6 +133,9 @@ beforeMap.on("load", function () {
 		document.location.href = "raster-version.html" + urlHash;
 	});
 	*/
+	
+	
+	
 });
 
 afterMap.on("load", function () {
@@ -143,6 +149,9 @@ afterMap.on("load", function () {
 		document.location.href = "raster-version.html" + urlHash;
 	});
 	*/
+	
+	
+	
 });
 
 beforeMap.on("error", function (e) {
@@ -373,8 +382,133 @@ function setAfterLayers() {
 
 
 
+function addCastelloBeforeLayers() {
+	
+	// Add a layer showing the places.
+	        beforeMap.addLayer({
+                id: "places-left",
+                type: "circle",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.ap08s4n9"
+                },
+				layout: {
+                    visibility: document.getElementById('castello_points').checked ? "visible" : "none",
+                },
+                "source-layer": "castello_points_new-3qkr6t",
+                paint: {
+                    'circle-color': '#FF0000'
+                }
+            });
 
 
+            //POP UP
+            beforeMap.on('click', 'places-left', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+
+                    //BEFORE MAP POP UP CONTENTS
+                    .setHTML(
+                        e.features[0].properties.LOT2 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_1 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_2 +
+                        "<br>" +
+                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>'
+                    )
+
+                    .addTo(beforeMap);
+            });
+
+            //CURSOR ON HOVER
+
+            //ON HOVER
+            beforeMap.on('mouseenter', 'places-left', function () {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+            });
+
+            //OFF HOVER
+            beforeMap.on('mouseleave', 'places-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+            });
+	
+}
+
+function addCastelloAfterLayers() {
+	
+	// Add a layer showing the places.
+            afterMap.addLayer({
+                id: "places-right",
+                type: "circle",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.ap08s4n9"
+                },
+				layout: {
+                    visibility:  document.getElementById('castello_points').checked ? "visible" : "none",
+                },
+                "source-layer": "castello_points_new-3qkr6t",
+                paint: {
+                    'circle-color': '#FF0000'
+                }
+            });
+
+
+            // When a click event occurs on a feature in the places layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            afterMap.on('click', 'places-right', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+
+                    .setHTML(
+                        e.features[0].properties.LOT2 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_1 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_2 +
+                        "<br>" +
+                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>'
+                    )
+
+                    .addTo(afterMap);
+            });
+
+            //CURSOR ON HOVER
+
+            //ON HOVER
+            afterMap.on('mouseenter', 'places-right', function () {
+                afterMap.getCanvas().style.cursor = 'pointer';
+            });
+
+            //OFF HOVER
+            afterMap.on('mouseleave', 'places-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+            });
+	
+}
 
 
 /////////////////////////////
@@ -398,6 +532,7 @@ beforeMap.on('style.load', function () {
 	console.log(date)
 	//setBeforeLayers();
 	addBeforeLayers(yr, date);
+	addCastelloBeforeLayers();
 });
 afterMap.on('style.load', function () {
 	//on the 'style.load' event, switch "basemaps" and then re-add layers
@@ -414,6 +549,7 @@ afterMap.on('style.load', function () {
 	console.log(date)
 	//setAfterLayers();
 	addAfterLayers(yr, date);
+	addCastelloAfterLayers();
 });
 
 
@@ -447,6 +583,9 @@ function addBeforeLayers(yr, date) {
 				//URL: CHANGE THIS, 2 OF 3
 				url: "mapbox://nittyjee.8wpxjzzv"
 			},
+			layout: {
+                visibility: "visible",
+            },
 			"source-layer": "c7_shape-47qiak",
 			paint: {
 				//FILL COLOR
@@ -465,6 +604,9 @@ function addBeforeLayers(yr, date) {
 				//URL: CHANGE THIS, 2 OF 3
 				url: "mapbox://nittyjee.8krf945a"
 			},
+			layout: {
+                visibility: "visible",
+            },
 			"source-layer": "c7_dates-ajsksu",
 			paint: {
 
@@ -749,6 +891,9 @@ function addAfterLayers(yr, date) {
 				//URL: CHANGE THIS, 2 OF 3
 				url: "mapbox://nittyjee.8wpxjzzv"
 			},
+			layout: {
+                visibility: "visible",
+            },
 			"source-layer": "c7_shape-47qiak",
 			paint: {
 				//FILL COLOR
@@ -767,6 +912,9 @@ function addAfterLayers(yr, date) {
 				//URL: CHANGE THIS, 2 OF 3
 				url: "mapbox://nittyjee.8krf945a"
 			},
+			layout: {
+                visibility: "visible",
+            },
 			"source-layer": "c7_dates-ajsksu",
 			paint: {
 
@@ -1036,6 +1184,4 @@ function addAfterLayers(yr, date) {
 
 
 }
-
-
 
