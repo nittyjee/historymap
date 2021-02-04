@@ -116,42 +116,43 @@
 						//if(afterMap.getLayoutProperty("places", "visibility") === "none" )
 					        afterMap.setLayoutProperty( "places-right", "visibility", "visible" ); 
 					} else {
-					    //if(beforeMap.getLayoutProperty("places", "visibility") === "visible" )
+					    //if(beforeMap.getLayoutProperty("places-left", "visibility") === "visible" )
 					        beforeMap.setLayoutProperty( "places-left", "visibility", "none" ); 
-						//if(afterMap.getLayoutProperty("places", "visibility") === "visible" )
+						//if(afterMap.getLayoutProperty("places-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "places-right", "visibility", "none" );
 					}
                 });
 				
-				/*
+				
 				$('#circle_point').click(function() {
 				    if( $( this ).prop('checked') ) {
-					    if(beforeMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "none" )
-					        beforeMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "visible" ); 
-						if(afterMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "none" )
-					        afterMap.setLayoutProperty( "c7_dates-ajsksut", "visibility", "visible" ); 
+					    //if(beforeMap.getLayoutProperty("c7_dates-ajsksu-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "c7_dates-ajsksu-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("c7_dates-ajsksu-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "c7_dates-ajsksu-right", "visibility", "visible" ); 
 					} else {
-					    if(beforeMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "visible" )
-					        beforeMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "none" ); 
-						if(afterMap.getLayoutProperty("c7_dates-ajsksu", "visibility") === "visible" )
-					        afterMap.setLayoutProperty( "c7_dates-ajsksu", "visibility", "none" );
+					    //if(beforeMap.getLayoutProperty("c7_dates-ajsksu-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "c7_dates-ajsksu-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("c7_dates-ajsksu-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "c7_dates-ajsksu-right", "visibility", "none" );
 					}
 				});
 				
+				
 				$('#rect_point').click(function() {
 				    if( $( this ).prop('checked') ) {
-					    if(beforeMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "none" )
-					        beforeMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "visible" ); 
-						if(afterMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "none" )
-					        afterMap.setLayoutProperty( "c7_shape-47qiakt", "visibility", "visible" ); 
+					    //if(beforeMap.getLayoutProperty("c7_shape-47qiak-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "c7_shape-47qiak-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("c7_shape-47qiak-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "c7_shape-47qiak-right", "visibility", "visible" ); 
 					} else {
-					    if(beforeMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "visible" )
-					        beforeMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "none" ); 
-						if(afterMap.getLayoutProperty("c7_shape-47qiak", "visibility") === "visible" )
-					        afterMap.setLayoutProperty( "c7_shape-47qiak", "visibility", "none" );
+					    //if(beforeMap.getLayoutProperty("c7_shape-47qiak-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "c7_shape-47qiak-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("c7_shape-47qiak-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "c7_shape-47qiak-right", "visibility", "none" );
 					}
 				});
-				*/
+				
 				
 			});
 		</script>
@@ -201,10 +202,19 @@
 						top:80px;
 						/* bottom: 0; */
 						bottom: 100px;
-						width: 100%;
+						/* width: 100%; */
+						/* Standard */
+			            width: calc(100% - 230px);
+				        /* Opera */
+                        width: -o-calc(100% - 230px);
+				        /* Firefox */
+				        width: -moz-calc(100% - 230px);
+				        /* WebKit */
+                        width: -webkit-calc(100% - 230px);
+						right: 0;
 						border-top: 2px solid #b0691d;
 
-
+                        
 
 					}
 			
@@ -394,6 +404,29 @@
 		#basemapmenuRight {
 		    display: block;
 		}
+		
+		
+/* Style for Studio Menu */
+#studioMenu {
+    position: absolute;
+	display:block;
+	width: 219px;
+	top: 80px;
+	box-shadow: 0 0 10px 2px rgba(31,51,73,.1)!important;
+	background-color: #fff!important;
+	padding: 10px 2px 10px 10px;
+	border-top: 2px solid #b0691d;
+}
+
+#studioMenu .title {
+	color: #23374d;
+	font-weight: bold;
+	font-size: 17px;
+	padding-bottom: 8px;
+	text-align: center;
+	border-bottom: 1px solid #c6d2e1;
+}
+
 	</style>
 	
 		
@@ -434,31 +467,27 @@
 
 
 
-
-		<!-- MAP DIV-->
-        <!--
-		<div id="map" class="map"></div>
-		-->
-		<div id='before' class='map'></div>
-        <div id='after' class='map'></div>
-
-
     <!---------------------->
-    <!--ADD BASEMAP TOGGLE-->
+    <!--ADD LAYERS TOGGLE -->
 	<!---------------------->
-    
-	<div id='baseMapMenu'>
-
-      <!-- Castello Points -->
+    <div id="studioMenu">
+      <p class="title">
+        LAYERS
+      </p>
+	  
+	  
+	  <br><br>
+	  
+	  <!-- Castello Points -->
 	  <input type="checkbox" id="castello_points" name="castello_points">
       <label for="castello_points"> Castello Points</label><br>
 	  
 	  <!-- Circle -->
-      <input type="checkbox" id="circle_point" name="circle_point" checked="checked" disabled="disabled">
-      <label for="circle_point"> Circle Point</label>
+      <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
+      <label for="circle_point"> Circle Point</label><br>
 	   
    	  <!-- Rect -->
-	  <input type="checkbox" id="rect_point" name="rect_point" checked="checked" disabled="disabled">
+	  <input type="checkbox" id="rect_point" name="rect_point" checked="checked">
       <label for="rect_point"> Rect </label>
 	  <br><br>
 	  
@@ -543,9 +572,29 @@
 		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
 		
 	  </div>
+	  
+	  <br><br>
+	  
+	</div>
 
+		<!-- MAP DIV-->
+        <!--
+		<div id="map" class="map"></div>
+		-->
+		<div id='before' class='map'></div>
+        <div id='after' class='map'></div>
+
+
+    
+
+    <!---------------------->
+    <!--ADD BASEMAP TOGGLE-->
+	<!---------------------->
+    <!--
+	<div id='baseMapMenu'>
 
 	</div>
+	-->
 
 
 		<!-- BASEMAP SWITHER DIV -->
