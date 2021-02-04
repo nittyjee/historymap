@@ -257,8 +257,9 @@ function changeDate(unixDate) {
 
 
 	//NAHC
-	beforeMap.setFilter("c7_dates-ajsksu", dateFilter);
-	afterMap.setFilter("c7_dates-ajsksu", dateFilter);
+	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
+	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
+
 
 }//end function changeDate
 
@@ -576,7 +577,7 @@ function addBeforeLayers(yr, date) {
 
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_shape-47qiak",
+			id: "c7_shape-47qiak-left",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -584,7 +585,7 @@ function addBeforeLayers(yr, date) {
 				url: "mapbox://nittyjee.8wpxjzzv"
 			},
 			layout: {
-                visibility: "visible",
+                visibility: document.getElementById('rect_point').checked ? "visible" : "none",
             },
 			"source-layer": "c7_shape-47qiak",
 			paint: {
@@ -597,7 +598,7 @@ function addBeforeLayers(yr, date) {
 
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_dates-ajsksu",
+			id: "c7_dates-ajsksu-left",
 			type: "circle",
 			source: {
 				type: "vector",
@@ -605,7 +606,7 @@ function addBeforeLayers(yr, date) {
 				url: "mapbox://nittyjee.8krf945a"
 			},
 			layout: {
-                visibility: "visible",
+                visibility: document.getElementById('circle_point').checked ? "visible" : "none",
             },
 			"source-layer": "c7_dates-ajsksu",
 			paint: {
@@ -643,7 +644,7 @@ function addBeforeLayers(yr, date) {
 		//TAX LOT POPUP
 
 		// CLICK AND OPEN POPUP
-		beforeMap.on('click', 'c7_dates-ajsksu', function (e) {
+		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 			var description = e.features[0].properties.description;
 
@@ -864,12 +865,12 @@ function addBeforeLayers(yr, date) {
 		});
 
 		// CHANGE TO CURSOR WHEN HOVERING
-		beforeMap.on('mouseenter', 'c7_dates-ajsksu', function () {
+		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function () {
 			beforeMap.getCanvas().style.cursor = 'pointer';
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
-		beforeMap.on('mouseleave', 'c7_dates-ajsksu', function () {
+		beforeMap.on('mouseleave', 'c7_dates-ajsksu-left', function () {
 			beforeMap.getCanvas().style.cursor = '';
 		});
 	//*A });
@@ -884,7 +885,7 @@ function addAfterLayers(yr, date) {
 
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_shape-47qiak",
+			id: "c7_shape-47qiak-right",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -892,7 +893,7 @@ function addAfterLayers(yr, date) {
 				url: "mapbox://nittyjee.8wpxjzzv"
 			},
 			layout: {
-                visibility: "visible",
+                visibility:  document.getElementById('rect_point').checked ? "visible" : "none",
             },
 			"source-layer": "c7_shape-47qiak",
 			paint: {
@@ -905,7 +906,7 @@ function addAfterLayers(yr, date) {
 
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_dates-ajsksu",
+			id: "c7_dates-ajsksu-right",
 			type: "circle",
 			source: {
 				type: "vector",
@@ -913,7 +914,7 @@ function addAfterLayers(yr, date) {
 				url: "mapbox://nittyjee.8krf945a"
 			},
 			layout: {
-                visibility: "visible",
+                visibility: document.getElementById('circle_point').checked ? "visible" : "none",
             },
 			"source-layer": "c7_dates-ajsksu",
 			paint: {
@@ -951,7 +952,7 @@ function addAfterLayers(yr, date) {
 		//TAX LOT POPUP
 
 		// CLICK AND OPEN POPUP
-		afterMap.on('click', 'c7_dates-ajsksu', function (e) {
+		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 			var description = e.features[0].properties.description;
 
@@ -1172,16 +1173,18 @@ function addAfterLayers(yr, date) {
 		});
 
 		// CHANGE TO CURSOR WHEN HOVERING
-		afterMap.on('mouseenter', 'c7_dates-ajsksu', function () {
+		afterMap.on('mouseenter', 'c7_dates-ajsksu-right', function () {
 			afterMap.getCanvas().style.cursor = 'pointer';
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
-		afterMap.on('mouseleave', 'c7_dates-ajsksu', function () {
+		afterMap.on('mouseleave', 'c7_dates-ajsksu-right', function () {
 			afterMap.getCanvas().style.cursor = '';
 		})
 	//});
 
 
 }
+
+
 
