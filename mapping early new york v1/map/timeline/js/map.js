@@ -306,6 +306,31 @@ function addLayers(yr, date) {
 
 	map.on('load', function () {
 
+		/*
+		grants1-5sp9tb
+		nittyjee.b5bpfqeb
+		*/
+
+		map.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "grants1-5sp9tb",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.b5bpfqeb"
+			},
+			"source-layer": "grants1-5sp9tb",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": 0.5,
+				"fill-outline-color": "#000000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
 		//ADD TAX LOT POINTS
 
 		map.addLayer({
@@ -367,30 +392,7 @@ function addLayers(yr, date) {
 		});
 
 
-/*
-grants1-5sp9tb
-nittyjee.b5bpfqeb
-*/
 
-		map.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "grants1-5sp9tb",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
-			},
-			"source-layer": "grants1-5sp9tb",
-			paint: {
-				"fill-color": "#e3ed58",
-				"fill-opacity": 0.5,
-				"fill-outline-color": "#000000"
-
-			},
-
-			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
-		});
 
 
 
