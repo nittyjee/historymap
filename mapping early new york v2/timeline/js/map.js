@@ -1,6 +1,7 @@
-var layer_view_flag2 = false;
+var layer_view_flag2 = false,
+    layer_view_flag3 = false;
 $("#studioMenu2").slideUp();
-
+$("#studioMenu3").slideUp();
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -121,7 +122,59 @@ map.addControl(nav, "top-left");
 /////////////////////////////
 
 urlHash = window.location.hash;
+var map_click_ev = false;
 
+var afterMapPopUp = new mapboxgl.Popup(),
+    beforeMapPopUp = new mapboxgl.Popup();
+
+var coordinates = [];
+var places_popup_html = "";
+
+var afterMapPlacesPopUp = new mapboxgl.Popup(),
+    beforeMapPlacesPopUp = new mapboxgl.Popup();
+
+
+
+afterMapPopUp.on('close', function(e) {
+    if(beforeMapPopUp.isOpen()) {
+		beforeMapPopUp.remove();
+		if(layer_view_flag2) {
+		    $("#studioMenu2").slideUp();
+		    layer_view_flag2 = false;
+		}
+	}
+});
+
+beforeMapPopUp.on('close', function(e) {
+    if(afterMapPopUp.isOpen()) {
+		afterMapPopUp.remove();
+		if(layer_view_flag2) {
+		    $("#studioMenu2").slideUp();
+		    layer_view_flag2 = false;
+		}
+    }
+});
+
+
+afterMapPlacesPopUp.on('close', function(e) {
+    if(beforeMapPlacesPopUp.isOpen()) {
+		beforeMapPlacesPopUp.remove();
+		if(layer_view_flag3) {
+		    $("#studioMenu3").slideUp();
+		    layer_view_flag3 = false;
+		}
+	}
+});
+
+beforeMapPlacesPopUp.on('close', function(e) {
+    if(afterMapPlacesPopUp.isOpen()) {
+		afterMapPlacesPopUp.remove();
+		if(layer_view_flag3) {
+		    $("#studioMenu3").slideUp();
+		    layer_view_flag3 = false;
+		}
+    }
+});
 
 beforeMap.on("load", function () {
 	console.log("load");
@@ -135,7 +188,103 @@ beforeMap.on("load", function () {
 	});
 	*/
 	
+	if (beforeMap.getLayer("c7_dates-ajsksu-left")) {
+		// CLICK AND OPEN POPUP
+		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
+		            if(layer_view_flag2) {
+				        $("#studioMenu2").slideUp();
+						layer_view_flag2 = false;
+					} else {
+						
+						coordinates = e.features[0].geometry.coordinates.slice();
+			            //var description = e.features[0].properties.description;
+
+			            // Ensure that if the map is zoomed out such that multiple
+			            // copies of the feature are visible, the popup appears
+			            // over the copy being pointed to.
+			            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+				            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+			            }
+
+	              		//POPUP CONTENTS
+			            beforeMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(beforeMap);
+						
+						afterMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(afterMap);
+				
+						buildPopUpInfo(e.features[0].properties);
+					    $("#studioMenu2").slideDown();
+						layer_view_flag2 = true;
+					}
+					map_click_ev = true;
+		}).on('click', function () {
+			        if(layer_view_flag2 && !map_click_ev) {
+				        $("#studioMenu2").slideUp();
+						layer_view_flag2 = false;
+					}	
+					map_click_ev = false;
+		});
+	}
 	
+	
+	if (beforeMap.getLayer("places-left")) {
+		beforeMap.on('click', 'places-left', function (e) {
+			if(layer_view_flag3) {
+				        $("#studioMenu3").slideUp();
+						layer_view_flag3 = false;
+		    } else {
+                coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2
+                    )
+                    .addTo(beforeMap);
+					
+			//AFTER MAP POP UP CONTENTS
+                afterMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2 
+                    )
+                    .addTo(afterMap);
+					
+					places_popup_html = e.features[0].properties.LOT2 +
+                        ": " +
+                        e.features[0].properties.tax_lots_1 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_2 +
+                        "<br>" +
+                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
+					
+					$("#studioMenu3").html(places_popup_html).slideDown();
+				    layer_view_flag3 = true;
+			}
+		    map_click_ev = true;
+        }).on('click', function () {
+			        if(layer_view_flag3 && !map_click_ev) {
+				        $("#studioMenu3").slideUp();
+						layer_view_flag3 = false;
+					}	
+					map_click_ev = false;
+		});
+	}
 	
 });
 
@@ -151,7 +300,103 @@ afterMap.on("load", function () {
 	});
 	*/
 	
+	if (afterMap.getLayer("c7_dates-ajsksu-right")) {
+		// CLICK AND OPEN POPUP
+		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
+			        if(layer_view_flag2) {
+				        $("#studioMenu2").slideUp();
+						layer_view_flag2 = false;
+					} else {
+						
+						coordinates = e.features[0].geometry.coordinates.slice();
+			            //var description = e.features[0].properties.description;
+
+			            // Ensure that if the map is zoomed out such that multiple
+			            // copies of the feature are visible, the popup appears
+			            // over the copy being pointed to.
+			            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+				            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+			            }
+						
+						//POPUP CONTENTS
+			            beforeMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(beforeMap);
+						
+						afterMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(afterMap);
+						
+						buildPopUpInfo(e.features[0].properties);
+					    $("#studioMenu2").slideDown();
+						layer_view_flag2 = true;
+					}
+					map_click_ev = true;
+		}).on('click', function () {
+			        if(layer_view_flag2 && !map_click_ev) {
+				        $("#studioMenu2").slideUp();
+						layer_view_flag2 = false;
+					}	
+					map_click_ev = false;
+		});
+	}
 	
+	
+	if (afterMap.getLayer("places-right")) {
+		afterMap.on('click', 'places-right', function (e) {
+			if(layer_view_flag3) {
+				        $("#studioMenu3").slideUp();
+						layer_view_flag3 = false;
+		    } else {
+                coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                afterMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2
+                    )
+                    .addTo(afterMap);
+				
+				//BEFORE MAP POP UP CONTENTS
+                beforeMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2
+                    )
+                    .addTo(beforeMap);
+				
+					places_popup_html = e.features[0].properties.LOT2 +
+                        ": " +
+                        e.features[0].properties.tax_lots_1 +
+                        "<br>" +
+                        e.features[0].properties.tax_lots_2 +
+                        "<br>" +
+                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
+					
+					$("#studioMenu3").html(places_popup_html).slideDown();
+				    layer_view_flag3 = true;
+			}
+		    map_click_ev = true;
+        }).on('click', function () {
+			        if(layer_view_flag3 && !map_click_ev) {
+				        $("#studioMenu3").slideUp();
+						layer_view_flag3 = false;
+					}	
+					map_click_ev = false;
+		});
+	}
 	
 });
 
@@ -428,6 +673,7 @@ function addCastelloBeforeLayers() {
 
 
             //POP UP
+			/*
             beforeMap.on('click', 'places-left', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
                 var description = e.features[0].properties.description;
@@ -455,7 +701,8 @@ function addCastelloBeforeLayers() {
 
                     .addTo(beforeMap);
             });
-
+            */
+			
             //CURSOR ON HOVER
 
             //ON HOVER
@@ -492,6 +739,7 @@ function addCastelloAfterLayers() {
 
             // When a click event occurs on a feature in the places layer, open a popup at the
             // location of the feature, with description HTML from its properties.
+			/*
             afterMap.on('click', 'places-right', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
                 var description = e.features[0].properties.description;
@@ -519,7 +767,9 @@ function addCastelloAfterLayers() {
                     )
 
                     .addTo(afterMap);
+					
             });
+			*/
 
             //CURSOR ON HOVER
 
@@ -596,6 +846,13 @@ function addBeforeLayers(yr, date) {
 	/////////////////
 
 	//beforeMap.on('load', function () {
+		
+		//REMOVING TAX LOT POINTS IF EXIST
+		if (beforeMap.getLayer("c7_shape-47qiak-left")) beforeMap.removeLayer("c7_shape-47qiak-left");
+        if (beforeMap.getSource("c7_shape-47qiak")) beforeMap.removeSource("c7_shape-47qiak");
+		if (beforeMap.getLayer("c7_dates-ajsksu-left")) beforeMap.removeLayer("c7_dates-ajsksu-left");
+        if (beforeMap.getSource("c7_dates-ajsksu")) beforeMap.removeSource("c7_dates-ajsksu");
+		
 
 		//ADD TAX LOT POINTS
 
@@ -668,6 +925,7 @@ function addBeforeLayers(yr, date) {
 		//TAX LOT POPUP
 
 		// CLICK AND OPEN POPUP
+		/*
 		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 			var description = e.features[0].properties.description;
@@ -681,7 +939,6 @@ function addBeforeLayers(yr, date) {
 
 
 			//POPUP CONTENTS
-			/*
 			new mapboxgl.Popup()
 				.setLngLat(coordinates)
 
@@ -887,18 +1144,10 @@ function addBeforeLayers(yr, date) {
 
 				)
 				.addTo(beforeMap);
-				*/
 				
-				    if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
-					} else {
-						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenu2").slideDown();
-						layer_view_flag2 = true;
-					}
+				    
 		});
-		
+		*/
 
 		// CHANGE TO CURSOR WHEN HOVERING
 		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function () {
@@ -916,6 +1165,13 @@ function addBeforeLayers(yr, date) {
 function addAfterLayers(yr, date) {
 
     //afterMap.on('load', function () {
+        
+		//REMOVING TAX LOT POINTS IF EXIST
+		if (afterMap.getLayer("c7_shape-47qiak-right")) afterMap.removeLayer("c7_shape-47qiak-right");
+        if (afterMap.getSource("c7_shape-47qiak")) afterMap.removeSource("c7_shape-47qiak");
+        if (afterMap.getLayer("c7_dates-ajsksu-right")) afterMap.removeLayer("c7_dates-ajsksu-right");
+        if (afterMap.getSource("c7_dates-ajsksu")) afterMap.removeSource("c7_dates-ajsksu");
+       
 
 		//ADD TAX LOT POINTS
 
@@ -988,6 +1244,7 @@ function addAfterLayers(yr, date) {
 		//TAX LOT POPUP
 
 		// CLICK AND OPEN POPUP
+		/*
 		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 			var description = e.features[0].properties.description;
@@ -1003,7 +1260,6 @@ function addAfterLayers(yr, date) {
             //console.log(e.features[0].properties);
 
 			//POPUP CONTENTS
-	        /*
 			new mapboxgl.Popup()
 				.setLngLat(coordinates)
 
@@ -1209,18 +1465,9 @@ function addAfterLayers(yr, date) {
 
 				)
 				.addTo(afterMap);
-				*/
 				
-				    if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
-					} else {
-						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenu2").slideDown();
-						layer_view_flag2 = true;
-					}
 		});
-		          
+		*/        
 		           
 		            
                     
@@ -1443,6 +1690,7 @@ function buildPopUpInfo(props) {
 $("#studioMenu2").html(popup_html);
 
 }
+
 
 
 
