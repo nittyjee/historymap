@@ -120,6 +120,14 @@
 					        beforeMap.setLayoutProperty( "places-left", "visibility", "none" ); 
 						//if(afterMap.getLayoutProperty("places-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "places-right", "visibility", "none" );
+							
+						if(layer_view_flag3) { 
+						    if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+							if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
+						    $("#studioMenu3").slideUp();
+							layer_view_flag3 = false;
+						}	
+						
 					}
                 });
 				
@@ -135,6 +143,13 @@
 					        beforeMap.setLayoutProperty( "c7_dates-ajsksu-left", "visibility", "none" ); 
 						//if(afterMap.getLayoutProperty("c7_dates-ajsksu-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "c7_dates-ajsksu-right", "visibility", "none" );
+							
+						if(layer_view_flag2) { 
+						    if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
+							if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
+						    $("#studioMenu2").slideUp();
+							layer_view_flag2 = false;
+						}
 					}
 				});
 				
@@ -157,13 +172,15 @@
 				
 				$('#view-hide-layer-panel').click(function() {
 				    if(layer_view_flag) {
-				        $("#studioMenu").slideUp();
+				        $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
+						$(this).animate({'margin-left' : "-312px"},500);
 						layer_view_flag = false;
-						$("#dir-txt").html("&gt;&gt;&gt;");
+						$("#dir-txt").html("&gt;");
 					} else {
-					    $("#studioMenu").slideDown();
+					    $("#studioMenu").animate({'margin-left' : "0px"},500);//.slideDown();
+						$(this).animate({'margin-left' : "0px"},500);
 						layer_view_flag = true;
-						$("#dir-txt").html("&lt;&lt;&lt;");
+						$("#dir-txt").html("&lt;");
 					}
 				});
 				
@@ -422,16 +439,55 @@
 		
 		
 /* Style for Studio Menu */
-#studioMenu, #studioMenu2 {
+/* #studioMenu2 */
+#studioMenu {
     position: absolute;
 	display:block;
 	/* top: 80px; */
-	top: 88px;
+	top: 82px;
+	                    /* Standard */
+			            height: calc(100% - 204px);
+				        /* Opera */
+                        height: -o-calc(100% - 204px);
+				        /* Firefox */
+				        height: -moz-calc(100% - 204px);
+				        /* WebKit */
+                        height: -webkit-calc(100% - 204px);
+	/* Standard */
+	max-height: calc(100% - 204px);
+	/* Opera */
+	max-height: -o-calc(100% - 204px);
+	/* Firefox */
+	max-height: -moz-calc(100% - 204px);
+	/* WebKit */
+	max-height: -webkit-calc(100% - 204px);
+    overflow: auto;
 	box-shadow: 0 0 10px 2px rgba(31,51,73,.1)!important;
 	background-color: #fff!important;
 	padding: 10px 2px 10px 10px;
 	/* border-top: 2px solid #b0691d; */
 	z-index: 1;
+}
+
+
+/* width */
+#studioMenu::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+#studioMenu::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#studioMenu::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+#studioMenu::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 #studioMenu .title {
@@ -443,15 +499,19 @@
 	border-bottom: 1px solid #c6d2e1;
 }
 
-#studioMenu2 { width: 219px; }
-#studioMenu2 { left: 258px; width: 300px; }
+#studioMenu { width: 300px; }
+#studioMenu2, #studioMenu3 { width: 280px; /* left: 258px; width: 300px; */ }
 
 #view-hide-layer-panel {
     position: absolute; 
+	/*
 	bottom: 135px; 
 	left: -3px; 
+	float: rigth; 
+	*/
+	top: 88px;
+	left: 311px;
 	z-index: 1000; 
-	float: left; 
 	cursor: pointer;
 }
 
@@ -500,9 +560,9 @@
     <!--ADD LAYERS TOGGLE -->
 	<!---------------------->
 	
-	<button id="view-hide-layer-panel" ><br> &nbsp; <span id="dir-txt" >&lt;&lt;&lt;</span> &nbsp; &nbsp; <br><br></button>
+	<button id="view-hide-layer-panel" ><br> <span id="dir-txt" >&lt;</span> <br><br></button>
 	
-	<div id="studioMenu2"></div>
+	
 	
     <div id="studioMenu">
       <p class="title">
@@ -607,7 +667,11 @@
 		
 	  </div>
 	  
-	  <br><br>
+	  
+	  <br>
+	  <div id="studioMenu3"></div>
+	  <div id="studioMenu2"></div>
+	  
 	  
 	</div>
 
@@ -703,3 +767,4 @@
 	</body>
 
 </html>
+
