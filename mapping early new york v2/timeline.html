@@ -27,6 +27,9 @@
 		<!-- TIMELINE FUNCTIONALITY -->
 
 		<script>
+		
+		    var layer_view_flag = true;
+			
 			$(document).ready(function () {
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
 
@@ -168,7 +171,21 @@
 					}
 				});
 				
-				var layer_view_flag = true;
+				$('#grants_layer').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    //if(beforeMap.getLayoutProperty("grants1-5sp9tb-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "grants1-5sp9tb-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("grants1-5sp9tb-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "visible" ); 
+					} else {
+					    //if(beforeMap.getLayoutProperty("grants1-5sp9tb-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "grants1-5sp9tb-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("grants1-5sp9tb-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "none" );
+					}
+				});
+				
+				//var layer_view_flag = true;
 				
 				$('#view-hide-layer-panel').click(function() {
 				    if(layer_view_flag) {
@@ -572,6 +589,10 @@
 	  
 	  <br>
 	  
+	  <!-- Grants Layers -->
+	  <input type="checkbox" id="grants_layer" name="grants_layer">
+      <label for="grants_layer"> Dutch Grants Layer</label><br>
+	  
 	  <!-- Castello Points -->
 	  <input type="checkbox" id="castello_points" name="castello_points">
       <label for="castello_points"> Castello Points</label><br>
@@ -767,4 +788,5 @@
 	</body>
 
 </html>
+
 
