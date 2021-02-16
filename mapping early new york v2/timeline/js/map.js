@@ -1,4 +1,5 @@
-var layer_view_flag2 = false,
+
+		var layer_view_flag2 = false,
     layer_view_flag3 = false;
 $("#studioMenu2").slideUp();
 $("#studioMenu3").slideUp();
@@ -133,7 +134,8 @@ var places_popup_html = "";
 var afterMapPlacesPopUp = new mapboxgl.Popup(),
     beforeMapPlacesPopUp = new mapboxgl.Popup();
 
-
+var hoveredStateIdRight = null,
+    hoveredStateIdLeft = null
 
 afterMapPopUp.on('close', function(e) {
     if(beforeMapPopUp.isOpen()) {
@@ -155,7 +157,7 @@ beforeMapPopUp.on('close', function(e) {
     }
 });
 
-
+/*
 afterMapPlacesPopUp.on('close', function(e) {
     if(beforeMapPlacesPopUp.isOpen()) {
 		beforeMapPlacesPopUp.remove();
@@ -175,6 +177,7 @@ beforeMapPlacesPopUp.on('close', function(e) {
 		}
     }
 });
+*/
 
 beforeMap.on("load", function () {
 	console.log("load");
@@ -226,6 +229,12 @@ beforeMap.on("load", function () {
 			        if(layer_view_flag2 && !map_click_ev) {
 				        $("#studioMenu2").slideUp();
 						layer_view_flag2 = false;
+						if(layer_view_flag) {
+				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
+						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
+						    layer_view_flag = false;
+						    $("#dir-txt").html("&gt;");
+					    }
 					}	
 					map_click_ev = false;
 		});
@@ -238,6 +247,7 @@ beforeMap.on("load", function () {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 		    } else {
+				/*
                 coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
 
@@ -264,7 +274,8 @@ beforeMap.on("load", function () {
                         e.features[0].properties.LOT2 
                     )
                     .addTo(afterMap);
-					
+			    */
+				
 					places_popup_html = e.features[0].properties.LOT2 +
                         ": " +
                         e.features[0].properties.tax_lots_1 +
@@ -281,6 +292,12 @@ beforeMap.on("load", function () {
 			        if(layer_view_flag3 && !map_click_ev) {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
+						if(layer_view_flag) {
+				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
+						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
+						    layer_view_flag = false;
+						    $("#dir-txt").html("&gt;");
+					    }
 					}	
 					map_click_ev = false;
 		});
@@ -338,8 +355,15 @@ afterMap.on("load", function () {
 			        if(layer_view_flag2 && !map_click_ev) {
 				        $("#studioMenu2").slideUp();
 						layer_view_flag2 = false;
+						
+						if(layer_view_flag) {
+				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
+						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
+						    layer_view_flag = false;
+						    $("#dir-txt").html("&gt;");
+					    }
 					}	
-					map_click_ev = false;
+					map_click_ev = false;	
 		});
 	}
 	
@@ -350,6 +374,7 @@ afterMap.on("load", function () {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 		    } else {
+				/*
                 coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
 
@@ -376,6 +401,7 @@ afterMap.on("load", function () {
                         e.features[0].properties.LOT2
                     )
                     .addTo(beforeMap);
+				*/
 				
 					places_popup_html = e.features[0].properties.LOT2 +
                         ": " +
@@ -393,8 +419,15 @@ afterMap.on("load", function () {
 			        if(layer_view_flag3 && !map_click_ev) {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
+						if(layer_view_flag) {
+				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
+						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
+						    layer_view_flag = false;
+						    $("#dir-txt").html("&gt;");
+					    }
 					}	
 					map_click_ev = false;
+					
 		});
 	}
 	
@@ -519,6 +552,9 @@ function changeDate(unixDate) {
 
 
 	//NAHC
+	beforeMap.setFilter("grants1-5sp9tb-left", dateFilter);
+    afterMap.setFilter("grants1-5sp9tb-right", dateFilter);
+	
 	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
 	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
 
@@ -667,7 +703,21 @@ function addCastelloBeforeLayers() {
                 },
                 "source-layer": "castello_points_new-3qkr6t",
                 paint: {
-                    'circle-color': '#FF0000'
+                    'circle-color': '#FF0000',
+					'circle-opacity':  [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            1
+                        ],
+					'circle-stroke-width': 2,
+					'circle-stroke-color': '#FF0000',
+					'circle-stroke-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ]
                 }
             });
 
@@ -706,13 +756,54 @@ function addCastelloBeforeLayers() {
             //CURSOR ON HOVER
 
             //ON HOVER
-            beforeMap.on('mouseenter', 'places-left', function () {
+            beforeMap.on('mouseenter', 'places-left', function (e) {
                 beforeMap.getCanvas().style.cursor = 'pointer';
+				if (e.features.length > 0) {
+                    if (hoveredStateIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
+                            { hover: false }
+                        );
+                    }
+                    hoveredStateIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
+                        { hover: true }
+                    );
+					
+			    coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2
+                    )
+                    .addTo(beforeMap);
+					
+				}
             });
 
             //OFF HOVER
             beforeMap.on('mouseleave', 'places-left', function () {
                 beforeMap.getCanvas().style.cursor = '';
+				if (hoveredStateIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredStateIdLeft = null;	
+				if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
             });
 	
 }
@@ -732,7 +823,21 @@ function addCastelloAfterLayers() {
                 },
                 "source-layer": "castello_points_new-3qkr6t",
                 paint: {
-                    'circle-color': '#FF0000'
+                    'circle-color': '#FF0000',
+					'circle-opacity':  [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            1
+                        ],
+					'circle-stroke-width': 2,
+					'circle-stroke-color': '#FF0000',
+					'circle-stroke-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ]
                 }
             });
 
@@ -771,16 +876,58 @@ function addCastelloAfterLayers() {
             });
 			*/
 
+
             //CURSOR ON HOVER
 
             //ON HOVER
-            afterMap.on('mouseenter', 'places-right', function () {
+            afterMap.on('mouseenter', 'places-right', function (e) {
                 afterMap.getCanvas().style.cursor = 'pointer';
+				if (e.features.length > 0) {
+                    if (hoveredStateIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+                            { hover: false }
+                        );
+                    }
+                    hoveredStateIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+                        { hover: true }
+                    );
+					
+					
+			    coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //BEFORE MAP POP UP CONTENTS
+                afterMapPlacesPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        e.features[0].properties.LOT2
+                    )
+                    .addTo(afterMap);
+				}
             });
 
             //OFF HOVER
             afterMap.on('mouseleave', 'places-right', function () {
                 afterMap.getCanvas().style.cursor = '';
+				if (hoveredStateIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredStateIdRight = null;		
+				if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
             });
 	
 }
@@ -852,7 +999,34 @@ function addBeforeLayers(yr, date) {
         if (beforeMap.getSource("c7_shape-47qiak")) beforeMap.removeSource("c7_shape-47qiak");
 		if (beforeMap.getLayer("c7_dates-ajsksu-left")) beforeMap.removeLayer("c7_dates-ajsksu-left");
         if (beforeMap.getSource("c7_dates-ajsksu")) beforeMap.removeSource("c7_dates-ajsksu");
-		
+		if (beforeMap.getLayer("grants1-5sp9tb-left")) beforeMap.removeLayer("grants1-5sp9tb-left");
+        if (beforeMap.getSource("grants1-5sp9tb")) beforeMap.removeSource("grants1-5sp9tb");
+       
+	   
+	    //ADD GRANTS POLYGONS
+
+        beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "grants1-5sp9tb-left",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.b5bpfqeb"
+			},
+			layout: {
+                visibility: document.getElementById('grants_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "grants1-5sp9tb",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": 0.5,
+				"fill-outline-color": "#000000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
 
 		//ADD TAX LOT POINTS
 
@@ -1171,7 +1345,35 @@ function addAfterLayers(yr, date) {
         if (afterMap.getSource("c7_shape-47qiak")) afterMap.removeSource("c7_shape-47qiak");
         if (afterMap.getLayer("c7_dates-ajsksu-right")) afterMap.removeLayer("c7_dates-ajsksu-right");
         if (afterMap.getSource("c7_dates-ajsksu")) afterMap.removeSource("c7_dates-ajsksu");
+		if (afterMap.getLayer("grants1-5sp9tb-right")) afterMap.removeLayer("grants1-5sp9tb-right");
+        if (afterMap.getSource("grants1-5sp9tb")) afterMap.removeSource("grants1-5sp9tb");
        
+	   
+	    //ADD GRANTS POLYGONS
+
+        afterMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "grants1-5sp9tb-right",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.b5bpfqeb"
+			},
+			layout: {
+                visibility: document.getElementById('grants_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "grants1-5sp9tb",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": 0.5,
+				"fill-outline-color": "#000000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
 
 		//ADD TAX LOT POINTS
 
@@ -1690,7 +1892,4 @@ function buildPopUpInfo(props) {
 $("#studioMenu2").html(popup_html);
 
 }
-
-
-
 
