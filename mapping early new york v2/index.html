@@ -34,8 +34,10 @@
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
 
 				// console.log(window.name);
+				var sliderStartDrag = moment("06/02/1643").unix();
 				var sliderStart = moment("01/01/1626").unix();
 				//var sliderEnd = moment().unix();
+				var sliderEndDrag = moment("07/04/1675").unix();
 				var sliderEnd = moment("01/01/1700").unix();
 				
 				//*A (sliderStart + sliderEnd)/2 = -9799671480
@@ -56,11 +58,29 @@
 					        $(ui.handle).find('.ui-slider-tooltip').css({ left: tooltiPos}).text(moment.unix(ui.value).format('MM/DD/YYYY'));
 						$("#date").val(moment.unix(ui.value).format('MM/DD/YYYY'));
 						*/
-						$("#date").text(moment.unix(ui.value).format('DD MMM YYYY'));
-						changeDate(ui.value);
+						
 						urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
 						// hash.onMapMove();
+						
+						if(layer_view_flag2) { 
+						    if(ui.value <= sliderStartDrag){
+                                $(this).slider('value', sliderStartDrag)
+                                return false
+                            }
+                            if(ui.value >= sliderEndDrag){
+                                $(this).slider('value', sliderEndDrag)
+                                return false
+                            }
+							if ((ui.value <= sliderEndDrag) && (ui.value >= sliderStartDrag)) {
+							    changeDate(ui.value);
+								$("#date").text(moment.unix(ui.value).format('DD MMM YYYY'));
+							}
+						} else {
+						    changeDate(ui.value);
+							$("#date").text(moment.unix(ui.value).format('DD MMM YYYY'));
+						}
+						
 					},
 					create: function( event, ui ) {
 				                var tooltip = $('<div class="ui-slider-tooltip" />').css({
@@ -125,8 +145,8 @@
 					        afterMap.setLayoutProperty( "places-right", "visibility", "none" );
 							
 						if(layer_view_flag3) { 
-						    if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
-							if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
+						    // if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+							// if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
 						    $("#studioMenu3").slideUp();
 							layer_view_flag3 = false;
 						}	
@@ -148,8 +168,8 @@
 					        afterMap.setLayoutProperty( "c7_dates-ajsksu-right", "visibility", "none" );
 							
 						if(layer_view_flag2) { 
-						    if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
-							if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
+						    // if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
+							// if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
 						    $("#studioMenu2").slideUp();
 							layer_view_flag2 = false;
 						}
