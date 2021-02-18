@@ -1,5 +1,4 @@
-
-		var layer_view_flag2 = false,
+var layer_view_flag2 = false,
     layer_view_flag3 = false;
 $("#studioMenu2").slideUp();
 $("#studioMenu3").slideUp();
@@ -135,8 +134,13 @@ var afterMapPlacesPopUp = new mapboxgl.Popup(),
     beforeMapPlacesPopUp = new mapboxgl.Popup();
 
 var hoveredStateIdRight = null,
-    hoveredStateIdLeft = null
-
+    hoveredStateIdLeft = null,
+	hoveredStateIdRightCircle = null,
+    hoveredStateIdLeftCircle = null;
+	
+var clickedStateId = null;
+	
+/*
 afterMapPopUp.on('close', function(e) {
     if(beforeMapPopUp.isOpen()) {
 		beforeMapPopUp.remove();
@@ -157,7 +161,6 @@ beforeMapPopUp.on('close', function(e) {
     }
 });
 
-/*
 afterMapPlacesPopUp.on('close', function(e) {
     if(beforeMapPlacesPopUp.isOpen()) {
 		beforeMapPlacesPopUp.remove();
@@ -190,6 +193,21 @@ beforeMap.on("load", function () {
 		document.location.href = "raster-version.html" + urlHash;
 	});
 	*/
+	/*
+	beforeMap.on('click', function () {
+		if(layer_view_flag2) { 
+            $("#studioMenu2").slideUp();
+			layer_view_flag2 = false;
+		}
+		if(layer_view_flag3) { 
+            $("#studioMenu3").slideUp();
+			layer_view_flag3 = false;
+		}
+		if(layer_view_flag) {
+			$('#view-hide-layer-panel').trigger('click');
+		}
+	});
+    */
 	
 	if (beforeMap.getLayer("c7_dates-ajsksu-left")) {
 		// CLICK AND OPEN POPUP
@@ -198,7 +216,7 @@ beforeMap.on("load", function () {
 				        $("#studioMenu2").slideUp();
 						layer_view_flag2 = false;
 					} else {
-						
+						/*
 						coordinates = e.features[0].geometry.coordinates.slice();
 			            //var description = e.features[0].properties.description;
 
@@ -219,10 +237,12 @@ beforeMap.on("load", function () {
 				            .setLngLat(coordinates)
 							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
                             .addTo(afterMap);
-				
+				        */
+						
 						buildPopUpInfo(e.features[0].properties);
 					    $("#studioMenu2").slideDown();
 						layer_view_flag2 = true;
+						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
 					map_click_ev = true;
 		}).on('click', function () {
@@ -230,10 +250,13 @@ beforeMap.on("load", function () {
 				        $("#studioMenu2").slideUp();
 						layer_view_flag2 = false;
 						if(layer_view_flag) {
+							/*
 				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
 						    layer_view_flag = false;
 						    $("#dir-txt").html("&gt;");
+							*/
+							$('#view-hide-layer-panel').trigger('click');
 					    }
 					}	
 					map_click_ev = false;
@@ -243,10 +266,12 @@ beforeMap.on("load", function () {
 	
 	if (beforeMap.getLayer("places-left")) {
 		beforeMap.on('click', 'places-left', function (e) {
-			if(layer_view_flag3) {
+			if(layer_view_flag3  && (clickedStateId == e.features[0].id) ) {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 		    } else {
+				clickedStateId = e.features[0].id;
+				
 				/*
                 coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -286,17 +311,22 @@ beforeMap.on("load", function () {
 					
 					$("#studioMenu3").html(places_popup_html).slideDown();
 				    layer_view_flag3 = true;
+					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
 		    map_click_ev = true;
         }).on('click', function () {
 			        if(layer_view_flag3 && !map_click_ev) {
+						clickedStateId = null;
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 						if(layer_view_flag) {
+							/*
 				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
 						    layer_view_flag = false;
 						    $("#dir-txt").html("&gt;");
+							*/
+							$('#view-hide-layer-panel').trigger('click');
 					    }
 					}	
 					map_click_ev = false;
@@ -324,7 +354,7 @@ afterMap.on("load", function () {
 				        $("#studioMenu2").slideUp();
 						layer_view_flag2 = false;
 					} else {
-						
+						/*
 						coordinates = e.features[0].geometry.coordinates.slice();
 			            //var description = e.features[0].properties.description;
 
@@ -345,10 +375,12 @@ afterMap.on("load", function () {
 				            .setLngLat(coordinates)
 							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
                             .addTo(afterMap);
+						*/
 						
 						buildPopUpInfo(e.features[0].properties);
 					    $("#studioMenu2").slideDown();
 						layer_view_flag2 = true;
+						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
 					map_click_ev = true;
 		}).on('click', function () {
@@ -357,10 +389,13 @@ afterMap.on("load", function () {
 						layer_view_flag2 = false;
 						
 						if(layer_view_flag) {
+							/*
 				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
 						    layer_view_flag = false;
 						    $("#dir-txt").html("&gt;");
+							*/
+							$('#view-hide-layer-panel').trigger('click');
 					    }
 					}	
 					map_click_ev = false;	
@@ -370,10 +405,12 @@ afterMap.on("load", function () {
 	
 	if (afterMap.getLayer("places-right")) {
 		afterMap.on('click', 'places-right', function (e) {
-			if(layer_view_flag3) {
+			if(layer_view_flag3 && (clickedStateId == e.features[0].id) ) {
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 		    } else {
+				clickedStateId = e.features[0].id;
+				
 				/*
                 coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -413,17 +450,22 @@ afterMap.on("load", function () {
 					
 					$("#studioMenu3").html(places_popup_html).slideDown();
 				    layer_view_flag3 = true;
+					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
 		    map_click_ev = true;
         }).on('click', function () {
 			        if(layer_view_flag3 && !map_click_ev) {
+						clickedStateId = null;
 				        $("#studioMenu3").slideUp();
 						layer_view_flag3 = false;
 						if(layer_view_flag) {
+							/*
 				            $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						    $('#view-hide-layer-panel').animate({'margin-left' : "-312px"},500);
 						    layer_view_flag = false;
 						    $("#dir-txt").html("&gt;");
+							*/
+							$('#view-hide-layer-panel').trigger('click');
 					    }
 					}	
 					map_click_ev = false;
@@ -1081,6 +1123,35 @@ function addBeforeLayers(yr, date) {
 					default: "#FF0000"
 				},
 
+                    //CIRCLE OPACITY
+                    'circle-opacity':  [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            1
+                        ],
+					'circle-stroke-width': 2,
+					'circle-stroke-color': {
+					    type: "categorical",
+					    property: "color",
+					    stops: [
+						    ["6", "#0000ee"],
+						    ["5", "#097911"],
+						    ["4", "#0000ee"],
+						    ["3", "#097911"],
+						    ["2", "#0000ee"],
+						    ["1", "#097911"]
+					    ],
+					    default: "#FF0000"
+				    },
+					'circle-stroke-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ],
+
+
 				//CIRCLE RADIUS
 				"circle-radius": {
 					type: "categorical",
@@ -1324,13 +1395,51 @@ function addBeforeLayers(yr, date) {
 		*/
 
 		// CHANGE TO CURSOR WHEN HOVERING
-		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function () {
+		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function (e) {
 			beforeMap.getCanvas().style.cursor = 'pointer';
+			        //*A console.log(e.features[0].id);
+					//*A console.log(e.features[0]);
+					
+			        if (hoveredStateIdLeftCircle) {
+                        beforeMap.setFeatureState(
+                            { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
+                            { hover: false }
+                        );
+                    }
+                    hoveredStateIdLeftCircle = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
+                        { hover: true }
+                    );
+					
+				coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				
+				        beforeMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(beforeMap);
+					
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
 		beforeMap.on('mouseleave', 'c7_dates-ajsksu-left', function () {
 			beforeMap.getCanvas().style.cursor = '';
+			    if (hoveredStateIdLeftCircle) {
+                    beforeMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
+                        { hover: false }
+                    );
+                }
+                hoveredStateIdLeftCircle = null;		
+				if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
 		});
 	//*A });
 }
@@ -1427,6 +1536,35 @@ function addAfterLayers(yr, date) {
 					],
 					default: "#FF0000"
 				},
+
+                    //CIRCLE OPACITY
+                    'circle-opacity':  [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            1
+                        ],
+					'circle-stroke-width': 2,
+					'circle-stroke-color': {
+					    type: "categorical",
+					    property: "color",
+					    stops: [
+						    ["6", "#0000ee"],
+						    ["5", "#097911"],
+						    ["4", "#0000ee"],
+						    ["3", "#097911"],
+						    ["2", "#0000ee"],
+						    ["1", "#097911"]
+					    ],
+					    default: "#FF0000"
+				    },
+					'circle-stroke-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ],
+
 
 				//CIRCLE RADIUS
 				"circle-radius": {
@@ -1675,13 +1813,48 @@ function addAfterLayers(yr, date) {
                     
 					
 		// CHANGE TO CURSOR WHEN HOVERING
-		afterMap.on('mouseenter', 'c7_dates-ajsksu-right', function () {
+		afterMap.on('mouseenter', 'c7_dates-ajsksu-right', function (e) {
 			afterMap.getCanvas().style.cursor = 'pointer';
+					
+			        if (hoveredStateIdRightCircle) {
+                        afterMap.setFeatureState(
+                            { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+                            { hover: false }
+                        );
+                    }
+                    hoveredStateIdRightCircle = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+                        { hover: true }
+                    );
+					
+				coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				
+				        afterMapPopUp
+				            .setLngLat(coordinates)
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+                            .addTo(afterMap);
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
 		afterMap.on('mouseleave', 'c7_dates-ajsksu-right', function () {
 			afterMap.getCanvas().style.cursor = '';
+			    if (hoveredStateIdRightCircle) {
+                    afterMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+                        { hover: false }
+                    );
+                }
+                hoveredStateIdRightCircle = null;		
+				if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 		})
 	//});
 }
@@ -1892,4 +2065,5 @@ function buildPopUpInfo(props) {
 $("#studioMenu2").html(popup_html);
 
 }
+
 
