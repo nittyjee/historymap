@@ -553,6 +553,9 @@
 }
 
 
+/* hide mapbox gl js close button icon  */
+.mapboxgl-popup-close-button { display: none; }
+
 	</style>
 	
 		
@@ -611,11 +614,11 @@
 	  
 	  <!-- Grants Layers -->
 	  <input type="checkbox" id="grants_layer" name="grants_layer">
-      <label for="grants_layer"> Dutch Grants Layer</label><br>
+      <label for="grants_layer"> Dutch Grants </label><br>
 	  
 	  <!-- Castello Points -->
 	  <input type="checkbox" id="castello_points" name="castello_points">
-      <label for="castello_points"> Castello Points</label><br>
+      <label for="castello_points"> Castello Taxlots</label><br>
 	  
 	  <!-- Circle -->
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
@@ -737,8 +740,9 @@
 
 
 		<!-- BASEMAP SWITHER DIV -->
-
+        <!--
 		<div id="styleSwitcher"></div>
+		-->
 
 		<!-- TIMELINE PANEL DIV -->
 		<div id='datepanel'><b><span id="date"></span></b></div>
@@ -808,5 +812,3 @@
 	</body>
 
 </html>
-
-
