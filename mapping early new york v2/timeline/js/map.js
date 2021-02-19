@@ -1037,8 +1037,8 @@ function addBeforeLayers(yr, date) {
 	//beforeMap.on('load', function () {
 		
 		//REMOVING TAX LOT POINTS IF EXIST
-		if (beforeMap.getLayer("c7_shape-47qiak-left")) beforeMap.removeLayer("c7_shape-47qiak-left");
-        if (beforeMap.getSource("c7_shape-47qiak")) beforeMap.removeSource("c7_shape-47qiak");
+		//if (beforeMap.getLayer("c7_shape-47qiak-left")) beforeMap.removeLayer("c7_shape-47qiak-left");
+        //if (beforeMap.getSource("c7_shape-47qiak")) beforeMap.removeSource("c7_shape-47qiak");
 		if (beforeMap.getLayer("c7_dates-ajsksu-left")) beforeMap.removeLayer("c7_dates-ajsksu-left");
         if (beforeMap.getSource("c7_dates-ajsksu")) beforeMap.removeSource("c7_dates-ajsksu");
 		if (beforeMap.getLayer("grants1-5sp9tb-left")) beforeMap.removeLayer("grants1-5sp9tb-left");
@@ -1071,7 +1071,7 @@ function addBeforeLayers(yr, date) {
 		});
 
 		//ADD TAX LOT POINTS
-
+        /*
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "c7_shape-47qiak-left",
@@ -1092,7 +1092,8 @@ function addBeforeLayers(yr, date) {
 				'fill-outline-color': "#ffffff"
 			}
 		});
-
+        */
+		
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "c7_dates-ajsksu-left",
@@ -1450,8 +1451,8 @@ function addAfterLayers(yr, date) {
     //afterMap.on('load', function () {
         
 		//REMOVING TAX LOT POINTS IF EXIST
-		if (afterMap.getLayer("c7_shape-47qiak-right")) afterMap.removeLayer("c7_shape-47qiak-right");
-        if (afterMap.getSource("c7_shape-47qiak")) afterMap.removeSource("c7_shape-47qiak");
+		//if (afterMap.getLayer("c7_shape-47qiak-right")) afterMap.removeLayer("c7_shape-47qiak-right");
+        //if (afterMap.getSource("c7_shape-47qiak")) afterMap.removeSource("c7_shape-47qiak");
         if (afterMap.getLayer("c7_dates-ajsksu-right")) afterMap.removeLayer("c7_dates-ajsksu-right");
         if (afterMap.getSource("c7_dates-ajsksu")) afterMap.removeSource("c7_dates-ajsksu");
 		if (afterMap.getLayer("grants1-5sp9tb-right")) afterMap.removeLayer("grants1-5sp9tb-right");
@@ -1485,7 +1486,7 @@ function addAfterLayers(yr, date) {
 
 
 		//ADD TAX LOT POINTS
-
+        /*
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "c7_shape-47qiak-right",
@@ -1506,6 +1507,7 @@ function addAfterLayers(yr, date) {
 				'fill-outline-color': "#ffffff"
 			}
 		});
+		*/
 
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
@@ -2065,5 +2067,6 @@ function buildPopUpInfo(props) {
 $("#studioMenu2").html(popup_html);
 
 }
+
 
 
