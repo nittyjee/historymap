@@ -707,6 +707,12 @@ function addGrantLotsBeforeLayers(date) {
 				//if(beforeMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 				$("#studioMenuInfo").html("");
             });
+			
+			beforeMap.on('click', 'grant-lots-left' , function () {
+						if(!layer_view_flag) {
+							$('#view-hide-layer-panel').trigger('click');
+					    }
+		    });
 }
 
 
@@ -910,6 +916,12 @@ function addGrantLotsAfterLayers(date) {
 				//if(beforeMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 				$("#studioMenuInfo").html("");
             });
+			
+			afterMap.on('click', 'grant-lots-right' , function () {
+						if(!layer_view_flag) {
+							$('#view-hide-layer-panel').trigger('click');
+					    }
+		    });
 
 }
 
@@ -1640,3 +1652,5 @@ $("#studioMenu2").html(popup_html);
 
 }
 
+
+		
