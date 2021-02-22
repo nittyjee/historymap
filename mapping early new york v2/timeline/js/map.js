@@ -136,7 +136,9 @@ var afterMapPlacesPopUp = new mapboxgl.Popup(),
 var hoveredStateIdRight = null,
     hoveredStateIdLeft = null,
 	hoveredStateIdRightCircle = null,
-    hoveredStateIdLeftCircle = null;
+    hoveredStateIdLeftCircle = null,
+	hoveredGrantStateIdRight = null,
+	hoveredGrantStateIdLeft = null;
 	
 var clickedStateId = null;
 	
@@ -599,6 +601,9 @@ function changeDate(unixDate) {
 	
 	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
 	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
+	
+	beforeMap.setFilter("grant-lots-left", dateFilter);
+	afterMap.setFilter("grant-lots-right", dateFilter);
 
 	var layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	//console.log(layer_features[0].properties.DATE2);
@@ -621,113 +626,88 @@ function changeDate(unixDate) {
 /////////////////////////////
 //LAYERS AND LEGEND
 /////////////////////////////
-function setBeforeLayers() {
 
-	//TOGGLE LAYERS
-	var toggleableLayerIds = [
-
-	];
-
-	//LEGEND?
-	/*
-	var legend = document.getElementById("legend");
-	while (legend.hasChildNodes()) {
-		legend.removeChild(legend.lastChild);
-	}
-	*/
-
-	//TOGGLING
-	for (var i = 0; i < toggleableLayerIds.length; i++) {
-		//use closure to deal with scoping
-		(function () {
-			var id = toggleableLayerIds[i];
-
-			//ADD CHECKBOX
-			var input = document.createElement("input");
-			input.type = "checkbox";
-			input.id = id;
-			input.checked = true;
-
-			//ADD LABEL
-			var label = document.createElement("label");
-			label.setAttribute("for", id);
-			label.textContent = id;
-
-			//CHECKBOX CHANGING (CHECKED VS. UNCHECKED)
-			input.addEventListener("change", function (e) {
-				beforeMap.setLayoutProperty(
-					id,
-					"visibility",
-					e.target.checked ? "visible" : "none"
-				);
+function addGrantLotsBeforeLayers(date) {
+	
+	//REMOVING TAX LOT POINTS IF EXIST
+		if (beforeMap.getLayer("grant-lots-left")) beforeMap.removeLayer("grant-lots-left");
+        if (beforeMap.getSource("grant_lot_c7-6s06if")) beforeMap.removeSource("grant_lot_c7-6s06if");
+	
+	
+	// Add a layer showing the places.
+	        beforeMap.addLayer({
+                id: "grant-lots-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.4498iwgn"
+                },
+				layout: {
+                    visibility: document.getElementById('grant_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "grant_lot_c7-6s06if",
+                paint: {
+                    'fill-color': '#088',
+                    'fill-opacity': [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            0.8
+                        ],
+					'fill-outline-color': "#FF0000"
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+			
+					
+			
+			//CURSOR ON HOVER
+            //ON HOVER
+			beforeMap.on('mouseenter', 'grant-lots-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
 			});
+			
+            beforeMap.on('mousemove', 'grant-lots-left', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredGrantStateIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdLeft},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredGrantStateIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdLeft},
+                        { hover: true }
+                    );
+					
+					
+			    
+                    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+                 
+				    $("#studioMenuInfo").html(PopUpHTML);
+				
+				}
+				
+            });
 
-			//NOTE?
-			/*
-			var layers = document.getElementById("legend");
-			layers.appendChild(input);
-			layers.appendChild(label);
-			layers.appendChild(document.createElement("br"));
-			*/
-		})();
-	}
-
+            //OFF HOVER
+			beforeMap.on('mouseleave', 'grant-lots-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredGrantStateIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredGrantStateIdLeft = null;		
+				//if(beforeMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+				$("#studioMenuInfo").html("");
+            });
 }
-
-
-function setAfterLayers() {
-
-	//TOGGLE LAYERS
-	var toggleableLayerIds = [
-
-	];
-
-	//LEGEND?
-	/*
-	var legend = document.getElementById("legend");
-	while (legend.hasChildNodes()) {
-		legend.removeChild(legend.lastChild);
-	}
-	*/
-
-	//TOGGLING
-	for (var i = 0; i < toggleableLayerIds.length; i++) {
-		//use closure to deal with scoping
-		(function () {
-			var id = toggleableLayerIds[i];
-
-			//ADD CHECKBOX
-			var input = document.createElement("input");
-			input.type = "checkbox";
-			input.id = id;
-			input.checked = true;
-
-			//ADD LABEL
-			var label = document.createElement("label");
-			label.setAttribute("for", id);
-			label.textContent = id;
-
-			//CHECKBOX CHANGING (CHECKED VS. UNCHECKED)
-			input.addEventListener("change", function (e) {
-				afterMap.setLayoutProperty(
-					id,
-					"visibility",
-					e.target.checked ? "visible" : "none"
-				);
-			});
-
-			//NOTE?
-			/*
-			var layers = document.getElementById("legend");
-			layers.appendChild(input);
-			layers.appendChild(label);
-			layers.appendChild(document.createElement("br"));
-			*/
-		})();
-	}
-
-}
-
 
 
 function addCastelloBeforeLayers() {
@@ -849,6 +829,90 @@ function addCastelloBeforeLayers() {
             });
 	
 }
+
+
+function addGrantLotsAfterLayers(date) {
+	
+	//REMOVING TAX LOT POINTS IF EXIST
+	    if (afterMap.getLayer("grant-lots-right")) afterMap.removeLayer("grant-lots-right");
+        if (afterMap.getSource("grant_lot_c7-6s06if")) afterMap.removeSource("grant_lot_c7-6s06if");
+		
+	// Add a layer showing the places.
+	        afterMap.addLayer({
+                id: "grant-lots-right",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.4498iwgn"
+                },
+				layout: {
+                    visibility: document.getElementById('grant_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "grant_lot_c7-6s06if",
+                paint: {
+                    'fill-color': '#088',
+                    'fill-opacity': [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            0.8
+                        ],
+					'fill-outline-color': "#FF0000"
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+			
+			
+			
+			//CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'grant-lots-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+			});
+			
+            afterMap.on('mousemove', 'grant-lots-right', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredGrantStateIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredGrantStateIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdRight},
+                        { hover: true }
+                    );
+					
+					
+			    
+                    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+                 
+				    $("#studioMenuInfo").html(PopUpHTML);
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			afterMap.on('mouseleave', 'grant-lots-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredGrantStateIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredGrantStateIdRight = null;		
+				//if(beforeMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+				$("#studioMenuInfo").html("");
+            });
+
+}
+
 
 function addCastelloAfterLayers() {
 	
@@ -994,9 +1058,10 @@ beforeMap.on('style.load', function () {
 	console.log(sliderVal)
 	console.log(yr)
 	console.log(date)
-	//setBeforeLayers();
+
 	addBeforeLayers(yr, date);
 	addCastelloBeforeLayers();
+	addGrantLotsBeforeLayers(date);
 });
 afterMap.on('style.load', function () {
 	//on the 'style.load' event, switch "basemaps" and then re-add layers
@@ -1011,9 +1076,10 @@ afterMap.on('style.load', function () {
 	console.log(sliderVal)
 	console.log(yr)
 	console.log(date)
-	//setAfterLayers();
+
 	addAfterLayers(yr, date);
 	addCastelloAfterLayers();
+	addGrantLotsAfterLayers(date);
 });
 
 
@@ -1037,8 +1103,6 @@ function addBeforeLayers(yr, date) {
 	//beforeMap.on('load', function () {
 		
 		//REMOVING TAX LOT POINTS IF EXIST
-		//if (beforeMap.getLayer("c7_shape-47qiak-left")) beforeMap.removeLayer("c7_shape-47qiak-left");
-        //if (beforeMap.getSource("c7_shape-47qiak")) beforeMap.removeSource("c7_shape-47qiak");
 		if (beforeMap.getLayer("c7_dates-ajsksu-left")) beforeMap.removeLayer("c7_dates-ajsksu-left");
         if (beforeMap.getSource("c7_dates-ajsksu")) beforeMap.removeSource("c7_dates-ajsksu");
 		if (beforeMap.getLayer("grants1-5sp9tb-left")) beforeMap.removeLayer("grants1-5sp9tb-left");
@@ -1071,29 +1135,6 @@ function addBeforeLayers(yr, date) {
 		});
 
 		//ADD TAX LOT POINTS
-        /*
-		beforeMap.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_shape-47qiak-left",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.8wpxjzzv"
-			},
-			layout: {
-                visibility: document.getElementById('rect_point').checked ? "visible" : "none",
-            },
-			"source-layer": "c7_shape-47qiak",
-			paint: {
-				//FILL COLOR
-				'fill-color': "#ffffff",
-				//FILL COLOR OUTLINE
-				'fill-outline-color': "#ffffff"
-			}
-		});
-        */
-		
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "c7_dates-ajsksu-left",
@@ -1169,231 +1210,10 @@ function addBeforeLayers(yr, date) {
 
 
 		//TAX LOT POPUP
-
 		// CLICK AND OPEN POPUP
-		/*
-		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
-			var coordinates = e.features[0].geometry.coordinates.slice();
-			var description = e.features[0].properties.description;
+        //*A
 
-			// Ensure that if the map is zoomed out such that multiple
-			// copies of the feature are visible, the popup appears
-			// over the copy being pointed to.
-			while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-				coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-			}
 
-
-			//POPUP CONTENTS
-			new mapboxgl.Popup()
-				.setLngLat(coordinates)
-
-				.setHTML(
-
-					///////
-					//TITLE
-					///////
-					"<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b>" +
-// CAN'T GET THE TAXLOT LINK TO WORK: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7'>
-					////////////////
-					//PROPERTY TYPE
-					////////////////
-					"<b>House</b>" +
-
-
-					//LINE
-					"<hr>" +
-
-
-					/////////////
-					//DATE RANGE
-					////////////
-
-					//FROM
-					//example: June 3, 1643
-					"<b> FROM: </b>" +
-					e.features[0].properties.DATE1 +
-
-					//TO
-					//example: January 19, 1659
-					"<br>" +
-					"<b> TO: </b>" +
-					e.features[0].properties.DATE2 +
-
-
-
-					/////////////////////////////////////////////////////////////////////////////////////////////
-					//UNKNOWN (DISPLAY TITLE AND EXPLANATION WHERE UNKNOWN OR NOTHING, %nbsp)
-					//example 1: <br><br><b>TAXLOT EVENTS UNKNOWN</b><br>Needs research beyond sources used.
-					//example 2: &nbsp;
-					//////////////////////////////////////////////////////////////////////////////////////////////
-					e.features[0].properties.Unknown +
-
-
-
-					//LINE
-					"<hr>" +
-
-
-
-
-					//KEEP THIS AS ALTERNATIVE WAY OF LINKING:
-					//'<a href="' + e.features[0].properties.tax_lots_3 + '" target="_blank">' + e.features[0].properties.tax_lots_3 + '</a>'
-
-
-
-					//////////////////////////////////////////////////
-					//NEXT
-					//example 1: <b>OWNERSHIP:</b><br>
-					//example 2: <b>NEXT KNOWN OWNERSHIP:</b><br>
-					//////////////////////////////////////////////////
-					e.features[0].properties.Next +
-
-
-
-
-					///////////////////////
-					//OWNERS EXAMPLES:
-					//////////////////////
-
-					//NOTE: Not sure if NULLs are a problem, check in the future.
-
-					//TAXLOT EVENT PARTY ROLE 1
-					//TO_PAR1 / TO_PAR2 / FROM_PAR1 / FROM PAR2
-					//example 1: /nahc/encyclopedia/node/1537 hreflang="en" target="_blank">Joint Owner</a>
-					//example 2: NULL
-
-					//FROM PARTY 1 (ANCESTOR)
-					//TO_1 / T0_2 / FROM_1 / FROM_2
-					//example 1: /nahc/encyclopedia/node/1536 hreflang="en" target="_blank">Signatory</a>
-					//example 2: NULL
-
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					//TO_ENT1 / TO_ENT2 / FROM_ENT1 / FROM_ENT2
-					//example 1: /nahc/encyclopedia/node/1535 hreflang="en" target="_blank">Corporation</a>
-					//example 2: NULL
-
-
-
-
-					//////////////////////////////////////////
-					//TO OWNERS
-					//examples: See Above (OWNER EXAMPLES)
-					//////////////////////////////////////////
-
-
-
-					//OWNER 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_PAR1 + ": " +
-					"<br>" +
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_1 +
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_ENT1 + ")" +
-					"<br>" +
-					"<br>" +
-
-					//OWNER 2
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_PAR2 + ": " +
-					"<br>" +
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_2 +
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_ENT2 + ")" +
-
-					"<br>" +
-					"<br>" +
-
-
-
-					//////////////////
-					//TAXLOT EVENT
-					//////////////////
-
-					//TAXLOT EVENT TITLE
-					//example 1: <b>TAXLOT EVENT:</b>
-					//example 2: <b>NEXT TAXLOT EVENT:</b>
-					e.features[0].properties.Tax_Event +
-
-					"<br>" +
-
-
-					//TAXLOT EVENT TYPE
-					//example: /nahc/encyclopedia/node/1528 hreflang="en" target="_blank">Land Grant or Patent</a>
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.EVENT1 +
-					"<hr>" +
-
-
-					//////////////////////////////
-					//FROM OWNERS
-					//examples: see above, OWNER EXAMPLES
-					//////////////////////////////
-
-
-					//FROM TITLE
-					//example 1: <b>FROM:</b>
-					//example 2: <b>PREVIOUS KNOWN FROM:</b>
-					e.features[0].properties.Previous +
-
-					"<br>" +
-
-					//FROM 1
-
-					//TAXLOT EVENT PARTY ROLE 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_PAR1 + ": " +
-					"<br>" +
-					//FROM PARTY 1 (ANCESTOR)
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_1 +
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_ENT1 + ")" +
-					"<br>" +
-					"<br>" +
-
-
-					//FROM 2
-
-					//TAXLOT EVENT PARTY ROLE 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_PAR2 + ": " +
-					"<br>" +
-					//FROM PARTY 2 (ANCESTOR)
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_2 +
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_ENT2 + ")" +
-
-
-
-
-					///////////////////////////
-					//PREVIOUS TAXLOT EVENT (SHOWS UP IF TAXLOT EVENTS UNKNOWN, OTHERWISE BLANK, &nbsp;)
-					//////////////////////////
-
-					//TITLE: "PREVIOUS TAXLOT EVENT"
-					//example 1: <br><br><b>PREVIOUS TAXLOT EVENT:</b><br>
-					//example 2: &nbsp;
-					e.features[0].properties.Event +
-
-					//PREVIOUS TAXLOT EVENT
-					//example 1: /nahc/encyclopedia/node/1528 hreflang="en" target="_blank">Land Grant or Patent</a>
-					//example 2: &nbsp;
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.Prev_Event +
-
-
-
-
-
-
-					//LINK TO ALL TAXLOT EVENTS: "SEE ALL TAXLOT EVENTS"
-					"<br>" +
-					"<hr>" +
-					'<b> <h3><a href="https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-events" target="_blank">SEE ALL TAXLOT EVENTS</a></h3></b>'
-
-//NEED TO MAKE THIS OPEN IN SEPARATE TAB!!
-
-
-
-
-				)
-				.addTo(beforeMap);
-				
-				    
-		});
-		*/
 
 		// CHANGE TO CURSOR WHEN HOVERING
 		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function (e) {
@@ -1451,8 +1271,6 @@ function addAfterLayers(yr, date) {
     //afterMap.on('load', function () {
         
 		//REMOVING TAX LOT POINTS IF EXIST
-		//if (afterMap.getLayer("c7_shape-47qiak-right")) afterMap.removeLayer("c7_shape-47qiak-right");
-        //if (afterMap.getSource("c7_shape-47qiak")) afterMap.removeSource("c7_shape-47qiak");
         if (afterMap.getLayer("c7_dates-ajsksu-right")) afterMap.removeLayer("c7_dates-ajsksu-right");
         if (afterMap.getSource("c7_dates-ajsksu")) afterMap.removeSource("c7_dates-ajsksu");
 		if (afterMap.getLayer("grants1-5sp9tb-right")) afterMap.removeLayer("grants1-5sp9tb-right");
@@ -1486,28 +1304,6 @@ function addAfterLayers(yr, date) {
 
 
 		//ADD TAX LOT POINTS
-        /*
-		afterMap.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_shape-47qiak-right",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.8wpxjzzv"
-			},
-			layout: {
-                visibility:  document.getElementById('rect_point').checked ? "visible" : "none",
-            },
-			"source-layer": "c7_shape-47qiak",
-			paint: {
-				//FILL COLOR
-				'fill-color': "#ffffff",
-				//FILL COLOR OUTLINE
-				'fill-outline-color': "#ffffff"
-			}
-		});
-		*/
 
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
@@ -1584,232 +1380,8 @@ function addAfterLayers(yr, date) {
 
 
 		//TAX LOT POPUP
-
 		// CLICK AND OPEN POPUP
-		/*
-		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
-			var coordinates = e.features[0].geometry.coordinates.slice();
-			var description = e.features[0].properties.description;
-
-			// Ensure that if the map is zoomed out such that multiple
-			// copies of the feature are visible, the popup appears
-			// over the copy being pointed to.
-			while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-				coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-			}
-
-            //console.log(e.features[0].properties.DATE2);
-            //console.log(e.features[0].properties);
-
-			//POPUP CONTENTS
-			new mapboxgl.Popup()
-				.setLngLat(coordinates)
-
-				.setHTML(
-
-					///////
-					//TITLE
-					///////
-					"<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b>" +
-// CAN'T GET THE TAXLOT LINK TO WORK: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7'>
-					////////////////
-					//PROPERTY TYPE
-					////////////////
-					"<b>House</b>" +
-
-
-					//LINE
-					"<hr>" +
-
-
-					/////////////
-					//DATE RANGE
-					////////////
-
-					//FROM
-					//example: June 3, 1643
-					"<b> FROM: </b>" +
-					e.features[0].properties.DATE1 +
-
-					//TO
-					//example: January 19, 1659
-					"<br>" +
-					"<b> TO: </b>" +
-					e.features[0].properties.DATE2 +
-
-
-
-					/////////////////////////////////////////////////////////////////////////////////////////////
-					//UNKNOWN (DISPLAY TITLE AND EXPLANATION WHERE UNKNOWN OR NOTHING, %nbsp)
-					//example 1: <br><br><b>TAXLOT EVENTS UNKNOWN</b><br>Needs research beyond sources used.
-					//example 2: &nbsp;
-					//////////////////////////////////////////////////////////////////////////////////////////////
-					e.features[0].properties.Unknown +
-
-
-
-					//LINE
-					"<hr>" +
-
-
-
-
-					//KEEP THIS AS ALTERNATIVE WAY OF LINKING:
-					//'<a href="' + e.features[0].properties.tax_lots_3 + '" target="_blank">' + e.features[0].properties.tax_lots_3 + '</a>'
-
-
-
-					//////////////////////////////////////////////////
-					//NEXT
-					//example 1: <b>OWNERSHIP:</b><br>
-					//example 2: <b>NEXT KNOWN OWNERSHIP:</b><br>
-					//////////////////////////////////////////////////
-					e.features[0].properties.Next +
-
-
-
-
-					///////////////////////
-					//OWNERS EXAMPLES:
-					//////////////////////
-
-					//NOTE: Not sure if NULLs are a problem, check in the future.
-
-					//TAXLOT EVENT PARTY ROLE 1
-					//TO_PAR1 / TO_PAR2 / FROM_PAR1 / FROM PAR2
-					//example 1: /nahc/encyclopedia/node/1537 hreflang="en" target="_blank">Joint Owner</a>
-					//example 2: NULL
-
-					//FROM PARTY 1 (ANCESTOR)
-					//TO_1 / T0_2 / FROM_1 / FROM_2
-					//example 1: /nahc/encyclopedia/node/1536 hreflang="en" target="_blank">Signatory</a>
-					//example 2: NULL
-
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					//TO_ENT1 / TO_ENT2 / FROM_ENT1 / FROM_ENT2
-					//example 1: /nahc/encyclopedia/node/1535 hreflang="en" target="_blank">Corporation</a>
-					//example 2: NULL
-
-
-
-
-					//////////////////////////////////////////
-					//TO OWNERS
-					//examples: See Above (OWNER EXAMPLES)
-					//////////////////////////////////////////
-
-
-
-					//OWNER 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_PAR1 + ": " +
-					"<br>" +
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_1 +
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_ENT1 + ")" +
-					"<br>" +
-					"<br>" +
-
-					//OWNER 2
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_PAR2 + ": " +
-					"<br>" +
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_2 +
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.TO_ENT2 + ")" +
-
-					"<br>" +
-					"<br>" +
-
-
-
-					//////////////////
-					//TAXLOT EVENT
-					//////////////////
-
-					//TAXLOT EVENT TITLE
-					//example 1: <b>TAXLOT EVENT:</b>
-					//example 2: <b>NEXT TAXLOT EVENT:</b>
-					e.features[0].properties.Tax_Event +
-
-					"<br>" +
-
-
-					//TAXLOT EVENT TYPE
-					//example: /nahc/encyclopedia/node/1528 hreflang="en" target="_blank">Land Grant or Patent</a>
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.EVENT1 +
-					"<hr>" +
-
-
-					//////////////////////////////
-					//FROM OWNERS
-					//examples: see above, OWNER EXAMPLES
-					//////////////////////////////
-
-
-					//FROM TITLE
-					//example 1: <b>FROM:</b>
-					//example 2: <b>PREVIOUS KNOWN FROM:</b>
-					e.features[0].properties.Previous +
-
-					"<br>" +
-
-					//FROM 1
-
-					//TAXLOT EVENT PARTY ROLE 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_PAR1 + ": " +
-					"<br>" +
-					//FROM PARTY 1 (ANCESTOR)
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_1 +
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_ENT1 + ")" +
-					"<br>" +
-					"<br>" +
-
-
-					//FROM 2
-
-					//TAXLOT EVENT PARTY ROLE 1
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_PAR2 + ": " +
-					"<br>" +
-					//FROM PARTY 2 (ANCESTOR)
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_2 +
-					//TAXLOT ENTITY DESCRIPTIONS 2
-					" (" + '<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.FROM_ENT2 + ")" +
-
-
-
-
-					///////////////////////////
-					//PREVIOUS TAXLOT EVENT (SHOWS UP IF TAXLOT EVENTS UNKNOWN, OTHERWISE BLANK, &nbsp;)
-					//////////////////////////
-
-					//TITLE: "PREVIOUS TAXLOT EVENT"
-					//example 1: <br><br><b>PREVIOUS TAXLOT EVENT:</b><br>
-					//example 2: &nbsp;
-					e.features[0].properties.Event +
-
-					//PREVIOUS TAXLOT EVENT
-					//example 1: /nahc/encyclopedia/node/1528 hreflang="en" target="_blank">Land Grant or Patent</a>
-					//example 2: &nbsp;
-					'<a href=https://nahc-mapping.org/mappingNY' + e.features[0].properties.Prev_Event +
-
-
-
-
-
-
-					//LINK TO ALL TAXLOT EVENTS: "SEE ALL TAXLOT EVENTS"
-					"<br>" +
-					"<hr>" +
-					'<b> <h3><a href="https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-events" target="_blank">SEE ALL TAXLOT EVENTS</a></h3></b>'
-
-//NEED TO MAKE THIS OPEN IN SEPARATE TAB!!
-
-
-
-
-				)
-				.addTo(afterMap);
-				
-		});
-		*/        
+		//*A
 		           
 		            
                     
@@ -2067,6 +1639,4 @@ function buildPopUpInfo(props) {
 $("#studioMenu2").html(popup_html);
 
 }
-
-
 
