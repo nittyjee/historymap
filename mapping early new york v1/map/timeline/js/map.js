@@ -160,6 +160,9 @@ function changeDate(unixDate) {
 
 	map.setFilter("grants1-5sp9tb", dateFilter);
 
+	map.setFilter("grant_lot_c7-6s06if", dateFilter);
+
+
 }//end function changeDate
 
 
@@ -330,6 +333,33 @@ function addLayers(yr, date) {
 
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
+
+
+		
+		
+		//GRANT LOT C7
+
+		map.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "grant_lot_c7-6s06if",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.4498iwgn"
+			},
+			"source-layer": "grant_lot_c7-6s06if",
+			paint: {
+				"fill-color": "#F08080",
+				"fill-opacity": 0.5,
+				"fill-outline-color": "#000000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+
 
 		//ADD TAX LOT POINTS
 
