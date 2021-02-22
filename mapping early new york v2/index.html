@@ -176,21 +176,6 @@
 					}
 				});
 				
-				/*
-				$('#rect_point').click(function() {
-				    if( $( this ).prop('checked') ) {
-					    //if(beforeMap.getLayoutProperty("c7_shape-47qiak-left", "visibility") === "none" )
-					        beforeMap.setLayoutProperty( "c7_shape-47qiak-left", "visibility", "visible" ); 
-						//if(afterMap.getLayoutProperty("c7_shape-47qiak-right", "visibility") === "none" )
-					        afterMap.setLayoutProperty( "c7_shape-47qiak-right", "visibility", "visible" ); 
-					} else {
-					    //if(beforeMap.getLayoutProperty("c7_shape-47qiak-left", "visibility") === "visible" )
-					        beforeMap.setLayoutProperty( "c7_shape-47qiak-left", "visibility", "none" ); 
-						//if(afterMap.getLayoutProperty("c7_shape-47qiak-right", "visibility") === "visible" )
-					        afterMap.setLayoutProperty( "c7_shape-47qiak-right", "visibility", "none" );
-					}
-				});
-				*/
 				
 				$('#grants_layer').click(function() {
 				    if( $( this ).prop('checked') ) {
@@ -205,6 +190,21 @@
 					        afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "none" );
 					}
 				});
+				
+				$('#grant_lots').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    //if(beforeMap.getLayoutProperty("grant-lots-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "grant-lots-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("grant-lots-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "grant-lots-right", "visibility", "visible" ); 
+					} else {
+					    //if(beforeMap.getLayoutProperty("grant-lots-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "grant-lots-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("grant-lots-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "grant-lots-right", "visibility", "none" );
+					}
+				});
+				
 				
 				//var layer_view_flag = true;
 				
@@ -538,7 +538,7 @@
 }
 
 #studioMenu { width: 300px; }
-#studioMenu2, #studioMenu3 { width: 280px; /* left: 258px; width: 300px; */ }
+#studioMenu2, #studioMenu3, #studioMenuInfo { width: 280px; /* left: 258px; width: 300px; */ }
 
 #view-hide-layer-panel {
     position: absolute; 
@@ -624,12 +624,11 @@
 	  <!-- Circle -->
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
       <label for="circle_point"> Demo Taxlot: C7</label><br>
-	   
-   	  <!-- Rect -->
-	  <!--
-	  <input type="checkbox" id="rect_point" name="rect_point" checked="checked">
-      <label for="rect_point"> Rect </label>
-	  -->
+	  
+	   <!-- Grants Layers -->
+	  <input type="checkbox" id="grant_lots" name="grant_lots">
+      <label for="grant_lots"> Grant Lots</label><br>
+
 	  <br><br>
 	  
       <button id="l-btn" > Left Map </button><button id="r-btn" class="active" > Right Map </button><br><br>
@@ -716,6 +715,7 @@
 	  
 	  
 	  <br>
+	  <div id="studioMenuInfo"></div>
 	  <div id="studioMenu3"></div>
 	  <div id="studioMenu2"></div>
 	  
@@ -815,3 +815,4 @@
 	</body>
 
 </html>
+
