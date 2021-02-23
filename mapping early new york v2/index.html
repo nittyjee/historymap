@@ -202,6 +202,11 @@
 					        beforeMap.setLayoutProperty( "grant-lots-left", "visibility", "none" ); 
 						//if(afterMap.getLayoutProperty("grant-lots-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "grant-lots-right", "visibility", "none" );
+							
+						if(layer_view_flag1) { 
+							$("#studioMenuInfo").slideUp(); 
+							layer_view_flag1 = false;
+						}
 					}
 				});
 				
@@ -555,7 +560,9 @@
 
 
 /* hide mapbox gl js close button icon  */
+/*
 .mapboxgl-popup-close-button { display: none; }
+*/
 
 	</style>
 	
@@ -815,4 +822,5 @@
 	</body>
 
 </html>
+
 
