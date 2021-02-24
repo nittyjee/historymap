@@ -1,10 +1,14 @@
-var layer_view_id1 = null,
-    layer_view_flag1 = false,
-    layer_view_flag2 = false,
-    layer_view_flag3 = false;
+var grant_lots_view_id = null,
+    dgrants_layer_view_id = null,
+    grant_lots_view_flag = false,
+    demo_layer_view_flag = false,
+    castello_layer_view_flag = false,
+	dgrants_layer_view_flag = false;
+	
 $("#studioMenuInfo").slideUp();
-$("#studioMenu2").slideUp();
-$("#studioMenu3").slideUp();
+$("#studioMenuInfo1").slideUp();
+$("#studioMenuDemo").slideUp();
+$("#studioMenuCastello").slideUp();
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -127,7 +131,8 @@ map.addControl(nav, "top-left");
 urlHash = window.location.hash;
 var castello_click_ev = false,
     grant_lots_click_ev = false,
-	demo_taxlot_click_ev = false;
+	demo_taxlot_click_ev = false,
+	dutch_grant_click_ev = false;
     
 
 var afterMapPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
@@ -141,6 +146,9 @@ var afterMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick:
 
 var afterMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
 /*
         new mapboxgl.Popup({
@@ -158,7 +166,9 @@ var hoveredStateIdRight = null,
 	hoveredGrantStateIdRight = null,
 	hoveredGrantStateIdLeft = null,
 	hoveredGrantLotIdRight = null,
-	hoveredGrantLotIdLeft = null;
+	hoveredGrantLotIdLeft = null,
+	hoveredDutchGrantIdRight = null,
+	hoveredDutchGrantIdLeft = null;
 	
 var clickedStateId = null;
 	
@@ -166,9 +176,9 @@ var clickedStateId = null;
 afterMapPopUp.on('close', function(e) {
     if(beforeMapPopUp.isOpen()) {
 		beforeMapPopUp.remove();
-		if(layer_view_flag2) {
-		    $("#studioMenu2").slideUp();
-		    layer_view_flag2 = false;
+		if(demo_layer_view_flag) {
+		    $("#studioMenuDemo").slideUp();
+		    demo_layer_view_flag = false;
 		}
 	}
 });
@@ -176,9 +186,9 @@ afterMapPopUp.on('close', function(e) {
 beforeMapPopUp.on('close', function(e) {
     if(afterMapPopUp.isOpen()) {
 		afterMapPopUp.remove();
-		if(layer_view_flag2) {
-		    $("#studioMenu2").slideUp();
-		    layer_view_flag2 = false;
+		if(demo_layer_view_flag) {
+		    $("#studioMenuDemo").slideUp();
+		    demo_layer_view_flag = false;
 		}
     }
 });
@@ -186,9 +196,9 @@ beforeMapPopUp.on('close', function(e) {
 afterMapPlacesPopUp.on('close', function(e) {
     if(beforeMapPlacesPopUp.isOpen()) {
 		beforeMapPlacesPopUp.remove();
-		if(layer_view_flag3) {
-		    $("#studioMenu3").slideUp();
-		    layer_view_flag3 = false;
+		if(castello_layer_view_flag) {
+		    $("#studioMenuCastello").slideUp();
+		    castello_layer_view_flag = false;
 		}
 	}
 });
@@ -196,9 +206,9 @@ afterMapPlacesPopUp.on('close', function(e) {
 beforeMapPlacesPopUp.on('close', function(e) {
     if(afterMapPlacesPopUp.isOpen()) {
 		afterMapPlacesPopUp.remove();
-		if(layer_view_flag3) {
-		    $("#studioMenu3").slideUp();
-		    layer_view_flag3 = false;
+		if(castello_layer_view_flag) {
+		    $("#studioMenuCastello").slideUp();
+		    castello_layer_view_flag = false;
 		}
     }
 });
@@ -217,13 +227,13 @@ beforeMap.on("load", function () {
 	*/
 	/*
 	beforeMap.on('click', function () {
-		if(layer_view_flag2) { 
-            $("#studioMenu2").slideUp();
-			layer_view_flag2 = false;
+		if(demo_layer_view_flag) { 
+            $("#studioMenuDemo").slideUp();
+			demo_layer_view_flag = false;
 		}
-		if(layer_view_flag3) { 
-            $("#studioMenu3").slideUp();
-			layer_view_flag3 = false;
+		if(castello_layer_view_flag) { 
+            $("#studioMenuCastello").slideUp();
+			castello_layer_view_flag = false;
 		}
 		if(layer_view_flag) {
 			$('#view-hide-layer-panel').trigger('click');
@@ -236,23 +246,23 @@ beforeMap.on("load", function () {
 	
 		// CLICK AND OPEN POPUP
 		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
-		            if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
+		            if(demo_layer_view_flag) {
+				        $("#studioMenuDemo").slideUp();
+						demo_layer_view_flag = false;
 					} else {
 						
 						
 						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenu2").slideDown();
-						layer_view_flag2 = true;
+					    $("#studioMenuDemo").slideDown();
+						demo_layer_view_flag = true;
 						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
 					
 	                demo_taxlot_click_ev = true;
 		}).on('click', 'places-left', function (e) {
-			if(layer_view_flag3  && (clickedStateId == e.features[0].id) ) {
-				        $("#studioMenu3").slideUp();
-						layer_view_flag3 = false;
+			if(castello_layer_view_flag  && (clickedStateId == e.features[0].id) ) {
+				        $("#studioMenuCastello").slideUp();
+						castello_layer_view_flag = false;
 		    } else {
 				   clickedStateId = e.features[0].id;
 				
@@ -265,8 +275,8 @@ beforeMap.on("load", function () {
                         "<br>" +
                         '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
-					$("#studioMenu3").html(places_popup_html).slideDown();
-				    layer_view_flag3 = true;
+					$("#studioMenuCastello").html(places_popup_html).slideDown();
+				    castello_layer_view_flag = true;
 					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
 			
@@ -274,43 +284,73 @@ beforeMap.on("load", function () {
         }).on('click', 'grant-lots-left' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(layer_view_id1 == e.features[0].id) {
-								if(layer_view_flag1) {
+							if(grant_lots_view_id == e.features[0].id) {
+								if(grant_lots_view_flag) {
 							        $("#studioMenuInfo").slideUp(); 
-									layer_view_flag1 = false;
+									grant_lots_view_flag = false;
 								} else {
 									//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 									buildGrantLotsPopUpInfo(e.features[0].properties);
 							        $("#studioMenuInfo").slideDown();
-								    layer_view_flag1 = true;
+								    grant_lots_view_flag = true;
 								}
 								
 							} else {
 			                    //$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#studioMenuInfo").slideDown();
-								layer_view_flag1 = true;
+								grant_lots_view_flag = true;
 							}
-							layer_view_id1 = e.features[0].id;
+							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 							buildGrantLotsPopUpInfo(e.features[0].properties);
 							$("#studioMenuInfo").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
-							layer_view_id1 = null;
+							grant_lots_view_id = null;
 					    } 
 						
 						grant_lots_click_ev = true;
 						
+		}).on('click', 'grants1-5sp9tb-left' , function (e) {
+				        
+						if(layer_view_flag) {
+							if(dgrants_layer_view_id == e.features[0].id) {
+								if(dgrants_layer_view_flag) {
+							        $("#studioMenuInfo1").slideUp(); 
+									dgrants_layer_view_flag = false;
+								} else {
+									buildDutchGrantPopUpInfo(e.features[0].properties);
+							        $("#studioMenuInfo1").slideDown();
+								    dgrants_layer_view_flag = true;
+								}
+								
+							} else {
+								buildDutchGrantPopUpInfo(e.features[0].properties);
+							    $("#studioMenuInfo1").slideDown();
+								dgrants_layer_view_flag = true;
+							}
+							dgrants_layer_view_id = e.features[0].id;
+						} else {
+							buildDutchGrantPopUpInfo(e.features[0].properties);
+							$("#studioMenuInfo1").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							dgrants_layer_view_id = null;
+					    } 
+						
+						dutch_grant_click_ev = true;
+						
 		}).on('click', function () {
 					
-					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev) {
+					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
+						/*
 						$("#studioMenuInfo").slideUp(); 
-						layer_view_flag1 = false;
-                        $("#studioMenu2").slideUp();
-			            layer_view_flag2 = false;
-                        $("#studioMenu3").slideUp();
-			            layer_view_flag3 = false;
+						grant_lots_view_flag = false;
+                        $("#studioMenuDemo").slideUp();
+			            demo_layer_view_flag = false;
+                        $("#studioMenuCastello").slideUp();
+			            castello_layer_view_flag = false;
+						*/
 
 			            $('#view-hide-layer-panel').trigger('click');
 					}
@@ -318,6 +358,7 @@ beforeMap.on("load", function () {
 					demo_taxlot_click_ev = false;
 					castello_click_ev = false;
 					grant_lots_click_ev = false;
+					dutch_grant_click_ev = false;
 		});
 	
 	
@@ -340,21 +381,21 @@ afterMap.on("load", function () {
 	
 		// CLICK AND OPEN POPUP
 		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
-			        if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
+			        if(demo_layer_view_flag) {
+				        $("#studioMenuDemo").slideUp();
+						demo_layer_view_flag = false;
 					} else {
 						
 						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenu2").slideDown();
-						layer_view_flag2 = true;
+					    $("#studioMenuDemo").slideDown();
+						demo_layer_view_flag = true;
 						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
 					demo_taxlot_click_ev = true;
 		}).on('click', 'places-right', function (e) {
-			if(layer_view_flag3 && (clickedStateId == e.features[0].id) ) {
-				        $("#studioMenu3").slideUp();
-						layer_view_flag3 = false;
+			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
+				        $("#studioMenuCastello").slideUp();
+						castello_layer_view_flag = false;
 		    } else {
 				    clickedStateId = e.features[0].id;
 				
@@ -366,57 +407,88 @@ afterMap.on("load", function () {
                         "<br>" +
                         '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
-					$("#studioMenu3").html(places_popup_html).slideDown();
-				    layer_view_flag3 = true;
+					$("#studioMenuCastello").html(places_popup_html).slideDown();
+				    castello_layer_view_flag = true;
 					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
 		    castello_click_ev = true;
         }).on('click', 'grant-lots-right' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(layer_view_id1 == e.features[0].id) {
-								if(layer_view_flag1) {
+							if(grant_lots_view_id == e.features[0].id) {
+								if(grant_lots_view_flag) {
 							        $("#studioMenuInfo").slideUp(); 
-									layer_view_flag1 = false;
+									grant_lots_view_flag = false;
 								} else {
 									//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 									buildGrantLotsPopUpInfo(e.features[0].properties);
 							        $("#studioMenuInfo").slideDown();
-								    layer_view_flag1 = true;
+								    grant_lots_view_flag = true;
 								}
 								
 							} else {
 			                    //$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#studioMenuInfo").slideDown();
-								layer_view_flag1 = true;
+								grant_lots_view_flag = true;
 							}
-							layer_view_id1 = e.features[0].id;
+							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
 							buildGrantLotsPopUpInfo(e.features[0].properties);
 							$("#studioMenuInfo").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
-							layer_view_id1 = null;
+							grant_lots_view_id = null;
 					    } 
 						
 						grant_lots_click_ev = true;
 						
+		}).on('click', 'grants1-5sp9tb-right' , function (e) {
+				        
+						if(layer_view_flag) {
+							if(dgrants_layer_view_id == e.features[0].id) {
+								if(dgrants_layer_view_flag) {
+							        $("#studioMenuInfo1").slideUp(); 
+									dgrants_layer_view_flag = false;
+								} else {
+									buildDutchGrantPopUpInfo(e.features[0].properties);
+							        $("#studioMenuInfo1").slideDown();
+								    dgrants_layer_view_flag = true;
+								}
+								
+							} else {
+								buildDutchGrantPopUpInfo(e.features[0].properties);
+							    $("#studioMenuInfo1").slideDown();
+								dgrants_layer_view_flag = true;
+							}
+							dgrants_layer_view_id = e.features[0].id;
+						} else {
+							buildDutchGrantPopUpInfo(e.features[0].properties);
+							$("#studioMenuInfo1").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							dgrants_layer_view_id = null;
+					    } 
+						
+						dutch_grant_click_ev = true;
+						
 		}).on('click', function () {
-			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev) {
+			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
+						/*
 						$("#studioMenuInfo").slideUp(); 
-						layer_view_flag1 = false;
-                        $("#studioMenu2").slideUp();
-			            layer_view_flag2 = false;
-                        $("#studioMenu3").slideUp();
-			            layer_view_flag3 = false;
-
+						grant_lots_view_flag = false;
+                        $("#studioMenuDemo").slideUp();
+			            demo_layer_view_flag = false;
+                        $("#studioMenuCastello").slideUp();
+			            castello_layer_view_flag = false;
+                        */
+						
 			            $('#view-hide-layer-panel').trigger('click');
 					}
 					
 					demo_taxlot_click_ev = false;
 					castello_click_ev = false;
 					grant_lots_click_ev = false;	
+					dutch_grant_click_ev = false;
 		});
 
 	
@@ -434,16 +506,16 @@ afterMap.on("error", function (e) {
 
         /*
         beforeMap.on('click', function () {
-			        if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
+			        if(demo_layer_view_flag) {
+				        $("#studioMenuDemo").slideUp();
+						demo_layer_view_flag = false;
 					}
 		});
 		
 		afterMap.on('click', function () {
-			        if(layer_view_flag2) {
-				        $("#studioMenu2").slideUp();
-						layer_view_flag2 = false;
+			        if(demo_layer_view_flag) {
+				        $("#studioMenuDemo").slideUp();
+						demo_layer_view_flag = false;
 					}
 		});
 		*/
@@ -554,7 +626,7 @@ function changeDate(unixDate) {
 	//console.log(layer_features[0].properties.DATE2);
 	//console.log(layer_features[0].properties);
 	//buildPopUpInfo(layer_features[0].properties);
-	                if(layer_view_flag2) {
+	                if(demo_layer_view_flag) {
 						buildPopUpInfo(layer_features[0].properties);
 					}
 	
@@ -596,8 +668,8 @@ function addGrantLotsBeforeLayers(date) {
                     'fill-opacity': [ 
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
-                            0.5,
-                            0.8
+                            0.8,
+                            0.5
                         ],
 					'fill-outline-color': "#FF0000"
                 },
@@ -820,8 +892,8 @@ function addGrantLotsAfterLayers(date) {
                     'fill-opacity': [ 
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
-                            0.5,
-                            0.8
+                            0.8,
+                            0.5
                         ],
 					'fill-outline-color': "#FF0000"
                 },
@@ -885,13 +957,13 @@ function addGrantLotsAfterLayers(date) {
             //OFF HOVER
 			afterMap.on('mouseleave', 'grant-lots-right', function () {
                 afterMap.getCanvas().style.cursor = '';
-				if (hoveredGrantStateIdRight) {
+				if (hoveredGrantLotIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantStateIdRight},
+                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdRight},
                         { hover: false }
                     );
                 }
-                hoveredGrantStateIdRight = null;		
+                hoveredGrantLotIdRight = null;		
 				if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();
             });
 }
@@ -1109,13 +1181,84 @@ function addBeforeLayers(yr, date) {
 			"source-layer": "grants1-5sp9tb",
 			paint: {
 				"fill-color": "#e3ed58",
-				"fill-opacity": 0.5,
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
 				"fill-outline-color": "#000000"
 
 			},
 
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
+		
+		
+		//CURSOR ON HOVER
+            //ON HOVER
+			beforeMap.on('mouseenter', 'grants1-5sp9tb-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(beforeMap);
+			});
+			
+            beforeMap.on('mousemove', 'grants1-5sp9tb-left', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredDutchGrantIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredDutchGrantIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                 
+                 
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+					
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapDutchGrantPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			beforeMap.on('mouseleave', 'grants1-5sp9tb-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredDutchGrantIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredDutchGrantIdLeft = null;		
+				if(beforeMapDutchGrantPopUp.isOpen()) beforeMapDutchGrantPopUp.remove();
+            });
+			
 
 		//ADD TAX LOT POINTS
 		beforeMap.addLayer({
@@ -1277,13 +1420,84 @@ function addAfterLayers(yr, date) {
 			"source-layer": "grants1-5sp9tb",
 			paint: {
 				"fill-color": "#e3ed58",
-				"fill-opacity": 0.5,
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
 				"fill-outline-color": "#000000"
 
 			},
 
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
+
+
+        //CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'grants1-5sp9tb-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+				afterMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			});
+			
+            afterMap.on('mousemove', 'grants1-5sp9tb-right', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredDutchGrantIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredDutchGrantIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                 
+                 
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+					
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                afterMapDutchGrantPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			afterMap.on('mouseleave', 'grants1-5sp9tb-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredDutchGrantIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredDutchGrantIdRight = null;		
+				if(afterMapDutchGrantPopUp.isOpen()) afterMapDutchGrantPopUp.remove();
+            });
+			
 
 
 		//ADD TAX LOT POINTS
@@ -1619,7 +1833,7 @@ function buildPopUpInfo(props) {
 ;
 
 //console.log(popup_html);
-$("#studioMenu2").html(popup_html);
+$("#studioMenuDemo").html(popup_html);
 
 }
 
@@ -1627,7 +1841,7 @@ $("#studioMenu2").html(popup_html);
 
 function buildGrantLotsPopUpInfo(props) {
 				var popup_html =
-				    "<b>" + props.Lot + "</b> <i>" + props.castello + "</i> " + props.dutchlot +
+				    "<b>" + props.Lot + "</b> - <i>" + props.castello + "</i> - " + props.dutchlot + "<br>" +
 				    "<b>From:</b> <i>" + props.from + "</i><br>" +
 				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
 					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
@@ -1637,5 +1851,19 @@ function buildGrantLotsPopUpInfo(props) {
 				//console.log(props);
     
 	$("#studioMenuInfo").html(popup_html);
+
+}
+
+function buildDutchGrantPopUpInfo(props) {
+				var popup_html =
+				    "<b>Lot:</b> <i>" + props.Lot + "</i><br>" +
+				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
+					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
+					"<b>End:</b> <i>" + props.day2 + " " + props.year2 + "</i><br>" +
+					props.descriptio + "<br><br>"
+				;
+				//console.log(props);
+    
+	$("#studioMenuInfo1").html(popup_html);
 
 }
