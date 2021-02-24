@@ -63,7 +63,7 @@
 						// console.log(urlHash);
 						// hash.onMapMove();
 						
-						if(layer_view_flag2) { 
+						if(demo_layer_view_flag) { 
 						    if(ui.value <= sliderStartDrag){
                                 $(this).slider('value', sliderStartDrag)
                                 return false
@@ -144,11 +144,11 @@
 						//if(afterMap.getLayoutProperty("places-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "places-right", "visibility", "none" );
 							
-						if(layer_view_flag3) { 
+						if(castello_layer_view_flag) { 
 						    // if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 							// if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
-						    $("#studioMenu3").slideUp();
-							layer_view_flag3 = false;
+						    $("#studioMenuCastello").slideUp();
+							castello_layer_view_flag = false;
 						}	
 						
 					}
@@ -167,11 +167,11 @@
 						//if(afterMap.getLayoutProperty("c7_dates-ajsksu-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "c7_dates-ajsksu-right", "visibility", "none" );
 							
-						if(layer_view_flag2) { 
+						if(demo_layer_view_flag) { 
 						    // if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 							// if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
-						    $("#studioMenu2").slideUp();
-							layer_view_flag2 = false;
+						    $("#studioMenuDemo").slideUp();
+							demo_layer_view_flag = false;
 						}
 					}
 				});
@@ -188,6 +188,11 @@
 					        beforeMap.setLayoutProperty( "grants1-5sp9tb-left", "visibility", "none" ); 
 						//if(afterMap.getLayoutProperty("grants1-5sp9tb-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "none" );
+							
+						if(dgrants_layer_view_flag) { 
+							$("#studioMenuInfo1").slideUp(); 
+							dgrants_layer_view_flag = false;
+						}
 					}
 				});
 				
@@ -203,9 +208,9 @@
 						//if(afterMap.getLayoutProperty("grant-lots-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "grant-lots-right", "visibility", "none" );
 							
-						if(layer_view_flag1) { 
+						if(grant_lots_view_flag) { 
 							$("#studioMenuInfo").slideUp(); 
-							layer_view_flag1 = false;
+							grant_lots_view_flag = false;
 						}
 					}
 				});
@@ -482,7 +487,7 @@
 		
 		
 /* Style for Studio Menu */
-/* #studioMenu2 */
+/* #studioMenuDemo */
 #studioMenu {
     position: absolute;
 	display:block;
@@ -543,7 +548,7 @@
 }
 
 #studioMenu { width: 300px; }
-#studioMenu2, #studioMenu3, #studioMenuInfo { width: 280px; /* left: 258px; width: 300px; */ }
+#studioMenuDemo, #studioMenuCastello, #studioMenuInfo, #studioMenuInfo1 { width: 280px; /* left: 258px; width: 300px; */ }
 
 #view-hide-layer-panel {
     position: absolute; 
@@ -723,8 +728,9 @@
 	  
 	  <br>
 	  <div id="studioMenuInfo"></div>
-	  <div id="studioMenu3"></div>
-	  <div id="studioMenu2"></div>
+	  <div id="studioMenuInfo1"></div>
+	  <div id="studioMenuCastello"></div>
+	  <div id="studioMenuDemo"></div>
 	  
 	  
 	</div>
@@ -822,5 +828,3 @@
 	</body>
 
 </html>
-
-
