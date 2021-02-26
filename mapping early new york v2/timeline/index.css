@@ -267,6 +267,77 @@ h1 {
 
 
 
+/* Timeline Ruler */
+.timeline{
+  display: flex;
+  position: relative;
+  border-bottom:2px red solid;
+  padding:10px 0;
+    /* Standard */
+  width: calc(100% - 30px);
+	/* Opera */
+  width: -o-calc(100% - 30px);
+	/* Firefox */
+  width: -moz-calc(100% - 30px);
+	/* WebKit */
+  width: -webkit-calc(100% - 30px);
+}
+.year{
+  width: 20%;
+  text-align:center;
+  position: relative;
+}
+
+.year:before{
+	content:'';
+    display: block;
+    width: 50%;
+    position: absolute;
+    height: 5px;
+    bottom:-10px;
+    left:0px;
+    background: linear-gradient(to right,rgba(0,0,0,0) 90%,red 95%,rgba(0,0,0,0) 100%);
+    /* Standard */
+	background-size: calc(100%/5) calc(100%/5);
+	/* Opera */
+	background-size: -o-calc(100%/5) -o-calc(100%/5);
+	/* Firefox */
+	background-size: -moz-calc(100%/5) -moz-calc(100%/5);
+	/* WebKit */
+	background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
+  }
+.year:after{
+	content:'';
+    display: block;
+    width: 50%;
+    position: absolute;
+    height: 5px;
+    bottom:-10px;
+    right:0px;
+    background: linear-gradient(to right,rgba(0,0,0,0) 90%,red 95%,rgba(0,0,0,0) 100%);
+    /* Standard */
+	background-size: calc(100%/5) calc(100%/5);
+	/* Opera */
+	background-size: -o-calc(100%/5) -o-calc(100%/5);
+	/* Firefox */
+	background-size: -moz-calc(100%/5) -moz-calc(100%/5);
+	/* WebKit */
+	background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
+  }
+ .year>span.timeline-ruler:before{
+	content:'';
+    display: block;
+    width: 50%;
+    position: absolute;
+    height: 10px;
+    bottom:-10px;
+    left:0px;
+    background: linear-gradient(to right,rgba(0,0,0,0) 95%,red 100%,rgba(0,0,0,0) 100%);
+    background-size: 100% 100%;
+  }
+/* Timeline Ruler */
+
+
 
 <style>
     .mapboxgl-popup {
