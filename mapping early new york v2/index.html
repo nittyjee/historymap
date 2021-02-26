@@ -41,8 +41,20 @@
 				var sliderEnd = moment("01/01/1700").unix();
 				
 				//*A (sliderStart + sliderEnd)/2 = -9799671480
-				var sliderMiddle = (sliderStart + sliderEnd)/2;
+				var sliderMiddle =  (sliderStart + sliderEnd)/2;
 				var tooltiPos = -100;
+				
+				var ruler_step = (sliderEnd - sliderStart)/10,
+				    date_ruler1 = sliderStart + ruler_step,
+				    date_ruler2 = sliderStart + ruler_step*3,
+					date_ruler4 = sliderStart + ruler_step*7,
+					date_ruler5 = sliderStart + ruler_step*9;
+					
+				$("#ruler-date1").text(moment.unix(date_ruler1).format('DD MMM YYYY'));
+				$("#ruler-date2").text(moment.unix(date_ruler2).format('DD MMM YYYY'));
+				$("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+				$("#ruler-date4").text(moment.unix(date_ruler4).format('DD MMM YYYY'));
+				$("#ruler-date5").text(moment.unix(date_ruler5).format('DD MMM YYYY'));
 				
 				console.log("start:", sliderStart);
 				console.log("end:", sliderEnd);
@@ -51,7 +63,7 @@
 					min: sliderStart,
 					max: sliderEnd,
 					step: 86400, //24 hrs in unix time, set slider step to 1 day=86400 seconds
-					value: window.name || sliderEnd,
+					value: window.name || sliderMiddle,
 					slide: function (event, ui) {
 						tooltiPos = ((ui.value < sliderMiddle ) ? 30 : -100);
 						/*
@@ -90,7 +102,7 @@
 					              color: "red",
 					              width: "100px",
 					              size: "1"
-				                }).text(moment.unix(sliderEnd).format('MM/DD/YYYY'));
+				                }).text(moment.unix(sliderMiddle).format('MM/DD/YYYY'));
 
 				                      //*A $(event.target).find('.ui-slider-handle').append(tooltip);
 			                        },
@@ -815,7 +827,16 @@
 			<!-- TIMELINE slider DIV -->
 			
 			<div id="slider"></div>
-
+            
+			
+			<!-- TIMELINE ruler DIV -->
+			<div class="timeline">
+			    <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
+                <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
+                <div class="year"><span id="ruler-date3"> ... </span><span class="timeline-ruler"></span></div>
+                <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
+                <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
+            </div>
 		
 		</div>
 	
@@ -828,3 +849,4 @@
 	</body>
 
 </html>
+
