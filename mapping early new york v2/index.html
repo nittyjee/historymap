@@ -118,31 +118,6 @@
 				});
 				
 				
-				//*A 
-				$("#r-btn").click(function () {
-				    if(!$(this).hasClass("active")) {
-					    if($("#l-btn").hasClass("active"))
-					        $("#l-btn").removeClass("active");
-						$(this).addClass("active");
-						
-						$("#basemapmenuLeft").css("display", "none");
-						$("#basemapmenuRight").css("display", "block");
-					}
-				});
-				
-				$("#l-btn").click(function () {
-				    if(!$(this).hasClass("active")) {
-					    if($("#r-btn").hasClass("active"))
-					        $("#r-btn").removeClass("active");
-						$(this).addClass("active");
-						
-						$("#basemapmenuLeft").css("display", "block");
-						$("#basemapmenuRight").css("display", "none");
-					}
-				});
-				
-				
-				
 				$('#castello_points').click(function() {
 				    //console.warn(document.getElementById('castello_points').checked);
                     if( $( this ).prop('checked') ) {
@@ -293,7 +268,7 @@
 						/*top: 61px;*/
 						top:80px;
 						/* bottom: 0; */
-						bottom: 100px;
+						bottom: 67px;
 						width: 100%;
 						/* Standard */
 			            /* width: calc(100% - 230px); */
@@ -462,7 +437,7 @@
 					
 					width:100%;
 					/* height: 35px; */
-					height: 100px;
+					height: 67px;
 					background: #f5f6f7
 					min-width: 100px;
 
@@ -489,14 +464,6 @@
             right: 20px;
         }
 		
-		#basemapmenuLeft {
-		    display: none;
-		}
-		
-		#basemapmenuRight {
-		    display: block;
-		}
-		
 		
 /* Style for Studio Menu */
 /* #studioMenuDemo */
@@ -506,21 +473,21 @@
 	/* top: 80px; */
 	top: 82px;
 	                    /* Standard */
-			            height: calc(100% - 204px);
+			            height: calc(100% - 171px);
 				        /* Opera */
-                        height: -o-calc(100% - 204px);
+                        height: -o-calc(100% - 171px);
 				        /* Firefox */
-				        height: -moz-calc(100% - 204px);
+				        height: -moz-calc(100% - 171px);
 				        /* WebKit */
-                        height: -webkit-calc(100% - 204px);
+                        height: -webkit-calc(100% - 171px);
 	/* Standard */
-	max-height: calc(100% - 204px);
+	max-height: calc(100% - 171px);
 	/* Opera */
-	max-height: -o-calc(100% - 204px);
+	max-height: -o-calc(100% - 171px);
 	/* Firefox */
-	max-height: -moz-calc(100% - 204px);
+	max-height: -moz-calc(100% - 171px);
 	/* WebKit */
-	max-height: -webkit-calc(100% - 204px);
+	max-height: -webkit-calc(100% - 171px);
     overflow: auto;
 	box-shadow: 0 0 10px 2px rgba(31,51,73,.1)!important;
 	background-color: #fff!important;
@@ -653,79 +620,46 @@
 	  <input type="checkbox" id="grant_lots" name="grant_lots">
       <label for="grant_lots"> Grant Lots</label><br>
 
-	  <br><br>
-	  
-      <button id="l-btn" > Left Map </button><button id="r-btn" class="active" > Right Map </button><br><br>
-      <div id='basemapmenuRight'>
+	  <br>
 
-		<!--CASTELLO COLORED (DEFAULT)-->
-		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
-		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
-
-        <br>
-
-		<!--ORIGINAL CASTELLO-->
-		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
-		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
-
-        <br>
-
-		<!--STOKES KEY-->
-		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
-		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
-
-        <br>
-
-		<!--COLORED KEY-->
-		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
-        <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
-        
-        <br>
-
-        <!--DUTCH GRANTS-->
-        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
-        <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
-        <!--//ck7xni5u51kur1iqdokpijm0u-->
-		
-		<br>
-		
-		<!--CURRENT SATELLITE -->
-		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
-		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
-
-		
-	  </div>
-
-		
-		
-      <div id='basemapmenuLeft'>
+      <div>
 
 		<!--CASTELLO COLORED (DEFAULT)-->
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='ltoggle' value='cjowjzrig5pje2rmmnjb5b0y2'>
+		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
+		&nbsp;
 		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
 
         <br>
 
 		<!--ORIGINAL CASTELLO-->
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='ltoggle' value='ck7phs10100951is1p3p4bv9j'>
+		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
+		&nbsp;
 		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
 
         <br>
 
 		<!--STOKES KEY-->
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='ltoggle' value='ck7piltib01881ioc5i8bel7m'>
+		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
+		&nbsp;
 		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
 
         <br>
 
 		<!--COLORED KEY-->
 		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='ltoggle' value='ck7pilmus016r1ilbsbiat6zs'>
+		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
+		&nbsp;
         <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
         
         <br>
 
         <!--DUTCH GRANTS-->
-        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
+		<input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
+        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
+		&nbsp;
         <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
         <!--//ck7xni5u51kur1iqdokpijm0u-->
 		
@@ -733,12 +667,15 @@
 		
 		<!--CURRENT SATELLITE -->
 		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
+		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
+		&nbsp;
 		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
+
 		
 	  </div>
-	  
-	  
+
 	  <br>
+	
 	  <div id="studioMenuInfo"></div>
 	  <div id="studioMenuInfo1"></div>
 	  <div id="studioMenuCastello"></div>
@@ -821,23 +758,22 @@
 	    <!-------------------->
 		<!--ADD FOOTER DIV---->
 		<!-------------------->
-			
 		<div id="footer">
 		
 			<!-- TIMELINE slider DIV -->
+			<div id="slider">
 			
-			<div id="slider"></div>
-            
+			    <!-- TIMELINE ruler DIV -->
+			    <div class="timeline">
+			        <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date3"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
+                </div>
+				
+		    </div>
 			
-			<!-- TIMELINE ruler DIV -->
-			<div class="timeline">
-			    <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
-                <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
-                <div class="year"><span id="ruler-date3"> ... </span><span class="timeline-ruler"></span></div>
-                <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
-                <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
-            </div>
-		
 		</div>
 	
 	
@@ -849,4 +785,3 @@
 	</body>
 
 </html>
-
