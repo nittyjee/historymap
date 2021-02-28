@@ -76,10 +76,12 @@ var map = new mapboxgl.Map({
 
 
 		//RIGHT MENU
-		
+		/*
         var rightLayerList = document.getElementById('basemapmenuRight');
         var rightInputs = rightLayerList.getElementsByTagName('input');
-
+		*/
+        var rightInputs = document.getElementsByName('rtoggle');
+		
         function switchRightLayer(layer) {
             //afterMap.removeLayer('c7_dates-ajsksu');
 			//console.warn(afterMap.getStyle().layers);
@@ -95,10 +97,12 @@ var map = new mapboxgl.Map({
 
 
 		//LEFT MENU
-		
+		/*
         var leftLayerList = document.getElementById('basemapmenuLeft');
         var leftInputs = leftLayerList.getElementsByTagName('input');
-
+        */
+		var leftInputs = document.getElementsByName('ltoggle');
+		
         function switchLeftLayer(layer) {
             //afterMap.removeLayer('c7_dates-ajsksu');
 			//console.warn(afterMap.getStyle().layers);
