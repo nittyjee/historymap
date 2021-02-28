@@ -68,7 +68,7 @@ p {
 #datepanel {
   position: absolute;
   float: right;
-  bottom: 111px;
+  bottom: 80px;
   right: 20px;
   border: solid 1px #ce5c00;
   border-radius: 8px;
@@ -266,21 +266,14 @@ h1 {
 } */
 
 
-
 /* Timeline Ruler */
 .timeline{
   display: flex;
   position: relative;
-  border-bottom:2px red solid;
+  border-bottom:2px darkorange solid;
   padding:10px 0;
-    /* Standard */
-  width: calc(100% - 30px);
-	/* Opera */
-  width: -o-calc(100% - 30px);
-	/* Firefox */
-  width: -moz-calc(100% - 30px);
-	/* WebKit */
-  width: -webkit-calc(100% - 30px);
+  width: 100%;
+  bottom: 5px;
 }
 .year{
   width: 20%;
@@ -296,7 +289,7 @@ h1 {
     height: 5px;
     bottom:-10px;
     left:0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 90%,red 95%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
     /* Standard */
 	background-size: calc(100%/5) calc(100%/5);
 	/* Opera */
@@ -314,7 +307,7 @@ h1 {
     height: 5px;
     bottom:-10px;
     right:0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 90%,red 95%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
     /* Standard */
 	background-size: calc(100%/5) calc(100%/5);
 	/* Opera */
@@ -332,12 +325,10 @@ h1 {
     height: 10px;
     bottom:-10px;
     left:0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 95%,red 100%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right,rgba(0,0,0,0) 95%,darkorange 100%,rgba(0,0,0,0) 100%);
     background-size: 100% 100%;
   }
 /* Timeline Ruler */
-
-
 
 <style>
     .mapboxgl-popup {
