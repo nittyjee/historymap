@@ -232,6 +232,11 @@
 				    $("div#slider").css("opacity", 1);
                                     $("a.ui-slider-handle").css("background", "");
                                 });
+				$("a.ui-slider-handle").mouseover(function(){
+				    $("div.timeline").css("opacity", 0);
+                                }).mouseout(function(){
+				    $("div.timeline").css("opacity", 1);
+                                });
 				
 			});
 		</script>
