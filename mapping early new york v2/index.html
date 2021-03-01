@@ -52,7 +52,7 @@
 					
 				$("#ruler-date1").text(moment.unix(date_ruler1).format('DD MMM YYYY'));
 				$("#ruler-date2").text(moment.unix(date_ruler2).format('DD MMM YYYY'));
-				$("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+				//$("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
 				$("#ruler-date4").text(moment.unix(date_ruler4).format('DD MMM YYYY'));
 				$("#ruler-date5").text(moment.unix(date_ruler5).format('DD MMM YYYY'));
 				
@@ -220,6 +220,15 @@
 				});
 				
 				
+				/* A */
+				$("div#slider").mouseover(function(){
+				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'))
+				});
+				$("div.timeline").mouseover(function(){
+                    $("a.ui-slider-handle").css("background", "red");
+                }).mouseout(function(){
+                    $("a.ui-slider-handle").css("background", "");
+                });
 				
 			});
 		</script>
@@ -767,7 +776,7 @@
 			    <div class="timeline">
 			        <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date3"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date3">&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;</span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
                 </div>
