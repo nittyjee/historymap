@@ -224,11 +224,14 @@
 				$("div#slider").mouseover(function(){
 				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'))
 				});
+				/* change timeline CSS property on mouseover & mouseout */
 				$("div.timeline").mouseover(function(){
-                    $("a.ui-slider-handle").css("background", "red");
-                }).mouseout(function(){
-                    $("a.ui-slider-handle").css("background", "");
-                });
+				    $("div#slider").css("opacity", 0.8);
+                                    $("a.ui-slider-handle").css("background", "red");
+                                }).mouseout(function(){
+				    $("div#slider").css("opacity", 1);
+                                    $("a.ui-slider-handle").css("background", "");
+                                });
 				
 			});
 		</script>
