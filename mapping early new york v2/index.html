@@ -220,10 +220,6 @@
 				});
 				
 				
-				/* A */
-				$("div#slider").mouseover(function(){
-				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'))
-				});
 				/* change timeline CSS property on mouseover & mouseout */
 				$("div.timeline").mouseover(function(){
 				    $("div#slider").css("opacity", 0.8);
@@ -233,9 +229,7 @@
                                     $("a.ui-slider-handle").css("background", "");
                                 });
 				$("a.ui-slider-handle").mouseover(function(){
-				    $("div.timeline").css("opacity", 0);
-                                }).mouseout(function(){
-				    $("div.timeline").css("opacity", 1);
+				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
                                 });
 				
 			});
