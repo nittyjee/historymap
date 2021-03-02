@@ -210,27 +210,29 @@
 				        $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						$(this).animate({'margin-left' : "-312px"},500);
 						layer_view_flag = false;
-						$("#dir-txt").html("&gt;");
+						$("#dir-txt").html("&#9205;");
 					} else {
 					    $("#studioMenu").animate({'margin-left' : "0px"},500);//.slideDown();
 						$(this).animate({'margin-left' : "0px"},500);
 						layer_view_flag = true;
-						$("#dir-txt").html("&lt;");
+						$("#dir-txt").html("&#9204;");
 					}
 				});
 				
-				
+
 				/* change timeline CSS property on mouseover & mouseout */
 				$("div.timeline").mouseover(function(){
-				    $("div#slider").css("opacity", 0.8);
-                                    $("a.ui-slider-handle").css("background", "red");
-                                }).mouseout(function(){
-				    $("div#slider").css("opacity", 1);
-                                    $("a.ui-slider-handle").css("background", "");
-                                });
+				    //$("div#slider").css("opacity", 0.8);
+					$("div.ui-widget-content").css("background-color", "#555555");
+                    $("a.ui-slider-handle").css("background", "red");
+                }).mouseout(function(){
+				    //$("div#slider").css("opacity", 1);
+					$("div.ui-widget-content").css("background-color", "#000000");
+                    $("a.ui-slider-handle").css("background", "");
+                });
 				$("a.ui-slider-handle").mouseover(function(){
 				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
-                                });
+                });
 				
 			});
 		</script>
@@ -548,9 +550,10 @@
 	float: rigth; 
 	*/
 	top: 88px;
-	left: 311px;
+	left: 312px;
 	z-index: 1000; 
 	cursor: pointer;
+	border: solid sliver;
 }
 
 
@@ -603,7 +606,7 @@
     <!--ADD LAYERS TOGGLE -->
 	<!---------------------->
 	
-	<button id="view-hide-layer-panel" ><br> <span id="dir-txt" >&lt;</span> <br><br></button>
+	<button id="view-hide-layer-panel" ><br> <span id="dir-txt" >&#9204;</span> <br><br></button>
 	
 	
 	
@@ -625,11 +628,11 @@
 	  
 	  <!-- Circle -->
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
-      <label for="circle_point"> Demo Castello Taxlot: C7</label><br>
+      <label for="circle_point"> Demo Taxlot: C7</label><br>
 	  
 	   <!-- Grants Layers -->
 	  <input type="checkbox" id="grant_lots" name="grant_lots">
-      <label for="grant_lots"> Demo Dutch Grant Lot: C7</label><br>
+      <label for="grant_lots"> Grant Lots</label><br>
 
 	  <br>
 
