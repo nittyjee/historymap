@@ -24,15 +24,36 @@
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
 		<link href='timeline/index.css' rel='stylesheet' />
 
+        <!-- Load Awesome Icons 4.7.0 -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 		<!-- TIMELINE FUNCTIONALITY -->
 
 		<script>
 		
 		    var layer_view_flag = true;
+			var timeline_pointer_flag = true;
+			var windoWidth = 0;
 			
 			$(document).ready(function () {
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
-
+                
+				windoWidth = $(window).width();
+				//console.log(windoWidth);
+				if(windoWidth <= 555) {
+				    if(layer_view_flag) {
+				        $("#studioMenu").css({'margin-left' : "-111%"});//.slideUp();
+						$("#view-hide-layer-panel").css({'margin-left' : "-312px"});
+						$("#mobi-hide-sidebar").css({'margin-left' : "-111%"});
+						layer_view_flag = false;
+						$("#dir-txt").html("&#9205;");
+					}
+			    }
+                
+				$(window).resize(function(){
+				    windoWidth = $(window).width();
+				});
+				
 				// console.log(window.name);
 				var sliderStartDrag = moment("06/02/1643").unix();
 				var sliderStart = moment("01/01/1626").unix();
@@ -53,6 +74,8 @@
 				$("#ruler-date1").text(moment.unix(date_ruler1).format('DD MMM YYYY'));
 				$("#ruler-date2").text(moment.unix(date_ruler2).format('DD MMM YYYY'));
 				//$("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+				$("#ruler-date3").html("&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;");
+				$("#mobi-year").html("&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;");
 				$("#ruler-date4").text(moment.unix(date_ruler4).format('DD MMM YYYY'));
 				$("#ruler-date5").text(moment.unix(date_ruler5).format('DD MMM YYYY'));
 				
@@ -74,14 +97,23 @@
 						urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
 						// hash.onMapMove();
+						if(timeline_pointer_flag) {
+						    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+					        $("#mobi-year").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+						    timeline_pointer_flag = false;
+						}
 						
 						if(demo_layer_view_flag) { 
 						    if(ui.value <= sliderStartDrag){
-                                $(this).slider('value', sliderStartDrag)
+                                $(this).slider('value', sliderStartDrag);
+								changeDate(sliderStartDrag);
+								$("#date").text(moment.unix(sliderStartDrag).format('DD MMM YYYY'));
                                 return false
                             }
                             if(ui.value >= sliderEndDrag){
-                                $(this).slider('value', sliderEndDrag)
+                                $(this).slider('value', sliderEndDrag);
+								changeDate(sliderEndDrag);
+								$("#date").text(moment.unix(sliderEndDrag).format('DD MMM YYYY'));
                                 return false
                             }
 							if ((ui.value <= sliderEndDrag) && (ui.value >= sliderStartDrag)) {
@@ -209,16 +241,37 @@
 				    if(layer_view_flag) {
 				        $("#studioMenu").animate({'margin-left' : "-312px"},500);//.slideUp();
 						$(this).animate({'margin-left' : "-312px"},500);
+						$('#mobi-hide-sidebar').animate({'margin-left' : "-312px"},500);
 						layer_view_flag = false;
 						$("#dir-txt").html("&#9205;");
 					} else {
 					    $("#studioMenu").animate({'margin-left' : "0px"},500);//.slideDown();
 						$(this).animate({'margin-left' : "0px"},500);
+						$('#mobi-hide-sidebar').animate({'margin-left' : "0px"},500);
 						layer_view_flag = true;
 						$("#dir-txt").html("&#9204;");
 					}
 				});
 				
+				$('#mobi-view-sidebar').click(function() {
+				    if(!layer_view_flag) {
+				        $("#studioMenu").animate({'margin-left' : "0px"},500);//.slideDown();
+						$("#view-hide-layer-panel").animate({'margin-left' : "0px"},500);
+						$("#mobi-hide-sidebar").animate({'margin-left' : "0px"},500);
+						layer_view_flag = true;
+						$("#dir-txt").html("&#9204;");
+					}
+				});
+				
+				$('#mobi-hide-sidebar').click(function() {
+				    if(layer_view_flag) {
+				        $("#studioMenu").animate({'margin-left' : "-111%"},500);//.slideUp();
+						$("#view-hide-layer-panel").animate({'margin-left' : "-312px"},500);
+						$(this).animate({'margin-left' : "-111%"},500);
+						layer_view_flag = false;
+						$("#dir-txt").html("&#9205;");
+					}
+				});
 
 				/* change timeline CSS property on mouseover & mouseout */
 				$("div.timeline").mouseover(function(){
@@ -230,9 +283,13 @@
 					$("div.ui-widget-content").css("background-color", "#000000");
                     $("a.ui-slider-handle").css("background", "");
                 });
+				
+				/*
 				$("a.ui-slider-handle").mouseover(function(){
 				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+					$("#mobi-year").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
                 });
+				*/
 				
 			});
 		</script>
@@ -400,7 +457,7 @@
 
 					margin-left: 10px;
 					font-family: 'Consolas';
-
+                    margin-bottom: 21px;
 
 				}
 
@@ -506,7 +563,7 @@
 	background-color: #fff!important;
 	padding: 10px 2px 10px 10px;
 	/* border-top: 2px solid #b0691d; */
-	z-index: 1;
+	z-index: 100;
 }
 
 
@@ -562,6 +619,67 @@
 .mapboxgl-popup-close-button { display: none; }
 */
 
+i#mobi-hide-sidebar { 
+    color: blue;
+	position: absolute;
+    margin-top: -11px;	
+}
+
+i#mobi-hide-sidebar:hover { 
+    color: darkblue;
+}
+
+div#mobi-view-sidebar { 
+    color: #000;
+	position: absolute;
+    float: right;
+    bottom: 150px;
+    right: 20px;
+	height: 70px;
+    width: 70px;
+	text-align: center;
+    background-color: #fff;
+    border-radius: 50%;
+	border: 2px solid #000;
+}
+
+div#mobi-view-sidebar:hover { 
+    background-color: #ccc;
+}
+
+div#mobi-view-sidebar>i {
+   margin-top: 11px;
+}
+
+
+/* adaptive | responsive  design */
+div#mobi-year {
+    display: none;
+	width: 100%;
+	text-align: center;
+}
+
+@media (max-width: 1000px) {
+    span#ruler-date1, span#ruler-date2, span#ruler-date3, span#ruler-date4, span#ruler-date5 {
+	    display: none;
+	}
+
+    div#mobi-year {
+	    margin-top: 5px;
+	    margin-bottom: -5px;
+        display: block;
+	}
+}
+
+@media (max-width: 555px) {
+    #studioMenu { width: 100%; }
+	#view-hide-layer-panel { display: none; }
+}
+
+@media (min-width: 555px) {
+    #mobi-hide-sidebar, #mobi-view-sidebar { display: none; }
+}
+
 	</style>
 	
 		
@@ -611,6 +729,10 @@
 	
 	
     <div id="studioMenu">
+	  
+	  <i id="mobi-hide-sidebar"  class="fa fa-arrow-circle-left fa-3x"></i>
+	
+
       <p class="title">
         LAYERS
       </p>
@@ -722,6 +844,7 @@
         <!--
 		<div id="styleSwitcher"></div>
 		-->
+		<div id="mobi-view-sidebar" ><i  class="fa fa-bars fa-3x"></i></div>
 
 		<!-- TIMELINE PANEL DIV -->
 		<div id='datepanel'><b><span id="date"></span></b></div>
@@ -776,12 +899,15 @@
 		
 			<!-- TIMELINE slider DIV -->
 			<div id="slider">
-			
+			 
+			    <!-- TIMELINE mobile info -->
+			    <div id="mobi-year"> ... </div>
+				
 			    <!-- TIMELINE ruler DIV -->
 			    <div class="timeline">
 			        <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date3">&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;</span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span id="ruler-date3"> ... </span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
                     <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
                 </div>
