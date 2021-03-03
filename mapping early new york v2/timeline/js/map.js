@@ -355,8 +355,10 @@ beforeMap.on("load", function () {
                         $("#studioMenuCastello").slideUp();
 			            castello_layer_view_flag = false;
 						*/
-
-			            $('#view-hide-layer-panel').trigger('click');
+						
+						//*A
+                        if(windoWidth > 555)
+			                $('#view-hide-layer-panel').trigger('click');
 					}
 					
 					demo_taxlot_click_ev = false;
@@ -388,6 +390,7 @@ afterMap.on("load", function () {
 			        if(demo_layer_view_flag) {
 				        $("#studioMenuDemo").slideUp();
 						demo_layer_view_flag = false;
+						//if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 					} else {
 						
 						buildPopUpInfo(e.features[0].properties);
@@ -400,6 +403,7 @@ afterMap.on("load", function () {
 			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
 				        $("#studioMenuCastello").slideUp();
 						castello_layer_view_flag = false;
+						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 		    } else {
 				    clickedStateId = e.features[0].id;
 				
@@ -421,7 +425,8 @@ afterMap.on("load", function () {
 						if(layer_view_flag) {
 							if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
-							        $("#studioMenuInfo").slideUp(); 
+							        $("#studioMenuInfo").slideUp();
+                                    //if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();						
 									grant_lots_view_flag = false;
 								} else {
 									//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
@@ -454,6 +459,7 @@ afterMap.on("load", function () {
 								if(dgrants_layer_view_flag) {
 							        $("#studioMenuInfo1").slideUp(); 
 									dgrants_layer_view_flag = false;
+									//if(afterMapDutchGrantPopUp.isOpen()) afterMapDutchGrantPopUp.remove();
 								} else {
 									buildDutchGrantPopUpInfo(e.features[0].properties);
 							        $("#studioMenuInfo1").slideDown();
@@ -486,7 +492,9 @@ afterMap.on("load", function () {
 			            castello_layer_view_flag = false;
                         */
 						
-			            $('#view-hide-layer-panel').trigger('click');
+			            //*A 
+						if(windoWidth > 555)
+						    $('#view-hide-layer-panel').trigger('click');
 					}
 					
 					demo_taxlot_click_ev = false;
