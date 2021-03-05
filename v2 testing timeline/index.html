@@ -29,6 +29,7 @@
 		<script>
 		
 		    var layer_view_flag = true;
+			var timeline_pointer_flag = true;
 			
 			$(document).ready(function () {
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
@@ -74,14 +75,26 @@
 						urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
 						// hash.onMapMove();
-						
+						if(timeline_pointer_flag) {
+					      if($("#ruler-date3").hasClass("ruler-date-init")) {
+						    $("#ruler-date3").removeClass("ruler-date-init");
+							$("#ruler-date3").addClass("ruler-date");
+						  }
+				          $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+						  timeline_pointer_flag = false;
+					    }
+					
 						if(demo_layer_view_flag) { 
 						    if(ui.value <= sliderStartDrag){
-                                $(this).slider('value', sliderStartDrag)
+                                $(this).slider('value', sliderStartDrag);
+								changeDate(sliderStartDrag);
+								$("#date").text(moment.unix(sliderStartDrag).format('DD MMM YYYY'));
                                 return false
                             }
                             if(ui.value >= sliderEndDrag){
-                                $(this).slider('value', sliderEndDrag)
+                                $(this).slider('value', sliderEndDrag);
+								changeDate(sliderEndDrag);
+								$("#date").text(moment.unix(sliderEndDrag).format('DD MMM YYYY'));
                                 return false
                             }
 							if ((ui.value <= sliderEndDrag) && (ui.value >= sliderStartDrag)) {
@@ -227,9 +240,6 @@
                                 }).mouseout(function(){
 				    $("div#slider").css("opacity", 1);
                                     $("a.ui-slider-handle").css("background", "");
-                                });
-				$("a.ui-slider-handle").mouseover(function(){
-				    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
                                 });
 				
 			});
@@ -559,6 +569,20 @@
 .mapboxgl-popup-close-button { display: none; }
 */
 
+.ruler-date {
+    position: absolute;
+    bottom: 13px;
+	width: 100px;
+    text-align: left;
+}
+
+.ruler-date-init {
+     position: absolute;
+     bottom: 13px;
+	 width: 200px;
+	 margin-left: -102px;  
+}
+
 	</style>
 	
 		
@@ -776,11 +800,11 @@
 			
 			    <!-- TIMELINE ruler DIV -->
 			    <div class="timeline">
-			        <div class="year"><span id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date3">&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;</span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
-                    <div class="year"><span id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
+			        <div class="year"><span class="ruler-date" id="ruler-date1"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span class="ruler-date" id="ruler-date2"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span class="ruler-date-init" id="ruler-date3">&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;</span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span class="ruler-date" id="ruler-date4"> ... </span><span class="timeline-ruler"></span></div>
+                    <div class="year"><span class="ruler-date" id="ruler-date5"> ... </span><span class="timeline-ruler"></span></div>
                 </div>
 				
 		    </div>
