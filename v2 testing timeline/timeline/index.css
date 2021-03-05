@@ -271,7 +271,7 @@ h1 {
   display: flex;
   position: relative;
   border-bottom:2px darkorange solid;
-  padding:10px 0;
+  padding:20px 0;
   width: 100%;
   bottom: -15px;
 }
@@ -288,7 +288,7 @@ h1 {
     width: 50%;
     position: absolute;
     height: 30px;
-    bottom:-10px;
+    bottom:-20px;
     left:0px;
     background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
     /* Standard */
@@ -306,7 +306,7 @@ h1 {
     width: 50%;
     position: absolute;
     height: 30px;
-    bottom:-10px;
+    bottom:-20px;
     right:0px;
     background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
     /* Standard */
@@ -324,7 +324,7 @@ h1 {
     width: 50%;
     position: absolute;
     height: 57px;
-    bottom:-10px;
+    bottom:-20px;
     left:0px;
     background: linear-gradient(to right,rgba(0,0,0,0) 95%,darkorange 100%,rgba(0,0,0,0) 100%);
     background-size: 100% 100%;
