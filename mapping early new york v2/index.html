@@ -31,6 +31,10 @@
     <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icon_192x192.png">
     <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icon_512x512.png">
 		
+		
+		<link rel="shortcut icon" href="./icons/icon_32x32.ico"  type="image/x-icon" />
+        <link rel="icon" href="./icons/icon_32x32.ico"  type="image/x-icon" />
+		
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,600italic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="timeline/vendor/jquery-ui-1.10.3.custom/css/ui-darkness/jquery-ui-1.10.3.custom.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -94,13 +98,13 @@
 					date_ruler4 = sliderStart + ruler_step*7,
 					date_ruler5 = sliderStart + ruler_step*9;
 					
-				$("#ruler-date1").text(moment.unix(date_ruler1).format('DD MMM YYYY'));
-				$("#ruler-date2").text(moment.unix(date_ruler2).format('DD MMM YYYY'));
+				$("#ruler-date1").text(moment.unix(date_ruler1).format('YYYY')); // .format('DD MMM YYYY')
+				$("#ruler-date2").text(moment.unix(date_ruler2).format('YYYY')); // .format('DD MMM YYYY')
 				//$("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
 				$("#ruler-date3").html("&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;");
 				$("#mobi-year").html("&nbsp; &#8678; &nbsp; TIME &nbsp; &nbsp; &nbsp; &nbsp; SLIDE &nbsp; &#8680;");
-				$("#ruler-date4").text(moment.unix(date_ruler4).format('DD MMM YYYY'));
-				$("#ruler-date5").text(moment.unix(date_ruler5).format('DD MMM YYYY'));
+				$("#ruler-date4").text(moment.unix(date_ruler4).format('YYYY')); // .format('DD MMM YYYY')
+				$("#ruler-date5").text(moment.unix(date_ruler5).format('YYYY')); // .format('DD MMM YYYY')
 				
 				console.log("start:", sliderStart);
 				console.log("end:", sliderEnd);
@@ -121,8 +125,14 @@
 						// console.log(urlHash);
 						// hash.onMapMove();
 						if(timeline_pointer_flag) {
-						    $("#ruler-date3").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
-					        $("#mobi-year").text(moment.unix(sliderMiddle).format('DD MMM YYYY'));
+						    $("#ruler-date3").text(moment.unix(sliderMiddle).format('YYYY')); // .format('DD MMM YYYY')
+					        //$("#mobi-year").text(moment.unix(sliderMiddle).format('YYYY'));  // .format('DD MMM YYYY')
+							$("#mobi-year").css("display", "none");
+							$("#ruler-date1").css("display", "block");
+							$("#ruler-date2").css("display", "block");
+							$("#ruler-date3").css("display", "block");
+							$("#ruler-date4").css("display", "block");
+							$("#ruler-date5").css("display", "block");
 						    timeline_pointer_flag = false;
 						}
 						
@@ -429,7 +439,7 @@
 			
 			<style>
 				
-				.header a {
+				.header a, .header label {
 				  float: left;
 				  color: black;
 				  text-align: center;
@@ -447,7 +457,7 @@
 	
 	
 	
-				.header a:hover {
+				.header a:hover, .header label:hover {
 				  background-color: #ddd;
 				  color: black;
 				}
@@ -631,7 +641,7 @@
 	*/
 	top: 88px;
 	left: 312px;
-	z-index: 1000; 
+	z-index: 500; 
 	cursor: pointer;
 	border: solid sliver;
 }
@@ -681,17 +691,19 @@ div#mobi-year {
 	width: 100%;
 	text-align: center;
 }
+    
 
 @media (max-width: 1000px) {
     span#ruler-date1, span#ruler-date2, span#ruler-date3, span#ruler-date4, span#ruler-date5 {
 	    display: none;
 	}
-
+	
     div#mobi-year {
 	    margin-top: 5px;
 	    margin-bottom: -5px;
         display: block;
 	}
+
 }
 
 @media (max-width: 555px) {
@@ -705,7 +717,61 @@ div#mobi-year {
 
 	</style>
 	
-		
+<!-------------------->
+<!---ADD MODAL DIV---->
+<!-------------------->
+	
+<input class="checker" type="checkbox" id="o" hidden>
+<div class="modal">
+  
+  <div class="modal-body">
+   <div class="modal-header">
+   <h1>ABOUT</h1><label for="o" id="close" title="Close">&times;</label>
+    </div>
+    <div class="modal-content">
+            New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>,
+			 the capital of New Netherland. The New Amsterdam History Center
+			 is devoted to documenting and mapping New Amsterdam, its
+			 diverse people, landscapes, institutions and global legacy today.
+			<p>
+			We’ve presented several versions of the <i>Castello Plan</i> and the 
+			 <i>Dutch Grants Map</i> here.
+			 You can see the settlement of houses, farms,
+			 taverns and workshops, surrounded by walls. Over the three
+			 centuries that followed, the area became the Financial District.
+			 The east wall was torn down and named Wall Street. The canals
+			 were paved over and turned into streets and in between developed
+			 skysrapers, and the island was expanded with infill.
+			 Above ground, almost nothing remains of New Amsterdam except the 
+			 original street pattern.  Underground, archeologists have found 
+			 evidence of the plots of houses and gardens, Amsterdam yellow 
+			 brick, and pollen samples of plants.
+			<p>
+			You can swipe the map to compare the Castello Plan in 1660
+			 to the present,
+			 and explore each lot, where it shows what was there and who lived
+			 there. Our next steps are to expand through the full history
+			 of New Amsterdam with a timeline from 1624 to 1664, when it
+			 was taken over
+			 by the English.
+			<p>
+			We need your help to make this work happen. Donate now to
+			 develop the map and expand the research.
+			<p>
+	</div>
+  
+    <div class="modal-footer">
+	  <!--
+      <label for="o">close</label>
+	  -->
+	        <b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
+			<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
+				<i>MAPPING EARLY NEW YORK</i>, PHASE 1 AND 2 are made possible by a grant from the SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES.</p>
+    </div>
+   
+  </div>
+</div>
+
 		
 			<!-------------------->
 			<!--ADD HEADER DIV---->
@@ -736,7 +802,10 @@ div#mobi-year {
 					<a class="active" href="#home">Timeline (BETA)</a>
 					-->
 					<a class="encyclopedia" href="https://nahc-mapping.org/mappingNY/encyclopedia/" target="_blank">Encyclopedia <img class="img2" height="18" src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
+					<!--
 					<a href="about.html">About</a>
+					-->
+					<label for="o" id="about" title="Open">ABOUT</label>
 				</div>
 	
 			</div>
