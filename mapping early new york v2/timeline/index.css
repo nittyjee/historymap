@@ -76,7 +76,7 @@ p {
   padding: 5px 20px 5px 0px;
   font-size: 21px;
   color: #eeeeec;
-  z-index: 10000;
+  z-index: 500;
   word-spacing: 5px;
   min-width: 210px;
   text-align: right;
@@ -329,6 +329,72 @@ h1 {
     background-size: 100% 100%;
   }
 /* Timeline Ruler */
+
+
+
+/* Modal PopUp */
+    /*
+    label {
+      display: inline-block;
+      color: #fff;
+      background-color: #3c8dbc;
+      border-color: #367fa9;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    }
+	label#about {
+		font-size: 13px;
+		padding: 8px 13px;
+	}
+	*/
+	label#about, label#close { cursor: pointer; }
+	label#close {
+		font-size: 21px;
+		border-radius: 4px;
+		border: solid black;
+		font-weight: bold;
+		padding: 3px 11px 3px 11px;
+		float: right;
+	}
+    label#close:hover {/*opacity: 0.5;*/ background-color: #eee; border: solid silver; color: silver; }
+    label#close:active {background-color: #ccc;}
+    .checker:checked + .modal {
+      display: flex;
+    }
+    .modal {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      /*text-align: center;*/
+      background-color: rgba(0,0,0,.4);
+	  z-index: 1000;
+    }
+    .modal-body {
+      width: calc(100% - 100px);
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 15px;
+	  opacity: 0.9;
+    }
+    .modal-content {
+      margin-top: 5px;
+      padding: 15px;
+      height: 238px;
+      overflow-y: auto;
+    }
+    .modal-footer, .modal-header {
+      overflow: hidden;
+      text-align: left;
+    }
+	.modal-header > h1 {display: inline;}
+/* Modal PopUp */
+
 
 <style>
     .mapboxgl-popup {
