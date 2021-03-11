@@ -199,7 +199,7 @@
 						if(castello_layer_view_flag) { 
 						    // if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 							// if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
-						    $("#studioMenuCastello").slideUp();
+						    $("#infoLayerCastello").slideUp();
 							castello_layer_view_flag = false;
 						}	
 						
@@ -222,7 +222,7 @@
 						if(demo_layer_view_flag) { 
 						    // if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 							// if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
-						    $("#studioMenuDemo").slideUp();
+						    $("#demoLayerInfo").slideUp();
 							demo_layer_view_flag = false;
 						}
 					}
@@ -242,7 +242,7 @@
 					        afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "none" );
 							
 						if(dgrants_layer_view_flag) { 
-							$("#studioMenuInfo1").slideUp(); 
+							$("#infoLayerDutchGrants").slideUp(); 
 							dgrants_layer_view_flag = false;
 						}
 					}
@@ -261,7 +261,7 @@
 					        afterMap.setLayoutProperty( "grant-lots-right", "visibility", "none" );
 							
 						if(grant_lots_view_flag) { 
-							$("#studioMenuInfo").slideUp(); 
+							$("#infoLayerGrantLots").slideUp(); 
 							grant_lots_view_flag = false;
 						}
 					}
@@ -493,6 +493,20 @@
                     margin-bottom: 21px;
 
 				}
+				
+				#small_header_text {
+					display: inline-block;
+					margin-top: 11px;
+	                width: 100%;
+					text-shadow: #717c9b 0px 1px 3px;
+					text-align: center;
+					font-size: 15pt;
+					repeat-x 50% 0;
+
+					margin-left: 10px;
+					font-family: 'Consolas';
+
+				}
 
 				.header a.encyclopedia {
 				background-color: #e8e1da;
@@ -569,7 +583,7 @@
 		
 		
 /* Style for Studio Menu */
-/* #studioMenuDemo */
+/* #demoLayerInfo */
 #studioMenu {
     position: absolute;
 	display:block;
@@ -630,7 +644,50 @@
 }
 
 #studioMenu { width: 300px; }
-#studioMenuDemo, #studioMenuCastello, #studioMenuInfo, #studioMenuInfo1 { width: 280px; /* left: 258px; width: 300px; */ }
+#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants { 
+    padding: 5px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+    width: 270px; /* left: 258px; width: 300px; */ 
+  /* dont break out a link */
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  /* word-break: break-all; */
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+#demoLayerInfo, .demoLayerInfoPopUp { 
+    background-color: rgb(50, 205, 50, 0.3); /* #32CD32 LimeGreen */
+    border: solid #32CD32 2px;
+} 
+#infoLayerCastello, .infoLayerCastelloPopUp { 
+    background-color: rgb(255, 192, 203, 0.3);  /* #FFC0CB Pink */
+    border: solid pink 2px;
+} 
+#infoLayerGrantLots, .infoLayerGrantLotsPopUp { 
+    background-color: rgb(102, 205, 170, 0.3); /* #66CDAA MediumAquamarine */
+    border: solid #66CDAA 2px;
+}
+#infoLayerDutchGrants, .infoLayerDutchGrantsPopUp { 
+    background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
+    border: solid #FFFF00 2px;
+}
+
+.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp {
+    padding-left: 5px;
+	padding-right: 5px;
+}
 
 #view-hide-layer-panel {
     position: absolute; 
@@ -691,7 +748,12 @@ div#mobi-year {
 	width: 100%;
 	text-align: center;
 }
-    
+   
+img#logo-img {   
+    padding: 6px 0px 0px 30px; 
+    float: left;
+	height: 70px;
+}
 
 @media (max-width: 1000px) {
     span#ruler-date1, span#ruler-date2, span#ruler-date3, span#ruler-date4, span#ruler-date5 {
@@ -709,10 +771,48 @@ div#mobi-year {
 @media (max-width: 555px) {
     #studioMenu { width: 100%; }
 	#view-hide-layer-panel { display: none; }
+	
+
+	
+	.header a, .header label {
+				  color: black;
+				  text-align: center;
+				  padding: 3px;
+				  text-decoration: none;
+				  font-size: 13px; 
+				  line-height: 15px;
+				  border-radius: 3px;
+				  border: solid black;
+				  font-weight: bold;
+				  margin-top: 3px;
+					margin: 3px;
+				}
+				
+	img.img2 { display: none; }
+	
+}
+
+@media (max-width: 438px) {
+	img#logo-img {  
+	    height: 34px;
+	}
+	
+	.header-right {
+	    margin-top: 5px;
+	}
 }
 
 @media (min-width: 555px) {
     #mobi-hide-sidebar, #mobi-view-sidebar { display: none; }
+}
+
+@media (max-width: 930px) {
+    .headerText { display: none; }
+	
+	.header-right {
+				margin-left: 5px;
+				margin-right: 5px;
+				}
 }
 
 	</style>
@@ -780,9 +880,9 @@ div#mobi-year {
 			<div class="header">
 			
 				<a href="http://newamsterdamhistorycenter.org" class="logo">
-					<img style="padding: 6px 0px 0px 30px; float: left;"
+					<img id="logo-img"
 						src="http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png"
-						height="70" align="middle">
+						align="middle">
 				</a>
 
 			<!--PREVIOUS HEADER-->
@@ -807,7 +907,11 @@ div#mobi-year {
 					-->
 					<label for="o" id="about" title="Open">ABOUT</label>
 				</div>
-	
+	            
+				<div id="small_header_text">
+				  Mapping Early New York
+				</div>
+				
 			</div>
 
 
@@ -904,10 +1008,10 @@ div#mobi-year {
 
 	  <br>
 	
-	  <div id="studioMenuInfo"></div>
-	  <div id="studioMenuInfo1"></div>
-	  <div id="studioMenuCastello"></div>
-	  <div id="studioMenuDemo"></div>
+	  <div id="infoLayerGrantLots"></div>
+	  <div id="infoLayerDutchGrants"></div>
+	  <div id="infoLayerCastello"></div>
+	  <div id="demoLayerInfo"></div>
 	  
 	  
 	</div>
