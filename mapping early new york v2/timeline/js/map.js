@@ -5,10 +5,10 @@ var grant_lots_view_id = null,
     castello_layer_view_flag = false,
 	dgrants_layer_view_flag = false;
 	
-$("#studioMenuInfo").slideUp();
-$("#studioMenuInfo1").slideUp();
-$("#studioMenuDemo").slideUp();
-$("#studioMenuCastello").slideUp();
+$("#infoLayerGrantLots").slideUp();
+$("#infoLayerDutchGrants").slideUp();
+$("#demoLayerInfo").slideUp();
+$("#infoLayerCastello").slideUp();
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -181,7 +181,7 @@ afterMapPopUp.on('close', function(e) {
     if(beforeMapPopUp.isOpen()) {
 		beforeMapPopUp.remove();
 		if(demo_layer_view_flag) {
-		    $("#studioMenuDemo").slideUp();
+		    $("#demoLayerInfo").slideUp();
 		    demo_layer_view_flag = false;
 		}
 	}
@@ -191,7 +191,7 @@ beforeMapPopUp.on('close', function(e) {
     if(afterMapPopUp.isOpen()) {
 		afterMapPopUp.remove();
 		if(demo_layer_view_flag) {
-		    $("#studioMenuDemo").slideUp();
+		    $("#demoLayerInfo").slideUp();
 		    demo_layer_view_flag = false;
 		}
     }
@@ -201,7 +201,7 @@ afterMapPlacesPopUp.on('close', function(e) {
     if(beforeMapPlacesPopUp.isOpen()) {
 		beforeMapPlacesPopUp.remove();
 		if(castello_layer_view_flag) {
-		    $("#studioMenuCastello").slideUp();
+		    $("#infoLayerCastello").slideUp();
 		    castello_layer_view_flag = false;
 		}
 	}
@@ -211,7 +211,7 @@ beforeMapPlacesPopUp.on('close', function(e) {
     if(afterMapPlacesPopUp.isOpen()) {
 		afterMapPlacesPopUp.remove();
 		if(castello_layer_view_flag) {
-		    $("#studioMenuCastello").slideUp();
+		    $("#infoLayerCastello").slideUp();
 		    castello_layer_view_flag = false;
 		}
     }
@@ -232,11 +232,11 @@ beforeMap.on("load", function () {
 	/*
 	beforeMap.on('click', function () {
 		if(demo_layer_view_flag) { 
-            $("#studioMenuDemo").slideUp();
+            $("#demoLayerInfo").slideUp();
 			demo_layer_view_flag = false;
 		}
 		if(castello_layer_view_flag) { 
-            $("#studioMenuCastello").slideUp();
+            $("#infoLayerCastello").slideUp();
 			castello_layer_view_flag = false;
 		}
 		if(layer_view_flag) {
@@ -251,13 +251,13 @@ beforeMap.on("load", function () {
 		// CLICK AND OPEN POPUP
 		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
 		            if(demo_layer_view_flag) {
-				        $("#studioMenuDemo").slideUp();
+				        $("#demoLayerInfo").slideUp();
 						demo_layer_view_flag = false;
 					} else {
 						
 						
 						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenuDemo").slideDown();
+					    $("#demoLayerInfo").slideDown();
 						demo_layer_view_flag = true;
 						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
@@ -265,13 +265,14 @@ beforeMap.on("load", function () {
 	                demo_taxlot_click_ev = true;
 		}).on('click', 'places-left', function (e) {
 			if(castello_layer_view_flag  && (clickedStateId == e.features[0].id) ) {
-				        $("#studioMenuCastello").slideUp();
+				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 		    } else {
 				   clickedStateId = e.features[0].id;
 				
 				
-					places_popup_html = e.features[0].properties.LOT2 +
+					places_popup_html = "<h3>Castello Taxlot</h3><hr>" +
+					    "<b>" + e.features[0].properties.LOT2 + "</b>" +
                         ": " +
                         e.features[0].properties.tax_lots_1 +
                         "<br>" +
@@ -279,7 +280,7 @@ beforeMap.on("load", function () {
                         "<br>" +
                         '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
-					$("#studioMenuCastello").html(places_popup_html).slideDown();
+					$("#infoLayerCastello").html(places_popup_html).slideDown();
 				    castello_layer_view_flag = true;
 					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
@@ -290,26 +291,26 @@ beforeMap.on("load", function () {
 						if(layer_view_flag) {
 							if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
-							        $("#studioMenuInfo").slideUp(); 
+							        $("#infoLayerGrantLots").slideUp(); 
 									grant_lots_view_flag = false;
 								} else {
-									//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+									//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 									buildGrantLotsPopUpInfo(e.features[0].properties);
-							        $("#studioMenuInfo").slideDown();
+							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
 								
 							} else {
-			                    //$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
-							    $("#studioMenuInfo").slideDown();
+							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
 							grant_lots_view_id = e.features[0].id;
 						} else {
-							//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 							buildGrantLotsPopUpInfo(e.features[0].properties);
-							$("#studioMenuInfo").slideDown();
+							$("#infoLayerGrantLots").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
 							grant_lots_view_id = null;
 					    } 
@@ -321,23 +322,23 @@ beforeMap.on("load", function () {
 						if(layer_view_flag) {
 							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
-							        $("#studioMenuInfo1").slideUp(); 
+							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
 								} else {
 									buildDutchGrantPopUpInfo(e.features[0].properties);
-							        $("#studioMenuInfo1").slideDown();
+							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
 								
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
-							    $("#studioMenuInfo1").slideDown();
+							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
-							$("#studioMenuInfo1").slideDown();
+							$("#infoLayerDutchGrants").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
 							dgrants_layer_view_id = null;
 					    } 
@@ -348,11 +349,11 @@ beforeMap.on("load", function () {
 					
 					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
 						/*
-						$("#studioMenuInfo").slideUp(); 
+						$("#infoLayerGrantLots").slideUp(); 
 						grant_lots_view_flag = false;
-                        $("#studioMenuDemo").slideUp();
+                        $("#demoLayerInfo").slideUp();
 			            demo_layer_view_flag = false;
-                        $("#studioMenuCastello").slideUp();
+                        $("#infoLayerCastello").slideUp();
 			            castello_layer_view_flag = false;
 						*/
 						
@@ -388,34 +389,34 @@ afterMap.on("load", function () {
 		// CLICK AND OPEN POPUP
 		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
 			        if(demo_layer_view_flag) {
-				        $("#studioMenuDemo").slideUp();
+				        $("#demoLayerInfo").slideUp();
 						demo_layer_view_flag = false;
 						//if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 					} else {
 						
 						buildPopUpInfo(e.features[0].properties);
-					    $("#studioMenuDemo").slideDown();
+					    $("#demoLayerInfo").slideDown();
 						demo_layer_view_flag = true;
 						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 					}
 					demo_taxlot_click_ev = true;
 		}).on('click', 'places-right', function (e) {
 			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
-				        $("#studioMenuCastello").slideUp();
+				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 		    } else {
 				    clickedStateId = e.features[0].id;
 				
-					places_popup_html = e.features[0].properties.LOT2 +
-                        ": " +
+					places_popup_html = "<h3>Castello Taxlot</h3><hr>" +
+					    "<b>" + e.features[0].properties.LOT2 + ":</b> " +
                         e.features[0].properties.tax_lots_1 +
                         "<br>" +
                         e.features[0].properties.tax_lots_2 +
                         "<br>" +
                         '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
-					$("#studioMenuCastello").html(places_popup_html).slideDown();
+					$("#infoLayerCastello").html(places_popup_html).slideDown();
 				    castello_layer_view_flag = true;
 					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
 			}
@@ -425,27 +426,27 @@ afterMap.on("load", function () {
 						if(layer_view_flag) {
 							if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
-							        $("#studioMenuInfo").slideUp();
+							        $("#infoLayerGrantLots").slideUp();
                                     //if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();						
 									grant_lots_view_flag = false;
 								} else {
-									//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+									//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 									buildGrantLotsPopUpInfo(e.features[0].properties);
-							        $("#studioMenuInfo").slideDown();
+							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
 								
 							} else {
-			                    //$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
-							    $("#studioMenuInfo").slideDown();
+							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
 							grant_lots_view_id = e.features[0].id;
 						} else {
-							//$("#studioMenuInfo").html(e.features[0].properties.name).slideDown();
+							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 							buildGrantLotsPopUpInfo(e.features[0].properties);
-							$("#studioMenuInfo").slideDown();
+							$("#infoLayerGrantLots").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
 							grant_lots_view_id = null;
 					    } 
@@ -457,24 +458,24 @@ afterMap.on("load", function () {
 						if(layer_view_flag) {
 							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
-							        $("#studioMenuInfo1").slideUp(); 
+							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
 									//if(afterMapDutchGrantPopUp.isOpen()) afterMapDutchGrantPopUp.remove();
 								} else {
 									buildDutchGrantPopUpInfo(e.features[0].properties);
-							        $("#studioMenuInfo1").slideDown();
+							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
 								
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
-							    $("#studioMenuInfo1").slideDown();
+							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
-							$("#studioMenuInfo1").slideDown();
+							$("#infoLayerDutchGrants").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
 							dgrants_layer_view_id = null;
 					    } 
@@ -484,11 +485,11 @@ afterMap.on("load", function () {
 		}).on('click', function () {
 			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
 						/*
-						$("#studioMenuInfo").slideUp(); 
+						$("#infoLayerGrantLots").slideUp(); 
 						grant_lots_view_flag = false;
-                        $("#studioMenuDemo").slideUp();
+                        $("#demoLayerInfo").slideUp();
 			            demo_layer_view_flag = false;
-                        $("#studioMenuCastello").slideUp();
+                        $("#infoLayerCastello").slideUp();
 			            castello_layer_view_flag = false;
                         */
 						
@@ -519,14 +520,14 @@ afterMap.on("error", function (e) {
         /*
         beforeMap.on('click', function () {
 			        if(demo_layer_view_flag) {
-				        $("#studioMenuDemo").slideUp();
+				        $("#demoLayerInfo").slideUp();
 						demo_layer_view_flag = false;
 					}
 		});
 		
 		afterMap.on('click', function () {
 			        if(demo_layer_view_flag) {
-				        $("#studioMenuDemo").slideUp();
+				        $("#demoLayerInfo").slideUp();
 						demo_layer_view_flag = false;
 					}
 		});
@@ -716,9 +717,10 @@ function addGrantLotsBeforeLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -858,7 +860,7 @@ function addCastelloBeforeLayers() {
                 beforeMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        e.features[0].properties.LOT2
+                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(beforeMap);
 					
@@ -940,9 +942,10 @@ function addGrantLotsAfterLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 				coordinates = e.features[0].geometry.coordinates.slice();
@@ -1084,7 +1087,7 @@ function addCastelloAfterLayers() {
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        e.features[0].properties.LOT2
+                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(afterMap);
 				}
@@ -1232,8 +1235,8 @@ function addBeforeLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1383,7 +1386,7 @@ function addBeforeLayers(yr, date) {
 				
 				        beforeMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br></div>")
                             .addTo(beforeMap);
 					
 		});
@@ -1471,8 +1474,8 @@ function addAfterLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name;
+				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1623,7 +1626,7 @@ function addAfterLayers(yr, date) {
 				
 				        afterMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br></div>")
                             .addTo(afterMap);
 		});
 
@@ -1845,7 +1848,7 @@ function buildPopUpInfo(props) {
 ;
 
 //console.log(popup_html);
-$("#studioMenuDemo").html(popup_html);
+$("#demoLayerInfo").html(popup_html);
 
 }
 
@@ -1853,6 +1856,7 @@ $("#studioMenuDemo").html(popup_html);
 
 function buildGrantLotsPopUpInfo(props) {
 				var popup_html =
+				    "<h3>Grant Lot</h3><hr>" +
 				    "<b>" + props.Lot + "</b> - <i>" + props.castello + "</i> - " + props.dutchlot + "<br>" +
 				    "<b>From:</b> <i>" + props.from + "</i><br>" +
 				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
@@ -1862,12 +1866,13 @@ function buildGrantLotsPopUpInfo(props) {
 				;
 				//console.log(props);
     
-	$("#studioMenuInfo").html(popup_html);
+	$("#infoLayerGrantLots").html(popup_html);
 
 }
 
 function buildDutchGrantPopUpInfo(props) {
-				var popup_html =
+				var popup_html = 
+				    "<h3>Dutch Grant</h3><hr>" +
 				    "<b>Lot:</b> <i>" + props.Lot + "</i><br>" +
 				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
 					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
@@ -1876,6 +1881,6 @@ function buildDutchGrantPopUpInfo(props) {
 				;
 				//console.log(props);
     
-	$("#studioMenuInfo1").html(popup_html);
+	$("#infoLayerDutchGrants").html(popup_html);
 
 }
