@@ -264,8 +264,7 @@ beforeMap.on("load", function () {
 					
 	                demo_taxlot_click_ev = true;
 		}).on('click', 'places-left', function (e) {
-			//*A if(castello_layer_view_flag && (clickedStateId == e.features[0].id) )
-			if(castello_layer_view_flag ) {
+			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
 				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 		    } else {
@@ -290,7 +289,7 @@ beforeMap.on("load", function () {
         }).on('click', 'grant-lots-left' , function (e) {
 				        
 						if(layer_view_flag) {
-							//*A if(grant_lots_view_id == e.features[0].id) {
+							if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
 							        $("#infoLayerGrantLots").slideUp(); 
 									grant_lots_view_flag = false;
@@ -300,14 +299,12 @@ beforeMap.on("load", function () {
 							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
-							/*
 							} else {
 			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
-							*/
 							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
@@ -322,7 +319,7 @@ beforeMap.on("load", function () {
 		}).on('click', 'grants1-5sp9tb-left' , function (e) {
 				        
 						if(layer_view_flag) {
-							//*A if(dgrants_layer_view_id == e.features[0].id) {
+							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
@@ -331,13 +328,11 @@ beforeMap.on("load", function () {
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
-							/*
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
-							*/
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
@@ -404,8 +399,7 @@ afterMap.on("load", function () {
 					}
 					demo_taxlot_click_ev = true;
 		}).on('click', 'places-right', function (e) {
-			//*A if(castello_layer_view_flag && (clickedStateId == e.features[0].id) )
-			if(castello_layer_view_flag) {
+			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
 				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
@@ -428,7 +422,7 @@ afterMap.on("load", function () {
         }).on('click', 'grant-lots-right' , function (e) {
 				        
 						if(layer_view_flag) {
-							//* if(grant_lots_view_id == e.features[0].id) {
+							if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
 							        $("#infoLayerGrantLots").slideUp();
                                     //if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();						
@@ -439,14 +433,12 @@ afterMap.on("load", function () {
 							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
-							/*
 							} else {
 			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
-							*/
 							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
@@ -461,7 +453,7 @@ afterMap.on("load", function () {
 		}).on('click', 'grants1-5sp9tb-right' , function (e) {
 				        
 						if(layer_view_flag) {
-							//*A if(dgrants_layer_view_id == e.features[0].id) {
+							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
@@ -471,13 +463,11 @@ afterMap.on("load", function () {
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
-							/*	
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
-							*/
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
