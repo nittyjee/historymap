@@ -723,10 +723,11 @@ function addGrantLotsBeforeLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
 						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
-									"<div class='infoLayerGrantLotsPopUp'></div>";
+									"</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -866,7 +867,7 @@ function addCastelloBeforeLayers() {
                 beforeMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        e.features[0].properties.LOT2 + "<div class='infoLayerCastelloPopUp'></div>"
+                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(beforeMap);
 					
@@ -948,10 +949,11 @@ function addGrantLotsAfterLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
 						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
-									"<div class='infoLayerGrantLotsPopUp'></div>";
+									"</div>";
 					
 					
 				coordinates = e.features[0].geometry.coordinates.slice();
@@ -1093,7 +1095,7 @@ function addCastelloAfterLayers() {
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        e.features[0].properties.LOT2 + "<div class='infoLayerCastelloPopUp'></div>"
+                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(afterMap);
 				}
@@ -1241,8 +1243,8 @@ function addBeforeLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "<div class='infoLayerDutchGrantsPopUp'></div>";
+				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1392,7 +1394,7 @@ function addBeforeLayers(yr, date) {
 				
 				        beforeMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><div class='demoLayerInfoPopUp'></div>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
                             .addTo(beforeMap);
 					
 		});
@@ -1480,8 +1482,8 @@ function addAfterLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "<div class='infoLayerDutchGrantsPopUp'></div>";
+				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1632,7 +1634,7 @@ function addAfterLayers(yr, date) {
 				
 				        afterMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><div class='demoLayerInfoPopUp'></div>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
                             .addTo(afterMap);
 		});
 
