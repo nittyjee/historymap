@@ -264,7 +264,8 @@ beforeMap.on("load", function () {
 					
 	                demo_taxlot_click_ev = true;
 		}).on('click', 'places-left', function (e) {
-			if(castello_layer_view_flag  && (clickedStateId == e.features[0].id) ) {
+			//*A if(castello_layer_view_flag && (clickedStateId == e.features[0].id) )
+			if(castello_layer_view_flag ) {
 				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 		    } else {
@@ -289,7 +290,7 @@ beforeMap.on("load", function () {
         }).on('click', 'grant-lots-left' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(grant_lots_view_id == e.features[0].id) {
+							//*A if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
 							        $("#infoLayerGrantLots").slideUp(); 
 									grant_lots_view_flag = false;
@@ -299,13 +300,14 @@ beforeMap.on("load", function () {
 							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
-								
+							/*
 							} else {
 			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
+							*/
 							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
@@ -320,7 +322,7 @@ beforeMap.on("load", function () {
 		}).on('click', 'grants1-5sp9tb-left' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(dgrants_layer_view_id == e.features[0].id) {
+							//*A if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
@@ -329,12 +331,13 @@ beforeMap.on("load", function () {
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
-								
+							/*
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
+							*/
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
@@ -401,7 +404,8 @@ afterMap.on("load", function () {
 					}
 					demo_taxlot_click_ev = true;
 		}).on('click', 'places-right', function (e) {
-			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
+			//*A if(castello_layer_view_flag && (clickedStateId == e.features[0].id) )
+			if(castello_layer_view_flag) {
 				        $("#infoLayerCastello").slideUp();
 						castello_layer_view_flag = false;
 						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
@@ -424,7 +428,7 @@ afterMap.on("load", function () {
         }).on('click', 'grant-lots-right' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(grant_lots_view_id == e.features[0].id) {
+							//* if(grant_lots_view_id == e.features[0].id) {
 								if(grant_lots_view_flag) {
 							        $("#infoLayerGrantLots").slideUp();
                                     //if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();						
@@ -435,13 +439,14 @@ afterMap.on("load", function () {
 							        $("#infoLayerGrantLots").slideDown();
 								    grant_lots_view_flag = true;
 								}
-								
+							/*
 							} else {
 			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
 								buildGrantLotsPopUpInfo(e.features[0].properties);
 							    $("#infoLayerGrantLots").slideDown();
 								grant_lots_view_flag = true;
 							}
+							*/
 							grant_lots_view_id = e.features[0].id;
 						} else {
 							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
@@ -456,7 +461,7 @@ afterMap.on("load", function () {
 		}).on('click', 'grants1-5sp9tb-right' , function (e) {
 				        
 						if(layer_view_flag) {
-							if(dgrants_layer_view_id == e.features[0].id) {
+							//*A if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
@@ -466,12 +471,13 @@ afterMap.on("load", function () {
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
 								}
-								
+							/*	
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
 							}
+							*/
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
@@ -717,10 +723,10 @@ function addGrantLotsBeforeLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
-					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
+									"<div class='infoLayerGrantLotsPopUp'></div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -860,7 +866,7 @@ function addCastelloBeforeLayers() {
                 beforeMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
+                        e.features[0].properties.LOT2 + "<div class='infoLayerCastelloPopUp'></div>"
                     )
                     .addTo(beforeMap);
 					
@@ -942,10 +948,10 @@ function addGrantLotsAfterLayers(date) {
 			    
                  
                  
-				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
-					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
 						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
+									"<div class='infoLayerGrantLotsPopUp'></div>";
 					
 					
 				coordinates = e.features[0].geometry.coordinates.slice();
@@ -1087,7 +1093,7 @@ function addCastelloAfterLayers() {
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
+                        e.features[0].properties.LOT2 + "<div class='infoLayerCastelloPopUp'></div>"
                     )
                     .addTo(afterMap);
 				}
@@ -1235,8 +1241,8 @@ function addBeforeLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "<div class='infoLayerDutchGrantsPopUp'></div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1386,7 +1392,7 @@ function addBeforeLayers(yr, date) {
 				
 				        beforeMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br></div>")
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><div class='demoLayerInfoPopUp'></div>")
                             .addTo(beforeMap);
 					
 		});
@@ -1474,8 +1480,8 @@ function addAfterLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
+				    var PopUpHTML = "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
+						            "<b>Name:</b> <i>" + e.features[0].properties.name + "<div class='infoLayerDutchGrantsPopUp'></div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1626,7 +1632,7 @@ function addAfterLayers(yr, date) {
 				
 				        afterMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><br></div>")
+							.setHTML("<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b><div class='demoLayerInfoPopUp'></div>")
                             .addTo(afterMap);
 		});
 
