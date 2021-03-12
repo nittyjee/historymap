@@ -667,27 +667,50 @@
   hyphens: auto;
 }
 
-#demoLayerInfo, .demoLayerInfoPopUp { 
+#demoLayerInfo { 
     background-color: rgb(50, 205, 50, 0.3); /* #32CD32 LimeGreen */
     border: solid #32CD32 2px;
 } 
-#infoLayerCastello, .infoLayerCastelloPopUp { 
+#infoLayerCastello { 
     background-color: rgb(255, 192, 203, 0.3);  /* #FFC0CB Pink */
     border: solid pink 2px;
 } 
-#infoLayerGrantLots, .infoLayerGrantLotsPopUp { 
+#infoLayerGrantLots { 
     background-color: rgb(102, 205, 170, 0.3); /* #66CDAA MediumAquamarine */
     border: solid #66CDAA 2px;
 }
-#infoLayerDutchGrants, .infoLayerDutchGrantsPopUp { 
+#infoLayerDutchGrants { 
     background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
     border: solid #FFFF00 2px;
 }
 
-.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp {
-    padding-left: 5px;
-	padding-right: 5px;
+
+.demoLayerInfoPopUp { 
+    height: 34px;
+    width: 34px;
+    background-color: green;  /* #00FF00 green */
+	border-radius: 50%;
+	margin: 0 auto;
+} 
+.infoLayerCastelloPopUp { 
+    height: 15px;
+    width: 15px;
+    background-color: red;  /* #FF0000 Red */
+	border-radius: 50%;
+	margin: 0 auto;
+} 
+.infoLayerGrantLotsPopUp { 
+    height: 13px;
+    width: 100%;
+    background-color: #66CDAA; /* #66CDAA MediumAquamarine */
 }
+.infoLayerDutchGrantsPopUp { 
+    height: 15px;
+    width: 100%;
+    background-color: #FFFF00; /* #FFFF00 Yellow */
+}
+
+
 
 #view-hide-layer-panel {
     position: absolute; 
