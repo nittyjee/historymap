@@ -271,14 +271,18 @@ beforeMap.on("load", function () {
 				   clickedStateId = e.features[0].id;
 				
 				
-					places_popup_html = "<h3>Castello Taxlot</h3><hr>" +
-					    "<b>" + e.features[0].properties.LOT2 + "</b>" +
-                        ": " +
-                        e.features[0].properties.tax_lots_1 +
-                        "<br>" +
-                        e.features[0].properties.tax_lots_2 +
-                        "<br>" +
-                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
+					places_popup_html = "<h3>Castello Taxlot (1660)</h3><hr>" +
+						"<br>" +
+						"<b>" + "Taxlot: " + "</b>" + 
+						e.features[0].properties.LOT2 +
+						"<br>" +
+						"<b>" + "Property Type: " + "</b>" + 
+						e.features[0].properties.tax_lots_1 +
+						"<br>" +
+						"<br>" +
+						"<b>" + "Encyclopedia Page: " + "</b>" + 
+						"<br>" +
+						'<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
 					$("#infoLayerCastello").html(places_popup_html).slideDown();
 				    castello_layer_view_flag = true;
@@ -406,13 +410,18 @@ afterMap.on("load", function () {
 		    } else {
 				    clickedStateId = e.features[0].id;
 				
-					places_popup_html = "<h3>Castello Taxlot</h3><hr>" +
-					    "<b>" + e.features[0].properties.LOT2 + ":</b> " +
-                        e.features[0].properties.tax_lots_1 +
-                        "<br>" +
-                        e.features[0].properties.tax_lots_2 +
-                        "<br>" +
-                        '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
+					places_popup_html = "<h3>Castello Taxlot (1660)</h3><hr>" +
+						"<br>" +
+						"<b>" + "Taxlot: " + "</b>" + 
+						e.features[0].properties.LOT2 +
+						"<br>" +
+						"<b>" + "Property Type: " + "</b>" + 
+						e.features[0].properties.tax_lots_1 +
+						"<br>" +
+						"<br>" +
+						"<b>" + "Encyclopedia Page: " + "</b>" + 
+						"<br>" +
+						'<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
 					
 					$("#infoLayerCastello").html(places_popup_html).slideDown();
 				    castello_layer_view_flag = true;
@@ -714,9 +723,11 @@ function addGrantLotsBeforeLayers(date) {
                  
                  
 				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
-					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
+									e.features[0].properties.name + "<br>" +
+											"<b>Start:</b> " + e.features[0].properties.day1 + ", " + e.features[0].properties.year1 + "<br>" +
+											"<b>End:</b> " + e.features[0].properties.day2 + ", " + e.features[0].properties.year2 + "<br>" +
+											//"<br>" +
+											"<b>Lot Division: </b>" + e.features[0].properties.dutchlot +
 									"</div>";
 					
 					
@@ -857,7 +868,7 @@ function addCastelloBeforeLayers() {
                 beforeMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
+                        "<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(beforeMap);
 					
@@ -940,9 +951,11 @@ function addGrantLotsAfterLayers(date) {
                  
                  
 				    var PopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
-					                "<b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Castello:</b> <i>" + e.features[0].properties.castello + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + 
+									e.features[0].properties.name + "<br>" +
+											"<b>Start:</b> " + e.features[0].properties.day1 + ", " + e.features[0].properties.year1 + "<br>" +
+											"<b>End:</b> " + e.features[0].properties.day2 + ", " + e.features[0].properties.year2 + "<br>" +
+											//"<br>" +
+											"<b>Lot Division: </b>" + e.features[0].properties.dutchlot +
 									"</div>";
 					
 					
@@ -1085,7 +1098,7 @@ function addCastelloAfterLayers() {
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.LOT2 + "</div>"
+                        "<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(afterMap);
 				}
@@ -1233,8 +1246,8 @@ function addBeforeLayers(yr, date) {
 					//console.log(e.lngLat.lng);
                  
                  
-				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
+					var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>" +
+									"<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1471,10 +1484,8 @@ function addAfterLayers(yr, date) {
 					
 					//console.log(e.lngLat.lng);
                  
-                 
-				    var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'><b>LOT:</b> <i>" + e.features[0].properties.Lot + "</i><br>" +
-						            "<b>Name:</b> <i>" + e.features[0].properties.name + "</div>";
-					
+					var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>" +
+									"<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -1652,12 +1663,13 @@ function buildPopUpInfo(props) {
 					///////
 					//TITLE
 					///////
-					"<b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b>" +
+					"<b><h2>Demo Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b>" +
 // CAN'T GET THE TAXLOT LINK TO WORK: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7'>
 					////////////////
 					//PROPERTY TYPE
 					////////////////
-					"<b>House</b>" +
+					"<b>Property Type: </b>" +
+					"House" +
 
 
 					//LINE
@@ -1854,12 +1866,23 @@ $("#demoLayerInfo").html(popup_html);
 
 function buildGrantLotsPopUpInfo(props) {
 				var popup_html =
-				    "<h3>Grant Lot</h3><hr>" +
-				    "<b>" + props.Lot + "</b> - <i>" + props.castello + "</i> - " + props.dutchlot + "<br>" +
-				    "<b>From:</b> <i>" + props.from + "</i><br>" +
-				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
-					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
-					"<b>End:</b> <i>" + props.day2 + " " + props.year2 + "</i><br>" +
+				    "<h3>Grant Lot Division</h3><hr>" +
+					"<br>" +
+					"<b>Original Dutch Grant: </b>" + props.Lot +
+					"<br>" +
+					"<b>Lot Division: </b>" + props.dutchlot +
+				    "<br>" +
+					"<b>Castello Taxlot (1660): </b>" + props.castello +
+					"<br>" +
+				    "<br>" +
+				    "<b>Ownership:</b> " + props.name + "<br>" +
+				    "<b>From:</b> " + props.from +
+					"<br>" +
+				    "<br>" +
+					"<b>Start:</b> " + props.day1 + ", " + props.year1 + "<br>" +
+					"<b>End:</b> " + props.day2 + ", " + props.year2 + "<br>" +
+				    "<br>" +
+				    "<b>Description:</b> " + "<br>" +
 					props.descriptio + "<br><br>"
 				;
 				//console.log(props);
@@ -1871,10 +1894,14 @@ function buildGrantLotsPopUpInfo(props) {
 function buildDutchGrantPopUpInfo(props) {
 				var popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
-				    "<b>Lot:</b> <i>" + props.Lot + "</i><br>" +
-				    "<b>Name:</b> <i>" + props.name + "</i><br>" +
+				    props.name + "<br>" +
+				    "<b>Dutch Grant Lot:</b> <i>" + props.Lot + "</i><br>" +
+					"<br>" +
 					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
 					"<b>End:</b> <i>" + props.day2 + " " + props.year2 + "</i><br>" +
+					"<br>" +
+					"<b>Description (partial):</b>" +
+					"<br>" +
 					props.descriptio + "<br><br>"
 				;
 				//console.log(props);
