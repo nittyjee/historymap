@@ -397,6 +397,10 @@ h1 {
 	.modal-header > h1 {display: inline;}
 /* Modal PopUp */
 
+/* Mapbox PopUp content */
+.mapboxgl-popup-content {
+    padding: 0;
+}
 
 <style>
     .mapboxgl-popup {
