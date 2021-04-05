@@ -385,7 +385,8 @@ h1 {
       left: 0;
       /*text-align: center;*/
       background-color: rgba(0,0,0,.4);
-	  z-index: 1000;
+	    z-index: 1000;
+      max-width: 800px;
     }
     .modal-body {
       width: calc(100% - 100px);
@@ -397,7 +398,7 @@ h1 {
     .modal-content {
       margin-top: 5px;
       padding: 15px;
-      height: 238px;
+      height: 385px;
       overflow-y: auto;
     }
     .modal-footer, .modal-header {
