@@ -86,7 +86,7 @@
 				var sliderStart = moment("01/01/1626").unix();
 				//var sliderEnd = moment().unix();
 				var sliderEndDrag = moment("07/04/1675").unix();
-				var sliderEnd = moment("01/01/1681").unix();
+				var sliderEnd = moment("01/01/1700").unix();
 				
 				//*A (sliderStart + sliderEnd)/2 = -9799671480
 				var sliderMiddle =  (sliderStart + sliderEnd)/2;
@@ -402,6 +402,11 @@
 							 user-select: none;
 				}
 				
+				
+				.mapboxgl-ctrl {
+                    display: none !important;
+                }
+				
 			</style>
 			
 			
@@ -439,7 +444,7 @@
 			
 			<style>
 				
-				.header a, .header label {
+				.header a.encyclopedia, .header label#about {
 				  float: left;
 				  color: black;
 				  text-align: center;
@@ -455,7 +460,8 @@
 					font-family: "Arial";
 				}
 	
-	
+	            .header label#info { display: none; }
+				i.fa-info-circle { color: #777; }
 	
 				.header a:hover, .header label:hover {
 				  background-color: #ddd;
@@ -497,11 +503,11 @@
 				#small_header_text {
 					display: inline-block;
 					margin-top: 11px;
-	                width: 100%;
+	                /* width: 100%; */
 					text-shadow: #717c9b 0px 1px 3px;
-					text-align: center;
-					font-size: 15pt;
-					repeat-x 50% 0;
+					/* text-align: center; */
+					font-size: 13pt;
+					/* repeat-x 50% 0; */
 
 					margin-left: 10px;
 					font-family: 'Consolas';
@@ -681,7 +687,7 @@
 }
 #infoLayerDutchGrants, .infoLayerDutchGrantsPopUp { 
     background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
-    border: solid #b5b500 2px;
+    border: solid #FFFF00 2px;
 }
 
 /*
@@ -750,10 +756,10 @@ div#mobi-view-sidebar {
     color: #000;
 	position: absolute;
     float: right;
-    bottom: 150px;
+    bottom: 128px;
     right: 20px;
-	height: 70px;
-    width: 70px;
+	height: 50px;
+    width: 50px;
 	text-align: center;
     background-color: #fff;
     border-radius: 50%;
@@ -765,7 +771,7 @@ div#mobi-view-sidebar:hover {
 }
 
 div#mobi-view-sidebar>i {
-   margin-top: 11px;
+   margin-top: 9px;
 }
 
 
@@ -776,10 +782,16 @@ div#mobi-year {
 	text-align: center;
 }
    
-img#logo-img {   
+img#logo-img-wide {   
     padding: 6px 0px 0px 30px; 
     float: left;
 	height: 70px;
+}
+
+img#logo-img {   
+    padding: 5px 0px 0px 8px; 
+    float: left;
+	display: none;
 }
 
 @media (max-width: 1000px) {
@@ -795,13 +807,52 @@ img#logo-img {
 
 }
 
+@media (max-width: 438px) {
+    .header a.encyclopedia, .header label#about { display: none; }
+	.header label#info { display: inline-block; }
+}
+
 @media (max-width: 555px) {
     #studioMenu { width: 100%; }
 	#view-hide-layer-panel { display: none; }
-	
+}
 
+
+@media (min-width: 555px) {
+    #mobi-hide-sidebar, #mobi-view-sidebar { display: none; }
+}
+
+@media (max-width: 930px) {
+    .map { top: 43px; }
+	#studioMenu { 
+	    top: 45px; 
+		/* Standard */
+			            height: calc(100% - 134px);
+				        /* Opera */
+                        height: -o-calc(100% - 134px);
+				        /* Firefox */
+				        height: -moz-calc(100% - 134px);
+				        /* WebKit */
+                        height: -webkit-calc(100% - 134px);
+	/* Standard */
+	max-height: calc(100% - 134px);
+	/* Opera */
+	max-height: -o-calc(100% - 134px);
+	/* Firefox */
+	max-height: -moz-calc(100% - 134px);
+	/* WebKit */
+	max-height: -webkit-calc(100% - 134px);
+	}
 	
-	.header a, .header label {
+    .headerText { display: none; }
+	
+	.header-right {
+				margin-left: 5px;
+				margin-right: 5px;
+				}
+				
+		
+	.header a.encyclopedia, .header label#about {
 				  color: black;
 				  text-align: center;
 				  padding: 3px;
@@ -817,29 +868,18 @@ img#logo-img {
 				
 	img.img2 { display: none; }
 	
-}
-
-@media (max-width: 438px) {
+	img#logo-img-wide {  
+		display: none;
+	}
+	
 	img#logo-img {  
 	    height: 34px;
+		display: inline-block;
 	}
 	
 	.header-right {
 	    margin-top: 5px;
 	}
-}
-
-@media (min-width: 555px) {
-    #mobi-hide-sidebar, #mobi-view-sidebar { display: none; }
-}
-
-@media (max-width: 930px) {
-    .headerText { display: none; }
-	
-	.header-right {
-				margin-left: 5px;
-				margin-right: 5px;
-				}
 }
 
 	</style>
@@ -860,7 +900,7 @@ img#logo-img {
 			 the capital of New Netherland. The New Amsterdam History Center
 			 is devoted to documenting and mapping New Amsterdam, its
 			 diverse people, landscapes, institutions and global legacy today.
-			<p><br>
+			<p>
 			We’ve presented several versions of the <i>Castello Plan</i> and the 
 			 <i>Dutch Grants Map</i> here.
 			 You can see the settlement of houses, farms,
@@ -873,7 +913,7 @@ img#logo-img {
 			 original street pattern.  Underground, archeologists have found 
 			 evidence of the plots of houses and gardens, Amsterdam yellow 
 			 brick, and pollen samples of plants.
-			<p><br>
+			<p>
 			You can swipe the map to compare the Castello Plan in 1660
 			 to the present,
 			 and explore each lot, where it shows what was there and who lived
@@ -881,10 +921,10 @@ img#logo-img {
 			 of New Amsterdam with a timeline from 1624 to 1664, when it
 			 was taken over
 			 by the English.
-			<p><br>
+			<p>
 			We need your help to make this work happen. Donate now to
 			 develop the map and expand the research.
-			<p><br>
+			<p>
 	</div>
   
     <div class="modal-footer">
@@ -907,8 +947,11 @@ img#logo-img {
 			<div class="header">
 			
 				<a href="http://newamsterdamhistorycenter.org" class="logo">
-					<img id="logo-img"
+					<img id="logo-img-wide"
 						src="http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png"
+						align="middle">
+					<img id="logo-img"
+						src="icons/icon_57x57.png"
 						align="middle">
 				</a>
 
@@ -933,6 +976,7 @@ img#logo-img {
 					<a href="about.html">About</a>
 					-->
 					<label for="o" id="about" title="Open">ABOUT</label>
+					<label for="o" id="info" ><i for="o" class="fa fa-2x fa-info-circle"></i></label>
 				</div>
 	            
 				<div id="small_header_text">
@@ -965,7 +1009,7 @@ img#logo-img {
 	  
 	  <!-- Grants Layers -->
 	  <input type="checkbox" id="grants_layer" name="grants_layer">
-      <label for="grants_layer"> Dutch Grants</label><br>
+      <label for="grants_layer"> Dutch Grants </label><br>
 	  
 	  <!-- Castello Points -->
 	  <input type="checkbox" id="castello_points" name="castello_points">
@@ -1067,7 +1111,7 @@ img#logo-img {
         <!--
 		<div id="styleSwitcher"></div>
 		-->
-		<div id="mobi-view-sidebar" ><i  class="fa fa-bars fa-3x"></i></div>
+		<div id="mobi-view-sidebar" ><i  class="fa fa-bars fa-2x"></i></div>
 
 		<!-- TIMELINE PANEL DIV -->
 		<div id='datepanel'><b><span id="date"></span></b></div>
@@ -1142,14 +1186,13 @@ img#logo-img {
 	
 	
 		<!-- MAP.JS SOURCE -->
-                <!--
-		<script src="timeline/js/map.js"></script>
-                -->
-                <script src="timeline/js/mapinit.js"></script>
+		<script src="timeline/js/mapinit.js"></script>
 		<script src="timeline/js/beforelayers.js"></script>
 		<script src="timeline/js/afterlayers.js"></script>
 		<script src="timeline/js/sliderpopups.js"></script>
+        
 
 	</body>
 
 </html>
+
