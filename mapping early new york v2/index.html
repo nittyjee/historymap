@@ -500,19 +500,6 @@
 
 				}
 				
-				#small_header_text {
-					display: inline-block;
-					margin-top: 11px;
-	                /* width: 100%; */
-					text-shadow: #717c9b 0px 1px 3px;
-					/* text-align: center; */
-					font-size: 13pt;
-					/* repeat-x 50% 0; */
-
-					margin-left: 10px;
-					font-family: 'Consolas';
-
-				}
 
 				.header a.encyclopedia {
 				background-color: #e8e1da;
@@ -844,7 +831,13 @@ img#logo-img {
 	max-height: -webkit-calc(100% - 134px);
 	}
 	
-    .headerText { display: none; }
+    #headerTextSuffix { display: none; }
+	
+	.headerText {
+					margin-top: 11px;
+					font-size: 13pt;
+					margin-left: 10px;
+				}
 	
 	.header-right {
 				margin-left: 5px;
@@ -962,7 +955,7 @@ img#logo-img {
 			-->
 			  
 				<div id="header_text" class="headerText">
-					| Mapping Early New York
+					<span id="headerTextSuffix">|</span> Mapping Early New York
 				</div>
 				   
 				<div class="header-right">
@@ -977,10 +970,6 @@ img#logo-img {
 					-->
 					<label for="o" id="about" title="Open">ABOUT</label>
 					<label for="o" id="info" ><i for="o" class="fa fa-2x fa-info-circle"></i></label>
-				</div>
-	            
-				<div id="small_header_text">
-				  Mapping Early New York
 				</div>
 				
 			</div>
