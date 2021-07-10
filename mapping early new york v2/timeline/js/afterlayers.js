@@ -449,7 +449,7 @@ function addCastelloAfterLayers() {
                 }
 
 
-                //BEFORE MAP POP UP CONTENTS
+                //AFTER MAP POP UP CONTENTS
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
@@ -472,4 +472,140 @@ function addCastelloAfterLayers() {
 				if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
             });
 	
+}
+
+
+/////////////////////////
+// Current Static Layers
+/////////////////////////
+
+function addCurrentLotsAfterLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (afterMap.getLayer("curr-lots-right")) afterMap.removeLayer("curr-lots-right");
+        if (afterMap.getSource("current_lots_1-ca6kq1")) afterMap.removeSource("current_lots_1-ca6kq1");
+	
+	        afterMap.addLayer({
+                id: "curr-lots-right",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.441lyesf"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "current_lots_1-ca6kq1",
+                paint: {
+				"fill-color": "#7B68EE",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+			
+			
+			//CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'curr-lots-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+				afterMapCurrLotsPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			});
+			
+            afterMap.on('mousemove', 'curr-lots-right', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredCurrLotsIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredCurrLotsIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    //console.log(e.features[0].properties);
+                    //Address
+					//OwnerName
+					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + e.features[0].properties.Address + "<br>" +
+									"<b>Current Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+					
+					/*
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				*/
+
+
+                //AFTER MAP POP UP CONTENTS
+                afterMapCurrLotsPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+	
+	
+            //OFF HOVER
+			afterMap.on('mouseleave', 'curr-lots-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredCurrLotsIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredCurrLotsIdRight = null;		
+				if(afterMapCurrLotsPopUp.isOpen()) afterMapCurrLotsPopUp.remove();
+            });
+}
+
+
+function addCurrentBuildingsAfterLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (afterMap.getLayer("curr-builds-right")) afterMap.removeLayer("curr-builds-right");
+        if (afterMap.getSource("current_buildings_1-cjgsm")) afterMap.removeSource("current_buildings_1-cjgsm");
+	
+	        afterMap.addLayer({
+                id: "curr-builds-right",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8zoowskg"
+                },
+				layout: {
+                    visibility: document.getElementById('current_buildings').checked ? "visible" : "none",
+                },
+                "source-layer": "current_buildings_1-cjgsm0",
+                paint: {
+				"fill-color": "#FF7F50",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
 }
