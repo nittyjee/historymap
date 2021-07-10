@@ -238,7 +238,7 @@ function buildDutchGrantPopUpInfo(props) {
 				var popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
 				    props.name + "<br>" +
-				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
+				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
 					"<br>" +
 					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
 					"<b>End:</b> <i>" + props.day2 + " " + props.year2 + "</i><br>" +
@@ -250,5 +250,18 @@ function buildDutchGrantPopUpInfo(props) {
 				//console.log(props);
     
 	$("#infoLayerDutchGrants").html(popup_html);
+
+}
+
+
+function buildCurrLotsPopUpInfo(props) {
+				var popup_html = 
+				    "<h2>Current Lot: " + props.Lot + "</h2>" +
+				    props.OwnerName + "<br>" +
+					"<b>Address:</b> <i>" + props.Address + "</i><br><br>"
+				;
+				//console.log(props);
+    
+	$("#infoLayerCurrLots").html(popup_html);
 
 }
