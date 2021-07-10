@@ -1,14 +1,17 @@
 var grant_lots_view_id = null,
     dgrants_layer_view_id = null,
+	curr_layer_view_id = null,
     grant_lots_view_flag = false,
     demo_layer_view_flag = false,
     castello_layer_view_flag = false,
-	dgrants_layer_view_flag = false;
+	dgrants_layer_view_flag = false,
+	curr_layer_view_flag = false;
 	
 $("#infoLayerGrantLots").slideUp();
 $("#infoLayerDutchGrants").slideUp();
 $("#demoLayerInfo").slideUp();
 $("#infoLayerCastello").slideUp();
+$("#infoLayerCurrLots").slideUp();
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -103,7 +106,8 @@ urlHash = window.location.hash;
 var castello_click_ev = false,
     grant_lots_click_ev = false,
 	demo_taxlot_click_ev = false,
-	dutch_grant_click_ev = false;
+	dutch_grant_click_ev = false,
+	curr_layer_click_ev = false;
     
 
 var afterMapPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
@@ -121,7 +125,8 @@ var afterMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClic
 var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-
+var afterMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
 var hoveredStateIdRight = null,
     hoveredStateIdLeft = null,
@@ -132,7 +137,9 @@ var hoveredStateIdRight = null,
 	hoveredGrantLotIdRight = null,
 	hoveredGrantLotIdLeft = null,
 	hoveredDutchGrantIdRight = null,
-	hoveredDutchGrantIdLeft = null;
+	hoveredDutchGrantIdLeft = null,
+	hoveredCurrLotsIdRight = null,
+	hoveredCurrLotsIdLeft = null;
 	
 var clickedStateId = null;
 	
@@ -244,9 +251,36 @@ beforeMap.on("load", function () {
 						
 						dutch_grant_click_ev = true;
 						
+		}).on('click', 'curr-lots-left' , function (e) {
+				        
+						if(layer_view_flag) {
+							if(curr_layer_view_id == e.features[0].id) {
+								if(curr_layer_view_flag) {
+							        $("#infoLayerCurrLots").slideUp(); 
+									curr_layer_view_flag = false;
+								} else {
+									buildCurrLotsPopUpInfo(e.features[0].properties);
+							        $("#infoLayerCurrLots").slideDown();
+								    curr_layer_view_flag = true;
+								}
+							} else {
+								buildCurrLotsPopUpInfo(e.features[0].properties);
+							    $("#infoLayerCurrLots").slideDown();
+								curr_layer_view_flag = true;
+							}
+							curr_layer_view_id = e.features[0].id;
+						} else {
+							buildCurrLotsPopUpInfo(e.features[0].properties);
+							$("#infoLayerCurrLots").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							curr_layer_view_id = null;
+					    } 
+						
+						curr_layer_click_ev = true;
+						
 		}).on('click', function () {
 					
-					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
+					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !curr_layer_click_ev) {
 						/*
 						$("#infoLayerGrantLots").slideUp(); 
 						grant_lots_view_flag = false;
@@ -265,6 +299,7 @@ beforeMap.on("load", function () {
 					castello_click_ev = false;
 					grant_lots_click_ev = false;
 					dutch_grant_click_ev = false;
+					curr_layer_click_ev = false;
 		});
 	
 	
@@ -373,8 +408,35 @@ afterMap.on("load", function () {
 						
 						dutch_grant_click_ev = true;
 						
+		}).on('click', 'curr-lots-right' , function (e) {
+				        
+						if(layer_view_flag) {
+							if(curr_layer_view_id == e.features[0].id) {
+								if(curr_layer_view_flag) {
+							        $("#infoLayerCurrLots").slideUp(); 
+									curr_layer_view_flag = false;
+								} else {
+									buildCurrLotsPopUpInfo(e.features[0].properties);
+							        $("#infoLayerCurrLots").slideDown();
+								    curr_layer_view_flag = true;
+								}
+							} else {
+								buildCurrLotsPopUpInfo(e.features[0].properties);
+							    $("#infoLayerCurrLots").slideDown();
+								curr_layer_view_flag = true;
+							}
+							curr_layer_view_id = e.features[0].id;
+						} else {
+							buildCurrLotsPopUpInfo(e.features[0].properties);
+							$("#infoLayerCurrLots").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							curr_layer_view_id = null;
+					    } 
+						
+						curr_layer_click_ev = true;
+						
 		}).on('click', function () {
-			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev) {
+			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !curr_layer_click_ev) {
 						if(windoWidth > 555)
 						    $('#view-hide-layer-panel').trigger('click');
 					}
@@ -383,6 +445,7 @@ afterMap.on("load", function () {
 					castello_click_ev = false;
 					grant_lots_click_ev = false;	
 					dutch_grant_click_ev = false;
+					curr_layer_click_ev = false;
 		});
 
 	
@@ -465,6 +528,8 @@ beforeMap.on('style.load', function () {
 	addBeforeLayers(yr, date);
 	addCastelloBeforeLayers();
 	addGrantLotsBeforeLayers(date);
+	addCurrentLotsBeforeLayers();
+	addCurrentBuildingsBeforeLayers();
 });
 
 //BASEMAP SWITCHING
@@ -485,7 +550,10 @@ afterMap.on('style.load', function () {
 	addAfterLayers(yr, date);
 	addCastelloAfterLayers();
 	addGrantLotsAfterLayers(date);
+	addCurrentLotsAfterLayers();
+	addCurrentBuildingsAfterLayers();
 });
+
 
 
 
