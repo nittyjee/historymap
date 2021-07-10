@@ -480,3 +480,142 @@ function addCastelloBeforeLayers() {
             });
 	
 }
+
+
+
+/////////////////////////
+// Current Static Layers
+/////////////////////////
+
+function addCurrentLotsBeforeLayers() {
+	
+	    //REMOVING CURRENT LOTS IF EXIST
+		if (beforeMap.getLayer("curr-lots-left")) beforeMap.removeLayer("curr-lots-left");
+        if (beforeMap.getSource("current_lots_1-ca6kq1")) beforeMap.removeSource("current_lots_1-ca6kq1");
+	
+	        beforeMap.addLayer({
+                id: "curr-lots-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.441lyesf"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "current_lots_1-ca6kq1",
+                paint: {
+				"fill-color": "#7B68EE",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+			
+			
+			//CURSOR ON HOVER
+            //ON HOVER
+			beforeMap.on('mouseenter', 'curr-lots-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapCurrLotsPopUp.setLngLat(e.lngLat).addTo(beforeMap);
+			});
+			
+            beforeMap.on('mousemove', 'curr-lots-left', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredCurrLotsIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredCurrLotsIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    //console.log(e.features[0].properties);
+                    //Address
+					//OwnerName
+					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + e.features[0].properties.Address + "<br>" +
+									"<b>Current Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+					
+					/*
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				*/
+
+
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapCurrLotsPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			beforeMap.on('mouseleave', 'curr-lots-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredCurrLotsIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredCurrLotsIdLeft = null;		
+				if(beforeMapCurrLotsPopUp.isOpen()) beforeMapCurrLotsPopUp.remove();
+            });
+			
+}
+
+
+function addCurrentBuildingsBeforeLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (beforeMap.getLayer("curr-builds-left")) beforeMap.removeLayer("curr-builds-left");
+        if (beforeMap.getSource("current_buildings_1-cjgsm")) beforeMap.removeSource("current_buildings_1-cjgsm");
+	
+	         beforeMap.addLayer({
+                id: "curr-builds-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8zoowskg"
+                },
+				layout: {
+                    visibility: document.getElementById('current_buildings').checked ? "visible" : "none",
+                },
+                "source-layer": "current_buildings_1-cjgsm0",
+                paint: {
+				"fill-color": "#FF7F50",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.5
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+	
+}
+
