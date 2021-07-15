@@ -62,6 +62,23 @@
 			var timeline_pointer_flag = true;
 			var windoWidth = 0;
 			
+			var sliderStartDrag = moment("06/02/1643").unix();
+		    var sliderStart = moment("01/01/1626").unix();
+		    //var sliderEnd = moment().unix();
+			var sliderEndDrag = moment("07/04/1675").unix();
+			var sliderEnd = moment("01/01/1700").unix();
+				
+			//*A (sliderStart + sliderEnd)/2 = -9799671480
+			var sliderMiddle =  (sliderStart + sliderEnd)/2;
+			var tooltiPos = -100;
+			
+			var ruler_step = (sliderEnd - sliderStart)/10,
+				date_ruler1 = sliderStart + ruler_step,
+				date_ruler2 = sliderStart + ruler_step*3,
+				date_ruler4 = sliderStart + ruler_step*7,
+				date_ruler5 = sliderStart + ruler_step*9;
+			
+			
 			$(document).ready(function () {
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
                 
@@ -82,21 +99,9 @@
 				});
 				
 				// console.log(window.name);
-				var sliderStartDrag = moment("06/02/1643").unix();
-				var sliderStart = moment("01/01/1626").unix();
-				//var sliderEnd = moment().unix();
-				var sliderEndDrag = moment("07/04/1675").unix();
-				var sliderEnd = moment("01/01/1700").unix();
 				
-				//*A (sliderStart + sliderEnd)/2 = -9799671480
-				var sliderMiddle =  (sliderStart + sliderEnd)/2;
-				var tooltiPos = -100;
 				
-				var ruler_step = (sliderEnd - sliderStart)/10,
-				    date_ruler1 = sliderStart + ruler_step,
-				    date_ruler2 = sliderStart + ruler_step*3,
-					date_ruler4 = sliderStart + ruler_step*7,
-					date_ruler5 = sliderStart + ruler_step*9;
+				
 					
 				$("#ruler-date1").text(moment.unix(date_ruler1).format('YYYY')); // .format('DD MMM YYYY')
 				$("#ruler-date2").text(moment.unix(date_ruler2).format('YYYY')); // .format('DD MMM YYYY')
@@ -108,12 +113,13 @@
 				
 				console.log("start:", sliderStart);
 				console.log("end:", sliderEnd);
+				console.log("window:", window.name);
 
 				$("#slider").slider({
 					min: sliderStart,
 					max: sliderEnd,
 					step: 86400, //24 hrs in unix time, set slider step to 1 day=86400 seconds
-					value: window.name || sliderMiddle,
+					value: sliderMiddle, //window.name || sliderMiddle,
 					slide: function (event, ui) {
 						tooltiPos = ((ui.value < sliderMiddle ) ? 30 : -100);
 						/*
@@ -1235,3 +1241,4 @@ img#logo-img {
 	</body>
 
 </html>
+
