@@ -579,6 +579,61 @@ function addCurrentLotsAfterLayers() {
 }
 
 
+function addCurrentLotsLinesAfterLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (afterMap.getLayer("curr-lots-lines-right")) afterMap.removeLayer("curr-lots-lines-right");
+        if (afterMap.getSource("selected_lots_lines-2qrhih")) afterMap.removeSource("selected_lots_lines-2qrhih");
+	
+	         afterMap.addLayer({
+                id: "curr-lots-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.dzxpgww5"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "selected_lots_lines-2qrhih",
+                paint: {
+				    "line-color": "#000080",
+					"line-width": 3,
+					"line-opacity": 0.7
+				}
+			
+            });
+	
+}
+
+
+function addCurrentBuildingsLinesAfterLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (afterMap.getLayer("curr-builds-lines-right")) afterMap.removeLayer("curr-builds-lines-right");
+        if (afterMap.getSource("selected_buildings_lines-2gyw2x")) afterMap.removeSource("selected_buildings_lines-2gyw2x");
+	
+	         afterMap.addLayer({
+                id: "curr-builds-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8icvriua"
+                },
+				layout: {
+                    visibility: document.getElementById('current_buildings_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "selected_buildings_lines-2gyw2x",
+                paint: {
+				    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.7
+				}
+			
+            });
+	
+}
+
 function addCurrentBuildingsAfterLayers() {
 	
 	//REMOVING CURRENT LOTS IF EXIST
@@ -609,3 +664,4 @@ function addCurrentBuildingsAfterLayers() {
 			
             });
 }
+
