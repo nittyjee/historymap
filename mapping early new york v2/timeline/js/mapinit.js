@@ -529,7 +529,9 @@ beforeMap.on('style.load', function () {
 	addCastelloBeforeLayers();
 	addGrantLotsBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
+	addCurrentLotsLinesBeforeLayers();
 	addCurrentBuildingsBeforeLayers();
+	addCurrentBuildingsLinesBeforeLayers();
 });
 
 //BASEMAP SWITCHING
@@ -551,7 +553,9 @@ afterMap.on('style.load', function () {
 	addCastelloAfterLayers();
 	addGrantLotsAfterLayers(date);
 	addCurrentLotsAfterLayers();
+	addCurrentLotsLinesAfterLayers();
 	addCurrentBuildingsAfterLayers();
+	addCurrentBuildingsLinesAfterLayers();
 });
 
 
