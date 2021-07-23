@@ -587,6 +587,61 @@ function addCurrentLotsBeforeLayers() {
 }
 
 
+function addCurrentLotsLinesBeforeLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (beforeMap.getLayer("curr-lots-lines-left")) beforeMap.removeLayer("curr-lots-lines-left");
+        if (beforeMap.getSource("selected_lots_lines-2qrhih")) beforeMap.removeSource("selected_lots_lines-2qrhih");
+	
+	         beforeMap.addLayer({
+                id: "curr-lots-lines-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.dzxpgww5"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "selected_lots_lines-2qrhih",
+                paint: {
+				    "line-color": "#000080",
+					"line-width": 3,
+					"line-opacity": 0.7
+                }
+			
+            });
+	
+}
+
+
+function addCurrentBuildingsLinesBeforeLayers() {
+	
+	//REMOVING CURRENT LOTS IF EXIST
+		if (beforeMap.getLayer("curr-builds-lines-left")) beforeMap.removeLayer("curr-builds-lines-left");
+        if (beforeMap.getSource("selected_buildings_lines-2gyw2x")) beforeMap.removeSource("selected_buildings_lines-2gyw2x");
+	
+	         beforeMap.addLayer({
+                id: "curr-builds-lines-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8icvriua"
+                },
+				layout: {
+                    visibility: document.getElementById('current_buildings_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "selected_buildings_lines-2gyw2x",
+                paint: {
+				    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.7
+                }
+			
+            });
+	
+}
+
 function addCurrentBuildingsBeforeLayers() {
 	
 	//REMOVING CURRENT LOTS IF EXIST
@@ -618,4 +673,5 @@ function addCurrentBuildingsBeforeLayers() {
             });
 	
 }
+
 
