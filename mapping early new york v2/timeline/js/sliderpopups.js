@@ -256,10 +256,15 @@ function buildDutchGrantPopUpInfo(props) {
 
 function buildCurrLotsPopUpInfo(props) {
 				var popup_html = 
-				    "<h2>Current Lot: " + props.Lot + "</h2>" +
-				    props.OwnerName + "<br>" +
-					"<b>Address:</b> <i>" + props.Address + "</i><br><br>"
+					"<h3>Current Lot</h3><hr>" +
+					"<b>Owner:</b>" + "<br>" + props.OwnerName + "<br><br>" +
+					"<b>Address:</b>" + "<br>" + props.Address + "<br><br>" +
+					"<b>Lot:</b>" + "<br>" + props.BBL + "<br><br>"
 				;
+
+
+
+
 				//console.log(props);
     
 	$("#infoLayerCurrLots").html(popup_html);

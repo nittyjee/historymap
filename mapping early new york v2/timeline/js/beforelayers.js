@@ -510,7 +510,7 @@ function addCurrentLotsBeforeLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.5
+                            0.3
                         ],
 				"fill-outline-color": "#000000"
                 }
@@ -544,8 +544,8 @@ function addCurrentLotsBeforeLayers() {
                     //console.log(e.features[0].properties);
                     //Address
 					//OwnerName
-					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + e.features[0].properties.Address + "<br>" +
-									"<b>Current Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + "<b>" + e.features[0].properties.OwnerName + "</b>" + "<br>" +
+									e.features[0].properties.Address + "</div>";	
 					
 					/*
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -634,7 +634,7 @@ function addCurrentBuildingsLinesBeforeLayers() {
                 "source-layer": "selected_buildings_lines-2gyw2x",
                 paint: {
 				    "line-color": "#FF0000",
-					"line-width": 3,
+					"line-width": 2,
 					"line-opacity": 0.7
                 }
 			
@@ -665,7 +665,7 @@ function addCurrentBuildingsBeforeLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.5
+                            0.3
                         ],
 				"fill-outline-color": "#000000"
                 }

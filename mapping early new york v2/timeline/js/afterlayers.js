@@ -37,7 +37,7 @@ function addAfterLayers(yr, date) {
                             0.8,
                             0.5
                         ],
-				"fill-outline-color": "#000000"
+				"fill-outline-color": "#FF0000"
 
 			},
 
@@ -502,7 +502,7 @@ function addCurrentLotsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.5
+                            0.2
                         ],
 				"fill-outline-color": "#000000"
                 }
@@ -536,8 +536,8 @@ function addCurrentLotsAfterLayers() {
                     //console.log(e.features[0].properties);
                     //Address
 					//OwnerName
-					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + e.features[0].properties.Address + "<br>" +
-									"<b>Current Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + "<b>" + e.features[0].properties.OwnerName + "</b>" + "<br>" +
+									e.features[0].properties.Address + "</div>";		
 					
 					/*
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -626,7 +626,7 @@ function addCurrentBuildingsLinesAfterLayers() {
                 "source-layer": "selected_buildings_lines-2gyw2x",
                 paint: {
 				    "line-color": "#FF0000",
-					"line-width": 3,
+					"line-width": 2,
 					"line-opacity": 0.7
 				}
 			
@@ -657,7 +657,7 @@ function addCurrentBuildingsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.5
+                            0.2
                         ],
 				"fill-outline-color": "#000000"
                 }
