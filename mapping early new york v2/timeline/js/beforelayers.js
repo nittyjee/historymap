@@ -510,7 +510,7 @@ function addCurrentLotsBeforeLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.3
+                            0.1
                         ],
 				"fill-outline-color": "#000000"
                 }
@@ -605,7 +605,7 @@ function addCurrentLotsLinesBeforeLayers() {
                 },
                 "source-layer": "selected_lots_lines-2qrhih",
                 paint: {
-				    "line-color": "#000080",
+				    "line-color": "#00ff00",
 					"line-width": 3,
 					"line-opacity": 0.7
                 }

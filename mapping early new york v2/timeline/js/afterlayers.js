@@ -502,7 +502,7 @@ function addCurrentLotsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.2
+                            0.0
                         ],
 				"fill-outline-color": "#000000"
                 }
