@@ -345,6 +345,36 @@ function addGrantLotsAfterLayers(date) {
 }
 
 
+function addGrantLotsLinesAfterLayers(date) {
+	
+	//REMOVING TAX LOT POINTS IF EXIST
+		if (afterMap.getLayer("grant-lots-lines-right")) afterMap.removeLayer("grant-lots-lines-right");
+        if (afterMap.getSource("dutch_grants_lines-1n0e0p")) afterMap.removeSource("dutch_grants_lines-1n0e0p");
+	
+	
+	// Add a layer showing the places.
+	        afterMap.addLayer({
+                id: "grant-lots-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.1j4u7q5k"
+                },
+				layout: {
+                    visibility: document.getElementById('grants_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "dutch_grants_lines-1n0e0p",
+                paint: {
+                    "line-color": "#e3ed58",
+					"line-width": 3,
+					"line-opacity": 0.8
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+			
+			
+}
+
 
 /////////////////////////
 // Castello Static Layer
