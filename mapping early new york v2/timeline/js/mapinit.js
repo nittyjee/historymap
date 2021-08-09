@@ -494,6 +494,9 @@ function changeDate(unixDate) {
 	
 	beforeMap.setFilter("grant-lots-left", dateFilter);
 	afterMap.setFilter("grant-lots-right", dateFilter);
+	
+	beforeMap.setFilter("grant-lots-lines-left", dateFilter);
+	afterMap.setFilter("grant-lots-lines-right", dateFilter);
 
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	
@@ -528,6 +531,7 @@ beforeMap.on('style.load', function () {
 	addBeforeLayers(yr, date);
 	addCastelloBeforeLayers();
 	addGrantLotsBeforeLayers(date);
+	addGrantLotsLinesBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
 	addCurrentLotsLinesBeforeLayers();
 	addCurrentBuildingsBeforeLayers();
@@ -552,12 +556,12 @@ afterMap.on('style.load', function () {
 	addAfterLayers(yr, date);
 	addCastelloAfterLayers();
 	addGrantLotsAfterLayers(date);
+	addGrantLotsLinesAfterLayers(date);
 	addCurrentLotsAfterLayers();
 	addCurrentLotsLinesAfterLayers();
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
 });
-
 
 
 
