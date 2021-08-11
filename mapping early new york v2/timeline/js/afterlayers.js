@@ -35,7 +35,7 @@ function addAfterLayers(yr, date) {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.5
+                            0.45
                         ],
 				"fill-outline-color": "#FF0000"
 
@@ -365,7 +365,7 @@ function addGrantLotsLinesAfterLayers(date) {
                 },
                 "source-layer": "dutch_grants_lines-1n0e0p",
                 paint: {
-                    "line-color": "#e3ed58",
+                    "line-color": "#FF0000",
 					"line-width": 3,
 					"line-opacity": 0.8
                 },
@@ -655,7 +655,7 @@ function addCurrentBuildingsLinesAfterLayers() {
                 },
                 "source-layer": "selected_buildings_lines-2gyw2x",
                 paint: {
-				    "line-color": "#FF0000",
+				    "line-color": "#0000FF",
 					"line-width": 2,
 					"line-opacity": 0.7
 				}
