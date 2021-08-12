@@ -58,10 +58,14 @@
 		<!-- Load Awesome Icons 5.15.3 -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <!-- MODAL INFO JS SOURCE -->
+		<script src="timeline/js/modalinfo.js"></script>
+
+
 		<!-- TIMELINE FUNCTIONALITY -->
 
 		<script>
-		
+
 		    var layer_view_flag = true;
 			var timeline_pointer_flag = true;
 			var windoWidth = 0;
@@ -487,6 +491,14 @@
                 });
 				*/
 				
+				$('.trigger-popup').click(function(e) {
+				    //$(this).attr("id")
+				    //alert("view modal  for : " + e.target.id);
+					console.log(e.target.id);
+					$("div.modal-header h1").text(modal_header_text[e.target.id]);
+					$("div.modal-content").html(modal_content_html[e.target.id]);
+					$("label#open-popup").trigger("click");
+				});
 			});
 		</script>
 
@@ -623,7 +635,7 @@
 					font-family: "Arial";
 				}
 	
-	            .header label#info { display: none; }
+	            .header i#info { display: none; }
 				i.fa-info-circle { color: #777; }
 	
 				.header a:hover, .header label:hover {
@@ -849,6 +861,9 @@
     border: solid #7B68EE 2px;
 }
 
+i.layer-info { cursor: pointer; float: right; margin-top: 3px; margin-right: 15px;}
+i.layer-info:hover { opacity: 0.7; }
+
 /*
 .demoLayerInfoPopUp { 
     height: 34px;
@@ -968,7 +983,7 @@ img#logo-img {
 
 @media (max-width: 438px) {
     .header a.encyclopedia, .header label#about { display: none; }
-	.header label#info { display: inline-block; }
+	.header i#info { display: inline-block; }
 }
 
 @media (max-width: 555px) {
@@ -1046,7 +1061,7 @@ img#logo-img {
 	    margin-top: 5px;
 	}
 	
-	
+
 }
 
 	</style>
@@ -1142,8 +1157,13 @@ img#logo-img {
 					<!--
 					<a href="about.html">About</a>
 					-->
+					<!--
 					<label for="o" id="about" title="Open">ABOUT</label>
 					<label for="o" id="info" ><i for="o" class="fa fa-2x fa-info-circle"></i></label>
+					-->
+					<label for="o" id="open-popup" style="display: none;" >Open PopUp</label>
+					<label id="about" class="trigger-popup" title="Open">ABOUT</label>
+					<i class="fa fa-2x fa-info-circle trigger-popup" id="info" ></i>
 				</div>
 				
 			</div>
@@ -1173,19 +1193,21 @@ img#logo-img {
 	  
 	  <!-- Grants Layers Items -->
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
-      <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> Dutch Grants</label><br>
-	  
+      <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> Dutch Grants Items</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer" ></i><br>
+	 
 	  <!-- Grants Layers -->
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer" class="grants_layer" name="grants_layer">
-      <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information </label><br>
+      <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Dutch Grants </label><br>
 	  
 	  <!-- Grants Layers Lines -->
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
-      <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label><br>
+      <label for="grants_layer_lines"> <i class="far fa-square" style="color: #e3ed58;" ></i> Dutch Grants Lines</label><br>
 	  
 	  <!-- Castello Points -->
 	  <input type="checkbox" id="castello_points" name="castello_points">
-      <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)</label><br>
+      <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer" ></i><br>
 	  
 	  <!-- Circle -->
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
@@ -1197,19 +1219,20 @@ img#logo-img {
 	  
 	  <!-- Current Lots Items -->
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
-      <label for="current_lots_items"> <i class="fas fa-caret-down"></i> Current Lots</label><br>
+      <label for="current_lots_items"> <i class="fas fa-caret-down"></i> Current Lots Items</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer" ></i><br>
 	 
       <!-- Current Lots -->
 	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots" name="current_lots">
-      <label for="current_lots"> <i class="fa fa-square" style="color: #7B68EE;" ></i> Information</label><br>
+      <label for="current_lots"> <i class="fa fa-square" style="color: #7B68EE;" ></i> Current Lots</label><br>
 	  
 	  <!-- Current Lots Lines -->
 	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots_lines" name="current_lots_lines">
-      <label for="current_lots_lines"> <i class="far fa-square" style="color: #000080;"></i> Lines</label><br>
+      <label for="current_lots_lines"> <i class="far fa-square" style="color: #000080;"></i> Current Lots Lines</label><br>
 	  
 	  <!-- Current Buildings Items -->
 	  <input type="checkbox" id="current_buildings_items" name="current_buildings_items">
-      <label for="current_buildings_items"> <i class="fas fa-caret-down"></i> Current Buildings</label>
+      <label for="current_buildings_items"> <i class="fas fa-caret-down"></i> Current Buildings Items</label>
 	  
 	  <!-- Current Buildings -->
 	  <input type="checkbox" class="current_buildings" id="current_buildings" name="current_buildings">
@@ -1217,7 +1240,8 @@ img#logo-img {
 	  
 	  <!-- Current Buildings Lines -->
 	  <input type="checkbox" class="current_buildings" id="current_buildings_lines" name="current_buildings_lines">
-      <label for="current_buildings_lines"> <i class="far fa-square" style="color: #0000FF;"></i> Current Buildings</label><br>
+      <label for="current_buildings_lines"> <i class="far fa-square" style="color: #FF0000;"></i> Current Buildings Lines</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer" ></i><br>
 	  
 	  <br>
 
@@ -1392,3 +1416,4 @@ img#logo-img {
 	</body>
 
 </html>
+
