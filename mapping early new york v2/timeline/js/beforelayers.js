@@ -543,7 +543,6 @@ function addCurrentLotsBeforeLayers() {
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
                             0.1
-                            /*0.4*/
                         ],
 				"fill-outline-color": "#000000"
                 }
@@ -706,5 +705,6 @@ function addCurrentBuildingsBeforeLayers() {
             });
 	
 }
+
 
 
