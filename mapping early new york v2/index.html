@@ -494,11 +494,22 @@
 				$('.trigger-popup').click(function(e) {
 				    //$(this).attr("id")
 				    //alert("view modal  for : " + e.target.id);
-					console.log(e.target.id);
+					//console.log(e.target.id);
 					$("div.modal-header h1").text(modal_header_text[e.target.id]);
 					$("div.modal-content").html(modal_content_html[e.target.id]);
 					$("label#open-popup").trigger("click");
 				});
+				
+	
+				// close modal by click outside the box
+				
+				$('div.modal-body').click(function(e){
+                    e.stopPropagation();
+                });
+				
+				$('div.modal').click(function() {
+				    $("label#close").trigger("click");
+                });
 			});
 		</script>
 
@@ -748,6 +759,14 @@
             bottom: 175px;
             right: 20px;
         }
+		
+		div.layer-list-row {
+		    width: 100%;
+		}
+		
+		div.layer-list-row:hover {
+		    background-color: #DDD;
+		}
 		
 
 /* hide current buildings fill layers */
@@ -1192,56 +1211,81 @@ img#logo-img {
 	  
 	  
 	  <!-- Grants Layers Items -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
       <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> Dutch Grants</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer" ></i><br>
-	 
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer" ></i>
+	  </div>
+
+	  
 	  <!-- Grants Layers -->
+	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer" class="grants_layer" name="grants_layer">
-      <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label><br>
+      <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
+	  </div>
 	  
 	  <!-- Grants Layers Lines -->
+	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
-      <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label><br>
+      <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
+	  </div>
 	  
 	  <!-- Castello Points -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" id="castello_points" name="castello_points">
       <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer" ></i><br>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer" ></i>
+	  </div>
 	  
 	  <!-- Circle -->
+	  <div class="layer-list-row" >
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
-      <label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7</label><br>
+      <label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7</label>
+	  </div>
 	  
 	  <!-- Grants Layers -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grant_lots" name="grant_lots">
-      <label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7</label><br>
+      <label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7</label>
+	  </div>
 	  
 	  <!-- Current Lots Items -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
       <label for="current_lots_items"> <i class="fas fa-caret-down"></i> Current Lots</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer" ></i><br>
-	 
+	  </div>
+	  
       <!-- Current Lots -->
+	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots" name="current_lots">
-      <label for="current_lots"> <i class="fa fa-square" style="color: #7B68EE;" ></i> Information</label><br>
+      <label for="current_lots"> <i class="fa fa-square" style="color: #7B68EE;" ></i> Information</label>
+	  </div>
 	  
 	  <!-- Current Lots Lines -->
+	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots_lines" name="current_lots_lines">
-      <label for="current_lots_lines"> <i class="far fa-square" style="color: #000080;"></i> Lines</label><br>
+      <label for="current_lots_lines"> <i class="far fa-square" style="color: #000080;"></i> Lines</label>
+	  </div>
 	  
 	  <!-- Current Buildings Items -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_buildings_items" name="current_buildings_items">
       <label for="current_buildings_items"> <i class="fas fa-caret-down"></i> Current Buildings</label>
+	  </div>
 	  
 	  <!-- Current Buildings -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" class="current_buildings" id="current_buildings" name="current_buildings">
       <label for="current_buildings"> <i class="fa fa-square" style="color: #FF7F50;" ></i> Current Buildings</label>
+	  </div>
 	  
 	  <!-- Current Buildings Lines -->
+	  <div class="layer-list-row" >
 	  <input type="checkbox" class="current_buildings" id="current_buildings_lines" name="current_buildings_lines">
       <label for="current_buildings_lines"> <i class="far fa-square" style="color: #0000FF;"></i> Current Buildings</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer" ></i><br>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer" ></i>
+	  </div>
 	  
 	  <br>
 
