@@ -61,5 +61,45 @@ modal_content_html["current-buildings-lines-info-layer"] = `
             <i class="far fa-square" style="color: #FF0000;"></i> Current Buildings Lines
             `;
 
+modal_header_text["demo-taxlot-info-layer"] = "Demo Taxlot Layer";
+modal_content_html["demo-taxlot-info-layer"] = `
+            <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7
+            `;
+
+modal_header_text["demo-grant-info-layer"] = "Demo Grant Divisions Layer";
+modal_content_html["demo-grant-info-layer"] = `
+            <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7
+            `;
+
+
+modal_header_text["castello-redrawn-plan"] = "Castello Redrawn";
+modal_content_html["castello-redrawn-plan"] = `
+              1913 (Default)
+            `;
+
+modal_header_text["original-castello-plan"] = "Original Castello";
+modal_content_html["original-castello-plan"] = `
+              Plan 1660
+            `;
+
+modal_header_text["stokes-key-castello"] = "Stokes Key";
+modal_content_html["stokes-key-castello"] = `
+              to Castello Plan 1912
+            `;
+			
+modal_header_text["new-amsterdam-legend"] = "Legend of";
+modal_content_html["new-amsterdam-legend"] = `
+              New Amsterdam
+            `;
+
+modal_header_text["dutch-grants-stokes"] = "Dutch Grants,";
+modal_content_html["dutch-grants-stokes"] = `
+              Stokes 1914-1916
+            `;
+
+modal_header_text["satellite-image"] = "Current Satellite";
+modal_content_html["satellite-image"] = `
+              Satellite Image
+            `;
 
 			
