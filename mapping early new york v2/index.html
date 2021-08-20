@@ -87,9 +87,27 @@
 				date_ruler5 = sliderStart + ruler_step*9;
 			
 			
+function simple_tooltip(target_items, name){
+$(target_items).each(function(i){
+$("body").append("<div class='"+name+"' id='"+name+i+"'><p>"+$(this).attr('title')+"</p></div>");
+var my_tooltip = $("#"+name+i);
+
+$(this).removeAttr("title").mouseover(function(){
+my_tooltip.css({opacity:0.8, display:"none"}).fadeIn(200);
+}).mousemove(function(kmouse){
+my_tooltip.css({left:kmouse.pageX+15, top:kmouse.pageY+15});
+}).mouseout(function(){
+my_tooltip.fadeOut(200);
+});
+});
+}
+			
+			
 			$(document).ready(function () {
 				if (jQuery.browser.msie) alert('Sorry, this application uses state of the art HTML5 techniques which are not (well) supported by Internet Explorer.\nUse Google Chrome or Mozilla Firefox to experience the full power of HTML5 and this application');
                 
+				simple_tooltip("i.layer-info","tooltip");
+				
 				windoWidth = $(window).width();
 				//console.log(windoWidth);
 				if(windoWidth <= 555) {
@@ -768,6 +786,24 @@
 		    background-color: #DDD;
 		}
 		
+/* tooltip */
+.tooltip{
+position:absolute;
+z-index:999;
+left:-9999px;
+background-color:#dedede;
+padding:5px;
+border:1px solid #fff;
+width:100px;
+text-align: center;
+}
+.tooltip p{
+margin:0;
+padding:0;
+color:#fff;
+background-color:#222;
+padding:2px 7px;
+}
 
 /* hide current buildings fill layers */
 	#current_buildings_items,  #current_buildings { display: none; }
@@ -880,7 +916,7 @@
     border: solid #7B68EE 2px;
 }
 
-i.layer-info { cursor: pointer; float: right; margin-top: 3px; margin-right: 15px;}
+i.layer-info { cursor: pointer; float: right; margin-top: 2px; margin-right: 5px;}
 i.layer-info:hover { opacity: 0.7; }
 
 /*
@@ -1008,6 +1044,7 @@ img#logo-img {
 @media (max-width: 555px) {
     #studioMenu { width: 100%; }
 	#view-hide-layer-panel { display: none; }
+	i.layer-info { margin-right: 21px;}
 }
 
 
@@ -1214,7 +1251,7 @@ img#logo-img {
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
       <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> Dutch Grants</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer" ></i>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer"  title="Layer Info" ></i>
 	  </div>
 
 	  
@@ -1234,28 +1271,28 @@ img#logo-img {
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="castello_points" name="castello_points">
       <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer" ></i>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
 	  <!-- Circle -->
 	  <div class="layer-list-row" >
       <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
       <label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-taxlot-info-layer" ></i>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-taxlot-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
 	  <!-- Grants Layers -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grant_lots" name="grant_lots">
       <label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer" ></i>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
 	  <!-- Current Lots Items -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
       <label for="current_lots_items"> <i class="fas fa-caret-down"></i> Current Lots</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer" ></i><br>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer"  title="Layer Info" ></i><br>
 	  </div>
 	  
       <!-- Current Lots -->
@@ -1286,7 +1323,7 @@ img#logo-img {
 	  <div class="layer-list-row" >
 	  <input type="checkbox" class="current_buildings" id="current_buildings_lines" name="current_buildings_lines">
       <label for="current_buildings_lines"> <i class="far fa-square" style="color: #0000FF;"></i> Current Buildings</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer" ></i>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
 	  <br>
@@ -1299,7 +1336,7 @@ img#logo-img {
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
 		&nbsp;
 		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
-        <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-redrawn-plan" ></i>
+        <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-redrawn-plan"  title="Layer Info" ></i>
         </div>
 
 		<!--ORIGINAL CASTELLO-->
@@ -1308,7 +1345,7 @@ img#logo-img {
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
 		&nbsp;
 		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
-        <i  class="fa fa-info-circle layer-info trigger-popup" id="original-castello-plan" ></i>
+        <i  class="fa fa-info-circle layer-info trigger-popup" id="original-castello-plan"  title="Layer Info" ></i>
         </div>
 
 		<!--STOKES KEY-->
@@ -1317,7 +1354,7 @@ img#logo-img {
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
 		&nbsp;
 		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
-        <i  class="fa fa-info-circle layer-info trigger-popup" id="stokes-key-castello" ></i>
+        <i  class="fa fa-info-circle layer-info trigger-popup" id="stokes-key-castello"  title="Layer Info" ></i>
         </div>
 
 		<!--COLORED KEY-->
@@ -1326,7 +1363,7 @@ img#logo-img {
 		<input class='ck7pilmus016r1ilbsbiat6zs' type='radio' name='rtoggle' value='ck7pilmus016r1ilbsbiat6zs'>
 		&nbsp;
         <label for='ck7pilmus016r1ilbsbiat6zs'>Legend of New Amsterdam</label>
-        <i  class="fa fa-info-circle layer-info trigger-popup" id="new-amsterdam-legend" ></i>
+        <i  class="fa fa-info-circle layer-info trigger-popup" id="new-amsterdam-legend"  title="Layer Info" ></i>
         </div>
 
         <!--DUTCH GRANTS-->
@@ -1336,7 +1373,7 @@ img#logo-img {
 		&nbsp;
         <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
         <!--//ck7xni5u51kur1iqdokpijm0u-->
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="dutch-grants-stokes" ></i>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="dutch-grants-stokes"  title="Layer Info" ></i>
 		</div>
 		
 		<!--CURRENT SATELLITE -->
@@ -1345,7 +1382,7 @@ img#logo-img {
 		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
 		&nbsp;
 		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="satellite-image" ></i>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="satellite-image"  title="Layer Info" ></i>
 		</div>
 
 		
