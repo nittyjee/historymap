@@ -93,7 +93,7 @@ $("body").append("<div class='"+name+"' id='"+name+i+"'><p>"+$(this).attr('title
 var my_tooltip = $("#"+name+i);
 
 $(this).removeAttr("title").mouseover(function(){
-my_tooltip.css({opacity:0.8, display:"none"}).fadeIn(200);
+my_tooltip.css({opacity:1.0, display:"none"}).fadeIn(200);
 }).mousemove(function(kmouse){
 my_tooltip.css({left:kmouse.pageX+15, top:kmouse.pageY+15});
 }).mouseout(function(){
@@ -792,7 +792,7 @@ position:absolute;
 z-index:999;
 left:-9999px;
 background-color:#dedede;
-padding:5px;
+padding:3px;
 border:1px solid #fff;
 width:100px;
 text-align: center;
@@ -801,7 +801,7 @@ text-align: center;
 margin:0;
 padding:0;
 color:#fff;
-background-color:#222;
+background-color:#23579B;
 padding:2px 7px;
 }
 
