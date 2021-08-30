@@ -32,6 +32,13 @@ modal_content_html["about"] = `
 			We need your help to make this work happen. Donate now to
 			 develop the map and expand the research.
 			<p>
+
+			
+			<br>
+	        <b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
+			<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
+				<i>MAPPING EARLY NEW YORK</i>, PHASE 1 AND 2 are made possible by a grant from the SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES.</p>
+
 			`;
 		
 modal_header_text["info"] = modal_header_text["about"];

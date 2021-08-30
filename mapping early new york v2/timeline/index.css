@@ -388,7 +388,7 @@ h1 {
     .modal-content {
       margin-top: 5px;
       padding: 15px;
-      height: 238px;
+      /*height: 238px;*/
       overflow-y: auto;
     }
     .modal-footer, .modal-header {
