@@ -53,32 +53,34 @@ modal_content_html["grants-info-layer"] = `
 			<br>
 			<p>
 -->
-			The Dutch Grants were the first properties of people who arrived in Manhattan. Slide the timeline beneath to see how they were granted over time, from 1640 to 1664. Hover over them to see who owned the grant and when it was granted, and click on them for a description and a link to the encyclopedia.
+
+			The Dutch Grants were the first properties that the Dutch West India Company awarded to many of the residents of New Amsterdam. Slide the timeline beneath to see how they were granted over time, from 1640 to 1664. Hover over them to see who owned the grant, when it was granted, and click for a description and a link to the encyclopedia.
 			<p>
 			<br>
 			The grants were traced from the Dutch Grants map in The Iconography of Manhattan Island, where they were drawn using property descriptions. You can see the Dutch Grants map overlay beneath: “Dutch Grants, Stokes 1914-1916”.
 			<p>
 			<br>
-			This layer only shows the grants as they were first established, not as they were divided or sold. For example, if a grant was made in 1640, in 1641 it may have been divided, with different owners, but you will still see it as it was when it was granted, across the whole timeline. Only one Dutch Grant has so far been divided over the whole Dutch period - See the map layer: “Demo Grant Divisions: C7”.
+			This layer only shows the grants as they were first established, not as they were divided or sold. For example, if a grant was made in 1640, in 1641 it may have been divided, with different owners, but you will still see it as it was when it was granted, across the whole timeline. Only one Dutch Grant, C7,  has been divided to show its evolution over the whole Dutch period - See the map layer: “Demo Grant Divisions: C7”.  Future funding will allow us to show all of them this way.
 			<p>
 			<br>
-            `;
+			 `;
 			
 modal_header_text["castello-info-layer"] = "Castello Taxlots Layer";
 modal_content_html["castello-info-layer"] = `
 <!--
             <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)
 -->
+
 			The Castello Taxlots (1660) shows residents and owners of properties in 1660, when the Castello Plan was drawn. The information was gathered from Stokes’ Iconography of Manhattan Island, where each of the lots in the Castello Plan illustration was assigned a “taxlot number”, and historic information was given for each.
 			<p>
 			<br>
-			Click on the dots to see some information for each taxlot, with a link to the encyclopedia, where you can see who lived there, the property type, and the description from Stokes’ Iconography.
+			Click on the dots to see some information for each taxlot, with a link to the encyclopedia, where you can see who lived there, the property type, and the description from Stokes’ Iconography along with additions from many other resources.
 			<p>
 			<br>
 			Use in conjunction with the Castello Plan map overlays, and click their info buttons to learn more about the Castello Plan.
 			<p>
 			<br>
-            `;
+			`;
 
 modal_header_text["current-lots-info-layer"] = "Current Lots Layer";
 modal_content_html["current-lots-info-layer"] = `
@@ -87,20 +89,23 @@ modal_content_html["current-lots-info-layer"] = `
 			<br>
 			<i class="far fa-square" style="color: #000080;"></i> Current Lots Lines
 -->
+
 			These are the current lots in the area (2021), that cover the other layers and map overlays. Hover over the features and see the current owners, and click for more information, such as the lot number.
 			<p>
 			<br>
 			To use this layer, compare it with others by clicking them on and off. For example, turn the Current Lots layer group on, and turn the Dutch Grants layers on and off repeatedly to compare, and do the same in reverse - keep the Dutch Grants on and turn the Current Lots on and off repeatedly, so the differences can be seen. Hover over features as well to see how lot lines cross.
 			<p>
 			<br>
-            `;
+			`;
+			
+
 			
 modal_header_text["current-buildings-lines-info-layer"] = "Current Buildings Layer";
 modal_content_html["current-buildings-lines-info-layer"] = `
 <!--
             <i class="far fa-square" style="color: #FF0000;"></i> Current Buildings Lines
 -->
-			These are the current building outlines - they often match up with the lot lines, but often there are multiple buildings within a lot or buildings that cover multiple lots.
+			These are the current building outlines - they often match up with the lot lines, but sometimes there are multiple buildings within a lot or buildings that cover multiple lots.
             `;
 
 modal_header_text["demo-taxlot-info-layer"] = "Demo Taxlot Layer";
@@ -108,29 +113,32 @@ modal_content_html["demo-taxlot-info-layer"] = `
 <!--
             <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7
 -->
-			In this layer is a single large dot over a Castello Plan lot. Click on the dot and move the timeline on the bottom, and you’ll see people who owned or lived there over the history of the Dutch Period in the sidebar. Each time an event happens, the dot color changes between blue and green. The information is from the Castello Plan section of Stokes’ Iconography of Manhattan Island. Each taxlot was given a number, and taxlot C7 was chosen for a demo. 
+
+
+			In this layer is a single large dot over a Castello Plan lot. Click on the dot and move the timeline on the bottom, and you’ll see people who owned or lived there over the history of the Dutch Period in the sidebar. Each time an event happens, the dot color changes blue or green. The information is from the Castello Plan section of Stokes’ Iconography of Manhattan Island. Each taxlot was given a number, and taxlot C7 was chosen for our demo. 
 			<p>
 			<br>
 			Use this layer in conjunction with the Castello Plan map overlays on the bottom.
 			<p>
 			<br>
-			For more information, see the “Castello Taxlots (1660)” layer.
-			<p>
-			<br>
-            `;
+			For more information, see the “Castello Taxlots” map overlay.
+			`;
+
 
 modal_header_text["demo-grant-info-layer"] = "Demo Grant Divisions Layer";
 modal_content_html["demo-grant-info-layer"] = `
 <!--
             <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7
 -->
-			In this layer one Dutch Grant was taken and divided using property transfer descriptions, with owners added. Lots were split and changed hands between multiple people. Slide the timeline and see the divisions happen and in between, hover or click the properties. Click on them for more information, such as the property description.
+
+			In this layer one Dutch Grant was taken and divided using property transfer descriptions, with owners added. Lots were subdivided and changed hands between multiple people. Slide the timeline and see the divisions happen and in between, hover or click the properties. Click on them for more information, such as the property description.
 			<p>
 			<br>
 			Use the “Dutch Grants” layer for more context.
 			<p>
 			<br>
             `;
+
 
 
 modal_header_text["castello-redrawn-plan"] = "Castello Redrawn 1913 (Default)";
@@ -143,6 +151,8 @@ modal_content_html["castello-redrawn-plan"] = `
 			<br>
             `;
 
+
+
 modal_header_text["original-castello-plan"] = "Original Castello Plan 1660";
 modal_content_html["original-castello-plan"] = `
 			This is the original copy of the Castello Plan, an illustrated map created in 1660 by Jacques Cortelyou. The copy was created by a draftsman between 1665-1670, from the lost original. Around 1667, cartographer Joan Blaeu brought the map to Europe and it was sold to Cosimo III de' Medici, Grand Duke of Tuscany. It was rediscovered in the Villa di Castello near Florence, Italy in 1900 and was printed in 1916. Today it is on display at the New York Public Library.
@@ -152,6 +162,7 @@ modal_content_html["original-castello-plan"] = `
 			<p>
 			<br>
             `;
+
 
 modal_header_text["stokes-key-castello"] = "Stokes Key to the Castello Plan 1912";
 modal_content_html["stokes-key-castello"] = `
@@ -172,5 +183,3 @@ modal_header_text["satellite-image"] = "Current Satellite";
 modal_content_html["satellite-image"] = `
 			This is a current satellite map of the area, with roads highlighted and labeled. Use this to compare other map overlays, and see then vs now, swiping the vertical bar left and right.
             `;
-
-			
