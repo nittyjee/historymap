@@ -3,8 +3,9 @@ var modal_content_html = [];
 
 modal_header_text["about"] = "ABOUT";
 modal_content_html["about"] = `
-             New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>,
-			 the capital of New Netherland. The New Amsterdam History Center
+			New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>,
+			a trading post for the Dutch West India Company in New Netherland.
+			The New Amsterdam History Center
 			 is devoted to documenting and mapping New Amsterdam, its
 			 diverse people, landscapes, institutions and global legacy today.
 			<p>
@@ -35,9 +36,13 @@ modal_content_html["about"] = `
 
 			
 			<br>
-	        <b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
-			<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
-				<i>MAPPING EARLY NEW YORK</i>, PHASE 1 AND 2 are made possible by a grant from the SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES.</p>
+				<b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
+				<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
+					<i>MAPPING EARLY NEW YORK</i> is made possible by grants from:<br>
+					The SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES<br>
+					KEN CHASE<br>
+					THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK
+
 
 			`;
 		
