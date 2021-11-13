@@ -184,6 +184,11 @@ modal_content_html["dutch-grants-stokes"] = `
 			This is a map of the Dutch Grants, drawn from property descriptions, meticulously sequenced and documented in Stokes’ Iconography of Manhattan Island. This map was traced to create the Dutch Grants layer, above. Turn on the Dutch Grants layer group to see information from Stokes’, with a link to the original grant documents. Click the info button for the Dutch Grants layer group for more information.
             `;
 
+modal_header_text["ratzer-map"] = "Ratzer Map";
+modal_content_html["ratzer-map"] = `
+              This is a Ratzer Map
+            `;
+
 modal_header_text["satellite-image"] = "Current Satellite";
 modal_content_html["satellite-image"] = `
 			This is a current satellite map of the area, with roads highlighted and labeled. Use this to compare other map overlays, and see then vs now, swiping the vertical bar left and right.
