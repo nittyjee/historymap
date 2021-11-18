@@ -189,6 +189,16 @@ modal_content_html["ratzer-map"] = `
               This is a Ratzer Map
             `;
 
+modal_header_text["nyc-map-plan"] = "NYC Plan";
+modal_content_html["nyc-map-plan"] = `
+              A Plan of the City of New York, 1730 
+            `;
+
+modal_header_text["original-grants-map"] = "Original Grants and Farms";
+modal_content_html["original-grants-map"] = `
+              Stokes 1914-16
+            `;
+
 modal_header_text["satellite-image"] = "Current Satellite";
 modal_content_html["satellite-image"] = `
 			This is a current satellite map of the area, with roads highlighted and labeled. Use this to compare other map overlays, and see then vs now, swiping the vertical bar left and right.
