@@ -184,19 +184,23 @@ modal_content_html["dutch-grants-stokes"] = `
 			This is a map of the Dutch Grants, drawn from property descriptions, meticulously sequenced and documented in Stokes’ Iconography of Manhattan Island. This map was traced to create the Dutch Grants layer, above. Turn on the Dutch Grants layer group to see information from Stokes’, with a link to the original grant documents. Click the info button for the Dutch Grants layer group for more information.
             `;
 
-modal_header_text["ratzer-map"] = "Ratzer Map";
+modal_header_text["ratzer-map"] = "Ratzer Map 1766";
 modal_content_html["ratzer-map"] = `
-              This is a Ratzer Map
+			<i>The Plan of the City of New York in North America</i> by British military officer Bernard Ratzer, created in 1766-1767 and printed in 1770.
+			<br><br>This is a colored version of the <i>Ratzer Map</i>, which It shows the city and vicinity in the years before the Revolutionary Era, full of the city streets, harbors, farms and fields, and hills, and many well illustrated details. Shown are Brooklyn and Manhattan, and the edges of Queens and New Jersey, right across from Manhattan.
             `;
 
-modal_header_text["nyc-map-plan"] = "NYC Plan";
+			
+modal_header_text["nyc-map-plan"] = "A Plan of the City of New York, 1730";
 modal_content_html["nyc-map-plan"] = `
-              A Plan of the City of New York, 1730 
+A map of New York from an actual survey in 1730, engraved by I. Carwitham and presented to John Montgomerie, the English colonial governor of New York. The map shows buildings that line streets, with a few buildings that are illustrated from a bird's eye view. Comparing with the Castello Plan in 1660, one can see there was already considerable infill along the edges of Manhattan, and the size of the city more than doubled, growing nearly to where the Brooklyn Bridge is today. Though the population increased several times, it was still small, at around 8000 people.
             `;
 
-modal_header_text["original-grants-map"] = "Original Grants and Farms";
+
+
+modal_header_text["original-grants-map"] = "Original Grants & Farms, Stokes 1914-1916";
 modal_content_html["original-grants-map"] = `
-              Stokes 1914-16
+			This map details the grants made in Manhattan through the Dutch period and into the early English period in New York, going all the way up to present day Harlem. It is drawn from property descriptions of original documents, published in Stokes' <i>Iconography of Manhattan Island, Volume 6</i>. It is supplementary to the Dutch Grants map, which you can select in the sidebar.
             `;
 
 modal_header_text["satellite-image"] = "Current Satellite";
