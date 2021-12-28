@@ -2,48 +2,42 @@ var modal_header_text = [];
 var modal_content_html = [];
 
 modal_header_text["about"] = "ABOUT";
-modal_content_html["about"] = `
-			New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>,
-			a trading post for the Dutch West India Company in New Netherland.
-			The New Amsterdam History Center
-			 is devoted to documenting and mapping New Amsterdam, its
-			 diverse people, landscapes, institutions and global legacy today.
+
+			modal_content_html["about"] = `
+
+			New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>, a trading post for the Dutch West India Company in New Netherland. The New Amsterdam History Center is devoted to documenting and mapping New Amsterdam, its diverse people, landscapes, institutions, and global legacy today.
 			<p>
-			We’ve presented several versions of the <i>Castello Plan</i> and the 
-			 <i>Dutch Grants Map</i> here.
-			 You can see the settlement of houses, farms,
-			 taverns and workshops, surrounded by walls. Over the three
-			 centuries that followed, the area became the Financial District.
-			 The east wall was torn down and named Wall Street. The canals
-			 were paved over and turned into streets and in between developed
-			 skysrapers, and the island was expanded with infill.
-			 Above ground, almost nothing remains of New Amsterdam except the 
-			 original street pattern.  Underground, archeologists have found 
-			 evidence of the plots of houses and gardens, Amsterdam yellow 
-			 brick, and pollen samples of plants.
+			We’ve presented several versions of the <i>Castello Plan</i>, the <i>Dutch Grants Map</i>, and other maps here.  You can see the settlement of houses, farms, taverns, and workshops, surrounded by walls.   Over the centuries that followed, the area became the Financial District.   The east wall was torn down and named Wall Street.   The canals were paved over became streets, and in between developed skyscrapers, while the island was expanded with infill.   Above ground, almost nothing remains of New Amsterdam except the original street pattern.   Underground, archeologists have found evidence of the plots of houses and gardens, Amsterdam yellow brick, and pollen samples of plants.
 			<p>
-			You can swipe the map to compare the Castello Plan in 1660
-			 to the present,
-			 and explore each lot, where it shows what was there and who lived
-			 there. Our next steps are to expand through the full history
-			 of New Amsterdam with a timeline from 1624 to 1664, when it
-			 was taken over
-			 by the English.
+			You can swipe the map to compare the Castello Plan in 1660 to the present, explore each lot, and use our encyclopedia to learn who lived there, how they earned a living, and in many cases, who they married.   
 			<p>
-			We need your help to make this work happen. Donate now to
-			 develop the map and expand the research.
+			Our next steps will be to expand the maps to include all of Long Island and eventually the Hudson Valley, Connecticut and New Jersey, and to add more detail to the timeline to through 1664 when New Amsterdam was taken over by the English.
+			<p>
+			We need your help to make this work happen!   Donate now to develop the map and expand the research.
 			<p>
 
-			
 			<br>
 				<b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
 				<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
 					<i>MAPPING EARLY NEW YORK</i> is made possible by grants from:<br>
 					The SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES<br>
 					KEN CHASE<br>
-					THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK
+					THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK<br>
+					THE ROBERT DAVID LION GARDINER FOUNDATION </b>
 
-
+			<p>
+			<br>
+			<b>Creative Contributors:</b>
+			<br>
+			Toya Dubin, Project Manager
+			<br>
+			Nitin Gadia, Lead Programmer and Mapping Specialist
+			<br>
+			Jerry O’Toole, Database Assistant
+			<br>
+			Firth Haring Fabend, PhD.,  Head of Scholarly Research
+			<br>
+			Esme Berg, Executive Director
 			`;
 		
 modal_header_text["info"] = modal_header_text["about"];
