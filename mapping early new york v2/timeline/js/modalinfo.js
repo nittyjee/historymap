@@ -26,12 +26,18 @@ modal_header_text["about"] = "ABOUT";
 					THE ROBERT DAVID LION GARDINER FOUNDATION </b>
 
 			<p>
+				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/gar-logo.jpg" width="96">
+				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/first_families_logo.png" width="96">
+				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/dohd_logo.png" width="96">
+
+
+			<p>
 			<br>
 			<b>Creative Contributors:</b>
 			<br>
-			Toya Dubin, Project Manager
+			Toya Dubin, Project Manager, info@newamsterdamhistorycenter.org
 			<br>
-			Nitin Gadia, Lead Programmer and Mapping Specialist
+			Nitin Gadia, Mapping Director and Database Development
 			<br>
 			Jerry O’Toole, Database Assistant
 			<br>
