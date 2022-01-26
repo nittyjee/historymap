@@ -25,7 +25,8 @@ modal_header_text["about"] = "ABOUT";
 					THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK<br>
 					THE ROBERT DAVID LION GARDINER FOUNDATION </b>
 
-			<p>
+			<br>
+			<br>
 				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/gar-logo.jpg" width="96">
 				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/first_families_logo.png" width="96">
 				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/dohd_logo.png" width="96">
