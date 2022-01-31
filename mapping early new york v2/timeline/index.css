@@ -390,6 +390,14 @@ h1 {
       padding: 15px;
       /*height: 238px;*/
       overflow-y: auto;
+	  /* Standard */
+	  max-height: calc(100vh - 123px);
+	  /* Opera */
+      max-height: -o-calc(100vh - 123px);
+	  /* Firefox */
+	  max-height: -moz-calc(100vh - 123px);
+	  /* WebKit */
+      max-height: -webkit-calc(100vh - 123px);
     }
     .modal-footer, .modal-header {
       overflow: hidden;
@@ -402,6 +410,24 @@ h1 {
 .mapboxgl-popup-content {
     padding: 0;
 }
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: #f15b28;
+    }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: #f15b28;
+    }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #f15b28;
+    }
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #f15b28;
+    }
+
 
 @media (max-width: 930px) {
 	#date {
