@@ -235,7 +235,11 @@ function buildGrantLotsPopUpInfo(props) {
 
 
 function buildDutchGrantPopUpInfo(props) {
-				var popup_html = 
+	        var popup_html = "";
+			//console.log(props);
+	        //console.log(dutch_grant_lots_info[props.Lot]);
+			if( typeof dutch_grant_lots_info[props.Lot] == "undefined" ) {
+			    popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
 				    props.name + "<br>" +
 				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
@@ -247,7 +251,26 @@ function buildDutchGrantPopUpInfo(props) {
 					"<br>" +
 					props.descriptio + "<br><br>"
 				;
-				//console.log(props);
+			} else {
+				popup_html = 
+				    "<h3>Dutch Grant</h3><hr>" +
+				    "<br>" +
+				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
+					"<br>" +
+					"<b>To Party:</b> <i>" + dutch_grant_lots_info[props.Lot].to_party + "</i><br>" +
+					"<b>From Party:</b> <i>" + dutch_grant_lots_info[props.Lot].from_party + "</i><br>" +
+					"<b>Start:</b> <i>" + dutch_grant_lots_info[props.Lot].start + "</i><br>" +
+					"<b>End:</b> <i>" + dutch_grant_lots_info[props.Lot].end + "</i><br>" +
+					"<br>" +
+					"<b>Notes:</b>" +
+					"<br>" +
+					"<i>" + dutch_grant_lots_info[props.Lot].notes + "</i><br><br>" +
+					"<b>Description:</b>" +
+					"<br>" +
+					"<i>" + dutch_grant_lots_info[props.Lot].descr + "</i><br><br>"
+				;
+			}
+				
     
 	$("#infoLayerDutchGrants").html(popup_html);
 
@@ -270,3 +293,4 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
+
