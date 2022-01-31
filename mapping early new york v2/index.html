@@ -5,9 +5,24 @@
 
 		<!-- SOURCES-->
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>Mapping Early New York | New Amsterdam History</title>
+		<title>Mapping Early New York - New Amsterdam History</title>
+		
+		<meta name="description" content="New Amsterdam - Early New York Interactive Map with History Timeline">
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="robots" content="all" />
+
+<!--  Essential META Tags -->
+<meta property="og:title" content="Mapping Early New York - New Amsterdam History">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://nahc-mapping.org/mappingNY/icons/icon_192x192.png">
+<meta property="og:url" content="https://nahc-mapping.org/mappingNY/">
+<meta name="twitter:card" content="new_amsterdam_icon">
+
+<!--  Non-Essential, But Recommended -->
+<meta property="og:description" content="New Amsterdam - Early New York Interactive Map with History Timeline">
+<meta property="og:site_name" content="New Amsterdam History">
+<meta name="twitter:image:alt" content="New Amsterdam Icon">
 		
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="theme-color" content="#00A2E5">
@@ -65,6 +80,49 @@
 		<!-- TIMELINE FUNCTIONALITY -->
 
 		<script>
+
+    // get Dutch Grants Lots Info from REST API
+    var dutch_grant_lots_info = new Array();
+    // for test REST_API/grant-lots-export.json
+	// REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
+	
+	$.ajax({
+				url: "https://nahc-mapping.org/mappingNY/dev/grant-lots-export",
+				headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+				type: 'post',
+                dataType: 'json',
+				data: {}
+    })
+	.done(function(data) { 
+	  
+		//console.log(data);
+		if(data.length > 0) {
+		    for(let i = 0; i < data.length; i++){
+			    /*
+			    html_cont += "<br><b>Lot:</b> &nbsp <i>" + data[i].title[0].value + "</i>";
+				html_cont += "<br><b>To Party:</b> &nbsp <i>" + ( data[i].field_name.length > 0 ? data[i].field_name[0].value  : "") + "</i>";
+				html_cont += "<br><b>From Party:</b> &nbsp <i>" + ( data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "") + "</i>";
+                html_cont += "<br><b>Start:</b> &nbsp <i>" + ( data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "") + "</i>";
+	            html_cont += "<br><b>End:</b> &nbsp <i>" + ( data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "") + "</i>";
+				html_cont += "<br><b>Notes:</b> &nbsp <i>" + ( data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "") + "</i>";
+	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
+				*/
+				if( typeof data[i].title[0].value != "undefined" ) {
+				    dutch_grant_lots_info[data[i].title[0].value] = { to_party: data[i].field_name.length > 0 ? data[i].field_name[0].value  : "", from_party:  data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "", start: data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "", end: data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "", notes: data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "", descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : ""};   
+				}
+			}
+		}
+		
+
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        // LOADING ERROR!
+		console.warn("jQuery AJAX request  ERROR !!!");
+		console.log(xhr.responseText);
+        console.log(textStatus);
+    });
 
 		    var layer_view_flag = true;
 			var timeline_pointer_flag = true;
