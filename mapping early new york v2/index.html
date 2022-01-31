@@ -83,46 +83,7 @@
 
     // get Dutch Grants Lots Info from REST API
     var dutch_grant_lots_info = new Array();
-    // for test REST_API/grant-lots-export.json
-	// REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
-	
-	$.ajax({
-				url: "https://nahc-mapping.org/mappingNY/dev/grant-lots-export",
-				headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-				type: 'post',
-                dataType: 'json',
-				data: {}
-    })
-	.done(function(data) { 
-	  
-		//console.log(data);
-		if(data.length > 0) {
-		    for(let i = 0; i < data.length; i++){
-			    /*
-			    html_cont += "<br><b>Lot:</b> &nbsp <i>" + data[i].title[0].value + "</i>";
-				html_cont += "<br><b>To Party:</b> &nbsp <i>" + ( data[i].field_name.length > 0 ? data[i].field_name[0].value  : "") + "</i>";
-				html_cont += "<br><b>From Party:</b> &nbsp <i>" + ( data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "") + "</i>";
-                html_cont += "<br><b>Start:</b> &nbsp <i>" + ( data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "") + "</i>";
-	            html_cont += "<br><b>End:</b> &nbsp <i>" + ( data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "") + "</i>";
-				html_cont += "<br><b>Notes:</b> &nbsp <i>" + ( data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "") + "</i>";
-	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
-				*/
-				if( typeof data[i].title[0].value != "undefined" ) {
-				    dutch_grant_lots_info[data[i].title[0].value] = { to_party: data[i].field_name.length > 0 ? data[i].field_name[0].value  : "", from_party:  data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "", start: data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "", end: data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "", notes: data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "", descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : ""};   
-				}
-			}
-		}
-		
-
-    })
-    .fail( function(xhr, textStatus, errorThrown) {
-        // LOADING ERROR!
-		console.warn("jQuery AJAX request  ERROR !!!");
-		console.log(xhr.responseText);
-        console.log(textStatus);
-    });
+    getDutchGrantsInfo();
 
 		    var layer_view_flag = true;
 			var timeline_pointer_flag = true;
@@ -436,6 +397,9 @@ my_tooltip.fadeOut(200);
 				$('#grants_layer_items').change(function(){
                     $('.grants_layer').prop('checked',this.checked);
 					if( $( this ).prop('checked') ) {
+					    if(dutch_grant_lots_info.length == 0) {
+					        getDutchGrantsInfo();
+					    }
 					    beforeMap.setLayoutProperty( "grants1-5sp9tb-left", "visibility", "visible" );
 						afterMap.setLayoutProperty( "grants1-5sp9tb-right", "visibility", "visible" ); 
 						beforeMap.setLayoutProperty( "grant-lots-lines-left", "visibility", "visible" );
@@ -459,6 +423,9 @@ my_tooltip.fadeOut(200);
 				
 				$('#grants_layer').click(function() {
 				    if( $( this ).prop('checked') ) {
+					    if(dutch_grant_lots_info.length == 0) {
+					        getDutchGrantsInfo();
+					    }
 					    //if(beforeMap.getLayoutProperty("grants1-5sp9tb-left", "visibility") === "none" )
 					        beforeMap.setLayoutProperty( "grants1-5sp9tb-left", "visibility", "visible" ); 
 						//if(afterMap.getLayoutProperty("grants1-5sp9tb-right", "visibility") === "none" )
@@ -587,6 +554,51 @@ my_tooltip.fadeOut(200);
 				    $("label#close").trigger("click");
                 });
 			});
+			
+			
+// for test local host REST_API/grant-lots-export.json
+// for test remote host https://lifecourse.xyz/upwork/test/ny/grant-lots-export.json
+// REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
+function getDutchGrantsInfo() {
+	$.ajax({
+				url: "https://nahc-mapping.org/mappingNY/dev/grant-lots-export",
+				headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+				type: 'get',
+                dataType: 'json',
+				data: {}
+    })
+	.done(function(data) { 
+	  
+		//console.log(data);
+		if(data.length > 0) {
+		    for(let i = 0; i < data.length; i++){
+			    /*
+			    html_cont += "<br><b>Lot:</b> &nbsp <i>" + data[i].title[0].value + "</i>";
+				html_cont += "<br><b>To Party:</b> &nbsp <i>" + ( data[i].field_name.length > 0 ? data[i].field_name[0].value  : "") + "</i>";
+				html_cont += "<br><b>From Party:</b> &nbsp <i>" + ( data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "") + "</i>";
+                html_cont += "<br><b>Start:</b> &nbsp <i>" + ( data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "") + "</i>";
+	            html_cont += "<br><b>End:</b> &nbsp <i>" + ( data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "") + "</i>";
+				html_cont += "<br><b>Notes:</b> &nbsp <i>" + ( data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "") + "</i>";
+	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
+				*/
+				if( typeof data[i].title[0].value != "undefined" ) {
+				    dutch_grant_lots_info[data[i].title[0].value] = { to_party: data[i].field_name.length > 0 ? data[i].field_name[0].value  : "", from_party:  data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "", start: data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "", end: data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "", notes: data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "", descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : ""};   
+				}
+			}
+		}
+		
+
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        // LOADING ERROR!
+		console.warn("jQuery AJAX request  ERROR !!!");
+		console.log(xhr.responseText);
+        console.log(textStatus);
+    });
+}
+
 		</script>
 
 		<script type="text/javascript">
