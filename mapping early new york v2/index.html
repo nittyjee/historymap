@@ -561,7 +561,7 @@ my_tooltip.fadeOut(200);
 // REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
 function getDutchGrantsInfo() {
 	$.ajax({
-				url: "https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export",
+				url: "https://nahc-mapping.org/mappingNY/dev/grant-lots-export",
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -584,7 +584,23 @@ function getDutchGrantsInfo() {
 	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
 				*/
 				if( typeof data[i].title[0].value != "undefined" ) {
-				    dutch_grant_lots_info[data[i].title[0].value] = { to_party: data[i].field_name.length > 0 ? data[i].field_name[0].value  : "", from_party:  data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "", start: data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "", end: data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "", notes: data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "", descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : ""};   
+				    dutch_grant_lots_info[data[i].title[0].value] = { 
+					    to_party: data[i].field_name.length > 0 ? (  
+						    ( data[i].field_name456.length > 0 ? "<a href='https://nahc-mapping.org" + data[i].field_name456[0].url + "' target='_blank'>" : "" ) +
+						     data[i].field_name[0].value  +
+							( data[i].field_name456.length > 0 ? "</a>"  : "" )
+						) : "", 
+					    from_party:  data[i].field_from_party_text_.length > 0 ? (
+						    ( data[i].field_from_party.length > 0 ? "<a href='https://nahc-mapping.org" + data[i].field_from_party[0].url + "' target='_blank'>" : "" ) +
+						    data[i].field_from_party_text_[0].value  +
+							( data[i].field_from_party.length > 0 ? "</a>"  : "" )
+						) : "",
+						start: data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "", 
+						end: data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "", 
+						notes: data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "", 
+						descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : "",
+						builds: data[i].field_current_buildings_and_land.length > 0 ? data[i].field_current_buildings_and_land : []
+					};   
 				}
 			}
 		}
