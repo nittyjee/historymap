@@ -252,6 +252,12 @@ function buildDutchGrantPopUpInfo(props) {
 					props.descriptio + "<br><br>"
 				;
 			} else {
+				var builds_imgs = "";
+				if(dutch_grant_lots_info[props.Lot].builds.length > 0) {
+					for(let i = 0; i < dutch_grant_lots_info[props.Lot].builds.length; i++){
+						builds_imgs += "<img src='" + dutch_grant_lots_info[props.Lot].builds[i].url + "'  width='258' alt='" + dutch_grant_lots_info[props.Lot].builds[i].alt  + "' title='" + dutch_grant_lots_info[props.Lot].builds[i].title  + "'><br><br>";
+					}
+				}
 				popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
 				    "<br>" +
@@ -267,7 +273,8 @@ function buildDutchGrantPopUpInfo(props) {
 					"<i>" + dutch_grant_lots_info[props.Lot].notes + "</i><br><br>" +
 					"<b>Description:</b>" +
 					"<br>" +
-					"<i>" + dutch_grant_lots_info[props.Lot].descr + "</i><br><br>"
+					"<i>" + dutch_grant_lots_info[props.Lot].descr + "</i><br><br>" +
+                                        builds_imgs
 				;
 			}
 				
