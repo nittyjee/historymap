@@ -587,6 +587,7 @@ function getDutchGrantsInfo() {
 				*/
 				if( typeof data[i].title[0].value != "undefined" ) {
 				    dutch_grant_lots_info[data[i].title[0].value] = { 
+					    name_txt: data[i].field_name.length > 0 ? data[i].field_name[0].value : "", 
 					    to_party: data[i].field_name.length > 0 ? (  
 						    ( data[i].field_name456.length > 0 ? "<a href='https://nahc-mapping.org" + data[i].field_name456[0].url + "' target='_blank'>" : "" ) +
 						     data[i].field_name[0].value  +
