@@ -75,9 +75,13 @@ function addBeforeLayers(yr, date) {
 					
 					//console.log(e.lngLat.lng);
                  
-                 
-					var PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>" +
-									"<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+                 		        var PopUpHTML = "";
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
