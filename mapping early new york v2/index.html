@@ -559,9 +559,11 @@ my_tooltip.fadeOut(200);
 // for test local host REST_API/grant-lots-export.json
 // for test remote host https://lifecourse.xyz/upwork/test/ny/grant-lots-export.json
 // REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
+// REST API https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export
+			
 function getDutchGrantsInfo() {
 	$.ajax({
-				url: "https://nahc-mapping.org/mappingNY/dev/grant-lots-export",
+				url: "https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export",
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
