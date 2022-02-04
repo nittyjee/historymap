@@ -560,8 +560,11 @@ my_tooltip.fadeOut(200);
 // for test remote host https://lifecourse.xyz/upwork/test/ny/grant-lots-export.json
 // REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
 // REST API https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export
-			
+
 function getDutchGrantsInfo() {
+    
+	var data_info_index = "";
+	
 	$.ajax({
 				url: "https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export",
 				headers: {
@@ -586,7 +589,23 @@ function getDutchGrantsInfo() {
 	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
 				*/
 				if( typeof data[i].title[0].value != "undefined" ) {
-				    dutch_grant_lots_info[data[i].title[0].value] = { 
+				    
+					data_info_index = data[i].title[0].value;
+					data_info_index = data_info_index.replace(/\s+/g, '');
+					//data_info_index = data_info_index.toLowerCase();
+					//console.log(/FortAmsterdam/.test(data_info_index));
+					if(/FortAmsterdam/.test(data_info_index)) {
+					    //console.log(data_info_index);
+						data_info_index = "Fort Amsterdam";
+					}
+					
+					/*
+					if(/J-Block-Garden-DWIC/.test(data_info_index)) {
+					    console.log(data_info_index);
+					}
+					*/
+				   
+				    dutch_grant_lots_info[data_info_index] = { 
 					    name_txt: data[i].field_name.length > 0 ? data[i].field_name[0].value : "", 
 					    to_party: data[i].field_name.length > 0 ? (  
 						    ( data[i].field_name456.length > 0 ? "<a href='https://nahc-mapping.org" + data[i].field_name456[0].url + "' target='_blank'>" : "" ) +
@@ -1638,4 +1657,5 @@ img#logo-img {
 	</body>
 
 </html>
+
 
