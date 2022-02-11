@@ -122,6 +122,10 @@ var afterMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick:
 var afterMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
+//*A#
+var afterHighMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
 var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
@@ -226,27 +230,103 @@ beforeMap.on("load", function () {
 						
 		}).on('click', 'grants1-5sp9tb-left' , function (e) {
 				        
+					var highPopUpHTML = "";
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
+					
+						
 						if(layer_view_flag) {
 							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
+									if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
 								} else {
 									buildDutchGrantPopUpInfo(e.features[0].properties);
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+									beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 								}
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+								beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 							}
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
 							$("#infoLayerDutchGrants").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
-							dgrants_layer_view_id = null;
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                { hover: true }
+                            );
+							afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+							beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
+							dgrants_layer_view_id = e.features[0].id;
+							//dgrants_layer_view_id = null;
 					    } 
 						
 						dutch_grant_click_ev = true;
@@ -382,28 +462,103 @@ afterMap.on("load", function () {
 						grant_lots_click_ev = true;
 						
 		}).on('click', 'grants1-5sp9tb-right' , function (e) {
-				        
+						
+			        var highPopUpHTML = "";
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
+						
 						if(layer_view_flag) {
 							if(dgrants_layer_view_id == e.features[0].id) {
 								if(dgrants_layer_view_flag) {
 							        $("#infoLayerDutchGrants").slideUp(); 
 									dgrants_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
+									if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
 								} else {
 									buildDutchGrantPopUpInfo(e.features[0].properties);
 							        $("#infoLayerDutchGrants").slideDown();
 								    dgrants_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+									beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 								}
 							} else {
 								buildDutchGrantPopUpInfo(e.features[0].properties);
 							    $("#infoLayerDutchGrants").slideDown();
 								dgrants_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+								beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 							}
 							dgrants_layer_view_id = e.features[0].id;
 						} else {
 							buildDutchGrantPopUpInfo(e.features[0].properties);
 							$("#infoLayerDutchGrants").slideDown();
 							$('#view-hide-layer-panel').trigger('click');
-							dgrants_layer_view_id = null;
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
+                                { hover: true }
+                            );
+							afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+							beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
+							dgrants_layer_view_id = e.features[0].id;
+							//dgrants_layer_view_id = null;
 					    } 
 						
 						dutch_grant_click_ev = true;
@@ -562,14 +717,6 @@ afterMap.on('style.load', function () {
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
 });
-
-
-
-
-
-
-
-
 
 
 
