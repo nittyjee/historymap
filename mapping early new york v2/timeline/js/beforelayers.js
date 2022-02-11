@@ -21,6 +21,35 @@ function addBeforeLayers(yr, date) {
        
 	   
 	    //ADD GRANTS POLYGONS
+        //*A#
+        beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "grants1-5sp9tb-left-highlighted",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.b5bpfqeb"
+			},
+			layout: {
+                visibility: document.getElementById('grants_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "grants1-5sp9tb",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
 
         beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
@@ -75,13 +104,13 @@ function addBeforeLayers(yr, date) {
 					
 					//console.log(e.lngLat.lng);
                  
-                 		        var PopUpHTML = "";
+                    var PopUpHTML = "";
 					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
 					} else {	
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
 					}
-					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
+					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
 					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -709,6 +738,5 @@ function addCurrentBuildingsBeforeLayers() {
             });
 	
 }
-
 
 
