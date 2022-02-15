@@ -70,6 +70,15 @@ modal_content_html["grants-info-layer"] = `
 			<p>
 			<br>
 			 `;
+
+modal_header_text["farms-info-layer"] = "Original Grants & Farms";
+modal_content_html["farms-info-layer"] = `
+
+
+			The Original Grants and the Farms Layer
+
+			<br>
+			 `;
 			
 modal_header_text["castello-info-layer"] = "Castello Taxlots Layer";
 modal_content_html["castello-info-layer"] = `
@@ -208,3 +217,4 @@ modal_header_text["satellite-image"] = "Current Satellite";
 modal_content_html["satellite-image"] = `
 			This is a current satellite map of the area, with roads highlighted and labeled. Use this to compare other map overlays, and see then vs now, swiping the vertical bar left and right.
             `;
+
