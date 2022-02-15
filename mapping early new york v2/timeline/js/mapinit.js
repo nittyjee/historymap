@@ -1,14 +1,17 @@
 var grant_lots_view_id = null,
     dgrants_layer_view_id = null,
+	farms_layer_view_id = null,
 	curr_layer_view_id = null,
     grant_lots_view_flag = false,
     demo_layer_view_flag = false,
     castello_layer_view_flag = false,
 	dgrants_layer_view_flag = false,
+	farms_layer_view_flag = false,
 	curr_layer_view_flag = false;
 	
 $("#infoLayerGrantLots").slideUp();
 $("#infoLayerDutchGrants").slideUp();
+$("#infoLayerFarms").slideUp();
 $("#demoLayerInfo").slideUp();
 $("#infoLayerCastello").slideUp();
 $("#infoLayerCurrLots").slideUp();
@@ -107,6 +110,7 @@ var castello_click_ev = false,
     grant_lots_click_ev = false,
 	demo_taxlot_click_ev = false,
 	dutch_grant_click_ev = false,
+	farms_click_ev = false,
 	curr_layer_click_ev = false;
     
 
@@ -129,6 +133,12 @@ var afterHighMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOn
 var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
+var afterHighFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+var afterMapFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
 var afterMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
@@ -142,6 +152,8 @@ var hoveredStateIdRight = null,
 	hoveredGrantLotIdLeft = null,
 	hoveredDutchGrantIdRight = null,
 	hoveredDutchGrantIdLeft = null,
+	hoveredFarmsIdRight = null,
+	hoveredFarmsIdLeft = null,
 	hoveredCurrLotsIdRight = null,
 	hoveredCurrLotsIdLeft = null;
 	
@@ -228,108 +240,13 @@ beforeMap.on("load", function () {
 						
 						grant_lots_click_ev = true;
 						
+		}).on('click', 'stokes_farms_complete_5_reduc-6k9tbl-left' , function (e) {
+					
+		    FarmsClickHandle(e);
+						
 		}).on('click', 'grants1-5sp9tb-left' , function (e) {
 				        
-					var highPopUpHTML = "";
-					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
-					} else {	
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
-					}
-					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
-					
-						
-						if(layer_view_flag) {
-							if(dgrants_layer_view_id == e.features[0].id) {
-								if(dgrants_layer_view_flag) {
-							        $("#infoLayerDutchGrants").slideUp(); 
-									dgrants_layer_view_flag = false;
-									//*A#
-							        afterMap.setFeatureState(
-                                        { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                        { hover: false }
-                                    );
-									beforeMap.setFeatureState(
-                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                        { hover: false }
-                                    );
-									if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
-									if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
-								} else {
-									buildDutchGrantPopUpInfo(e.features[0].properties);
-							        $("#infoLayerDutchGrants").slideDown();
-								    dgrants_layer_view_flag = true;
-									//*A#
-									afterMap.setFeatureState(
-                                       { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                       { hover: true }
-                                    );
-									beforeMap.setFeatureState(
-                                       { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                       { hover: true }
-                                    );
-									afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-									beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-								}
-							} else {
-								buildDutchGrantPopUpInfo(e.features[0].properties);
-							    $("#infoLayerDutchGrants").slideDown();
-								dgrants_layer_view_flag = true;
-								//*A#
-								afterMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                    { hover: false }
-                                );
-							    afterMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                    { hover: true }
-                                );
-								beforeMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                    { hover: false }
-                                );
-							    beforeMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                    { hover: true }
-                                );
-                                afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-								beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-							}
-							dgrants_layer_view_id = e.features[0].id;
-						} else {
-							buildDutchGrantPopUpInfo(e.features[0].properties);
-							$("#infoLayerDutchGrants").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							//*A#
-							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                { hover: false }
-                            );
-							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                { hover: true }
-                            );
-							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                { hover: false }
-                            );
-							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                { hover: true }
-                            );
-							afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-							beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-							dgrants_layer_view_id = e.features[0].id;
-							//dgrants_layer_view_id = null;
-					    } 
-						
-						dutch_grant_click_ev = true;
+			DutchGrantsClickHandle(e);
 						
 		}).on('click', 'curr-lots-left' , function (e) {
 				        
@@ -360,7 +277,7 @@ beforeMap.on("load", function () {
 						
 		}).on('click', function () {
 					
-					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !curr_layer_click_ev) {
+					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
 						/*
 						$("#infoLayerGrantLots").slideUp(); 
 						grant_lots_view_flag = false;
@@ -379,6 +296,7 @@ beforeMap.on("load", function () {
 					castello_click_ev = false;
 					grant_lots_click_ev = false;
 					dutch_grant_click_ev = false;
+					farms_click_ev = false;
 					curr_layer_click_ev = false;
 		});
 	
@@ -461,107 +379,13 @@ afterMap.on("load", function () {
 						
 						grant_lots_click_ev = true;
 						
+		}).on('click', 'stokes_farms_complete_5_reduc-6k9tbl-right' , function (e) {
+					
+		    FarmsClickHandle(e);
+						
 		}).on('click', 'grants1-5sp9tb-right' , function (e) {
-						
-			        var highPopUpHTML = "";
-					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
-					} else {	
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
-					}
-					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
-						
-						if(layer_view_flag) {
-							if(dgrants_layer_view_id == e.features[0].id) {
-								if(dgrants_layer_view_flag) {
-							        $("#infoLayerDutchGrants").slideUp(); 
-									dgrants_layer_view_flag = false;
-									//*A#
-							        afterMap.setFeatureState(
-                                        { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                        { hover: false }
-                                    );
-									beforeMap.setFeatureState(
-                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                        { hover: false }
-                                    );
-									if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
-									if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
-								} else {
-									buildDutchGrantPopUpInfo(e.features[0].properties);
-							        $("#infoLayerDutchGrants").slideDown();
-								    dgrants_layer_view_flag = true;
-									//*A#
-									afterMap.setFeatureState(
-                                       { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                       { hover: true }
-                                    );
-									beforeMap.setFeatureState(
-                                       { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                       { hover: true }
-                                    );
-									afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-									beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-								}
-							} else {
-								buildDutchGrantPopUpInfo(e.features[0].properties);
-							    $("#infoLayerDutchGrants").slideDown();
-								dgrants_layer_view_flag = true;
-								//*A#
-								afterMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                    { hover: false }
-                                );
-							    afterMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                    { hover: true }
-                                );
-								beforeMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                    { hover: false }
-                                );
-							    beforeMap.setFeatureState(
-                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                    { hover: true }
-                                );
-                                afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-								beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-							}
-							dgrants_layer_view_id = e.features[0].id;
-						} else {
-							buildDutchGrantPopUpInfo(e.features[0].properties);
-							$("#infoLayerDutchGrants").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							//*A#
-							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                { hover: false }
-                            );
-							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                { hover: true }
-                            );
-							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-                                { hover: false }
-                            );
-							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: e.features[0].id},
-                                { hover: true }
-                            );
-							afterHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-							beforeHighMapGrantLotPopUp.setLngLat(e.lngLat).setHTML(highPopUpHTML);
-							if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
-							dgrants_layer_view_id = e.features[0].id;
-							//dgrants_layer_view_id = null;
-					    } 
-						
-						dutch_grant_click_ev = true;
+					
+		    DutchGrantsClickHandle(e);
 						
 		}).on('click', 'curr-lots-right' , function (e) {
 				        
@@ -591,7 +415,7 @@ afterMap.on("load", function () {
 						curr_layer_click_ev = true;
 						
 		}).on('click', function () {
-			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !curr_layer_click_ev) {
+			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
 						if(windoWidth > 555)
 						    $('#view-hide-layer-panel').trigger('click');
 					}
@@ -600,6 +424,7 @@ afterMap.on("load", function () {
 					castello_click_ev = false;
 					grant_lots_click_ev = false;	
 					dutch_grant_click_ev = false;
+					farms_click_ev = false;
 					curr_layer_click_ev = false;
 		});
 
@@ -617,6 +442,210 @@ afterMap.on("error", function (e) {
 });
 
 
+//////////////////////////////////////////////
+// ===== Layers click event functions ======
+//////////////////////////////////////////////
+	
+		function FarmsClickHandle(event) {
+	
+			            var highPopUpHTML = "<div class='infoLayerFarmsPopUp'>" + event.features[0].properties.To + "</div>";
+								
+						if(layer_view_flag) {
+							if(farms_layer_view_id == event.features[0].id) {
+								if(farms_layer_view_flag) {
+							        $("#infoLayerFarms").slideUp(); 
+									farms_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.remove();
+									if(beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.remove();
+								} else {
+									buildFarmsPopUpInfo(event.features[0].properties);
+							        $("#infoLayerFarms").slideDown();
+								    farms_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.addTo(afterMap);
+									beforeHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.addTo(beforeMap);
+								}
+							} else {
+								buildFarmsPopUpInfo(event.features[0].properties);
+							    $("#infoLayerFarms").slideDown();
+								farms_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: event.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.addTo(afterMap);
+								beforeHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.addTo(beforeMap);
+							}
+							farms_layer_view_id = event.features[0].id;
+						} else {
+							buildFarmsPopUpInfo(event.features[0].properties);
+							$("#infoLayerFarms").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: event.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: event.features[0].id},
+                                { hover: true }
+                            );
+							afterHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.addTo(afterMap);
+							beforeHighFarmPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.addTo(beforeMap);
+							farms_layer_view_id = event.features[0].id;
+							//farms_layer_view_id = null;
+					    } 
+						
+						farms_click_ev = true;
+    }
+	
+	
+	function DutchGrantsClickHandle(event) {
+	
+			        var highPopUpHTML = "";
+					if( typeof dutch_grant_lots_info[event.features[0].properties.Lot] == "undefined" ) {
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + event.features[0].properties.name + "<br>";	
+					} else {	
+						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[event.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[event.features[0].properties.Lot].name_txt : event.features[0].properties.name ) + "<br>";
+					}
+					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + event.features[0].properties.Lot + "</div>";
+						
+						if(layer_view_flag) {
+							if(dgrants_layer_view_id == event.features[0].id) {
+								if(dgrants_layer_view_flag) {
+							        $("#infoLayerDutchGrants").slideUp(); 
+									dgrants_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
+									if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
+								} else {
+									buildDutchGrantPopUpInfo(event.features[0].properties);
+							        $("#infoLayerDutchGrants").slideDown();
+								    dgrants_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+									beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
+								}
+							} else {
+								buildDutchGrantPopUpInfo(event.features[0].properties);
+							    $("#infoLayerDutchGrants").slideDown();
+								dgrants_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: event.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+								beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
+							}
+							dgrants_layer_view_id = event.features[0].id;
+						} else {
+							buildDutchGrantPopUpInfo(event.features[0].properties);
+							$("#infoLayerDutchGrants").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: event.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: event.features[0].id},
+                                { hover: true }
+                            );
+							afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
+							beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
+							dgrants_layer_view_id = event.features[0].id;
+							//dgrants_layer_view_id = null;
+					    } 
+						
+						dutch_grant_click_ev = true;
+    }
 
 //////////////////////////////////////////////
 //TIME LAYER FILTERING. NOT SURE HOW WORKS.
@@ -644,14 +673,22 @@ function changeDate(unixDate) {
 	beforeMap.setFilter("grants1-5sp9tb-left", dateFilter);
     afterMap.setFilter("grants1-5sp9tb-right", dateFilter);
 	
+	beforeMap.setFilter("grants1-5sp9tb-left-highlighted", dateFilter);
+	afterMap.setFilter("grants1-5sp9tb-right-highlighted", dateFilter);
+	
+    //afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right", dateFilter);
+	
 	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
 	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
 	
 	beforeMap.setFilter("grant-lots-left", dateFilter);
 	afterMap.setFilter("grant-lots-right", dateFilter);
 	
+
+	
 	beforeMap.setFilter("grant-lots-lines-left", dateFilter);
 	afterMap.setFilter("grant-lots-lines-right", dateFilter);
+	
 
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	
@@ -684,6 +721,7 @@ beforeMap.on('style.load', function () {
 	console.log(date)
 
 	addBeforeLayers(yr, date);
+	addBeforeFarmsLayer();
 	addCastelloBeforeLayers();
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
@@ -709,6 +747,7 @@ afterMap.on('style.load', function () {
 	console.log(date)
 
 	addAfterLayers(yr, date);
+	addAfterFarmsLayer(date);
 	addCastelloAfterLayers();
 	addGrantLotsAfterLayers(date);
 	addGrantLotsLinesAfterLayers(date);
@@ -717,6 +756,14 @@ afterMap.on('style.load', function () {
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
 });
+
+
+
+
+
+
+
+
 
 
 
