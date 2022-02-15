@@ -497,6 +497,104 @@ my_tooltip.fadeOut(200);
 				});
 				
 				
+				// Farms Layer Start
+				
+				$('#farms_layer_items').change(function(){
+                    $('.farms_layer').prop('checked',this.checked);
+					if( $( this ).prop('checked') ) {
+					    beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted", "visibility", "visible" );
+						afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted", "visibility", "visible" );
+						
+						beforeMap.setLayoutProperty( "farms-lines-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "farms-lines-right", "visibility", "visible" ); 
+					} else {
+					    beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right", "visibility", "none" );
+						beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted", "visibility", "visible" );
+						afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted", "visibility", "none" );
+						
+						beforeMap.setLayoutProperty( "farms-lines-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "farms-lines-right", "visibility", "none" );
+						
+						if(farms_layer_view_flag) { 
+							$("#infoLayerFarms").slideUp(); 
+							farms_layer_view_flag = false;
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							if(afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.remove();
+							if(beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.remove();
+						}
+					}
+                });
+
+                $(".farms_layer").change(function () {
+                    if ($(".farms_layer:checked").length == $(".farms_layer").length) {
+                        $('#farms_layer_items').prop('checked','checked');
+                    }else{
+                        $('#farms_layer_items').prop('checked',false);  
+                    }
+                });
+				
+				
+				$('#farms_layer').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    //if(beforeMap.getLayoutProperty("stokes_farms_complete_5_reduc-6k9tbl-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("stokes_farms_complete_5_reduc-6k9tbl-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right", "visibility", "visible" ); 
+							beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted", "visibility", "visible" );
+							afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted", "visibility", "visible" );
+					} else {
+					    //if(beforeMap.getLayoutProperty("stokes_farms_complete_5_reduc-6k9tbl-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("stokes_farms_complete_5_reduc-6k9tbl-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right", "visibility", "none" );
+							beforeMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted", "visibility", "none" );
+							afterMap.setLayoutProperty( "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted", "visibility", "none" );
+						if(farms_layer_view_flag) { 
+							$("#infoLayerFarms").slideUp(); 
+							farms_layer_view_flag = false;
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-right-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'stokes_farms_complete_5_reduc-6k9tbl-left-highlighted', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: farms_layer_view_id},
+                                { hover: false }
+                            );
+							if(afterHighFarmPopUp.isOpen()) afterHighFarmPopUp.remove();
+							if(beforeHighFarmPopUp.isOpen()) beforeHighFarmPopUp.remove();
+						}
+					}
+				});
+				
+				$('#farms_layer_lines').click(function() {
+				    if( $( this ).prop('checked') ) {
+					    //if(beforeMap.getLayoutProperty("farms-lines-left", "visibility") === "none" )
+					        beforeMap.setLayoutProperty( "farms-lines-left", "visibility", "visible" ); 
+						//if(afterMap.getLayoutProperty("farms-lines-right", "visibility") === "none" )
+					        afterMap.setLayoutProperty( "farms-lines-right", "visibility", "visible" ); 
+					} else {
+					    //if(beforeMap.getLayoutProperty("farms-lines-left", "visibility") === "visible" )
+					        beforeMap.setLayoutProperty( "farms-lines-left", "visibility", "none" ); 
+						//if(afterMap.getLayoutProperty("farms-lines-right", "visibility") === "visible" )
+					        afterMap.setLayoutProperty( "farms-lines-right", "visibility", "none" );
+					}
+				});
+				
+				// Farms Layer End
+				
+				
 				$('#grant_lots').click(function() {
 				    if( $( this ).prop('checked') ) {
 					    //if(beforeMap.getLayoutProperty("grant-lots-left", "visibility") === "none" )
@@ -606,7 +704,7 @@ function getDutchGrantsInfo() {
 	dutch_grant_lots_info_length = 0;
 	
 	$.ajax({
-				url: "https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export",
+				url: "REST_API/grant-lots-export.json",
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -1046,7 +1144,7 @@ padding:2px 7px;
 }
 
 #studioMenu { width: 300px; }
-#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerCurrLots { 
+#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerFarms, #infoLayerCurrLots { 
     padding: 5px;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -1085,7 +1183,10 @@ padding:2px 7px;
     background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
     border: solid #FFFF00 2px;
 }
-
+#infoLayerFarms, .infoLayerFarmsPopUp { 
+    background-color: rgb(255, 192, 203, 0.5); /* #FFC0CB Pink */
+    border: solid #FFC0CB 2px;
+}
 #infoLayerCurrLots, .infoLayerCurrLotsPopUp { 
     background-color: rgb(123, 104, 238, 0.3); /* #7B68EE MediumSlateBlue */
     border: solid #7B68EE 2px;
@@ -1121,7 +1222,7 @@ i.layer-info:hover { opacity: 0.7; }
 }
 */
 
-.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerCurrLotsPopUp {
+.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerFarmsPopUp, .infoLayerCurrLotsPopUp {
     padding-left: 5px;
 	padding-right: 5px;
 }
@@ -1446,6 +1547,28 @@ img#logo-img {
       <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 	  </div>
 	  
+	  
+	  <!-- Farms Layers Items -->
+	  <div class="layer-list-row" >
+	  <input type="checkbox" id="farms_layer_items" name="farms_layer_items">
+      <label for="farms_layer_items"> <i class="fas fa-caret-down"></i> Original Grants &amp; Farms</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="farms-info-layer"  title="Layer Info" ></i>
+	  </div>
+
+	  
+	  <!-- Farms Layers -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" id="farms_layer" class="farms_layer" name="farms_layer">
+      <label for="farms_layer"> <i class="fa fa-square" style="color: #FFC0CB;" ></i> Information</label>
+	  </div>
+	  
+	  <!-- Farms Layers Lines -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" id="farms_layer_lines" class="farms_layer" name="farms_layer_lines">
+      <label for="farms_layer_lines"> <i class="far fa-square" style="color: #FFD700;" ></i> Lines</label>
+	  </div>
+	  
+	  
 	  <!-- Castello Points -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="castello_points" name="castello_points">
@@ -1609,6 +1732,7 @@ img#logo-img {
 	
 	  <div id="infoLayerGrantLots"></div>
 	  <div id="infoLayerDutchGrants"></div>
+	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
 	  <div id="demoLayerInfo"></div>
 	  <div id="infoLayerCurrLots"></div>
@@ -1724,4 +1848,5 @@ img#logo-img {
 	</body>
 
 </html>
+
 
