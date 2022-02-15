@@ -139,7 +139,7 @@ function addAfterLayers(yr, date) {
                 hoveredDutchGrantIdRight = null;		
 				if(afterMapDutchGrantPopUp.isOpen()) afterMapDutchGrantPopUp.remove();
             });
-			
+		
 
 
 		//ADD TAX LOT POINTS
@@ -408,6 +408,151 @@ function addGrantLotsLinesAfterLayers(date) {
 			
 }
 
+
+/////////////////////////
+//  Farms Static Layer
+/////////////////////////
+
+function addAfterFarmsLayer(date) {
+	
+		//ADD FARMS POLYGONS
+        
+		//*A#
+		    afterMap.addLayer({
+                id: "farms-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8n7ba8lp"
+                },
+				layout: {
+                    visibility: document.getElementById('farms_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "stokes_farms_lines-apf0fk",
+                paint: {
+				    "line-color": "#FFD700",
+					"line-width": 3,
+					"line-opacity": 0.7
+				}
+			
+            });
+		
+		
+        afterMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.220x7bg9"
+			},
+			layout: {
+                visibility: document.getElementById('farms_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "stokes_farms_complete_5_reduc-6k9tbl",
+			paint: {
+				"fill-color": "#FFC0CB",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0
+                        ],
+				"fill-outline-color": "#C71585"
+
+			}
+		});
+
+        afterMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "stokes_farms_complete_5_reduc-6k9tbl-right",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.220x7bg9"
+			},
+			layout: {
+                visibility: document.getElementById('farms_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "stokes_farms_complete_5_reduc-6k9tbl",
+			paint: {
+				"fill-color": "#FFC0CB",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.45
+                        ],
+				"fill-outline-color": "#C71585"
+
+			}
+			
+		});
+
+
+        //CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'stokes_farms_complete_5_reduc-6k9tbl-right', function (e) {
+				console.log(e.features[0]);
+                afterMap.getCanvas().style.cursor = 'pointer';
+				afterMapFarmPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			});
+			
+            afterMap.on('mousemove', 'stokes_farms_complete_5_reduc-6k9tbl-right', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredFarmsIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredFarmsIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+                        { hover: true }
+                    );
+					
+                    //console.log(e.lngLat.lng);
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                afterMapFarmPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        "<div class='infoLayerFarmsPopUp'>" + e.features[0].properties.To + "</div>"
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			afterMap.on('mouseleave', 'stokes_farms_complete_5_reduc-6k9tbl-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredFarmsIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredFarmsIdRight = null;		
+				if(afterMapFarmPopUp.isOpen()) afterMapFarmPopUp.remove();
+            });
+            
+	
+}
 
 /////////////////////////
 // Castello Static Layer
@@ -727,5 +872,6 @@ function addCurrentBuildingsAfterLayers() {
 			
             });
 }
+
 
 
