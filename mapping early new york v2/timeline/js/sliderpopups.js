@@ -274,12 +274,32 @@ function buildDutchGrantPopUpInfo(props) {
 					"<b>Description:</b>" +
 					"<br>" +
 					"<i>" + dutch_grant_lots_info[props.Lot].descr + "</i><br><br>" +
-                                        builds_imgs
+                    builds_imgs
 				;
 			}
 				
     
 	$("#infoLayerDutchGrants").html(popup_html);
+
+}
+
+
+function buildFarmsPopUpInfo(props) {
+	        var popup_html = "";
+			//console.log(props);
+
+			    popup_html = 
+				    "<h3>Original Grants &amp; Farms</h3><hr>" +
+					"<br>" +
+					"<b>To:</b> <i>" + props.To + "</i><br>" +
+					"<b>Date:</b> <i>" + props.Date + "</i><br>" +
+					"<br>" 
+				;
+				
+			
+				
+    
+	$("#infoLayerFarms").html(popup_html);
 
 }
 
@@ -300,4 +320,3 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
-
