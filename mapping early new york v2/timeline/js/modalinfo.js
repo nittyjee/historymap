@@ -75,8 +75,17 @@ modal_header_text["farms-info-layer"] = "Original Grants & Farms";
 modal_content_html["farms-info-layer"] = `
 
 
-			The Original Grants and the Farms Layer
-
+			The Original Farms and Grants were among the first properties that the Dutch West India Company awarded. Slide the timeline beneath to see how they were granted over time, from 1625. Hover over them to see who owned the grant and when it was granted.
+			<p>
+			<br>
+			The layer is a supplement of the Dutch Grants map layer, both of which you can click to see side by side. The Dutch Grants Map cover what is within the walls of New Amsterdam, and the Original Farms and Grants layer cover what is north of the north wall (Wall Street today).
+			<p>
+			<br>
+			The grants were traced from the Original Grants and Farms map in The Iconography of Manhattan Island, where they were drawn using property descriptions. You can see the Original Grants and Farms map overlay beneath: “Original Grants and Farms 1914 ”. There are many more boundaries drawn over one another, which include further divisions of grants and later farms.
+			<p>
+			<br>
+			This layer only shows the grants as they were first established, not as they were divided or sold. For example, if a grant was made in 1640, in 1641 it may have been divided, with different owners, but you will still see it as it was when it was granted, across the whole timeline. In the Dutch Grants layer, only one Dutch Grant, C7,  has been divided to show its evolution over the whole Dutch period - See the map layer: “Demo Grant Divisions: C7”.  Future funding will allow us to show all of them this way.
+			<p>
 			<br>
 			 `;
 			
