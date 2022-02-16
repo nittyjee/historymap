@@ -122,7 +122,19 @@ var places_popup_html = "";
 
 var afterMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
     beforeMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+	
+var afterHighCastelloPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
+    beforeHighCastelloPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
 
+var afterHighDemoPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
+    beforeHighDemoPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+	
+var afterHighGrantLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighGrantLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+	
+var afterHighCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+	
 var afterMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
@@ -170,75 +182,16 @@ beforeMap.on("load", function () {
 	
 		// CLICK AND OPEN POPUP
 		beforeMap.on('click', 'c7_dates-ajsksu-left', function (e) {
-		            if(demo_layer_view_flag) {
-				        $("#demoLayerInfo").slideUp();
-						demo_layer_view_flag = false;
-					} else {
-						
-						
-						buildPopUpInfo(e.features[0].properties);
-					    $("#demoLayerInfo").slideDown();
-						demo_layer_view_flag = true;
-						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
-					}
-					
-	                demo_taxlot_click_ev = true;
+		          
+            DemoClickHandle(e);
+				  
 		}).on('click', 'places-left', function (e) {
-			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
-				        $("#infoLayerCastello").slideUp();
-						castello_layer_view_flag = false;
-		    } else {
-				   clickedStateId = e.features[0].id;
-				
-				
-					places_popup_html = "<h3>Castello Taxlot (1660)</h3><hr>" +
-						"<br>" +
-						"<b>" + "Taxlot: " + "</b>" + 
-						e.features[0].properties.LOT2 +
-						"<br>" +
-						"<b>" + "Property Type: " + "</b>" + 
-						e.features[0].properties.tax_lots_1 +
-						"<br>" +
-						"<br>" +
-						"<b>" + "Encyclopedia Page: " + "</b>" + 
-						"<br>" +
-						'<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
-					
-					$("#infoLayerCastello").html(places_popup_html).slideDown();
-				    castello_layer_view_flag = true;
-					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
-			}
-			
-			castello_click_ev = true;
+              
+			CastelloClickHandle(e);
+			  
         }).on('click', 'grant-lots-left' , function (e) {
 				        
-						if(layer_view_flag) {
-							if(grant_lots_view_id == e.features[0].id) {
-								if(grant_lots_view_flag) {
-							        $("#infoLayerGrantLots").slideUp(); 
-									grant_lots_view_flag = false;
-								} else {
-									//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
-									buildGrantLotsPopUpInfo(e.features[0].properties);
-							        $("#infoLayerGrantLots").slideDown();
-								    grant_lots_view_flag = true;
-								}
-							} else {
-			                    //$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
-								buildGrantLotsPopUpInfo(e.features[0].properties);
-							    $("#infoLayerGrantLots").slideDown();
-								grant_lots_view_flag = true;
-							}
-							grant_lots_view_id = e.features[0].id;
-						} else {
-							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
-							buildGrantLotsPopUpInfo(e.features[0].properties);
-							$("#infoLayerGrantLots").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							grant_lots_view_id = null;
-					    } 
-						
-						grant_lots_click_ev = true;
+            GrantLotsHandle(e);
 						
 		}).on('click', 'stokes_farms_complete_5_reduc-6k9tbl-left' , function (e) {
 					
@@ -250,54 +203,12 @@ beforeMap.on("load", function () {
 						
 		}).on('click', 'curr-lots-left' , function (e) {
 				        
-						if(layer_view_flag) {
-							if(curr_layer_view_id == e.features[0].id) {
-								if(curr_layer_view_flag) {
-							        $("#infoLayerCurrLots").slideUp(); 
-									curr_layer_view_flag = false;
-								} else {
-									buildCurrLotsPopUpInfo(e.features[0].properties);
-							        $("#infoLayerCurrLots").slideDown();
-								    curr_layer_view_flag = true;
-								}
-							} else {
-								buildCurrLotsPopUpInfo(e.features[0].properties);
-							    $("#infoLayerCurrLots").slideDown();
-								curr_layer_view_flag = true;
-							}
-							curr_layer_view_id = e.features[0].id;
-						} else {
-							buildCurrLotsPopUpInfo(e.features[0].properties);
-							$("#infoLayerCurrLots").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							curr_layer_view_id = null;
-					    } 
-						
-						curr_layer_click_ev = true;
+            CurrLotsHandle(e);
 						
 		}).on('click', function () {
 					
-					if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
-						/*
-						$("#infoLayerGrantLots").slideUp(); 
-						grant_lots_view_flag = false;
-                        $("#demoLayerInfo").slideUp();
-			            demo_layer_view_flag = false;
-                        $("#infoLayerCastello").slideUp();
-			            castello_layer_view_flag = false;
-						*/
-						
-						//*A
-                        if(windoWidth > 555)
-			                $('#view-hide-layer-panel').trigger('click');
-					}
+			DefaultHandle();
 					
-					demo_taxlot_click_ev = false;
-					castello_click_ev = false;
-					grant_lots_click_ev = false;
-					dutch_grant_click_ev = false;
-					farms_click_ev = false;
-					curr_layer_click_ev = false;
 		});
 	
 	
@@ -313,71 +224,16 @@ afterMap.on("load", function () {
 	
 		// CLICK AND OPEN POPUP
 		afterMap.on('click', 'c7_dates-ajsksu-right', function (e) {
-			        if(demo_layer_view_flag) {
-				        $("#demoLayerInfo").slideUp();
-						demo_layer_view_flag = false;
-						//if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
-					} else {
-						
-						buildPopUpInfo(e.features[0].properties);
-					    $("#demoLayerInfo").slideDown();
-						demo_layer_view_flag = true;
-						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
-					}
-					demo_taxlot_click_ev = true;
+			
+            DemoClickHandle(e);
+			
 		}).on('click', 'places-right', function (e) {
-			if(castello_layer_view_flag && (clickedStateId == e.features[0].id) ) {
-				        $("#infoLayerCastello").slideUp();
-						castello_layer_view_flag = false;
-						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
-		    } else {
-				    clickedStateId = e.features[0].id;
-				
-					places_popup_html = "<h3>Castello Taxlot (1660)</h3><hr>" +
-						"<br>" +
-						"<b>" + "Taxlot: " + "</b>" + 
-						e.features[0].properties.LOT2 +
-						"<br>" +
-						"<b>" + "Property Type: " + "</b>" + 
-						e.features[0].properties.tax_lots_1 +
-						"<br>" +
-						"<br>" +
-						"<b>" + "Encyclopedia Page: " + "</b>" + 
-						"<br>" +
-						'<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>';
-					
-					$("#infoLayerCastello").html(places_popup_html).slideDown();
-				    castello_layer_view_flag = true;
-					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
-			}
-		    castello_click_ev = true;
+			
+			CastelloClickHandle(e);
+			
         }).on('click', 'grant-lots-right' , function (e) {
 				        
-						if(layer_view_flag) {
-							if(grant_lots_view_id == e.features[0].id) {
-								if(grant_lots_view_flag) {
-							        $("#infoLayerGrantLots").slideUp();						
-									grant_lots_view_flag = false;
-								} else {
-									buildGrantLotsPopUpInfo(e.features[0].properties);
-							        $("#infoLayerGrantLots").slideDown();
-								    grant_lots_view_flag = true;
-								}
-							} else {
-								buildGrantLotsPopUpInfo(e.features[0].properties);
-							    $("#infoLayerGrantLots").slideDown();
-								grant_lots_view_flag = true;
-							}
-							grant_lots_view_id = e.features[0].id;
-						} else {
-							//$("#infoLayerGrantLots").html(e.features[0].properties.name).slideDown();
-							buildGrantLotsPopUpInfo(e.features[0].properties);
-							$("#infoLayerGrantLots").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							grant_lots_view_id = null;
-					    } 
-						
-						grant_lots_click_ev = true;
+            GrantLotsHandle(e);
 						
 		}).on('click', 'stokes_farms_complete_5_reduc-6k9tbl-right' , function (e) {
 					
@@ -389,43 +245,12 @@ afterMap.on("load", function () {
 						
 		}).on('click', 'curr-lots-right' , function (e) {
 				        
-						if(layer_view_flag) {
-							if(curr_layer_view_id == e.features[0].id) {
-								if(curr_layer_view_flag) {
-							        $("#infoLayerCurrLots").slideUp(); 
-									curr_layer_view_flag = false;
-								} else {
-									buildCurrLotsPopUpInfo(e.features[0].properties);
-							        $("#infoLayerCurrLots").slideDown();
-								    curr_layer_view_flag = true;
-								}
-							} else {
-								buildCurrLotsPopUpInfo(e.features[0].properties);
-							    $("#infoLayerCurrLots").slideDown();
-								curr_layer_view_flag = true;
-							}
-							curr_layer_view_id = e.features[0].id;
-						} else {
-							buildCurrLotsPopUpInfo(e.features[0].properties);
-							$("#infoLayerCurrLots").slideDown();
-							$('#view-hide-layer-panel').trigger('click');
-							curr_layer_view_id = null;
-					    } 
-						
-						curr_layer_click_ev = true;
+			CurrLotsHandle(e);		
 						
 		}).on('click', function () {
-			        if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
-						if(windoWidth > 555)
-						    $('#view-hide-layer-panel').trigger('click');
-					}
+			        
+			DefaultHandle();
 					
-					demo_taxlot_click_ev = false;
-					castello_click_ev = false;
-					grant_lots_click_ev = false;	
-					dutch_grant_click_ev = false;
-					farms_click_ev = false;
-					curr_layer_click_ev = false;
 		});
 
 	
@@ -445,6 +270,255 @@ afterMap.on("error", function (e) {
 //////////////////////////////////////////////
 // ===== Layers click event functions ======
 //////////////////////////////////////////////
+	    
+		function DefaultHandle() {
+		
+		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
+                        if(windoWidth > 555)
+			                $('#view-hide-layer-panel').trigger('click');
+					}
+					
+					demo_taxlot_click_ev = false;
+					castello_click_ev = false;
+					grant_lots_click_ev = false;
+					dutch_grant_click_ev = false;
+					farms_click_ev = false;
+					curr_layer_click_ev = false;
+		
+		}
+		
+		
+		function CurrLotsHandle(event) {
+			            var highPopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + "<b>" + event.features[0].properties.OwnerName + "</b>" + "<br>" +
+									        event.features[0].properties.Address + "</div>";	
+			
+			 		    if(layer_view_flag) {
+							if(curr_layer_view_id == event.features[0].id) {
+								if(curr_layer_view_flag) {
+							        $("#infoLayerCurrLots").slideUp(); 
+									curr_layer_view_flag = false;
+									//*A#
+									afterMap.setFeatureState(
+                                        { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.remove();
+									if(beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.remove();
+								} else {
+									buildCurrLotsPopUpInfo(event.features[0].properties);
+							        $("#infoLayerCurrLots").slideDown();
+								    curr_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							        if(!afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.addTo(afterMap);
+							        beforeHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							        if(!beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.addTo(beforeMap);
+								}
+							} else {
+								buildCurrLotsPopUpInfo(event.features[0].properties);
+							    $("#infoLayerCurrLots").slideDown();
+								curr_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                    { hover: false }
+                                );
+								afterMap.setFeatureState(
+                                    { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								afterHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.addTo(afterMap);
+							    beforeHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.addTo(beforeMap);
+							}
+							curr_layer_view_id = event.features[0].id;
+						} else {
+							buildCurrLotsPopUpInfo(event.features[0].properties);
+							$("#infoLayerCurrLots").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: event.features[0].id},
+                                { hover: true }
+                            );
+						    beforeMap.setFeatureState(
+                                { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: event.features[0].id},
+                                { hover: true }
+                            );
+							afterHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+						    if(!afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.addTo(afterMap);
+							beforeHighCurrLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.addTo(beforeMap);
+							curr_layer_view_id = event.features[0].id;
+							//curr_layer_view_id = null;
+					    } 
+						
+						curr_layer_click_ev = true;
+		}
+
+			 
+
+        function GrantLotsHandle(event) { 
+		            
+					var highPopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+									    event.features[0].properties.name + "<br>" +
+										"<b>Start:</b> " + event.features[0].properties.day1 + ", " + event.features[0].properties.year1 + "<br>" +
+										"<b>End:</b> " + event.features[0].properties.day2 + ", " + event.features[0].properties.year2 + "<br>" +
+										//"<br>" +
+										"<b>Lot Division: </b>" + event.features[0].properties.dutchlot +
+									    "</div>";
+		
+						if(layer_view_flag) {
+							if(grant_lots_view_id == event.features[0].id) {
+								if(grant_lots_view_flag) {
+							        $("#infoLayerGrantLots").slideUp(); 
+									grant_lots_view_flag = false;
+									if(afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.remove();
+									if(beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.remove();
+								} else {
+									//$("#infoLayerGrantLots").html(event.features[0].properties.name).slideDown();
+									buildGrantLotsPopUpInfo(event.features[0].properties);
+							        $("#infoLayerGrantLots").slideDown();
+								    grant_lots_view_flag = true;
+									afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
+									beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
+								}
+							} else {
+			                    //$("#infoLayerGrantLots").html(event.features[0].properties.name).slideDown();
+								buildGrantLotsPopUpInfo(event.features[0].properties);
+							    $("#infoLayerGrantLots").slideDown();
+								grant_lots_view_flag = true;
+								afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
+								beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
+							}
+							grant_lots_view_id = event.features[0].id;
+						} else {
+							//$("#infoLayerGrantLots").html(event.features[0].properties.name).slideDown();
+							buildGrantLotsPopUpInfo(event.features[0].properties);
+							$("#infoLayerGrantLots").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							grant_lots_view_id = null;
+							afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
+							beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
+					    } 
+						
+						grant_lots_click_ev = true;
+        }
+		
+			 
+        function DemoClickHandle(event) { 
+					if(demo_layer_view_flag) {
+				        $("#demoLayerInfo").slideUp();
+						demo_layer_view_flag = false;
+						//if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
+						if(afterHighDemoPopUp.isOpen()) afterHighDemoPopUp.remove();
+						if(beforeHighDemoPopUp.isOpen()) beforeHighDemoPopUp.remove();
+					} else {
+						
+						buildPopUpInfo(event.features[0].properties);
+					    $("#demoLayerInfo").slideDown();
+						demo_layer_view_flag = true;
+						if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
+						
+						beforeHighDemoPopUp
+                        .setLngLat(coordinates)
+                        .setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>");
+					    if(!beforeHighDemoPopUp.isOpen()) beforeHighDemoPopUp.addTo(beforeMap);
+					
+					    afterHighDemoPopUp
+                        .setLngLat(coordinates)
+						.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>");
+					    if(!afterHighDemoPopUp.isOpen()) afterHighDemoPopUp.addTo(afterMap);
+					}
+					demo_taxlot_click_ev = true;
+        }
+	
+	
+	    function CastelloClickHandle(event) {
+	        if(castello_layer_view_flag && (clickedStateId == event.features[0].id) ) {
+				        $("#infoLayerCastello").slideUp();
+						castello_layer_view_flag = false;
+						//if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+						if(afterHighCastelloPopUp.isOpen()) afterHighCastelloPopUp.remove();
+						if(beforeHighCastelloPopUp.isOpen()) beforeHighCastelloPopUp.remove();
+		    } else {
+				    clickedStateId = event.features[0].id;
+				
+					places_popup_html = "<h3>Castello Taxlot (1660)</h3><hr>" +
+						"<br>" +
+						"<b>" + "Taxlot: " + "</b>" + 
+						event.features[0].properties.LOT2 +
+						"<br>" +
+						"<b>" + "Property Type: " + "</b>" + 
+						event.features[0].properties.tax_lots_1 +
+						"<br>" +
+						"<br>" +
+						"<b>" + "Encyclopedia Page: " + "</b>" + 
+						"<br>" +
+						'<a href="' + event.features[0].properties.new_link + '" target="_blank">' + event.features[0].properties.new_link + '</a>';
+				
+				coordinates = event.features[0].geometry.coordinates.slice();
+                //var description = event.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				
+					beforeHighCastelloPopUp
+                        .setLngLat(coordinates)
+                        .setHTML("<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + event.features[0].properties.LOT2 + "</div>");
+					if(!beforeHighCastelloPopUp.isOpen()) beforeHighCastelloPopUp.addTo(beforeMap);
+					
+					afterHighCastelloPopUp
+                        .setLngLat(coordinates)
+						.setHTML("<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + event.features[0].properties.LOT2 + "</div>");
+					if(!afterHighCastelloPopUp.isOpen()) afterHighCastelloPopUp.addTo(afterMap);
+					
+					$("#infoLayerCastello").html(places_popup_html).slideDown();
+				    castello_layer_view_flag = true;
+					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
+			}
+		    castello_click_ev = true;
+        }
+	
 	
 		function FarmsClickHandle(event) {
 	
@@ -676,7 +750,11 @@ function changeDate(unixDate) {
 	beforeMap.setFilter("grants1-5sp9tb-left-highlighted", dateFilter);
 	afterMap.setFilter("grants1-5sp9tb-right-highlighted", dateFilter);
 	
-        afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right", dateFilter);
+    beforeMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-left", dateFilter);
+	afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right", dateFilter);
+	
+	beforeMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-left-highlighted", dateFilter);
+	afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right-highlighted", dateFilter);
 	
 	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
 	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
@@ -688,6 +766,9 @@ function changeDate(unixDate) {
 	
 	beforeMap.setFilter("grant-lots-lines-left", dateFilter);
 	afterMap.setFilter("grant-lots-lines-right", dateFilter);
+	
+	beforeMap.setFilter("farms-lines-left", dateFilter);
+	afterMap.setFilter("farms-lines-right", dateFilter);
 	
 
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
@@ -721,7 +802,7 @@ beforeMap.on('style.load', function () {
 	console.log(date)
 
 	addBeforeLayers(yr, date);
-	addBeforeFarmsLayer();
+	addBeforeFarmsLayer(date);
 	addCastelloBeforeLayers();
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
@@ -756,10 +837,6 @@ afterMap.on('style.load', function () {
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
 });
-
-
-
-
 
 
 
