@@ -423,10 +423,10 @@ function addGrantLotsLinesBeforeLayers(date) {
 
 
 /////////////////////////
-//  Farms Static Layer
+//  Farms Dynamic Layer
 /////////////////////////
 
-function addBeforeFarmsLayer() {
+function addBeforeFarmsLayer(date) {
 	
 		//ADD FARMS POLYGONS
         
@@ -446,7 +446,8 @@ function addBeforeFarmsLayer() {
 				    "line-color": "#FFD700",
 					"line-width": 3,
 					"line-opacity": 0.7
-				}
+				},
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
             });
 		
@@ -473,7 +474,8 @@ function addBeforeFarmsLayer() {
                         ],
 				"fill-outline-color": "#C71585"
 
-			}
+			},
+            filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
         beforeMap.addLayer({
@@ -499,7 +501,8 @@ function addBeforeFarmsLayer() {
                         ],
 				"fill-outline-color": "#C71585"
 
-			}
+			},
+            filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
 		});
 
@@ -704,6 +707,30 @@ function addCurrentLotsBeforeLayers() {
         if (beforeMap.getSource("current_lots_1-ca6kq1")) beforeMap.removeSource("current_lots_1-ca6kq1");
 	
 	        beforeMap.addLayer({
+                id: "curr-lots-high-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.441lyesf"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "current_lots_1-ca6kq1",
+                paint: {
+				"fill-color": "#7B68EE",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            0
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+	
+	        beforeMap.addLayer({
                 id: "curr-lots-left",
                 type: "fill",
                 source: {
@@ -883,5 +910,6 @@ function addCurrentBuildingsBeforeLayers() {
             });
 	
 }
+
 
 
