@@ -676,7 +676,7 @@ function changeDate(unixDate) {
 	beforeMap.setFilter("grants1-5sp9tb-left-highlighted", dateFilter);
 	afterMap.setFilter("grants1-5sp9tb-right-highlighted", dateFilter);
 	
-    //afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right", dateFilter);
+        afterMap.setFilter("stokes_farms_complete_5_reduc-6k9tbl-right", dateFilter);
 	
 	beforeMap.setFilter("c7_dates-ajsksu-left", dateFilter);
 	afterMap.setFilter("c7_dates-ajsksu-right", dateFilter);
