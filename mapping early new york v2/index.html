@@ -241,11 +241,31 @@ my_tooltip.fadeOut(200);
 						afterMap.setLayoutProperty( "curr-lots-right", "visibility", "visible" ); 
 						beforeMap.setLayoutProperty( "curr-lots-lines-left", "visibility", "visible" );
 						afterMap.setLayoutProperty( "curr-lots-lines-right", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "curr-lots-high-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "curr-lots-high-right", "visibility", "visible" ); 
 					} else {
 					    beforeMap.setLayoutProperty( "curr-lots-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "curr-lots-right", "visibility", "none" );
 						beforeMap.setLayoutProperty( "curr-lots-lines-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "curr-lots-lines-right", "visibility", "none" );
+						beforeMap.setLayoutProperty( "curr-lots-high-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "curr-lots-high-right", "visibility", "none" );
+						
+						if(curr_layer_view_flag) { 
+							$("#infoLayerCurrLots").slideUp(); 
+							curr_layer_view_flag = false;
+							
+							        afterMap.setFeatureState(
+                                        { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.remove();
+									if(beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.remove();
+						}
 					}
                 });
 
@@ -286,18 +306,33 @@ my_tooltip.fadeOut(200);
 				    //console.warn(document.getElementById('current_lots').checked);
                     if( $( this ).prop('checked') ) {
 					    //if(beforeMap.getLayoutProperty("curr-lots", "visibility") === "none" )
-					        beforeMap.setLayoutProperty( "curr-lots-left", "visibility", "visible" ); 
+					        beforeMap.setLayoutProperty( "curr-lots-left", "visibility", "visible" );
+							beforeMap.setLayoutProperty( "curr-lots-high-left", "visibility", "visible" );
 						//if(afterMap.getLayoutProperty("curr-lots", "visibility") === "none" )
 					        afterMap.setLayoutProperty( "curr-lots-right", "visibility", "visible" ); 
+							afterMap.setLayoutProperty( "curr-lots-high-right", "visibility", "visible" );
 					} else {
 					    //if(beforeMap.getLayoutProperty("curr-lots-left", "visibility") === "visible" )
 					        beforeMap.setLayoutProperty( "curr-lots-left", "visibility", "none" ); 
+							beforeMap.setLayoutProperty( "curr-lots-high-left", "visibility", "none" );
 						//if(afterMap.getLayoutProperty("curr-lots-right", "visibility") === "visible" )
 					        afterMap.setLayoutProperty( "curr-lots-right", "visibility", "none" );
-								
+							afterMap.setLayoutProperty( "curr-lots-high-right", "visibility", "none" );
+							
 						if(curr_layer_view_flag) { 
 							$("#infoLayerCurrLots").slideUp(); 
 							curr_layer_view_flag = false;
+							
+							        afterMap.setFeatureState(
+                                        { source: 'curr-lots-high-right', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'curr-lots-high-left', sourceLayer: 'current_lots_1-ca6kq1', id: curr_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighCurrLotsPopUp.isOpen()) afterHighCurrLotsPopUp.remove();
+									if(beforeHighCurrLotsPopUp.isOpen()) beforeHighCurrLotsPopUp.remove();
 						}
 					}
                 });
@@ -365,6 +400,8 @@ my_tooltip.fadeOut(200);
 						if(castello_layer_view_flag) { 
 						    // if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
 							// if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
+							if(afterHighCastelloPopUp.isOpen()) afterHighCastelloPopUp.remove();
+						    if(beforeHighCastelloPopUp.isOpen()) beforeHighCastelloPopUp.remove();
 						    $("#infoLayerCastello").slideUp();
 							castello_layer_view_flag = false;
 						}	
@@ -388,6 +425,8 @@ my_tooltip.fadeOut(200);
 						if(demo_layer_view_flag) { 
 						    // if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
 							// if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
+							if(afterHighDemoPopUp.isOpen()) afterHighDemoPopUp.remove();
+						    if(beforeHighDemoPopUp.isOpen()) beforeHighDemoPopUp.remove();
 						    $("#demoLayerInfo").slideUp();
 							demo_layer_view_flag = false;
 						}
@@ -610,6 +649,8 @@ my_tooltip.fadeOut(200);
 						if(grant_lots_view_flag) { 
 							$("#infoLayerGrantLots").slideUp(); 
 							grant_lots_view_flag = false;
+							if(afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.remove();
+							if(beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.remove();
 						}
 					}
 				});
@@ -1848,5 +1889,4 @@ img#logo-img {
 	</body>
 
 </html>
-
 
