@@ -429,28 +429,7 @@ function addGrantLotsLinesBeforeLayers(date) {
 function addBeforeFarmsLayer(date) {
 	
 		//ADD FARMS POLYGONS
-        
-		//*A#
-		    beforeMap.addLayer({
-                id: "farms-lines-left",
-                type: "line",
-                source: {
-                    type: "vector",
-                    url: "mapbox://nittyjee.8n7ba8lp"
-                },
-				layout: {
-                    visibility: document.getElementById('farms_layer_lines').checked ? "visible" : "none",
-                },
-                "source-layer": "stokes_farms_lines-apf0fk",
-                paint: {
-				    "line-color": "#FFD700",
-					"line-width": 3,
-					"line-opacity": 0.7
-				},
-                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
-			
-            });
-		
+		//*A fill pink #FFC0CB outline #C71585
         beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted",
@@ -465,19 +444,20 @@ function addBeforeFarmsLayer(date) {
             },
 			"source-layer": "stokes_farms_complete_5_reduc-6k9tbl",
 			paint: {
-				"fill-color": "#FFC0CB",
+				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
                             0
                         ],
-				"fill-outline-color": "#C71585"
+				"fill-outline-color": "#000000"
 
 			},
             filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
+        //*A fill pink #FFC0CB outline #C71585
         beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "stokes_farms_complete_5_reduc-6k9tbl-left",
@@ -492,20 +472,42 @@ function addBeforeFarmsLayer(date) {
             },
 			"source-layer": "stokes_farms_complete_5_reduc-6k9tbl",
 			paint: {
-				"fill-color": "#FFC0CB",
+				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.45
+                            0.5
                         ],
-				"fill-outline-color": "#C71585"
+				"fill-outline-color": "#000000"
 
 			},
             filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
 		});
 
+        
+		//ADD FARMS LINES
+        //*A golden #FFD700
+		    beforeMap.addLayer({
+                id: "farms-lines-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.8n7ba8lp"
+                },
+				layout: {
+                    visibility: document.getElementById('farms_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "stokes_farms_lines-apf0fk",
+                paint: {
+				    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.8
+				},
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+			
+            });
 
         //CURSOR ON HOVER
             //ON HOVER
