@@ -410,7 +410,7 @@ function addGrantLotsLinesAfterLayers(date) {
 
 
 /////////////////////////
-//  Farms Static Layer
+// Farms Dynamic Layer
 /////////////////////////
 
 function addAfterFarmsLayer(date) {
@@ -433,7 +433,8 @@ function addAfterFarmsLayer(date) {
 				    "line-color": "#FFD700",
 					"line-width": 3,
 					"line-opacity": 0.7
-				}
+				},
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
             });
 		
@@ -461,7 +462,8 @@ function addAfterFarmsLayer(date) {
                         ],
 				"fill-outline-color": "#C71585"
 
-			}
+			},
+            filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
         afterMap.addLayer({
@@ -487,7 +489,8 @@ function addAfterFarmsLayer(date) {
                         ],
 				"fill-outline-color": "#C71585"
 
-			}
+			},
+            filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
 		});
 
@@ -693,6 +696,30 @@ function addCurrentLotsAfterLayers() {
 		if (afterMap.getLayer("curr-lots-right")) afterMap.removeLayer("curr-lots-right");
         if (afterMap.getSource("current_lots_1-ca6kq1")) afterMap.removeSource("current_lots_1-ca6kq1");
 	
+	    afterMap.addLayer({
+                id: "curr-lots-high-right",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.441lyesf"
+                },
+				layout: {
+                    visibility: document.getElementById('current_lots').checked ? "visible" : "none",
+                },
+                "source-layer": "current_lots_1-ca6kq1",
+                paint: {
+				"fill-color": "#7B68EE",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            0.0
+                        ],
+				"fill-outline-color": "transparent"
+                }
+			
+            });
+	
 	        afterMap.addLayer({
                 id: "curr-lots-right",
                 type: "fill",
@@ -872,6 +899,5 @@ function addCurrentBuildingsAfterLayers() {
 			
             });
 }
-
 
 
