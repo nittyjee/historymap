@@ -261,7 +261,7 @@ function buildDutchGrantPopUpInfo(props) {
 				}
 				popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
-				    "<br>" +
+				    "<small>" + dutch_grant_lots_info[props.Lot].name_txt + "</small><br>" +
 				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
 					"<br>" +
 					"<b>To Party:</b> <i>" + dutch_grant_lots_info[props.Lot].to_party + "</i><br>" +
