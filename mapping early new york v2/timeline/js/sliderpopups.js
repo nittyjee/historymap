@@ -268,7 +268,7 @@ function buildDutchGrantPopUpInfo(props) {
 					"<br>" +
 					"<b>From Party:</b>" + ( dutch_grant_lots_info[props.Lot].from_party.length > 0 ? "<br>" : "" ) + "<i>" + dutch_grant_lots_info[props.Lot].from_party + "</i><br>" +
 					"<br>" +
-					"<b>Start:</b>" + ( dutch_grant_lots_info[props.Lot].from_party.length > 0 ? "<br>" : "" ) + "<i>" + dutch_grant_lots_info[props.Lot].start + "</i><br>" +
+					"<b>Start:</b> <i>" + dutch_grant_lots_info[props.Lot].start + "</i><br>" +
 					"<b>End:</b> <i>" + dutch_grant_lots_info[props.Lot].end + "</i><br>" +
 					"<br>" +
 					"<b>Description:</b>" +
