@@ -759,15 +759,7 @@ function getDutchGrantsInfo() {
 		if(data.length > 0) {
 		    //console.warn("\n\n\nLOAD JSON REST API\n\n\n");
 		    for(let i = 0; i < data.length; i++){
-			    /*
-			    html_cont += "<br><b>Lot:</b> &nbsp <i>" + data[i].title[0].value + "</i>";
-				html_cont += "<br><b>To Party:</b> &nbsp <i>" + ( data[i].field_name.length > 0 ? data[i].field_name[0].value  : "") + "</i>";
-				html_cont += "<br><b>From Party:</b> &nbsp <i>" + ( data[i].field_from_party_text_.length > 0 ? data[i].field_from_party_text_[0].value  : "") + "</i>";
-                html_cont += "<br><b>Start:</b> &nbsp <i>" + ( data[i].field_date_end.length > 0 ? data[i].field_date_end[0].value  : "") + "</i>";
-	            html_cont += "<br><b>End:</b> &nbsp <i>" + ( data[i].field_date_end_grants.length > 0 ? data[i].field_date_end_grants[0].value  : "") + "</i>";
-				html_cont += "<br><b>Notes:</b> &nbsp <i>" + ( data[i].field_grant_notes.length > 0 ? data[i].field_grant_notes[0].value  : "") + "</i>";
-	            html_cont += "<br><b>Description:</b> &nbsp <i>" + ( data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value  : "") + "</i>";
-				*/
+                /* old api
 				if( typeof data[i].title[0].value != "undefined" ) {
 				    
 					data_info_index = data[i].title[0].value;
@@ -779,11 +771,9 @@ function getDutchGrantsInfo() {
 						data_info_index = "Fort Amsterdam";
 					}
 					
-					/*
-					if(/J-Block-Garden-DWIC/.test(data_info_index)) {
-					    console.log(data_info_index);
-					}
-					*/
+					//if(/J-Block-Garden-DWIC/.test(data_info_index)) {
+					//    console.log(data_info_index);
+					//}
 				   
 				    dutch_grant_lots_info[data_info_index] = { 
 					    name_txt: data[i].field_name.length > 0 ? data[i].field_name[0].value : "", 
@@ -803,10 +793,37 @@ function getDutchGrantsInfo() {
 						descr: data[i].field_grant_description.length > 0 ? data[i].field_grant_description[0].value : "",
 						builds: data[i].field_current_buildings_and_land.length > 0 ? data[i].field_current_buildings_and_land : []
 					};  
-
+          
                     dutch_grant_lots_info_length += 1;
                     //console.log(dutch_grant_lots_info_length);					
 				}
+				*/
+				// new api
+				//console.log(data[i].from_party);
+				//console.log(data[i].to_party);
+				//console.log(data[i].title);
+				//console.log(unescape(data[i].from_party));
+				//console.log(unescape(data[i].to_party));
+				if( data[i].title != "" ) {
+				    data_info_index = data[i].title;
+					data_info_index = data_info_index.replace(/\s+/g, '');
+					if(/FortAmsterdam/.test(data_info_index)) {
+					    //console.log(data_info_index);
+						data_info_index = "Fort Amsterdam";
+					}
+					dutch_grant_lots_info[data_info_index] = { 
+					    name_txt: data[i].to_party_unlinked,
+					    to_party: data[i].to_party.replace("href=\u0022", "target=\u0022_blank\u0022 href=\u0022https:\/\/nahc-mapping.org"),
+					    from_party: data[i].from_party.replace("href=\u0022", "target=\u0022_blank\u0022 href=\u0022https:\/\/nahc-mapping.org"),
+						start: data[i].start, 
+						end: data[i].end, 
+						notes: data[i].note, 
+						descr: data[i].description,
+						builds: data[i].images.length > 0 ?  data[i].images.split(", ") : []
+					};  
+          
+                    dutch_grant_lots_info_length += 1;
+			    }
 			}
 		}
 		
@@ -1892,5 +1909,4 @@ img#logo-img {
 	</body>
 
 </html>
-
 
