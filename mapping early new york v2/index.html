@@ -384,6 +384,64 @@ my_tooltip.fadeOut(200);
                 });
 				
 				
+				$('#lenape_trails').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "lenape-trails-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "lenape-trails-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "lenape-trails-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "lenape-trails-right", "visibility", "none" );
+					}
+                });
+				
+				$('#manahatta_shoreline').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "manahatta-shoreline-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "manahatta-shoreline-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "manahatta-shoreline-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "manahatta-shoreline-right", "visibility", "none" );
+					}
+                });
+				
+				$('#manahatta_streams').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "streams-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "streams-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "streams-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "streams-right", "visibility", "none" );
+					}
+                });
+				
+				$(".manahatta").change(function () {
+                    if ($(".manahatta:checked").length == $(".manahatta").length) {
+                        $('#manahatta_items').prop('checked','checked');
+                    }else{
+                        $('#manahatta_items').prop('checked',false);  
+                    }
+                });
+				
+				$('#manahatta_items').change(function(){
+                    $('.manahatta').prop('checked',this.checked);
+					if( $( this ).prop('checked') ) {
+					    beforeMap.setLayoutProperty( "lenape-trails-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "lenape-trails-right", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "manahatta-shoreline-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "manahatta-shoreline-right", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "streams-left", "visibility", "visible" );
+						afterMap.setLayoutProperty( "streams-right", "visibility", "visible" ); 
+					} else {
+					    beforeMap.setLayoutProperty( "lenape-trails-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "lenape-trails-right", "visibility", "none" );
+						beforeMap.setLayoutProperty( "manahatta-shoreline-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "manahatta-shoreline-right", "visibility", "none" );
+						beforeMap.setLayoutProperty( "streams-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "streams-right", "visibility", "none" );
+					}
+                });
+				
+				
 				$('#castello_points').click(function() {
 				    //console.warn(document.getElementById('castello_points').checked);
                     if( $( this ).prop('checked') ) {
@@ -738,6 +796,7 @@ my_tooltip.fadeOut(200);
 // for test remote host https://lifecourse.xyz/upwork/test/ny/grant-lots-export.json
 // REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
 // REST API https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export
+// REST API new https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export-properly
 
 function getDutchGrantsInfo() {
     
@@ -1689,6 +1748,32 @@ img#logo-img {
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
+	  
+	  <!-- Manahatta Items -->
+	  <div class="layer-list-row" >
+	  <input type="checkbox" class="manahatta_items" id="manahatta_items" name="manahatta_items">
+      <label for="manahatta_items"> <i class="fas fa-caret-down"></i> Manahatta</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-info"  title="Layer Info" ></i>
+	  </div>
+	  
+	  <!-- Lenape Trails -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="lenape_trails" name="lenape_trails">
+      <label for="lenape_trails"> <i class="fa fa-square" style="color: #FFD700;"></i> Lenape Trails</label>
+	  </div>
+	  
+	  <!-- Manahatta Shoreline -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" class="manahatta"  id="manahatta_shoreline" name="manahatta_shoreline">
+      <label for="manahatta_shoreline"> <i class="fa fa-square" style="color: #FFC0CB;"></i> Manahatta Shoreline</label>
+	  </div>
+	  
+	  <!-- Streams (c 1600) -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="manahatta_streams" name="manahatta_streams">
+      <label for="manahatta_streams"> <i class="fa fa-square" style="color: #32CD32;"></i> Streams (c 1600)</label>
+	  </div>
+	  
 	  <br>
 
       <div>
@@ -1766,7 +1851,7 @@ img#logo-img {
 			</div>
 
 
-	     <!--RATZER MAP-->
+	    <!--RATZER MAP-->
 		<div class="layer-list-row" >
 		<input class='ckvy8z20325dn14pj15a79wuq' type='radio' name='ltoggle' value='ckvy8z20325dn14pj15a79wuq'>
                 <input class='ckvy8z20325dn14pj15a79wuq' type='radio' name='rtoggle' value='ckvy8z20325dn14pj15a79wuq'>
@@ -1776,6 +1861,15 @@ img#logo-img {
 		</div>
 
 
+        <!-- Manahatta MAP -->
+		<div class="layer-list-row" >
+		<input class='cl01exvri000n14obi2uu26z0' type='radio' name='ltoggle' value='cl01exvri000n14obi2uu26z0'>
+                <input class='cl01exvri000n14obi2uu26z0' type='radio' name='rtoggle' value='cl01exvri000n14obi2uu26z0'>
+		&nbsp;
+                <label for='cl01exvri000n14obi2uu26z0'>Manahatta (1609)</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-map"  title="Layer Info" ></i>
+		</div>
+		
 	      
 		<!--CURRENT SATELLITE -->
 		<div class="layer-list-row" >
@@ -1909,4 +2003,5 @@ img#logo-img {
 	</body>
 
 </html>
+
 
