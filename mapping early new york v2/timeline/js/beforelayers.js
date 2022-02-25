@@ -914,4 +914,66 @@ function addCurrentBuildingsBeforeLayers() {
 }
 
 
+function addManahattaBeforeLayers() {
+
+	        beforeMap.addLayer({
+                id: "lenape-trails-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.4kio957z"
+                },
+				layout: {
+                    visibility: document.getElementById('lenape_trails').checked ? "visible" : "none",
+                },
+                "source-layer": "lenape_trails-9n6muf",
+                paint: {
+				"fill-color": "#FFD700",
+				"fill-opacity": 0.8,
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+			
+			
+			 beforeMap.addLayer({
+                id: "manahatta-shoreline-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.0q74r4c7"
+                },
+				layout: {
+                    visibility: document.getElementById('manahatta_shoreline').checked ? "visible" : "none",
+                },
+                "source-layer": "manahatta_shoreline-b3tcj6",
+                paint: {
+				"fill-color": "#FFC0CB",
+				"fill-opacity": 0.8,
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+			
+			
+			beforeMap.addLayer({
+                id: "streams-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.9t5q3gv8"
+                },
+				layout: {
+                    visibility: document.getElementById('manahatta_streams').checked ? "visible" : "none",
+                },
+                "source-layer": "streams-bek8e1",
+                paint: {
+				"fill-color": "#32CD32",
+				"fill-opacity": 0.8,
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+	
+}
 
