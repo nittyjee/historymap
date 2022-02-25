@@ -810,6 +810,7 @@ beforeMap.on('style.load', function () {
 	addCurrentLotsLinesBeforeLayers();
 	addCurrentBuildingsBeforeLayers();
 	addCurrentBuildingsLinesBeforeLayers();
+	addManahattaBeforeLayers();
 });
 
 //BASEMAP SWITCHING
@@ -836,6 +837,7 @@ afterMap.on('style.load', function () {
 	addCurrentLotsLinesAfterLayers();
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
+	addManahattaAfterLayers();
 });
 
 
