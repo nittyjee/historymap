@@ -209,7 +209,16 @@ modal_content_html["ratzer-map"] = `
 			<br><br>This is a colored version of the <i>Ratzer Map</i>, which It shows the city and vicinity in the years before the Revolutionary Era, full of the city streets, harbors, farms and fields, and hills, and many well illustrated details. Shown are Brooklyn and Manhattan, and the edges of Queens and New Jersey, right across from Manhattan.
             `;
 
-			
+modal_header_text["manahatta-map"] = "Manahatta Map (1609)";
+modal_content_html["manahatta-map"] = `
+			<i>Manahatta Map (1609)</i>
+            `;
+
+modal_header_text["manahatta-info"] = "Manahatta Map (1609)";
+modal_content_html["manahatta-info"] = `
+			<i>Manahatta Map (1609)</i>
+            `;
+
 modal_header_text["nyc-map-plan"] = "A Plan of the City of New York, 1730";
 modal_content_html["nyc-map-plan"] = `
 A map of New York from an actual survey in 1730, engraved by I. Carwitham and presented to John Montgomerie, the English colonial governor of New York. The map shows buildings that line streets, with a few buildings that are illustrated from a bird's eye view. Comparing with the Castello Plan in 1660, one can see there was already considerable infill along the edges of Manhattan, and the size of the city more than doubled, growing nearly to where the Brooklyn Bridge is today. Though the population increased several times, it was still small, at around 8000 people.
