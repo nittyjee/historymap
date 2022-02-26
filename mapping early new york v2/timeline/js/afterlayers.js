@@ -906,7 +906,7 @@ function addManahattaAfterLayers() {
             
 			afterMap.addLayer({
                 id: "lenape-trails-right",
-                type: "fill",
+                type: "line",
                 source: {
                     type: "vector",
                     url: "mapbox://nittyjee.4kio957z"
@@ -916,9 +916,9 @@ function addManahattaAfterLayers() {
                 },
                 "source-layer": "lenape_trails-9n6muf",
                 paint: {
-				"fill-color": "#FFD700",
-				"fill-opacity": 0.8,
-				"fill-outline-color": "#000000"
+                "line-color": "#FF0000",
+                "line-width": 4,
+                "line-opacity": 1.0
                 }
 			
             });
@@ -926,7 +926,7 @@ function addManahattaAfterLayers() {
 			
 			 afterMap.addLayer({
                 id: "manahatta-shoreline-right",
-                type: "fill",
+                type: "line",
                 source: {
                     type: "vector",
                     url: "mapbox://nittyjee.0q74r4c7"
@@ -936,9 +936,9 @@ function addManahattaAfterLayers() {
                 },
                 "source-layer": "manahatta_shoreline-b3tcj6",
                 paint: {
-				"fill-color": "#FFC0CB",
-				"fill-opacity": 0.8,
-				"fill-outline-color": "#000000"
+                "line-color": "#FFD700",
+                "line-width": 4,
+                "line-opacity": 1.0
                 }
 			
             });
@@ -946,7 +946,7 @@ function addManahattaAfterLayers() {
 			
 			afterMap.addLayer({
                 id: "streams-right",
-                type: "fill",
+                type: "line",
                 source: {
                     type: "vector",
                     url: "mapbox://nittyjee.9t5q3gv8"
@@ -956,9 +956,9 @@ function addManahattaAfterLayers() {
                 },
                 "source-layer": "streams-bek8e1",
                 paint: {
-				"fill-color": "#32CD32",
-				"fill-opacity": 0.8,
-				"fill-outline-color": "#000000"
+                "line-color": "#0000FF",
+                "line-width": 4,
+                "line-opacity": 1.0
                 }
 			
             });
