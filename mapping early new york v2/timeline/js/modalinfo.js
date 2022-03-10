@@ -212,7 +212,8 @@ modal_content_html["ratzer-map"] = `
 			/* Manahatta Map Overlay */
 modal_header_text["manahatta-map"] = "Manahatta Map Overlay (1609)";
 modal_content_html["manahatta-map"] = `
-			The Manahatta Project is an effort to create an image of Manhattan around the time Henry Hudson arrived in 1609. The reconstruction was developed using geography from maps from the 1700s and many historic documents and scientific data. The map overlay shows the landscape's forests, wetlands, beaches, ponds and streams, and hills and valleys. The Welikia Project has expanded beond Manahatta into the what are today the surrounding boroughs of New York City.
+			The Manahatta Project is an effort to create an image of Manhattan around the time Henry Hudson arrived in 1609. The reconstruction was developed using geography from maps from the 1700s and many historic documents and scientific data. The map overlay shows the landscape's forests, wetlands, beaches, ponds and streams, and hills and valleys. The Welikia Project has expanded beyond Manahatta into the what are today the surrounding boroughs of New York City.
+			<p>Use this overlay in conjunction with the Manahatta layers above, of the Lenape trails, and the rivers and shorelines.
 			<p>The Manahatta Map and the Welikia Project were developed by the Wildlife Conservation Society and led by Eric Sanderson.
 			`;
 
