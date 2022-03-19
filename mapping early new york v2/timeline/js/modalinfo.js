@@ -209,6 +209,12 @@ modal_content_html["ratzer-map"] = `
 			<br><br>This is a colored version of the <i>Ratzer Map</i>, which It shows the city and vicinity in the years before the Revolutionary Era, full of the city streets, harbors, farms and fields, and hills, and many well illustrated details. Shown are Brooklyn and Manhattan, and the edges of Queens and New Jersey, right across from Manhattan.
             `;
 
+			/* Novi Belgii Map */
+modal_header_text["novi-belgii-map"] = "Novi Belgii Map ";
+modal_content_html["novi-belgii-map"] = `
+			Novi Belgii Map Modal Info
+			`;
+
 			/* Manahatta Map Overlay */
 modal_header_text["manahatta-map"] = "Manahatta Map Overlay (1609)";
 modal_content_html["manahatta-map"] = `
