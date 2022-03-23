@@ -1645,73 +1645,115 @@ i.slash-icon { font-size: 11px; }
         LAYERS
       </p>
 	  
-	  
+	
 	  <br>
+	  <center>
+	  <b>Manhattan Island</b>
+	  </center>
+	  <p>
+
 	  
+	  <!-- Manahatta Items -->
+	  <div class="layer-list-row" >
+		<input type="checkbox" class="manahatta_items" id="manahatta_items" name="manahatta_items">
+		<label for="manahatta_items"> <i class="fas fa-caret-down"></i>1609 | Manahatta</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-info"  title="Layer Info" ></i>
+		</div>
+		
+		<!-- Lenape Trails -->
+		<div class="layer-list-row" >
+		&nbsp; &nbsp; <input type="checkbox" class="manahatta" id="lenape_trails" name="lenape_trails">
+		<label for="lenape_trails"> <i class="fas fa-slash slash-icon" style="color: #FF0000;"></i> Lenape Trails</label>
+		</div>
+		
+		<!-- Manahatta Shoreline -->
+		<div class="layer-list-row" >
+		&nbsp; &nbsp; <input type="checkbox" class="manahatta"  id="manahatta_shoreline" name="manahatta_shoreline">
+		<label for="manahatta_shoreline"> <i class="fas fa-slash slash-icon" style="color: #FFD700;"></i> Manahatta Shoreline</label>
+		</div>
+		
+		<!-- Streams (c 1600) -->
+		<div class="layer-list-row" >
+		&nbsp; &nbsp; <input type="checkbox" class="manahatta" id="manahatta_streams" name="manahatta_streams">
+		<label for="manahatta_streams"> <i class="fas fa-slash slash-icon" style="color: #0000FF;"></i> Streams (c 1600)</label>
+		</div>
+		
+
+	  <!-- Farms Layers Items -->
+	  <div class="layer-list-row" >
+		<input type="checkbox" id="farms_layer_items" name="farms_layer_items">
+		<label for="farms_layer_items"> <i class="fas fa-caret-down"></i> 1638-83 | Original Grants &amp; Farms</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="farms-info-layer"  title="Layer Info" ></i>
+		</div>
+  
+		
+		<!-- Farms Layers #FFC0CB -->
+		<div class="layer-list-row" >
+		&nbsp; &nbsp; <input type="checkbox" id="farms_layer" class="farms_layer" name="farms_layer">
+		<label for="farms_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
+		</div>
+		
+		<!-- Farms Layers Lines #FFD700 -->
+		<div class="layer-list-row" >
+		&nbsp; &nbsp; <input type="checkbox" id="farms_layer_lines" class="farms_layer" name="farms_layer_lines">
+		<label for="farms_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
+		</div>
+		
+
 	  
-	  <!-- Grants Layers Items -->
+	  <!-- Dutch Grants  -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
-      <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> Dutch Grants</label>
+      <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> 1640-64 | Dutch Grants</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer"  title="Layer Info" ></i>
 	  </div>
 
 	  
-	  <!-- Grants Layers -->
+	  <!-- Dutch Grants Layers -->
 	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer" class="grants_layer" name="grants_layer">
       <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
 	  </div>
 	  
-	  <!-- Grants Layers Lines -->
+	  <!-- Dutch Grants Layers Lines -->
 	  <div class="layer-list-row" >
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
       <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 	  </div>
 	  
-	  
-	  <!-- Farms Layers Items -->
-	  <div class="layer-list-row" >
-	  <input type="checkbox" id="farms_layer_items" name="farms_layer_items">
-      <label for="farms_layer_items"> <i class="fas fa-caret-down"></i> Original Grants &amp; Farms</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="farms-info-layer"  title="Layer Info" ></i>
-	  </div>
 
-	  
-	  <!-- Farms Layers #FFC0CB -->
+
+
+	  <!-- Circle -->
 	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" id="farms_layer" class="farms_layer" name="farms_layer">
-      <label for="farms_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
-	  </div>
-	  
-	  <!-- Farms Layers Lines #FFD700 -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" id="farms_layer_lines" class="farms_layer" name="farms_layer_lines">
-      <label for="farms_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
-	  </div>
-	  
+		<input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
+		<label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i>1643-75 | Demo Taxlot: C7</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-taxlot-info-layer"  title="Layer Info" ></i>
+		</div>
+		
+		<!-- Grants Layers -->
+		<div class="layer-list-row" >
+		<input type="checkbox" id="grant_lots" name="grant_lots">
+		<label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> 1643-67 | Demo Grant Divisions: C7</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
+		</div>
+		
+
 	  
 	  <!-- Castello Points -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="castello_points" name="castello_points">
-      <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  Castello Taxlots (1660)</label>
+      <label for="castello_points"> <i class="fa fa-circle"  style="color: #FF0000;" ></i>  1660 | Castello Taxlots</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
-	  <!-- Circle -->
-	  <div class="layer-list-row" >
-      <input type="checkbox" id="circle_point" name="circle_point" checked="checked" > <!-- disabled="disabled" -->
-      <label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i> Demo Taxlot: C7</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-taxlot-info-layer"  title="Layer Info" ></i>
-	  </div>
-	  
-	  <!-- Grants Layers -->
-	  <div class="layer-list-row" >
-	  <input type="checkbox" id="grant_lots" name="grant_lots">
-      <label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> Demo Grant Divisions: C7</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
-	  </div>
-	  
+
+	  <br>
+	  <center>
+	  <b>Current Day</b>
+	  </center>
+	  <p>
+
 	  <!-- Current Lots Items -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
@@ -1750,36 +1792,13 @@ i.slash-icon { font-size: 11px; }
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
-	  
-	  <!-- Manahatta Items -->
-	  <div class="layer-list-row" >
-	  <input type="checkbox" class="manahatta_items" id="manahatta_items" name="manahatta_items">
-      <label for="manahatta_items"> <i class="fas fa-caret-down"></i> Manahatta</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-info"  title="Layer Info" ></i>
-	  </div>
-	  
-	  <!-- Lenape Trails -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="lenape_trails" name="lenape_trails">
-      <label for="lenape_trails"> <i class="fas fa-slash slash-icon" style="color: #FF0000;"></i> Lenape Trails</label>
-	  </div>
-	  
-	  <!-- Manahatta Shoreline -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" class="manahatta"  id="manahatta_shoreline" name="manahatta_shoreline">
-      <label for="manahatta_shoreline"> <i class="fas fa-slash slash-icon" style="color: #FFD700;"></i> Manahatta Shoreline</label>
-	  </div>
-	  
-	  <!-- Streams (c 1600) -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="manahatta_streams" name="manahatta_streams">
-      <label for="manahatta_streams"> <i class="fas fa-slash slash-icon" style="color: #0000FF;"></i> Streams (c 1600)</label>
-	  </div>
-	  
+
 	  <br>
 
       <div>
 
+		<br>
+		<hr>
 		<p class="title">
 			MAP OVERLAYS
 		  </p>
@@ -1787,12 +1806,27 @@ i.slash-icon { font-size: 11px; }
 		  
 		  <br>
 
+		<!--CURRENT SATELLITE -->
+		<div class="layer-list-row" >
+			<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
+			<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
+			&nbsp;
+			<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
+			<i  class="fa fa-info-circle layer-info trigger-popup" id="satellite-image"  title="Layer Info" ></i>
+			</div>
+	
+			<br>
+			<center>
+			<b>Castello Plan</b>
+			</center>
+			<p>
+
 		<!--CASTELLO COLORED (DEFAULT)-->
 		<div class="layer-list-row" >
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='ltoggle' value='cjowjzrig5pje2rmmnjb5b0y2'>
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='rtoggle' value='cjowjzrig5pje2rmmnjb5b0y2' checked="checked">
 		&nbsp;
-		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn 1913 (Default)</label>
+		<label for='cjowjzrig5pje2rmmnjb5b0y2'>Castello Redrawn (Default)</label>
         <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-redrawn-plan"  title="Layer Info" ></i>
         </div>
 
@@ -1801,7 +1835,7 @@ i.slash-icon { font-size: 11px; }
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='ltoggle' value='ck7phs10100951is1p3p4bv9j'>
 		<input class='ck7phs10100951is1p3p4bv9j' type='radio' name='rtoggle' value='ck7phs10100951is1p3p4bv9j'>
 		&nbsp;
-		<label for='ck7phs10100951is1p3p4bv9j'>Original Castello Plan 1660</label>
+		<label for='ck7phs10100951is1p3p4bv9j'>1660 Original Castello Plan</label>
         <i  class="fa fa-info-circle layer-info trigger-popup" id="original-castello-plan"  title="Layer Info" ></i>
         </div>
 
@@ -1810,7 +1844,7 @@ i.slash-icon { font-size: 11px; }
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='ltoggle' value='ck7piltib01881ioc5i8bel7m'>
 		<input class='ck7piltib01881ioc5i8bel7m' type='radio' name='rtoggle' value='ck7piltib01881ioc5i8bel7m'>
 		&nbsp;
-		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan 1912</label>
+		<label for='ck7piltib01881ioc5i8bel7m'>Stokes Key to Castello Plan</label>
         <i  class="fa fa-info-circle layer-info trigger-popup" id="stokes-key-castello"  title="Layer Info" ></i>
         </div>
 
@@ -1823,32 +1857,51 @@ i.slash-icon { font-size: 11px; }
         <i  class="fa fa-info-circle layer-info trigger-popup" id="new-amsterdam-legend"  title="Layer Info" ></i>
         </div>
 
-        <!--DUTCH GRANTS-->
-		<div class="layer-list-row" >
-		<input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
-        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
-		&nbsp;
-        <label for='ck7z5152c1pur1imosvd6odsf'>Dutch Grants, Stokes 1914-1916</label>
-        <!--//ck7xni5u51kur1iqdokpijm0u-->
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="dutch-grants-stokes"  title="Layer Info" ></i>
-		</div>
+		<br>
+		<center>
+		<b>Manhattan and Surrounding</b>
+		</center>
+		<p>
 
+        <!-- Manahatta MAP -->
+		<div class="layer-list-row" >
+			<input class='cl01exvri000n14obi2uu26z0' type='radio' name='ltoggle' value='cl01exvri000n14obi2uu26z0'>
+					<input class='cl01exvri000n14obi2uu26z0' type='radio' name='rtoggle' value='cl01exvri000n14obi2uu26z0'>
+			&nbsp;
+					<label for='cl01exvri000n14obi2uu26z0'>1609 | Manahatta</label>
+			<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-map"  title="Layer Info" ></i>
+			</div>
+
+			
 		<!-- Original Grants and Farms, Stokes 1914-16 -->
 		<div class="layer-list-row" >
 			<input class='ckw5179rw0keo14o3ho6g6x00' type='radio' name='ltoggle' value='ckw5179rw0keo14o3ho6g6x00'>
 					<input class='ckw5179rw0keo14o3ho6g6x00' type='radio' name='rtoggle' value='ckw5179rw0keo14o3ho6g6x00'>
 			&nbsp;
-					<label for='ckw5179rw0keo14o3ho6g6x00'>Original Grants & Farms 1914</label>
+					<label for='ckw5179rw0keo14o3ho6g6x00'>1638-83 Original Grants & Farms</label>
 			<i  class="fa fa-info-circle layer-info trigger-popup" id="original-grants-map"  title="Layer Info" ></i>
 			</div>
 		
+			
+
+        <!--DUTCH GRANTS-->
+		<div class="layer-list-row" >
+		<input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='ltoggle' value='ck7z5152c1pur1imosvd6odsf'>
+        <input class='ck7z5152c1pur1imosvd6odsf' type='radio' name='rtoggle' value='ck7z5152c1pur1imosvd6odsf'>
+		&nbsp;
+        <label for='ck7z5152c1pur1imosvd6odsf'>1640-64 | Dutch Grants</label>
+        <!--//ck7xni5u51kur1iqdokpijm0u-->
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="dutch-grants-stokes"  title="Layer Info" ></i>
+		</div>
+
+
 
 		<!-- A Plan of the City of New York, 1730 -->
 		<div class="layer-list-row" >
 			<input class='ckw5176r63ajd15ms55qpn6xx' type='radio' name='ltoggle' value='ckw5176r63ajd15ms55qpn6xx'>
 					<input class='ckw5176r63ajd15ms55qpn6xx' type='radio' name='rtoggle' value='ckw5176r63ajd15ms55qpn6xx'>
 			&nbsp;
-					<label for='ckw5176r63ajd15ms55qpn6xx'>Plan of City of New York 1730</label>
+					<label for='ckw5176r63ajd15ms55qpn6xx'>1730 | Plan of City of New York</label>
 			<i  class="fa fa-info-circle layer-info trigger-popup" id="nyc-map-plan"  title="Layer Info" ></i>
 			</div>
 
@@ -1858,39 +1911,28 @@ i.slash-icon { font-size: 11px; }
 		<input class='ckvy8z20325dn14pj15a79wuq' type='radio' name='ltoggle' value='ckvy8z20325dn14pj15a79wuq'>
                 <input class='ckvy8z20325dn14pj15a79wuq' type='radio' name='rtoggle' value='ckvy8z20325dn14pj15a79wuq'>
 		&nbsp;
-                <label for='ckvy8z20325dn14pj15a79wuq'>Ratzer Map 1766</label>
+                <label for='ckvy8z20325dn14pj15a79wuq'>1766 | Ratzer Map</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="ratzer-map"  title="Layer Info" ></i>
 		</div>
 
 
-        <!-- Manahatta MAP -->
-		<div class="layer-list-row" >
-		<input class='cl01exvri000n14obi2uu26z0' type='radio' name='ltoggle' value='cl01exvri000n14obi2uu26z0'>
-                <input class='cl01exvri000n14obi2uu26z0' type='radio' name='rtoggle' value='cl01exvri000n14obi2uu26z0'>
-		&nbsp;
-                <label for='cl01exvri000n14obi2uu26z0'>Manahatta (1609)</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-map"  title="Layer Info" ></i>
-		</div>
-		
+
+
+		<br>
+		<center><b>New Netherland</b></center>
+		<p>
 	      
 	      <!-- Novi Belgii MAP -->
 		<div class="layer-list-row" >
 		<input class='cl0wzrvli003j15mmrlkdzp8f' type='radio' name='ltoggle' value='cl0wzrvli003j15mmrlkdzp8f'>
                 <input class='cl0wzrvli003j15mmrlkdzp8f' type='radio' name='rtoggle' value='cl0wzrvli003j15mmrlkdzp8f'>
 		&nbsp;
-                <label for='cl0wzrvli003j15mmrlkdzp8f'>Novi Belgii</label>
+                <label for='cl0wzrvli003j15mmrlkdzp8f'>1657 | Novi Belgii</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="novi-belgii-map"  title="Layer Info" ></i>
 		</div>
+
 	      
 	      
-		<!--CURRENT SATELLITE -->
-		<div class="layer-list-row" >
-		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
-		<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='rtoggle' value='cjooubzup2kx52sqdf9zmmv2j'>
-		&nbsp;
-		<label for='cjooubzup2kx52sqdf9zmmv2j'>Current Satellite</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="satellite-image"  title="Layer Info" ></i>
-		</div>
 
 		
 	  </div>
