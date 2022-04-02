@@ -210,10 +210,15 @@ modal_content_html["ratzer-map"] = `
             `;
 
 			/* Novi Belgii Map */
-modal_header_text["novi-belgii-map"] = "Belgii novi, angliae novae, et partis Virginiae ; novissima delineatio";
+modal_header_text["novi-belgii-map"] = "Belgii novi, 1651";
 modal_content_html["novi-belgii-map"] = `
-			This map was from 1651 shows the extent of New Netherland and the bordering areas of New England and New France. It goes from what is now Montreal on the north, and the border from Maine down past Washington DC in the south, and it locates dozens of places and Indian tribes. Belgii Novi is excellent cartographically for the time, and it aligns relatively well, except in the upper part, west of Montreal and east of the Great Lakes.
-			<br><br>The map was created by Joannes Jansson, and was followed by copies and updates by Nicholas Vissher, all the way through the 1680s.
+
+<i>Belgii novi, angliae novae, et partis Virginiae ; novissima delineatio</i>
+<br>
+Created in 1651 by Joannes Jansson.
+
+			<br><br>This map shows the extent of New Netherland and the bordering areas of New England and New France. It goes from what is now Montreal on the north, and the border from Maine down past Washington DC in the south, and it locates dozens of places and Indian tribes. Belgii Novi is excellent cartographically for the time, and it aligns relatively well, except in the upper part, west of Montreal and east of the Great Lakes.
+			It was followed by copies and updates by Nicholas Vissher, all the way through the 1680s.
 			`;
 
 			/* Manahatta Map Overlay */
