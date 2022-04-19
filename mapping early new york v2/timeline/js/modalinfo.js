@@ -195,7 +195,7 @@ modal_content_html["stokes-key-castello"] = `
 			
 modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam 1979";
 modal_content_html["new-amsterdam-legend"] = `
-			This illustration of the Castello Plan by Peter Spier in 1979 shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
+			This is an illustration of the Castello Plan by Peter Spier in 1979 that shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
             `;
 
 modal_header_text["dutch-grants-stokes"] = "Dutch Grants, Stokes 1914-1916";
