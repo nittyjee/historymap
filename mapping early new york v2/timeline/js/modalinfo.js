@@ -193,9 +193,9 @@ modal_content_html["stokes-key-castello"] = `
 			This map is a key to the lots numbered in the Iconography of Manhattan Island of the Castello Plan (1660). For more information on the Castello Plan, click on the info button for the Original Castello Plan map overlay.
             `;
 			
-modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam";
+modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam 1979";
 modal_content_html["new-amsterdam-legend"] = `
-			This illustration of the Castello Plan shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
+			This illustration of the Castello Plan by Peter Spier in 1979 shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
             `;
 
 modal_header_text["dutch-grants-stokes"] = "Dutch Grants, Stokes 1914-1916";
