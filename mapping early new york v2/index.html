@@ -383,6 +383,15 @@ my_tooltip.fadeOut(200);
 					}
                 });
 				
+				$('#longisland_coastline').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "long-island-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "long-island-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "long-island-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "long-island-right", "visibility", "none" );
+					}
+                });
 				
 				$('#lenape_trails').click(function() {
                     if( $( this ).prop('checked') ) {
@@ -1257,7 +1266,9 @@ padding:2px 7px;
 	font-size: 17px;
 	padding-bottom: 8px;
 	text-align: center;
-	border-bottom: 1px solid #c6d2e1;
+	/* #*A border-bottom: 1px solid #c6d2e1; */
+	border-bottom: 1px solid #ce5c00;
+	margin-bottom: 8px;
 }
 
 #studioMenu { width: 300px; }
@@ -1645,8 +1656,9 @@ i.slash-icon { font-size: 11px; }
         LAYERS
       </p>
 	  
-	
+	  <!-- #*A
 	  <br>
+	  -->
 	  <center>
 	  <b>Manhattan</b>
 	  </center>
@@ -1747,6 +1759,14 @@ i.slash-icon { font-size: 11px; }
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="castello-info-layer"  title="Layer Info" ></i>
 	  </div>
 	  
+	  
+	  <!-- Long Island Area Coastline -->
+	  <div class="layer-list-row" >
+	  <input type="checkbox" id="longisland_coastline" name="longisland_coastline">
+      <label for="longisland_coastline"> <i class="fas fa-slash slash-icon"  style="color: #006400;" ></i>  Long Island Area Coastline</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="longisland-info-layer"  title="Layer Info" ></i>
+	  </div>
+	  
 <!--
 	  <br>
 	  <center>
@@ -1796,16 +1816,16 @@ i.slash-icon { font-size: 11px; }
 
 
       <div>
-
+        <!-- #*A
 		<br>
+		-->
 		<hr>
 		<p class="title">
 			MAPS
 		  </p>
-		  
-		  
+		  <!-- #*A
 		  <br>
-
+          -->
 		<!--CURRENT SATELLITE -->
 		<div class="layer-list-row" >
 			<input class='cjooubzup2kx52sqdf9zmmv2j' type='radio' name='ltoggle' value='cjooubzup2kx52sqdf9zmmv2j' checked="checked">
@@ -2057,5 +2077,6 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
 
