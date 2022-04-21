@@ -914,6 +914,29 @@ function addCurrentBuildingsBeforeLayers() {
 }
 
 
+function addLongIslandCoastlineBeforeLayers() {
+
+	        beforeMap.addLayer({
+                id: "long-island-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.3lzv4797"
+                },
+				layout: {
+                    visibility: document.getElementById('longisland_coastline').checked ? "visible" : "none",
+                },
+                "source-layer": "long_island_area_1-88rdix",
+                paint: {
+                "line-color": "#006400",
+                "line-width": 3,
+                "line-opacity": 1.0
+                }
+			
+            });
+}
+
+
 function addManahattaBeforeLayers() {
 
 	        beforeMap.addLayer({
