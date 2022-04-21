@@ -193,9 +193,9 @@ modal_content_html["stokes-key-castello"] = `
 			This map is a key to the lots numbered in the Iconography of Manhattan Island of the Castello Plan (1660). For more information on the Castello Plan, click on the info button for the Original Castello Plan map overlay.
             `;
 			
-modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam 1979";
+modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam";
 modal_content_html["new-amsterdam-legend"] = `
-			This is an illustration of the Castello Plan by Peter Spier in 1979 that shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
+			This illustration of the Castello Plan shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
             `;
 
 modal_header_text["dutch-grants-stokes"] = "Dutch Grants, Stokes 1914-1916";
@@ -237,6 +237,10 @@ modal_content_html["manahatta-info"] = `
 			<p>The Manahatta Map and the Welikia Project were developed by the Wildlife Conservation Society and led by Eric Sanderson.
 			`;
 			
+modal_header_text["longisland-info-layer"] = "Long Island Area Coastline";
+modal_content_html["longisland-info-layer"] = `
+            <p><i>Long Island Area Coastline</i></p>
+            `;
 
 modal_header_text["nyc-map-plan"] = "A Plan of the City of New York, 1730";
 modal_content_html["nyc-map-plan"] = `
