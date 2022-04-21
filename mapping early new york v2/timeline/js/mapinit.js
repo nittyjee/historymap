@@ -811,6 +811,7 @@ beforeMap.on('style.load', function () {
 	addCurrentBuildingsBeforeLayers();
 	addCurrentBuildingsLinesBeforeLayers();
 	addManahattaBeforeLayers();
+	addLongIslandCoastlineBeforeLayers();
 });
 
 //BASEMAP SWITCHING
@@ -838,11 +839,8 @@ afterMap.on('style.load', function () {
 	addCurrentBuildingsAfterLayers();
 	addCurrentBuildingsLinesAfterLayers();
 	addManahattaAfterLayers();
+	addLongIslandCoastlineAfterLayers();
 });
-
-
-
-
 
 
 
