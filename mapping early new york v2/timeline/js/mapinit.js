@@ -804,6 +804,7 @@ beforeMap.on('style.load', function () {
 	addBeforeLayers(yr, date);
 	addBeforeFarmsLayer(date);
 	addCastelloBeforeLayers();
+	addSettlementsBeforeLayers();
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
@@ -832,6 +833,7 @@ afterMap.on('style.load', function () {
 	addAfterLayers(yr, date);
 	addAfterFarmsLayer(date);
 	addCastelloAfterLayers();
+	addSettlementsAfterLayers();
 	addGrantLotsAfterLayers(date);
 	addGrantLotsLinesAfterLayers(date);
 	addCurrentLotsAfterLayers();
@@ -841,6 +843,14 @@ afterMap.on('style.load', function () {
 	addManahattaAfterLayers();
 	addLongIslandCoastlineAfterLayers();
 });
+
+
+
+
+
+
+
+
 
 
 
