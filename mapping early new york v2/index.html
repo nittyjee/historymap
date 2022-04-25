@@ -383,6 +383,14 @@ my_tooltip.fadeOut(200);
 					}
                 });
 				
+				$(".long_island").change(function () {
+                    if ($(".long_island:checked").length == $(".long_island").length) {
+                        $('#longisland_items').prop('checked','checked');
+                    }else{
+                        $('#longisland_items').prop('checked',false);  
+                    }
+                });
+				
 				$('#longisland_coastline').click(function() {
                     if( $( this ).prop('checked') ) {
 					        beforeMap.setLayoutProperty( "long-island-left", "visibility", "visible" ); 
@@ -390,6 +398,31 @@ my_tooltip.fadeOut(200);
 					} else {
 					        beforeMap.setLayoutProperty( "long-island-left", "visibility", "none" ); 
 					        afterMap.setLayoutProperty( "long-island-right", "visibility", "none" );
+					}
+                });
+				
+				$('#longisland_area').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "long-island-area-left", "visibility", "visible" );
+					        afterMap.setLayoutProperty( "long-island-area-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "long-island-area-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "long-island-area-right", "visibility", "none" );
+					}
+                });
+				
+				$('#longisland_items').change(function(){
+                    $('.long_island').prop('checked',this.checked);
+					if( $( this ).prop('checked') ) {
+					    beforeMap.setLayoutProperty( "long-island-left", "visibility", "visible" ); 
+					    afterMap.setLayoutProperty( "long-island-right", "visibility", "visible" ); 
+					    beforeMap.setLayoutProperty( "long-island-area-left", "visibility", "visible" );
+					    afterMap.setLayoutProperty( "long-island-area-right", "visibility", "visible" );
+					} else {
+					    beforeMap.setLayoutProperty( "long-island-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "long-island-right", "visibility", "none" ); 
+					    beforeMap.setLayoutProperty( "long-island-area-left", "visibility", "none" );
+					    afterMap.setLayoutProperty( "long-island-area-right", "visibility", "none" );
 					}
                 });
 				
@@ -473,6 +506,17 @@ my_tooltip.fadeOut(200);
 							castello_layer_view_flag = false;
 						}	
 						
+					}
+                });
+				
+				
+				$('#settlements_points').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "settlements-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "settlements-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "settlements-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "settlements-right", "visibility", "none" );
 					}
                 });
 				
@@ -1750,7 +1794,13 @@ i.slash-icon { font-size: 11px; }
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
 		</div>
 		
-
+      <!-- Settlements Points -->
+	  <div class="layer-list-row" >
+	  <input type="checkbox" id="settlements_points" name="settlements_points">
+      <label for="settlements_points"> <i class="fa fa-circle"  style="color: #EE82EE;" ></i>  1645-61 | Settlements</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
+	  </div>
+	  
 	  
 	  <!-- Castello Points -->
 	  <div class="layer-list-row" >
@@ -1760,11 +1810,23 @@ i.slash-icon { font-size: 11px; }
 	  </div>
 	  
 	  
-	  <!-- Long Island Area Coastline -->
+	  <!-- Long Island Items -->
 	  <div class="layer-list-row" >
-	  <input type="checkbox" id="longisland_coastline" name="longisland_coastline">
-      <label for="longisland_coastline"> <i class="fas fa-slash slash-icon"  style="color: #006400;" ></i>  Long Island Area Coastline</label>
+	  <input type="checkbox" id="longisland_items" name="longisland_items">
+      <label for="longisland_items"> <i class="fas fa-caret-down"></i>  Long Island Area Coastline</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="longisland-info-layer"  title="Layer Info" ></i>
+	  </div>
+	  
+	  <!-- Long Island Area -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_area" name="longisland_area">
+      <label for="longisland_area"> <i class="fa fa-square" style="color: #00FF7F;" ></i> Area</label>
+	  </div>
+	  
+	  <!-- Long Island Coastline -->
+	  <div class="layer-list-row" >
+	  &nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_coastline" name="longisland_coastline">
+      <label for="longisland_coastline"> <i class="fas fa-slash slash-icon"  style="color: #006400;" ></i> Coastline</label>
 	  </div>
 	  
 <!--
@@ -1936,29 +1998,21 @@ i.slash-icon { font-size: 11px; }
 		</div>
 
 
-
-		<br>
-		<center>
-		<b>Long Island</b>
-		</center>
-		<p>
-
-        <!-- NY Bay and Harbor -->
+        <br>
+		<center><b>Long Island</b></center>
+	      
+	    <!-- NY Bay and Harbor MAP -->
 		<div class="layer-list-row" >
-			<input class='cl2etvao2000116o42yqjltvf' type='radio' name='ltoggle' value='cl2etvao2000116o42yqjltvf'>
-					<input class='cl2etvao2000116o42yqjltvf' type='radio' name='rtoggle' value='cl2etvao2000116o42yqjltvf'>
-			&nbsp;
-					<label for='cl2etvao2000116o42yqjltvf'>1844 | NY Bay and Harbor</label>
-			<i  class="fa fa-info-circle layer-info trigger-popup" id="ny-bay-and-harbor-map"  title="Layer Info" ></i>
-			</div>
-
-			
-
+		<input class='cl2aneo0n000w14mrfba6ccb0' type='radio' name='ltoggle' value='cl2aneo0n000w14mrfba6ccb0'>
+                <input class='cl2aneo0n000w14mrfba6ccb0' type='radio' name='rtoggle' value='cl2aneo0n000w14mrfba6ccb0'>
+		&nbsp;
+                <label for='cl2aneo0n000w14mrfba6ccb0'>NY Bay and Harbor</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="ny-bay-and-harbor"  title="Layer Info" ></i>
+		</div>
 
 
 		<br>
 		<center><b>New Netherland</b></center>
-		<p>
 	      
 	      <!-- Novi Belgii MAP -->
 		<div class="layer-list-row" >
@@ -2095,6 +2149,7 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
 
 
