@@ -259,3 +259,8 @@ modal_content_html["satellite-image"] = `
 			This is a current satellite map of the area, with roads highlighted and labeled. Use this to compare other map overlays, and see then vs now, swiping the vertical bar left and right.
             `;
 
+
+modal_header_text["ny-bay-and-harbor-map"] = "New York Bay and Harbor, 1844";
+modal_content_html["ny-bay-and-harbor-map"] = `
+			Description coming soon.
+			`;
