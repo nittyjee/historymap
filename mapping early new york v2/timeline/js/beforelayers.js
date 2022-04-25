@@ -573,6 +573,47 @@ function addBeforeFarmsLayer(date) {
 
 
 /////////////////////////
+// Settlements Static Layer
+/////////////////////////
+
+function addSettlementsBeforeLayers() {
+	
+	// Add a layer showing the places.
+	        beforeMap.addLayer({
+                id: "settlements-left",
+                type: "circle",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.9nbfolnk"
+                },
+				layout: {
+                    visibility: document.getElementById('settlements_points').checked ? "visible" : "none",
+                },
+                "source-layer": "locations_over_time-dqsn88",
+                paint: {
+                    'circle-color': '#EE82EE',
+					'circle-opacity':  [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.5,
+                            1
+                        ],
+					'circle-stroke-width': 2,
+					'circle-stroke-color': '#EE82EE',
+					'circle-stroke-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0
+                        ]
+                }
+            });
+
+}
+
+
+
+/////////////////////////
 // Castello Static Layer
 /////////////////////////
 
@@ -934,6 +975,32 @@ function addLongIslandCoastlineBeforeLayers() {
                 }
 			
             });
+			
+			
+			beforeMap.addLayer({
+                id: "long-island-area-left",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.1i8qb0mc"
+                },
+				layout: {
+                    visibility: document.getElementById('longisland_area').checked ? "visible" : "none",
+                },
+                "source-layer": "long_island_area_lines_to_pol-3kvp6g",
+                paint: {
+				"fill-color": "#00FF7F",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.2
+                        ],
+				"fill-outline-color": "#000000"
+                }
+			
+            });
+			
 }
 
 
@@ -999,4 +1066,6 @@ function addManahattaBeforeLayers() {
             });
 	
 }
+
+
 
