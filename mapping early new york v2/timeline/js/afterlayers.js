@@ -563,7 +563,7 @@ function addAfterFarmsLayer(date) {
 // Settlements Static Layer
 /////////////////////////
 
-function addSettlementsAfterLayers() {
+function addSettlementsAfterLayers(date) {
 	
 	// Add a layer showing the places.
 	        afterMap.addLayer({
@@ -593,7 +593,8 @@ function addSettlementsAfterLayers() {
                             1,
                             0
                         ]
-                }
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
 
 }
@@ -1053,4 +1054,4 @@ function addManahattaAfterLayers() {
             });
 			
 }
-
+      
