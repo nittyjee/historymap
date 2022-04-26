@@ -576,7 +576,7 @@ function addBeforeFarmsLayer(date) {
 // Settlements Static Layer
 /////////////////////////
 
-function addSettlementsBeforeLayers() {
+function addSettlementsBeforeLayers(date) {
 	
 	// Add a layer showing the places.
 	        beforeMap.addLayer({
@@ -606,7 +606,8 @@ function addSettlementsBeforeLayers() {
                             1,
                             0
                         ]
-                }
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
 
 }
