@@ -770,6 +770,9 @@ function changeDate(unixDate) {
 	beforeMap.setFilter("farms-lines-left", dateFilter);
 	afterMap.setFilter("farms-lines-right", dateFilter);
 	
+	beforeMap.setFilter("settlements-left", dateFilter);
+	afterMap.setFilter("settlements-right", dateFilter);
+	
 
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	
@@ -804,7 +807,7 @@ beforeMap.on('style.load', function () {
 	addBeforeLayers(yr, date);
 	addBeforeFarmsLayer(date);
 	addCastelloBeforeLayers();
-	addSettlementsBeforeLayers();
+	addSettlementsBeforeLayers(date);
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
@@ -833,7 +836,7 @@ afterMap.on('style.load', function () {
 	addAfterLayers(yr, date);
 	addAfterFarmsLayer(date);
 	addCastelloAfterLayers();
-	addSettlementsAfterLayers();
+	addSettlementsAfterLayers(date);
 	addGrantLotsAfterLayers(date);
 	addGrantLotsLinesAfterLayers(date);
 	addCurrentLotsAfterLayers();
@@ -843,13 +846,6 @@ afterMap.on('style.load', function () {
 	addManahattaAfterLayers();
 	addLongIslandCoastlineAfterLayers();
 });
-
-
-
-
-
-
-
 
 
 
