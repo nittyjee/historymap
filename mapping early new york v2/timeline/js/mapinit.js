@@ -772,7 +772,14 @@ function changeDate(unixDate) {
 	
 	beforeMap.setFilter("settlements-left", dateFilter);
 	afterMap.setFilter("settlements-right", dateFilter);
+
+
+/*START ADDED BY NITIN*/
+
+	beforeMap.setFilter("settlements-labels-left", dateFilter);
+	afterMap.setFilter("settlements-labels-right", dateFilter);
 	
+/*END ADDED BY NITIN*/
 
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	
@@ -808,6 +815,7 @@ beforeMap.on('style.load', function () {
 	addBeforeFarmsLayer(date);
 	addCastelloBeforeLayers();
 	addSettlementsBeforeLayers(date);
+	addSettlementsLabelsBeforeLayers(date);
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
@@ -837,6 +845,7 @@ afterMap.on('style.load', function () {
 	addAfterFarmsLayer(date);
 	addCastelloAfterLayers();
 	addSettlementsAfterLayers(date);
+	addSettlementsLabelsAfterLayers(date);
 	addGrantLotsAfterLayers(date);
 	addGrantLotsLinesAfterLayers(date);
 	addCurrentLotsAfterLayers();

@@ -600,6 +600,69 @@ function addSettlementsAfterLayers(date) {
 }
 
 
+/*START ADDED BY NITIN*/
+
+
+/////////////////////////
+// Settlements Labels Static Layer
+/////////////////////////
+
+function addSettlementsLabelsAfterLayers(date) {
+	
+	// Add a layer showing the places.
+	        afterMap.addLayer({
+                id: "settlements-labels-right",
+                type: "symbol",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.9nbfolnk"
+                },
+				layout: {
+                    visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
+                },
+
+
+                layout: {
+                    "text-field": "{Name}",
+                    "text-size": {
+                    stops: [
+                        [11, 10],
+                        [12, 12]
+                    ]
+                    }
+                },
+
+
+
+                "source-layer": "locations_over_time-dqsn88",
+
+
+
+                paint: {
+                    "text-halo-color": "#ffffff",
+                    "text-halo-width": 5,
+                    "text-opacity": {
+                        stops: [
+                        [8, 0],
+                        [9, 1]
+                        ]
+                    }
+                },
+
+
+
+
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+
+}
+
+
+
+
+/*END ADDED BY NITIN*/
+
+
 /////////////////////////
 // Castello Static Layer
 /////////////////////////

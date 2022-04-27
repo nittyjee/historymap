@@ -519,6 +519,21 @@ my_tooltip.fadeOut(200);
 					        afterMap.setLayoutProperty( "settlements-right", "visibility", "none" );
 					}
                 });
+
+
+<!-- START ADDED BY NITIN -->
+
+				$('#settlements_labels').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "settlements-labels-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "settlements-labels-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "settlements-labels-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "settlements-labels-right", "visibility", "none" );
+					}
+                });
+
+<!-- END ADDED BY NITIN -->
 				
 				
 				$('#circle_point').click(function() {
@@ -1776,7 +1791,7 @@ i.slash-icon { font-size: 11px; }
 	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
       <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 	  </div>
-	  
+
 
 
 
@@ -1786,21 +1801,33 @@ i.slash-icon { font-size: 11px; }
 		<label for="circle_point"> <i class="fa fa-play-circle"  style="color: #097911;" ></i>1643-75 | Demo Taxlot: C7</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-taxlot-info-layer"  title="Layer Info" ></i>
 		</div>
-		
+
 		<!-- Grants Layers -->
 		<div class="layer-list-row" >
 		<input type="checkbox" id="grant_lots" name="grant_lots">
 		<label for="grant_lots"> <i class="fa fa-square" style="color: #008888;" ></i> 1643-67 | Demo Grant Divisions: C7</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
 		</div>
-		
+
       <!-- Settlements Points -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="settlements_points" name="settlements_points">
       <label for="settlements_points"> <i class="fa fa-circle"  style="color: #EE82EE;" ></i>  1645-61 | Settlements</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
 	  </div>
-	  
+
+
+<!-- START ADDED BY NITIN -->
+
+      <!-- Settlements Labels -->
+	  <div class="layer-list-row" >
+		<input type="checkbox" id="settlements_labels" name="settlements_labels">
+		<label for="settlements_labels"> <i class="fa FIND THE TEXT ICON"  style="color: #EE82EE;" ></i>  1645-61 | Settlements Labels</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-labels-info-layer"  title="Layer Info" ></i>
+		</div>
+
+<!-- END ADDED BY NITIN -->
+
 	  
 	  <!-- Castello Points -->
 	  <div class="layer-list-row" >
