@@ -640,21 +640,21 @@ function addSettlementsLabelsBeforeLayers(date) {
                     "text-field": "{Name}",
                     "text-size": {
                     stops: [
-                        [11, 10],
-                        [12, 12]
+                        [0, 4],
+                        [22, 21]
                     ]
                     }
                 },
-
-
 
                 "source-layer": "locations_over_time-dqsn88",
 
 
 
                 paint: {
+                    "text-color": "#0b0ee5",
                     "text-halo-color": "#ffffff",
                     "text-halo-width": 5,
+                    "text-halo-blur": 1,
                     "text-opacity": {
                         stops: [
                         [8, 0],
@@ -662,7 +662,6 @@ function addSettlementsLabelsBeforeLayers(date) {
                         ]
                     }
                 },
-
 
 
 
