@@ -264,3 +264,18 @@ modal_header_text["ny-bay-and-harbor-map"] = "New York Bay and Harbor, 1844";
 modal_content_html["ny-bay-and-harbor-map"] = `
 			Description coming soon.
 			`;
+
+modal_header_text["settlements-info-layer"] = "Settlements: 1645-1661";
+modal_content_html["settlements-info-layer"] = `
+			This layer shows the location and dates of settlements. Some places have a clear founding date, while others were settled before the place was named or officiated. So far locations have only been applied to several of the first Dutch settlements in Brooklyn. Use in conjunction with the "NY Bay and Harbor" map below.
+			`;
+
+/*
+
+//
+
+modal_header_text["settlements-labels-info-layer"] = "settlements infoooo";
+modal_content_html["settlements-labels-info-layer"] = `
+			Description coming soon.
+			`;
+*/

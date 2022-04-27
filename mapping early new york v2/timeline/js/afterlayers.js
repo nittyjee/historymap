@@ -578,7 +578,7 @@ function addSettlementsAfterLayers(date) {
                 },
                 "source-layer": "locations_over_time-dqsn88",
                 paint: {
-                    'circle-color': '#EE82EE',
+                    'circle-color': '#0b0ee5',
 					'circle-opacity':  [
                         'case',
                         ['boolean', ['feature-state', 'hover'], false],
@@ -586,7 +586,7 @@ function addSettlementsAfterLayers(date) {
                             1
                         ],
 					'circle-stroke-width': 2,
-					'circle-stroke-color': '#EE82EE',
+					'circle-stroke-color': '#0b0ee5',
 					'circle-stroke-opacity': [
                         'case',
                         ['boolean', ['feature-state', 'hover'], false],
