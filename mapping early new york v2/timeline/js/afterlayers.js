@@ -619,11 +619,8 @@ function addSettlementsLabelsAfterLayers(date) {
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
-                },
-
-
-                layout: {
                     "text-field": "{Name}",
+					"text-offset": [0,1],
                     "text-size": {
                     stops: [
                         [0, 4],
@@ -1118,3 +1115,4 @@ function addManahattaAfterLayers() {
 			
 }
       
+
