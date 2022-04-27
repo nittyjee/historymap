@@ -510,6 +510,14 @@ my_tooltip.fadeOut(200);
                 });
 				
 				
+				$(".settlements").change(function () {
+                    if ($(".settlements:checked").length == $(".settlements").length) {
+                        $('#settlements_items').prop('checked','checked');
+                    }else{
+                        $('#settlements_items').prop('checked',false);  
+                    }
+                });
+				
 				$('#settlements_points').click(function() {
                     if( $( this ).prop('checked') ) {
 					        beforeMap.setLayoutProperty( "settlements-left", "visibility", "visible" ); 
@@ -519,7 +527,6 @@ my_tooltip.fadeOut(200);
 					        afterMap.setLayoutProperty( "settlements-right", "visibility", "none" );
 					}
                 });
-
 
 <!-- START ADDED BY NITIN -->
 
@@ -534,6 +541,22 @@ my_tooltip.fadeOut(200);
                 });
 
 <!-- END ADDED BY NITIN -->
+				
+				$('#settlements_items').change(function(){
+                    $('.settlements').prop('checked',this.checked);
+					if( $( this ).prop('checked') ) {
+					    beforeMap.setLayoutProperty( "settlements-left", "visibility", "visible" ); 
+					    afterMap.setLayoutProperty( "settlements-right", "visibility", "visible" ); 
+					    beforeMap.setLayoutProperty( "settlements-labels-left", "visibility", "visible" ); 
+					    afterMap.setLayoutProperty( "settlements-labels-right", "visibility", "visible" ); 
+					} else {
+					    beforeMap.setLayoutProperty( "settlements-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "settlements-right", "visibility", "none" );
+						beforeMap.setLayoutProperty( "settlements-labels-left", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "settlements-labels-right", "visibility", "none" );
+					}
+                });
+				
 				
 				
 				$('#circle_point').click(function() {
@@ -1809,11 +1832,18 @@ i.slash-icon { font-size: 11px; }
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="demo-grant-info-layer"  title="Layer Info" ></i>
 		</div>
 
+
+      <!-- Settlements Items -->
+	  <div class="layer-list-row" >
+	  <input type="checkbox" id="settlements_items" name="settlements_items">
+      <label for="settlements_items"> <i class="fas fa-caret-down"></i>  1645-61 | Settlements</label>
+	  <i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
+	  </div>
+
       <!-- Settlements Points -->
 	  <div class="layer-list-row" >
-	  <input type="checkbox" id="settlements_points" name="settlements_points">
-      <label for="settlements_points"> <i class="fa fa-circle"  style="color: #EE82EE;" ></i>  1645-61 | Settlements</label>
-	  <i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
+	  &nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_points" name="settlements_points">
+      <label for="settlements_points"> <i class="fa fa-circle"  style="color: #0b0ee5;" ></i>  Locations</label>
 	  </div>
 
 
@@ -1821,9 +1851,8 @@ i.slash-icon { font-size: 11px; }
 
       <!-- Settlements Labels -->
 	  <div class="layer-list-row" >
-		<input type="checkbox" id="settlements_labels" name="settlements_labels">
-		<label for="settlements_labels"> <i class="fa FIND THE TEXT ICON"  style="color: #EE82EE;" ></i>  1645-61 | Settlements Labels</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-labels-info-layer"  title="Layer Info" ></i>
+		&nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_labels" name="settlements_labels">
+		<label for="settlements_labels"> <i class="fa fa-comment-dots"  style="color: #0b0ee5;" ></i>  Labels</label>
 		</div>
 
 <!-- END ADDED BY NITIN -->
