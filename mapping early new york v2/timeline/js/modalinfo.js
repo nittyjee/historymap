@@ -239,7 +239,7 @@ modal_content_html["manahatta-info"] = `
 			
 modal_header_text["longisland-info-layer"] = "Long Island Area Coastline";
 modal_content_html["longisland-info-layer"] = `
-            <p><i>Long Island Area Coastline</i></p>
+            <p>This layer is to be used in conjunction with the Belgii Novi map below. It is intended to show Long Island in relation to where it is shown on the map, as a reference.</p>
             `;
 
 modal_header_text["nyc-map-plan"] = "A Plan of the City of New York, 1730";
@@ -260,9 +260,11 @@ modal_content_html["satellite-image"] = `
             `;
 
 
-modal_header_text["ny-bay-and-harbor-map"] = "New York Bay and Harbor, 1844";
-modal_content_html["ny-bay-and-harbor-map"] = `
-			Description coming soon.
+modal_header_text["ny-bay-and-harbor"] = "Map of New-York Bay and Harbor and the Environs, 1844";
+modal_content_html["ny-bay-and-harbor"] = `
+			This map shows much of the area around New York Bay, showing what is today the western half of Manhattan and Queens, all of Staten Island and Brooklyn, and the surrounding areas in New Jersey.
+			<br><br>It was a culmination of the work of Ferdinand Hassler, who had to persist for decades to be able to finally create a high quality cartographically accurate map, which he was originally commissioned to do when the US Coast Survey was established in 1807.
+			<br><br>Because this map is one of the earliest to show the precise locations of settlements that were founded in the 1600s, it is being used to locate places, which are unclear, paved over, or swallowed up by the city in the decades that followed.
 			`;
 
 modal_header_text["settlements-info-layer"] = "Settlements: 1645-1661";
