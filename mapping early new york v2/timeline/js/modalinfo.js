@@ -7,45 +7,55 @@ modal_header_text["about"] = "ABOUT";
 
 			New York City was founded by the Dutch in 1624 as <i>New Amsterdam</i>, a trading post for the Dutch West India Company in New Netherland. The New Amsterdam History Center is devoted to documenting and mapping New Amsterdam, its diverse people, landscapes, institutions, and global legacy today.
 			<p>
-			We’ve presented several versions of the <i>Castello Plan</i>, the <i>Dutch Grants Map</i>, and other maps here.  You can see the settlement of houses, farms, taverns, and workshops, surrounded by walls.   Over the centuries that followed, the area became the Financial District.   The east wall was torn down and named Wall Street.   The canals were paved over became streets, and in between developed skyscrapers, while the island was expanded with infill.   Above ground, almost nothing remains of New Amsterdam except the original street pattern.   Underground, archeologists have found evidence of the plots of houses and gardens, Amsterdam yellow brick, and pollen samples of plants.
+			<br>
+			We’ve presented several versions of the <i>Castello Plan</i>, a 3D model, an encyclopedia, and other maps here.  You can see the settlement with its houses, farms, taverns, and workshops, surrounded by walls.   Over the centuries that followed, this area became the Financial District.   The east wall was torn down and named Wall Street.   The canals were paved over, became streets, and in between developed skyscrapers, while the island was expanded with infill.   Above ground, almost nothing remains of New Amsterdam except the original street pattern.   Underground, archeologists have found evidence of the plots of houses and gardens, Amsterdam yellow brick, and pollen samples of plants.
 			<p>
-			You can swipe the map to compare the Castello Plan in 1660 to the present, explore each lot, and use our encyclopedia to learn who lived there, how they earned a living, and in many cases, who they married.   
+			<br>
+			You can swipe the map to compare the Castello Plan in 1660 to the present, explore each lot, view it in the 3D model, and use our encyclopedia to learn who lived there, how they earned a living, and in many cases, who they married.   
 			<p>
-			Our next steps will be to expand the maps to include all of Long Island and eventually the Hudson Valley, Connecticut and New Jersey, and to add more detail to the timeline to through 1664 when New Amsterdam was taken over by the English.
+			<br>
+			Our next steps will be to expand the project to include all of Long Island and eventually the Hudson Valley, Connecticut and New Jersey. We will continue to add more detail to the timeline through 1664 when New Amsterdam was taken over by the English.
 			<p>
-			We need your help to make this work happen!   Donate now to develop the map and expand the research.
+			<br>
+			Questions?  Contact us at <a href = "mailto: info@newamsterdamhistorycenter.org">info@newamsterdamhistorycenter.org</a>
+			<p>
+			<br>
+			Donate now to develop the maps, 3D Model, and expand the research. We need your help to make this work happen!   
 			<p>
 
 			<br>
-				<b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
-				<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
-					<i>MAPPING EARLY NEW YORK</i> is made possible by grants from:<br>
-					The SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES<br>
-					KEN CHASE<br>
-					THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK<br>
-					THE ROBERT DAVID LION GARDINER FOUNDATION </b>
+			<b><a href="http://newamsterdamhistorycenter.org/support/">Support Us</a></b>
+			<p style="color: #b0691d; font-size: 16px; font-weight: bold;">
+				<i>MAPPING EARLY NEW YORK</i> is made possible by grants from:<br>
+				The SOCIETY OF THE DAUGHTERS OF HOLLAND DAMES<br>
+				KEN CHASE<br>
+				THE SOCIETY OF THE FIRST FAMILIES OF NEW YORK<br>
+				THE ROBERT DAVID LION GARDINER FOUNDATION </b>
 
-			<br>
-			<br>
-				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/gar-logo.jpg" width="96">
-				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/first_families_logo.png" width="96">
-				<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/dohd_logo.png" width="96">
-
+		<br>
+		<br>
+			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/gar-logo.jpg" width="96">
+			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/first_families_logo.png" width="96">
+			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/dohd_logo.png" width="96">
 
 			<p>
-			<br>
-			<b>Creative Contributors:</b>
-			<br>
-			Toya Dubin, Project Manager, info@newamsterdamhistorycenter.org
-			<br>
-			Nitin Gadia, Mapping Director and Database Development
-			<br>
-			Jerry O’Toole, Database Assistant
-			<br>
-			Firth Haring Fabend, PhD.,  Head of Scholarly Research
-			<br>
-			Esme Berg, Executive Director
-			`;
+		<br>
+		<b>Creative Contributors:</b>
+		<br>
+		<a href = "https://www.linkedin.com/in/toya-dubin-44a3b82/">Toya Dubin</a>, Project Manager, <a href = "mailto: info@newamsterdamhistorycenter.org">info@newamsterdamhistorycenter.org</a>
+		<br>
+		<a href = "https://www.linkedin.com/in/nitingadia/">Nitin Gadia</a>, Mapping Director and Database Development
+		<br>
+		<a href = "https://www.linkedin.com/in/jerry-o-toole-0763934/">Daniel O’Toole</a>, Database Developer
+		<br>
+		<a href = "https://www.linkedin.com/in/eduard-van-dijk-76347329/">Eduard Van Dijk</a>, 3D Modeling
+		<br>
+		Firth Haring Fabend, PhD.,  Head of Scholarly Research
+		<br>
+		Esme Berg, Executive Director
+		`;
+
+
 		
 modal_header_text["info"] = modal_header_text["about"];
 modal_content_html["info"] = modal_content_html["about"];
