@@ -426,6 +426,18 @@ my_tooltip.fadeOut(200);
 					}
                 });
 				
+				
+				$('#indian_paths').click(function() {
+                    if( $( this ).prop('checked') ) {
+					        beforeMap.setLayoutProperty( "indian-paths-left", "visibility", "visible" ); 
+					        afterMap.setLayoutProperty( "indian-paths-right", "visibility", "visible" ); 
+					} else {
+					        beforeMap.setLayoutProperty( "indian-paths-left", "visibility", "none" ); 
+					        afterMap.setLayoutProperty( "indian-paths-right", "visibility", "none" );
+					}
+                });
+				
+				
 				$('#lenape_trails').click(function() {
                     if( $( this ).prop('checked') ) {
 					        beforeMap.setLayoutProperty( "lenape-trails-left", "visibility", "visible" ); 
@@ -1933,7 +1945,13 @@ i.slash-icon { font-size: 11px; }
 			<label for="longisland_coastline"> <i class="fas fa-slash slash-icon"  style="color: #006400;" ></i> Coastline</label>
 			</div>
 			
-
+        
+		<!-- Long Island Coastline -->
+		<div class="layer-list-row" >
+		<input type="checkbox" id="indian_paths" name="indian_paths">
+		<label for="indian_paths"> <i class="fas fa-slash slash-icon"  style="color: #EEE8AA;" ></i> Indian Paths</label>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="indian-paths-info-layer"  title="Layer Info" ></i>
+		</div>
 
 
 
@@ -2222,7 +2240,6 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
 
