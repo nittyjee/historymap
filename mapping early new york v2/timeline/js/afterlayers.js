@@ -1114,5 +1114,29 @@ function addManahattaAfterLayers() {
             });
 			
 }
-      
+
+
+function addIndianPathsAfterLayers() {
+
+	        afterMap.addLayer({
+                id: "indian-paths-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.9ys5pa40"
+                },
+				layout: {
+                    visibility: document.getElementById('indian_paths').checked ? "visible" : "none",
+                },
+                "source-layer": "indian_paths-1679y0",
+                paint: {
+                "line-color": "#EEE8AA",
+                "line-width": 5,
+                "line-opacity": 1.0
+                }
+			
+            });
+}
+
+
 
