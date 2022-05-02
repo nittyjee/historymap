@@ -277,10 +277,29 @@ modal_content_html["ny-bay-and-harbor"] = `
 			<br><br>Because this map is one of the earliest to show the precise locations of settlements that were founded in the 1600s, it is being used to locate places, which are unclear, paved over, or swallowed up by the city in the decades that followed.
 			`;
 
-modal_header_text["settlements-info-layer"] = "Settlements: 1645-1661";
+modal_header_text["settlements-info-layer"] = "Places: 1600-1664";
 modal_content_html["settlements-info-layer"] = `
-			This layer shows the location and dates of settlements. Some places have a clear founding date, while others were settled before the place was named or officiated. So far locations have only been applied to several of the first Dutch settlements in Brooklyn. Use in conjunction with the "NY Bay and Harbor" map below.
+			This layer shows the location and dates of Indian and Dutch places. Some places have a clear founding date, while others were settled before the place was named or officiated. So far locations have only been applied in Brooklyn. For the Dutch places, use in conjunction with the "NY Bay and Harbor" map, and for the Indian places, use in conjunction with the "Indian Paths & Places" maps below.
 			`;
+
+
+			/* Paths: 1600-1664 */
+
+modal_header_text["indian-paths-info-layer"] = "Paths: 1600-1664";
+modal_content_html["indian-paths-info-layer"] = `
+			This layer traces the paths that existed prior to and during the early colonial periods on Long Island. Currently it covers Brooklyn, and is used in conjunction with the "Indian Paths & Places" layer below. Paths are traced according to the map, which are likely a combination of Indian paths and paths used by colonists, which were created separately or shared. Many paths continued to be used and were eventually straightened and paved into the streets and highways used today. In many cases, the paths were likely drawn along the current streets where the exact paths were not known before.
+						`;
+
+
+			/* Indian Paths & Places | 1600-64 */
+
+modal_header_text["indian-paths-places"] = "Indian Villages Paths, Ponds and Places in Kings County, 1946";
+modal_content_html["indian-paths-places"] = `
+			This map by Brooklyn Borough Historian James Kelly shows paths created and used by Indians and several Indian settlements. The paths were likely a combination of Indian paths and paths used by colonists, which were created separately or shared. Use in conjunction with and read more about this map in the Long Island "Paths" and "Places" layers above.
+			`;
+
+
+
 
 /*
 

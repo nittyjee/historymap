@@ -614,7 +614,6 @@ function addSettlementsBeforeLayers(date) {
 
 
 
-/*START ADDED BY NITIN*/
 
 
 /////////////////////////
@@ -669,8 +668,6 @@ function addSettlementsLabelsBeforeLayers(date) {
 
 
 
-
-/*END ADDED BY NITIN*/
 
 
 
@@ -1143,7 +1140,7 @@ function addIndianPathsBeforeLayers() {
                 },
                 "source-layer": "indian_paths-1679y0",
                 paint: {
-                "line-color": "#EEE8AA",
+                "line-color": "#FF0000",
                 "line-width": 5,
                 "line-opacity": 1.0
                 }

@@ -540,8 +540,6 @@ my_tooltip.fadeOut(200);
 					}
                 });
 
-<!-- START ADDED BY NITIN -->
-
 				$('#settlements_labels').click(function() {
                     if( $( this ).prop('checked') ) {
 					        beforeMap.setLayoutProperty( "settlements-labels-left", "visibility", "visible" ); 
@@ -551,8 +549,6 @@ my_tooltip.fadeOut(200);
 					        afterMap.setLayoutProperty( "settlements-labels-right", "visibility", "none" );
 					}
                 });
-
-<!-- END ADDED BY NITIN -->
 				
 				$('#settlements_items').change(function(){
                     $('.settlements').prop('checked',this.checked);
@@ -1904,7 +1900,7 @@ i.slash-icon { font-size: 11px; }
       <!-- Settlements Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="settlements_items" name="settlements_items">
-		<label for="settlements_items"> <i class="fas fa-caret-down"></i>  1645-61 | Settlements</label>
+		<label for="settlements_items"> <i class="fas fa-caret-down"></i>  1600-64 | Settlements</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
 		</div>
   
@@ -1913,17 +1909,21 @@ i.slash-icon { font-size: 11px; }
 		&nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_points" name="settlements_points">
 		<label for="settlements_points"> <i class="fa fa-circle"  style="color: #0b0ee5;" ></i>  Locations</label>
 		</div>
-  
-  
-  <!-- START ADDED BY NITIN -->
+
   
 		<!-- Settlements Labels -->
 		<div class="layer-list-row" >
 		  &nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_labels" name="settlements_labels">
 		  <label for="settlements_labels"> <i class="fa fa-comment-dots"  style="color: #0b0ee5;" ></i>  Labels</label>
 		  </div>
-  
-  <!-- END ADDED BY NITIN -->
+
+
+		<!-- Indian Paths -->
+		<div class="layer-list-row" >
+			<input type="checkbox" id="indian_paths" name="indian_paths">
+			<label for="indian_paths"> <i class="fas fa-slash slash-icon"  style="color: #FF0000;" ></i> 1600-64 | Paths</label>
+			<i  class="fa fa-info-circle layer-info trigger-popup" id="indian-paths-info-layer"  title="Layer Info" ></i>
+			</div>
   
 
   	  <!-- Long Island Items -->
@@ -1946,12 +1946,7 @@ i.slash-icon { font-size: 11px; }
 			</div>
 			
         
-		<!-- Long Island Coastline -->
-		<div class="layer-list-row" >
-		<input type="checkbox" id="indian_paths" name="indian_paths">
-		<label for="indian_paths"> <i class="fas fa-slash slash-icon"  style="color: #EEE8AA;" ></i> Indian Paths</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="indian-paths-info-layer"  title="Layer Info" ></i>
-		</div>
+
 
 
 

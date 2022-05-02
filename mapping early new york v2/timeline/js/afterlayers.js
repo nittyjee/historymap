@@ -600,8 +600,6 @@ function addSettlementsAfterLayers(date) {
 }
 
 
-/*START ADDED BY NITIN*/
-
 
 /////////////////////////
 // Settlements Labels Static Layer
@@ -656,8 +654,6 @@ function addSettlementsLabelsAfterLayers(date) {
 
 
 
-
-/*END ADDED BY NITIN*/
 
 
 /////////////////////////
@@ -1130,7 +1126,7 @@ function addIndianPathsAfterLayers() {
                 },
                 "source-layer": "indian_paths-1679y0",
                 paint: {
-                "line-color": "#EEE8AA",
+                "line-color": "#FF0000",
                 "line-width": 5,
                 "line-opacity": 1.0
                 }
