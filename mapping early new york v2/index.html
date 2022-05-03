@@ -537,6 +537,13 @@ my_tooltip.fadeOut(200);
 					} else {
 					        beforeMap.setLayoutProperty( "settlements-left", "visibility", "none" ); 
 					        afterMap.setLayoutProperty( "settlements-right", "visibility", "none" );
+							
+						if(settlements_layer_view_flag) { 
+							if(afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.remove();
+						    if(beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.remove();
+						    $("#infoLayerSettlements").slideUp();
+							settlements_layer_view_flag = false;
+						}
 					}
                 });
 
@@ -1362,7 +1369,7 @@ padding:2px 7px;
 }
 
 #studioMenu { width: 300px; }
-#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerFarms, #infoLayerCurrLots { 
+#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerFarms, #infoLayerCurrLots, #infoLayerSettlements { 
     padding: 5px;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -1392,6 +1399,10 @@ padding:2px 7px;
 #infoLayerCastello, .infoLayerCastelloPopUp { 
     background-color: rgb(255, 192, 203, 0.3);  /* #FFC0CB Pink */
     border: solid pink 2px;
+} 
+#infoLayerSettlements, .infoLayerSettlementsPopUp { 
+    background-color: rgb(11, 14, 229, 0.2);  /* #0b0ee5 */
+    border: solid #0b0ee5 2px;
 } 
 #infoLayerGrantLots, .infoLayerGrantLotsPopUp { 
     background-color: rgb(102, 205, 170, 0.3); /* #66CDAA MediumAquamarine */
@@ -1443,7 +1454,7 @@ i.layer-info:hover { opacity: 0.7; }
 }
 */
 
-.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerFarmsPopUp, .infoLayerCurrLotsPopUp {
+.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerFarmsPopUp, .infoLayerCurrLotsPopUp, .infoLayerSettlementsPopUp {
     padding-left: 5px;
 	padding-right: 5px;
 }
@@ -2121,6 +2132,7 @@ i.slash-icon { font-size: 11px; }
 	  <div id="infoLayerDutchGrants"></div>
 	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
+	  <div id="infoLayerSettlements"></div>
 	  <div id="demoLayerInfo"></div>
 	  <div id="infoLayerCurrLots"></div>
 	  
@@ -2235,6 +2247,5 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
