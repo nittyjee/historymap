@@ -5,6 +5,7 @@ var grant_lots_view_id = null,
     grant_lots_view_flag = false,
     demo_layer_view_flag = false,
     castello_layer_view_flag = false,
+	settlements_layer_view_flag = false,
 	dgrants_layer_view_flag = false,
 	farms_layer_view_flag = false,
 	curr_layer_view_flag = false;
@@ -15,6 +16,7 @@ $("#infoLayerFarms").slideUp();
 $("#demoLayerInfo").slideUp();
 $("#infoLayerCastello").slideUp();
 $("#infoLayerCurrLots").slideUp();
+$("#infoLayerSettlements").slideUp();
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -111,14 +113,16 @@ var castello_click_ev = false,
 	demo_taxlot_click_ev = false,
 	dutch_grant_click_ev = false,
 	farms_click_ev = false,
-	curr_layer_click_ev = false;
+	curr_layer_click_ev = false,
+	settlements_click_ev = false;
     
 
 var afterMapPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
     beforeMapPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
 
 var coordinates = [];
-var places_popup_html = "";
+var places_popup_html = "",
+    settlements_popup_html = "";
 
 var afterMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
     beforeMapPlacesPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
@@ -153,6 +157,12 @@ var afterMapFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: f
 
 var afterMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+	
+var afterMapSettlementsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
+    beforeMapSettlementsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+	
+var afterHighMapSettlementsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
+    beforeHighMapSettlementsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
 
 var hoveredStateIdRight = null,
     hoveredStateIdLeft = null,
@@ -167,9 +177,12 @@ var hoveredStateIdRight = null,
 	hoveredFarmsIdRight = null,
 	hoveredFarmsIdLeft = null,
 	hoveredCurrLotsIdRight = null,
-	hoveredCurrLotsIdLeft = null;
+	hoveredCurrLotsIdLeft = null,
+	hoveredSettlementsIdRight = null,
+	hoveredSettlementsIdLeft = null;
 	
-var clickedStateId = null;
+var clickedStateId = null,
+    clickedSettlementsId = null;
 	
 var demo_layer_features = null;
 
@@ -188,6 +201,10 @@ beforeMap.on("load", function () {
 		}).on('click', 'places-left', function (e) {
               
 			CastelloClickHandle(e);
+			  
+        }).on('click', 'settlements-left', function (e) {
+              
+			SettlementsClickHandle(e);
 			  
         }).on('click', 'grant-lots-left' , function (e) {
 				        
@@ -231,6 +248,10 @@ afterMap.on("load", function () {
 			
 			CastelloClickHandle(e);
 			
+        }).on('click', 'settlements-right', function (e) {
+              
+			SettlementsClickHandle(e);
+			  
         }).on('click', 'grant-lots-right' , function (e) {
 				        
             GrantLotsHandle(e);
@@ -273,7 +294,7 @@ afterMap.on("error", function (e) {
 	    
 		function DefaultHandle() {
 		
-		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev) {
+		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev) {
                         if(windoWidth > 555)
 			                $('#view-hide-layer-panel').trigger('click');
 					}
@@ -284,6 +305,7 @@ afterMap.on("error", function (e) {
 					dutch_grant_click_ev = false;
 					farms_click_ev = false;
 					curr_layer_click_ev = false;
+					settlements_click_ev = false;
 		
 		}
 		
@@ -469,6 +491,60 @@ afterMap.on("error", function (e) {
         }
 	
 	
+	    function SettlementsClickHandle(event) {
+			//#infoLayerSettlements
+			//dutch_grant_lots_info[event.features[0].properties.Lot]
+			
+			
+			if(settlements_layer_view_flag && (clickedSettlementsId == event.features[0].id) ) {
+				        $("#infoLayerSettlements").slideUp();
+						settlements_layer_view_flag = false;
+						if(afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.remove();
+						if(beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.remove();
+		    } else {
+				    clickedSettlementsId = event.features[0].id;
+				
+					settlements_popup_html = "<h3>  1600-64 | Long Island Settlements</h3><hr>" +
+						"<br>" +
+						"<b>" + "Name: " + "</b>" + 
+						event.features[0].properties.Name +
+						"<br>" +
+						"<b>" + "Current Location: " + "</b>" + 
+						event.features[0].properties.map +
+						"<br>" +
+						"<b>" + "Date: " + "</b>" + 
+						( typeof event.features[0].properties.Date == "undefined" ? "" : event.features[0].properties.Date ) +
+						"<br>";
+				
+				coordinates = event.features[0].geometry.coordinates.slice();
+                //var description = event.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+				
+					beforeHighMapSettlementsPopUp
+                        .setLngLat(coordinates)
+                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.map + "</div>");
+					if(!beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.addTo(beforeMap);
+					
+					afterHighMapSettlementsPopUp
+                        .setLngLat(coordinates)
+						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.map + "</div>");
+					if(!afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.addTo(afterMap);
+					
+					$("#infoLayerSettlements").html(settlements_popup_html).slideDown();
+				    settlements_layer_view_flag = true;
+					if(!layer_view_flag) $('#view-hide-layer-panel').trigger('click');
+			}
+		    settlements_click_ev = true;
+			
+		}
+	
+	
 	    function CastelloClickHandle(event) {
 	        if(castello_layer_view_flag && (clickedStateId == event.features[0].id) ) {
 				        $("#infoLayerCastello").slideUp();
@@ -504,12 +580,12 @@ afterMap.on("error", function (e) {
 				
 					beforeHighCastelloPopUp
                         .setLngLat(coordinates)
-                        .setHTML("<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + event.features[0].properties.LOT2 + "</div>");
+                        .setHTML("<div class='infoLayerCastelloPopUp'><b>Taxlot (1660):</b><br>" + event.features[0].properties.LOT2 + "</div>");
 					if(!beforeHighCastelloPopUp.isOpen()) beforeHighCastelloPopUp.addTo(beforeMap);
 					
 					afterHighCastelloPopUp
                         .setLngLat(coordinates)
-						.setHTML("<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + event.features[0].properties.LOT2 + "</div>");
+						.setHTML("<div class='infoLayerCastelloPopUp'><b>Taxlot (1660):</b><br>" + event.features[0].properties.LOT2 + "</div>");
 					if(!afterHighCastelloPopUp.isOpen()) afterHighCastelloPopUp.addTo(afterMap);
 					
 					$("#infoLayerCastello").html(places_popup_html).slideDown();
@@ -857,7 +933,5 @@ afterMap.on('style.load', function () {
 	addLongIslandCoastlineAfterLayers();
 	addIndianPathsAfterLayers();
 });
-
-
 
 
