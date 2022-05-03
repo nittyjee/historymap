@@ -596,6 +596,59 @@ function addSettlementsAfterLayers(date) {
                 },
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
+			
+			
+			//ON HOVER
+            afterMap.on('mouseenter', 'settlements-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+			    //console.log(e.features[0].properties);
+				if (e.features.length > 0) {
+                    if (hoveredSettlementsIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'settlements-right', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdRight},
+                            { hover: false }
+                        );
+                    }
+                    hoveredSettlementsIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'settlements-right', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdRight},
+                        { hover: true }
+                    );
+					
+			    coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //BEFORE MAP POP UP CONTENTS
+                afterMapSettlementsPopUp
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        "<div class='infoLayerSettlementsPopUp'><b>" + e.features[0].properties.Name + "</b><br>" + e.features[0].properties.map + "</div>"
+                    )
+                    .addTo(afterMap);
+					
+				}
+			});
+			
+			//OFF HOVER
+            afterMap.on('mouseleave', 'settlements-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredSettlementsIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'settlements-right', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredSettlementsIdRight = null;	
+				if(afterMapSettlementsPopUp.isOpen()) afterMapSettlementsPopUp.remove();
+            });
 
 }
 
@@ -763,7 +816,7 @@ function addCastelloAfterLayers() {
                 afterMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerCastelloPopUp'>" + "<b>Taxlot (1660):</b> " + "<br>" + e.features[0].properties.LOT2 + "</div>"
+                        "<div class='infoLayerCastelloPopUp'><b>Taxlot (1660):</b><br>" + e.features[0].properties.LOT2 + "</div>"
                     )
                     .addTo(afterMap);
 				}
@@ -1133,6 +1186,5 @@ function addIndianPathsAfterLayers() {
 			
             });
 }
-
 
 
