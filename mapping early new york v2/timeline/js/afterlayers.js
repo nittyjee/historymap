@@ -630,7 +630,7 @@ function addSettlementsAfterLayers(date) {
                 afterMapSettlementsPopUp
                     .setLngLat(coordinates)
                     .setHTML(
-                        "<div class='infoLayerSettlementsPopUp'><b>" + e.features[0].properties.Name + "</b><br>" + e.features[0].properties.map + "</div>"
+                        "<div class='infoLayerSettlementsPopUp'><b>" + e.features[0].properties.Name + "</b><br>" + e.features[0].properties.Date + "</div>"
                     )
                     .addTo(afterMap);
 					

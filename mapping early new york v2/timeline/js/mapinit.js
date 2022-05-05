@@ -504,17 +504,15 @@ afterMap.on("error", function (e) {
 		    } else {
 				    clickedSettlementsId = event.features[0].id;
 				
-					settlements_popup_html = "<h3>  1600-64 | Long Island Settlements</h3><hr>" +
+					settlements_popup_html = "<h3>  Settlement</h3><hr>" +
 						"<br>" +
-						"<b>" + "Name: " + "</b>" + 
+						//"<b>" + "Name: " + "</b>" + 
 						event.features[0].properties.Name +
-						"<br>" +
-						"<b>" + "Current Location: " + "</b>" + 
-						event.features[0].properties.map +
 						"<br>" +
 						"<b>" + "Date: " + "</b>" + 
 						( typeof event.features[0].properties.Date == "undefined" ? "" : event.features[0].properties.Date ) +
-						"<br>";
+						"<br>" +
+						"<br>" ;
 				
 				coordinates = event.features[0].geometry.coordinates.slice();
                 //var description = event.features[0].properties.description;
@@ -528,12 +526,12 @@ afterMap.on("error", function (e) {
 				
 					beforeHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.map + "</div>");
+                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.Date + "</div>");
 					if(!beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.addTo(beforeMap);
 					
 					afterHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.map + "</div>");
+						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.Date + "</div>");
 					if(!afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.addTo(afterMap);
 					
 					$("#infoLayerSettlements").html(settlements_popup_html).slideDown();
