@@ -509,7 +509,7 @@ afterMap.on("error", function (e) {
 						//"<b>" + "Name: " + "</b>" + 
 						event.features[0].properties.Name +
 						"<br>" +
-						"<b>" + "Date: " + "</b>" + 
+						//"<b>" + "Date: " + "</b>" + 
 						( typeof event.features[0].properties.Date == "undefined" ? "" : event.features[0].properties.Date ) +
 						"<br>" +
 						"<br>" ;
@@ -526,12 +526,16 @@ afterMap.on("error", function (e) {
 				
 					beforeHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.Date + "</div>");
+                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" +
+						// event.features[0].properties.Date + 
+						"</div>");
 					if(!beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.addTo(beforeMap);
 					
 					afterHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" + event.features[0].properties.Date + "</div>");
+						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" +
+						// event.features[0].properties.Date + 
+						"</div>");
 					if(!afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.addTo(afterMap);
 					
 					$("#infoLayerSettlements").html(settlements_popup_html).slideDown();
