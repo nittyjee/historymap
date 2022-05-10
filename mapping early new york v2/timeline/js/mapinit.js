@@ -516,11 +516,11 @@ afterMap.on("error", function (e) {
 					if(cmp_name.includes(ref_name)) {
                 */
 				    if( typeof settlements_info[ref_name] == "undefined" ) {
-						settlements_popup_html += "<h4>" + event.features[0].properties.Name + "</h4>";
+						settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
 				    } else {
-						settlements_popup_html += settlements_info[ref_name].name + "<br><br>" +
-						"<b>" + "Current Location(s): " + "</b>" + settlements_info[ref_name].curr_loc + "<br>" +
-						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" +
+						settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
+						"<b>" + "Current Location(s): " + "</b>" + "<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
+						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" + "<br>" +
 						"<br><i>" + settlements_info[ref_name].descr +"</i>" +
 						( settlements_info[ref_name].img1.length > 0 ? "<img src='" + settlements_info[ref_name].img1 + "'  width='258' ><br>" : "" ) +
 						( settlements_info[ref_name].img2.length > 0 ? "<img src='" + settlements_info[ref_name].img2 + "'  width='258' ><br>" : "" ) +
