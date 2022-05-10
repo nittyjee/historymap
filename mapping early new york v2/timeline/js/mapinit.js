@@ -493,8 +493,8 @@ afterMap.on("error", function (e) {
 	
 	    function SettlementsClickHandle(event) {
 			//#infoLayerSettlements
-			//dutch_grant_lots_info[event.features[0].properties.Lot]
-			
+			//settlements_info[event.features[0].properties.Lot]
+			console.log(event.features[0]);
 			
 			if(settlements_layer_view_flag && (clickedSettlementsId == event.features[0].id) ) {
 				        $("#infoLayerSettlements").slideUp();
@@ -502,17 +502,34 @@ afterMap.on("error", function (e) {
 						if(afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.remove();
 						if(beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.remove();
 		    } else {
-				    clickedSettlementsId = event.features[0].id;
+				clickedSettlementsId = event.features[0].id;
 				
-					settlements_popup_html = "<h3>  Settlement</h3><hr>" +
-						"<br>" +
-						//"<b>" + "Name: " + "</b>" + 
-						event.features[0].properties.Name +
-						"<br>" +
-						//"<b>" + "Date: " + "</b>" + 
-						( typeof event.features[0].properties.Date == "undefined" ? "" : event.features[0].properties.Date ) +
-						"<br>" +
-						"<br>" ;
+				var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');;
+				console.log(ref_name);
+				console.log(settlements_info.length);
+				settlements_popup_html = "<h3>Settlement</h3><hr>";
+				/*
+				for (var j = 0; j < settlements_info.length; j += 1) {
+					console.log(j);
+					console.log(settlements_info[j].name);
+					var cmp_name = settlements_info[j].name;
+					if(cmp_name.includes(ref_name)) {
+                */
+				    if( typeof settlements_info[ref_name] == "undefined" ) {
+						settlements_popup_html += "<h4>" + event.features[0].properties.Name + "</h4>";
+				    } else {
+						settlements_popup_html += settlements_info[ref_name].name + "<br><br>" +
+						"<b>" + "Current Location(s): " + "</b>" + settlements_info[ref_name].curr_loc + "<br>" +
+						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" +
+						"<br><i>" + settlements_info[ref_name].descr +"</i>" +
+						( settlements_info[ref_name].img1.length > 0 ? "<img src='" + settlements_info[ref_name].img1 + "'  width='258' ><br>" : "" ) +
+						( settlements_info[ref_name].img2.length > 0 ? "<img src='" + settlements_info[ref_name].img2 + "'  width='258' ><br>" : "" ) +
+						( settlements_info[ref_name].img3.length > 0 ? "<img src='" + settlements_info[ref_name].img3 + "'  width='258' ><br>" : "" );
+				    }
+				/*	
+					}
+				}
+				*/
 				
 				coordinates = event.features[0].geometry.coordinates.slice();
                 //var description = event.features[0].properties.description;
