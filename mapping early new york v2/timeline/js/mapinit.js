@@ -504,7 +504,7 @@ afterMap.on("error", function (e) {
 		    } else {
 				clickedSettlementsId = event.features[0].id;
 				
-				var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');;
+				var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');
 				console.log(ref_name);
 				console.log(settlements_info.length);
 				settlements_popup_html = "<h3>Settlement</h3><hr>";
@@ -519,12 +519,18 @@ afterMap.on("error", function (e) {
 						settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
 				    } else {
 						settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
-						"<b>" + "Current Location(s): " + "</b>" + "<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
+						"<b>" + "Current Location(s): " + "</b>" + 
+						//"<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
+						( settlements_info[ref_name].curr_loc_url.length > 0 ? "<a href='https://nahc-mapping.org" + settlements_info[ref_name].curr_loc_url + "' target='_blank'>" : "" ) +
+						( typeof settlements_linked_location[settlements_info[ref_name].curr_loc_target] == "undefined" ? settlements_info[ref_name].curr_loc_name : settlements_linked_location[settlements_info[ref_name].curr_loc_target] ) +
+						( settlements_info[ref_name].curr_loc_url.length > 0 ? "</a>"  : "" ) + "<br><br>" +
 						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" + "<br>" +
 						"<br><i>" + settlements_info[ref_name].descr +"</i>" +
 						( settlements_info[ref_name].img1.length > 0 ? "<img src='" + settlements_info[ref_name].img1 + "'  width='258' ><br>" : "" ) +
 						( settlements_info[ref_name].img2.length > 0 ? "<img src='" + settlements_info[ref_name].img2 + "'  width='258' ><br>" : "" ) +
 						( settlements_info[ref_name].img3.length > 0 ? "<img src='" + settlements_info[ref_name].img3 + "'  width='258' ><br>" : "" );
+						console.warn(settlements_info[ref_name].curr_loc_target);
+						console.warn(settlements_linked_location[settlements_info[ref_name].curr_loc_target]);
 				    }
 				/*	
 					}
@@ -952,5 +958,4 @@ afterMap.on('style.load', function () {
 	addLongIslandCoastlineAfterLayers();
 	addIndianPathsAfterLayers();
 });
-
 
