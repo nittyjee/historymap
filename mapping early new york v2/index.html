@@ -83,7 +83,8 @@
 
     // get Dutch Grants Lots Info from REST API
     var dutch_grant_lots_info = new Array(),
-	    settlements_info = new Array();
+	    settlements_info = new Array(),
+		settlements_linked_location = new Array();
 	var dutch_grant_lots_info_length = 0,
 	    settlements_info_length = 0;
     getDutchGrantsInfo();
@@ -1056,6 +1057,9 @@ function getSettlementsInfo() {
 						     data[i].field_current_location_text_[0].value  +
 							( data[i].field_current_location_linked_.length > 0 ? "</a>"  : "" )
 						) : "",
+						curr_loc_name: ( data[i].field_current_location_text_.length > 0 ? data[i].field_current_location_text_[0].value : "" ),
+						curr_loc_url: ( data[i].field_current_location_linked_.length > 0 ? data[i].field_current_location_linked_[0].url : "" ),
+						curr_loc_target: ( data[i].field_current_location_linked_.length > 0 ? data[i].field_current_location_linked_[0].target_id : "" ),
 						date: data[i].field_date_text_.length > 0 ? data[i].field_date_text_[0].value : "", 
 						descr: data[i].field_description10.length > 0 ? data[i].field_description10[0].value : "",
 						curr_loc_txt: data[i].field_current_location_text_.length > 0 ? data[i].field_current_location_text_[0].value : "",
@@ -1064,7 +1068,9 @@ function getSettlementsInfo() {
 						img2: data[i].field_image_2.length > 0 ? data[i].field_image_2[0].url : "",
 						img3: data[i].field_image_3.length > 0 ? data[i].field_image_3[0].url : ""
 					};  
-          
+                    
+		            settlements_linked_location[data[i].nid[0].value] = data[i].title[0].value;
+					
                     settlements_info_length += 1;
                     //console.log(settlements_info_length);					
 				}
