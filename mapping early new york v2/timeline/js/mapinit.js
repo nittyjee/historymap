@@ -523,7 +523,8 @@ afterMap.on("error", function (e) {
 						//"<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
 						( settlements_info[ref_name].curr_loc_url.length > 0 ? "<a href='https://nahc-mapping.org" + settlements_info[ref_name].curr_loc_url + "' target='_blank'>" : "" ) +
 						( typeof settlements_linked_location[settlements_info[ref_name].curr_loc_target] == "undefined" ? settlements_info[ref_name].curr_loc_name : settlements_linked_location[settlements_info[ref_name].curr_loc_target] ) +
-						( settlements_info[ref_name].curr_loc_url.length > 0 ? "</a>"  : "" ) + "<br><br>" +
+						( settlements_info[ref_name].curr_loc_url.length > 0 ? "</a><br>"  : "" ) + 
+						( settlements_info[ref_name].curr_loc_name.length > 0 ? "<i>" + settlements_info[ref_name].curr_loc_name + "</i>" : "" ) + "<br><br>" +
 						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" + "<br>" +
 						"<br><i>" + settlements_info[ref_name].descr +"</i>" +
 						( settlements_info[ref_name].img1.length > 0 ? "<img src='" + settlements_info[ref_name].img1 + "'  width='258' ><br>" : "" ) +
@@ -958,4 +959,3 @@ afterMap.on('style.load', function () {
 	addLongIslandCoastlineAfterLayers();
 	addIndianPathsAfterLayers();
 });
-
