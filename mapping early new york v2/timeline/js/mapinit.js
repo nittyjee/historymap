@@ -142,12 +142,24 @@ var afterHighCurrLotsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnCli
 var afterMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-//*A#
 var afterHighMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeHighMapGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
 var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+	
+	
+/* REPLACE THIS */
+var afterMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+var afterHighMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+var afterMapDutchNewGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapDutchNewGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+/* REPLACE THIS */
+	
 
 var afterHighFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeHighFarmPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
@@ -174,6 +186,10 @@ var hoveredStateIdRight = null,
 	hoveredGrantLotIdLeft = null,
 	hoveredDutchGrantIdRight = null,
 	hoveredDutchGrantIdLeft = null,
+	/* REPLACE THIS */
+	hoveredDutchNewGrantIdRight = null,
+	hoveredDutchNewGrantIdLeft = null,
+	/* REPLACE THIS */
 	hoveredFarmsIdRight = null,
 	hoveredFarmsIdLeft = null,
 	hoveredCurrLotsIdRight = null,
