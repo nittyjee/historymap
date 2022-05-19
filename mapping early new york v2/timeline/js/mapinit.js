@@ -945,8 +945,6 @@ beforeMap.on('style.load', function () {
 	addBeforeLayers(yr, date);
 	addBeforeFarmsLayer(date);
 	addCastelloBeforeLayers();
-	addSettlementsBeforeLayers(date);
-	addSettlementsLabelsBeforeLayers(date);
 	addGrantLotsBeforeLayers(date);
 	addGrantLotsLinesBeforeLayers(date);
 	addCurrentLotsBeforeLayers();
@@ -960,6 +958,8 @@ beforeMap.on('style.load', function () {
 addGravesendBeforeLayers(date);
 addGravesendLinesBeforeLayers(date);
 /*REPLACE THIS*/
+addSettlementsBeforeLayers(date);
+addSettlementsLabelsBeforeLayers(date);
 
 
 });
@@ -982,8 +982,6 @@ afterMap.on('style.load', function () {
 	addAfterLayers(yr, date);
 	addAfterFarmsLayer(date);
 	addCastelloAfterLayers();
-	addSettlementsAfterLayers(date);
-	addSettlementsLabelsAfterLayers(date);
 	addGrantLotsAfterLayers(date);
 	addGrantLotsLinesAfterLayers(date);
 	addCurrentLotsAfterLayers();
@@ -998,5 +996,8 @@ afterMap.on('style.load', function () {
 addGravesendAfterLayers(date);
 addGravesendLinesAfterLayers(date);
 /*REPLACE THIS*/
+
+addSettlementsAfterLayers(date);
+addSettlementsLabelsAfterLayers(date);
 
 });
