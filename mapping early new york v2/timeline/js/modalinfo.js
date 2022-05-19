@@ -203,9 +203,9 @@ modal_content_html["stokes-key-castello"] = `
 			This map is a key to the lots numbered in the Iconography of Manhattan Island of the Castello Plan (1660). For more information on the Castello Plan, click on the info button for the Original Castello Plan map overlay.
             `;
 			
-modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam";
+modal_header_text["new-amsterdam-legend"] = "Legend of New Amsterdam 1979";
 modal_content_html["new-amsterdam-legend"] = `
-			This illustration of the Castello Plan shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
+			This illustration of the Castello Plan by Peter Spier shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
             `;
 
 modal_header_text["dutch-grants-stokes"] = "Dutch Grants, Stokes 1914-1916";
@@ -295,8 +295,13 @@ modal_content_html["indian-paths-info-layer"] = `
 
 modal_header_text["indian-paths-places"] = "Indian Villages Paths, Ponds and Places in Kings County, 1946";
 modal_content_html["indian-paths-places"] = `
-			This map by Brooklyn Borough Historian James Kelly shows paths created and used by Indians and several Indian settlements. The paths were likely a combination of Indian paths and paths used by colonists, which were created separately or shared. Use in conjunction with and read more about this map in the Long Island "Paths" and "Places" layers above.
+			This map by Brooklyn Borough Historian James Kelly shows paths created and used by Native Americans, along with several Native American settlements. Subsequently European colonists would have used them, and later expanded or incorporated them into their settlements. Use in conjunction with the map in the Long Island "Paths" and "Places" layers above.
+			<p><br>
+			Citation:
+			<br>
+			Indian Villages, Paths, Ponds, and Places in Kings County, James A. Kelly, 1946; MAP_1946-01-01; Brooklyn Public Library, Center for Brooklyn History.
 			`;
+
 
 
 
