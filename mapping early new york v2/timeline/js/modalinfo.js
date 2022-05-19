@@ -81,6 +81,22 @@ modal_content_html["grants-info-layer"] = `
 			<br>
 			 `;
 
+
+modal_header_text["boundaries-info-layer"] = "Boundaries, 1609-Present";
+modal_content_html["boundaries-info-layer"] = `
+<!--
+			<i class="fa fa-square" style="color: #e3ed58;" ></i> Dutch Grants
+			<br>
+			<i class="far fa-square" style="color: #e3ed58;" ></i> Dutch Grants Lines
+			<br>
+			<p>
+-->
+			This layer is intended to show administrative boundaries, including major patents and town boundaries, and possibly territorial claims. Boundaries take time to draw in precision, and will be done from written records and tracing maps. Currently the only boundary that exists is of Gravesend, a town created in 1645. We are starting with precise maps and will be adding towns and patents that share boundaries. You can see the corresponding map of Gravesend below.
+			`;
+	
+
+
+
 modal_header_text["farms-info-layer"] = "Original Grants & Farms";
 modal_content_html["farms-info-layer"] = `
 
@@ -303,6 +319,13 @@ modal_content_html["indian-paths-places"] = `
 			`;
 
 
+			/* Gravesend Map */
+
+modal_header_text["gravesend-map"] = "Gravesend Map, 1873";
+modal_content_html["gravesend-map"] = `
+			This map is of Gravesend, a patent that was granted on December 19th, 1645, and was organized as a town. It is from the <i>Atlas of Long Island, New York</i> in 1873, and the borders shown had not changed since the town was created. However, the coastlines changed quite a bit, with infill over the following decades. Gravesend was the first patent granted to a woman, Deborah Moody. She and others fled religious persecution by the English colonists, and were welcomed by the Dutch. This town and patent was traced, which can be seen in the "Boundaries" layer above.
+			`;
+			
 
 
 
