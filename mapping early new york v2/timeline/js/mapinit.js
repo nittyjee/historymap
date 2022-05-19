@@ -899,6 +899,19 @@ function changeDate(unixDate) {
 	
 /*END ADDED BY NITIN*/
 
+
+    /* REPLACE THIS */
+    beforeMap.setFilter("gravesend_boundaries-c6qrbw-left", dateFilter);
+    afterMap.setFilter("gravesend_boundaries-c6qrbw-right", dateFilter);
+	
+	beforeMap.setFilter("gravesend_boundaries-c6qrbw-left-highlighted", dateFilter);
+    afterMap.setFilter("gravesend_boundaries-c6qrbw-right-highlighted", dateFilter);
+	
+	beforeMap.setFilter("gravesend-lines-left", dateFilter);
+    afterMap.setFilter("gravesend-lines-right", dateFilter);
+	/* REPLACE THIS */
+
+
     demo_layer_features = afterMap.queryRenderedFeatures({ layers: ['c7_dates-ajsksu-right'] });
 	
 	if(demo_layer_view_flag) {
