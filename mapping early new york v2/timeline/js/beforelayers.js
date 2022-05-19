@@ -154,17 +154,17 @@ function addBeforeLayers(yr, date) {
 		/* REPLACE THIS */
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "new_grants1-5sp9tb-left-highlighted",
+			id: "gravesend_boundaries-c6qrbw-left-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
+				url: "mapbox://nittyjee.49p6xmnm"
 			},
 			layout: {
-                visibility: document.getElementById('new_grants_layer').checked ? "visible" : "none",
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
             },
-			"source-layer": "new_grants1-5sp9tb",
+			"source-layer": "gravesend_boundaries-c6qrbw",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -182,17 +182,17 @@ function addBeforeLayers(yr, date) {
 
         beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "new_grants1-5sp9tb-left",
+			id: "gravesend_boundaries-c6qrbw-left",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
+				url: "mapbox://nittyjee.49p6xmnm"
 			},
 			layout: {
-                visibility: document.getElementById('new_grants_layer').checked ? "visible" : "none",
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
             },
-			"source-layer": "new_grants1-5sp9tb",
+			"source-layer": "gravesend_boundaries-c6qrbw",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -211,23 +211,23 @@ function addBeforeLayers(yr, date) {
 
         //CURSOR ON HOVER
             //ON HOVER
-			beforeMap.on('mouseenter', 'new_grants1-5sp9tb-left', function (e) {
+			beforeMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-left', function (e) {
                 beforeMap.getCanvas().style.cursor = 'pointer';
 				beforeMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            beforeMap.on('mousemove', 'new_grants1-5sp9tb-left', function (e) {
+            beforeMap.on('mousemove', 'gravesend_boundaries-c6qrbw-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredDutchNewGrantIdLeft) {
+                    if (hoveredGravesendIdLeft) {
                         beforeMap.setFeatureState(
-                            { source: 'new_grants1-5sp9tb-left', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdLeft},
+                            { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredDutchNewGrantIdLeft = e.features[0].id;
+                    hoveredGravesendIdLeft = e.features[0].id;
                     beforeMap.setFeatureState(
-                        { source: 'new_grants1-5sp9tb-left', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdLeft},
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                         { hover: true }
                     );
 					
@@ -254,7 +254,7 @@ function addBeforeLayers(yr, date) {
 
 
                 //AFTER MAP POP UP CONTENTS
-                beforeMapDutchNewGrantPopUp
+                beforeMapGravesendTwoPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -265,16 +265,16 @@ function addBeforeLayers(yr, date) {
             });
 
             //OFF HOVER
-			beforeMap.on('mouseleave', 'new_grants1-5sp9tb-left', function () {
+			beforeMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-left', function () {
                 beforeMap.getCanvas().style.cursor = '';
-				if (hoveredDutchNewGrantIdLeft) {
+				if (hoveredGravesendIdLeft) {
                     beforeMap.setFeatureState(
-                        { source: 'new_grants1-5sp9tb-left', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdLeft},
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredDutchNewGrantIdLeft = null;		
-				if(beforeMapDutchNewGrantPopUp.isOpen()) beforeMapDutchNewGrantPopUp.remove();
+                hoveredGravesendIdLeft = null;		
+				if(beforeMapGravesendTwoPopUp.isOpen()) beforeMapGravesendTwoPopUp.remove();
             });
 		/* REPLACE THIS */
 

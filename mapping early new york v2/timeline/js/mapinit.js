@@ -150,14 +150,14 @@ var afterMapDutchGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnCl
 	
 	
 /* REPLACE THIS */
-var afterMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
-    beforeMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+var afterMapGravesendPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapGravesendPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-var afterHighMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
-    beforeHighMapNewGrantLotPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+var afterHighMapGravesendPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighMapGravesendPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-var afterMapDutchNewGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
-    beforeMapDutchNewGrantPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+var afterMapGravesendTwoPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapGravesendTwoPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 /* REPLACE THIS */
 	
 
@@ -187,8 +187,8 @@ var hoveredStateIdRight = null,
 	hoveredDutchGrantIdRight = null,
 	hoveredDutchGrantIdLeft = null,
 	/* REPLACE THIS */
-	hoveredDutchNewGrantIdRight = null,
-	hoveredDutchNewGrantIdLeft = null,
+	hoveredGravesendIdRight = null,
+	hoveredGravesendIdLeft = null,
 	/* REPLACE THIS */
 	hoveredFarmsIdRight = null,
 	hoveredFarmsIdLeft = null,
@@ -943,6 +943,12 @@ beforeMap.on('style.load', function () {
 	addManahattaBeforeLayers();
 	addLongIslandCoastlineBeforeLayers();
 	addIndianPathsBeforeLayers();
+/*REPLACE THIS*/
+addGravesendBeforeLayers(date);
+addGravesendLinesBeforeLayers(date);
+/*REPLACE THIS*/
+
+
 });
 
 //BASEMAP SWITCHING
@@ -974,4 +980,10 @@ afterMap.on('style.load', function () {
 	addManahattaAfterLayers();
 	addLongIslandCoastlineAfterLayers();
 	addIndianPathsAfterLayers();
+
+/*REPLACE THIS*/
+addGravesendAfterLayers(date);
+addGravesendLinesAfterLayers(date);
+/*REPLACE THIS*/
+
 });

@@ -146,17 +146,17 @@ function addAfterLayers(yr, date) {
 		/* REPLACE THIS */
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "new_grants1-5sp9tb-right-highlighted",
+			id: "gravesend_boundaries-c6qrbw-right-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
+				url: "mapbox://nittyjee.49p6xmnm"
 			},
 			layout: {
-                visibility: document.getElementById('new_grants_layer').checked ? "visible" : "none",
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
             },
-			"source-layer": "new_grants1-5sp9tb",
+			"source-layer": "gravesend_boundaries-c6qrbw",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -174,17 +174,17 @@ function addAfterLayers(yr, date) {
 
         afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "new_grants1-5sp9tb-right",
+			id: "gravesend_boundaries-c6qrbw-right",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
+				url: "mapbox://nittyjee.49p6xmnm"
 			},
 			layout: {
-                visibility: document.getElementById('new_grants_layer').checked ? "visible" : "none",
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
             },
-			"source-layer": "new_grants1-5sp9tb",
+			"source-layer": "gravesend_boundaries-c6qrbw",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -203,23 +203,23 @@ function addAfterLayers(yr, date) {
 
         //CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'new_grants1-5sp9tb-right', function (e) {
+			afterMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-right', function (e) {
                 afterMap.getCanvas().style.cursor = 'pointer';
 				afterMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(afterMap);
 			});
 			
-            afterMap.on('mousemove', 'new_grants1-5sp9tb-right', function (e) {
+            afterMap.on('mousemove', 'gravesend_boundaries-c6qrbw-right', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredDutchNewGrantIdRight) {
+                    if (hoveredGravesendIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'new_grants1-5sp9tb-right', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdRight},
+                            { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredDutchNewGrantIdRight = e.features[0].id;
+                    hoveredGravesendIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'new_grants1-5sp9tb-right', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdRight},
+                        { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
                         { hover: true }
                     );
 					
@@ -246,7 +246,7 @@ function addAfterLayers(yr, date) {
 
 
                 //AFTER MAP POP UP CONTENTS
-                afterMapDutchNewGrantPopUp
+                afterMapGravesendTwoPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -257,16 +257,16 @@ function addAfterLayers(yr, date) {
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'new_grants1-5sp9tb-right', function () {
+			afterMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-right', function () {
                 afterMap.getCanvas().style.cursor = '';
-				if (hoveredDutchNewGrantIdRight) {
+				if (hoveredGravesendIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'new_grants1-5sp9tb-right', sourceLayer: 'new_grants1-5sp9tb', id: hoveredDutchNewGrantIdRight},
+                        { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
                         { hover: false }
                     );
                 }
-                hoveredDutchNewGrantIdRight = null;		
-				if(afterMapDutchNewGrantPopUp.isOpen()) afterMapDutchNewGrantPopUp.remove();
+                hoveredGravesendIdRight = null;		
+				if(afterMapGravesendTwoPopUp.isOpen()) afterMapGravesendTwoPopUp.remove();
             });
 		/* REPLACE THIS */
 		
