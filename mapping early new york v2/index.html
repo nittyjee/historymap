@@ -738,23 +738,23 @@ my_tooltip.fadeOut(200);
 						beforeMap.setLayoutProperty( "gravesend-lines-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "gravesend-lines-right", "visibility", "none" );
 						
-						/*
-						if(dgrants_layer_view_flag) { 
-							$("#infoLayerDutchGrants").slideUp(); 
-							dgrants_layer_view_flag = false;
+						
+						if(gravesend_layer_view_flag) { 
+							$("#infoLayerGravesend").slideUp(); 
+							gravesend_layer_view_flag = false;
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
                                 { hover: false }
                             );
-							if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
-							if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
+							if(afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.remove();
+							if(beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.remove();
 						}
-						*/
+						
 					}
                 });
 
@@ -788,23 +788,22 @@ my_tooltip.fadeOut(200);
 					        afterMap.setLayoutProperty( "gravesend_boundaries-c6qrbw-right", "visibility", "none" );
 							beforeMap.setLayoutProperty( "gravesend_boundaries-c6qrbw-left-highlighted", "visibility", "none" );
 							afterMap.setLayoutProperty( "gravesend_boundaries-c6qrbw-right-highlighted", "visibility", "none" );
-						/*
-						if(dgrants_layer_view_flag) { 
-							$("#infoLayerDutchGrants").slideUp(); 
-							dgrants_layer_view_flag = false;
+						
+						if(gravesend_layer_view_flag) { 
+							$("#infoLayerGravesend").slideUp(); 
+							gravesend_layer_view_flag = false;
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+                                { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
                                 { hover: false }
                             );
-							if(afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.remove();
-							if(beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.remove();
+							if(afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.remove();
+							if(beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.remove();
 						}
-						*/
 					}
 				});
 				
@@ -1566,7 +1565,7 @@ padding:2px 7px;
 }
 
 #studioMenu { width: 300px; }
-#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerFarms, #infoLayerCurrLots, #infoLayerSettlements { 
+#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerGravesend, #infoLayerFarms, #infoLayerCurrLots, #infoLayerSettlements { 
     padding: 5px;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -1609,6 +1608,14 @@ padding:2px 7px;
     background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
     border: solid #FFFF00 2px;
 }
+
+/* REPLACE THIS */
+#infoLayerGravesend, .infoLayerGravesendPopUp { 
+    background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
+    border: solid #FFFF00 2px;
+}
+/* REPLACE THIS */
+
 #infoLayerFarms, .infoLayerFarmsPopUp { 
     /* background-color: rgb(255, 192, 203, 0.5); */
 	/* #FFC0CB Pink */
@@ -1651,7 +1658,7 @@ i.layer-info:hover { opacity: 0.7; }
 }
 */
 
-.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerFarmsPopUp, .infoLayerCurrLotsPopUp, .infoLayerSettlementsPopUp {
+.demoLayerInfoPopUp, .infoLayerCastelloPopUp, .infoLayerGrantLotsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerDutchGrantsPopUp, .infoLayerFarmsPopUp, .infoLayerCurrLotsPopUp, .infoLayerSettlementsPopUp {
     padding-left: 5px;
 	padding-right: 5px;
 }
@@ -2359,6 +2366,7 @@ i.slash-icon { font-size: 11px; }
 	
 	  <div id="infoLayerGrantLots"></div>
 	  <div id="infoLayerDutchGrants"></div>
+	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
 	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
 	  <div id="infoLayerSettlements"></div>
@@ -2476,6 +2484,5 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
