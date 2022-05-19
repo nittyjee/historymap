@@ -1,5 +1,6 @@
 var grant_lots_view_id = null,
     dgrants_layer_view_id = null,
+	gravesend_layer_view_id = null,   // REPLACE THIS 
 	farms_layer_view_id = null,
 	curr_layer_view_id = null,
     grant_lots_view_flag = false,
@@ -7,6 +8,7 @@ var grant_lots_view_id = null,
     castello_layer_view_flag = false,
 	settlements_layer_view_flag = false,
 	dgrants_layer_view_flag = false,
+	gravesend_layer_view_flag = false,   // REPLACE THIS 
 	farms_layer_view_flag = false,
 	curr_layer_view_flag = false;
 	
@@ -17,6 +19,7 @@ $("#demoLayerInfo").slideUp();
 $("#infoLayerCastello").slideUp();
 $("#infoLayerCurrLots").slideUp();
 $("#infoLayerSettlements").slideUp();
+$("#infoLayerGravesend").slideUp();   // REPLACE THIS 
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -112,6 +115,7 @@ var castello_click_ev = false,
     grant_lots_click_ev = false,
 	demo_taxlot_click_ev = false,
 	dutch_grant_click_ev = false,
+	gravesend_click_ev = false,     // REPLACE THIS
 	farms_click_ev = false,
 	curr_layer_click_ev = false,
 	settlements_click_ev = false;
@@ -234,6 +238,10 @@ beforeMap.on("load", function () {
 				        
 			DutchGrantsClickHandle(e);
 						
+		}).on('click', 'gravesend_boundaries-c6qrbw-left' , function (e) {
+					
+		    GravesendClickHandle(e);
+						
 		}).on('click', 'curr-lots-left' , function (e) {
 				        
             CurrLotsHandle(e);
@@ -280,6 +288,10 @@ afterMap.on("load", function () {
 					
 		    DutchGrantsClickHandle(e);
 						
+		}).on('click', 'gravesend_boundaries-c6qrbw-right' , function (e) {
+					
+		    GravesendClickHandle(e);
+						
 		}).on('click', 'curr-lots-right' , function (e) {
 				        
 			CurrLotsHandle(e);		
@@ -310,7 +322,7 @@ afterMap.on("error", function (e) {
 	    
 		function DefaultHandle() {
 		
-		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev) {
+		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev && !gravesend_click_ev) {
                         if(windoWidth > 555)
 			                $('#view-hide-layer-panel').trigger('click');
 					}
@@ -322,6 +334,7 @@ afterMap.on("error", function (e) {
 					farms_click_ev = false;
 					curr_layer_click_ev = false;
 					settlements_click_ev = false;
+					gravesend_click_ev = false;
 		
 		}
 		
@@ -839,6 +852,109 @@ afterMap.on("error", function (e) {
 						dutch_grant_click_ev = true;
     }
 
+
+    
+	/*REPLACE THIS*/
+	function GravesendClickHandle(event) {
+	
+			        var highPopUpHTML = "<div class='infoLayerGravesendPopUp'><b>Name : </b>" + event.features[0].properties.Name + "</div>";
+						
+						if(layer_view_flag) {
+							if(gravesend_layer_view_id == event.features[0].id) {
+								if(gravesend_layer_view_flag) {
+							        $("#infoLayerGravesend").slideUp(); 
+									gravesend_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.remove();
+									if(beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.remove();
+								} else {
+									buildGravesendPopUpInfo(event.features[0].properties);
+							        $("#infoLayerGravesend").slideDown();
+								    gravesend_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.addTo(afterMap);
+									beforeHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.addTo(beforeMap);
+								}
+							} else {
+								buildGravesendPopUpInfo(event.features[0].properties);
+							    $("#infoLayerGravesend").slideDown();
+								gravesend_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: event.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.addTo(afterMap);
+								beforeHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.addTo(beforeMap);
+							}
+							gravesend_layer_view_id = event.features[0].id;
+						} else {
+							buildGravesendPopUpInfo(event.features[0].properties);
+							$("#infoLayerGravesend").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'gravesend_boundaries-c6qrbw-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: event.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'gravesend_boundaries-c6qrbw-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: event.features[0].id},
+                                { hover: true }
+                            );
+							afterHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.addTo(afterMap);
+							beforeHighMapGravesendPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.addTo(beforeMap);
+							gravesend_layer_view_id = event.features[0].id;
+							//gravesend_layer_view_id = null;
+					    } 
+						
+						gravesend_click_ev = true;
+    }
+    /*REPLACE THIS*/
+
+
+
 //////////////////////////////////////////////
 //TIME LAYER FILTERING. NOT SURE HOW WORKS.
 //////////////////////////////////////////////
@@ -1001,3 +1117,4 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
