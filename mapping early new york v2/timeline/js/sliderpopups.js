@@ -284,6 +284,28 @@ function buildDutchGrantPopUpInfo(props) {
 }
 
 
+
+/*REPLACE THIS*/
+function buildGravesendPopUpInfo(props) {
+	        var popup_html = "";
+
+			    popup_html = 
+				    "<h3>Land Patents</h3><hr>" +
+				    "<b>Name:</b> <i>" + props.Name + "</i><br>" +
+					"<br>" +
+					"<b>Date:</b> <i>" + props['Date Text'] + "</i><br>" +
+					"<br>" +
+					"<i>" + props.source + "</i><br><br>"
+				;
+
+    
+	$("#infoLayerGravesend").html(popup_html);
+
+}
+/*REPLACE THIS*/
+
+
+
 function buildFarmsPopUpInfo(props) {
 	        var popup_html = "";
 			//console.log(props);
