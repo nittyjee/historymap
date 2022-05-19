@@ -150,138 +150,6 @@ function addBeforeLayers(yr, date) {
 			
 
 
-
-		/* REPLACE THIS */
-		beforeMap.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "gravesend_boundaries-c6qrbw-left-highlighted",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.49p6xmnm"
-			},
-			layout: {
-                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
-            },
-			"source-layer": "gravesend_boundaries-c6qrbw",
-			paint: {
-				"fill-color": "#e3ed58",
-				"fill-opacity": [ 
-					    'case',
-                        ['boolean', ['feature-state', 'hover'], false],
-                            0.8,
-                            0
-                        ],
-				"fill-outline-color": "#FF0000"
-
-			},
-
-			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
-		});
-
-        beforeMap.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "gravesend_boundaries-c6qrbw-left",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.49p6xmnm"
-			},
-			layout: {
-                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
-            },
-			"source-layer": "gravesend_boundaries-c6qrbw",
-			paint: {
-				"fill-color": "#e3ed58",
-				"fill-opacity": [ 
-					    'case',
-                        ['boolean', ['feature-state', 'hover'], false],
-                            0.8,
-                            0.45
-                        ],
-				"fill-outline-color": "#FF0000"
-
-			},
-
-			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
-		});
-
-
-        //CURSOR ON HOVER
-            //ON HOVER
-			beforeMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-left', function (e) {
-                beforeMap.getCanvas().style.cursor = 'pointer';
-				beforeMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(beforeMap);
-			});
-			
-            beforeMap.on('mousemove', 'gravesend_boundaries-c6qrbw-left', function (e) {
-				if (e.features.length > 0) {
-                    if (hoveredGravesendIdLeft) {
-                        beforeMap.setFeatureState(
-                            { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
-                            { hover: false }
-                        );
-                    }
-					//console.log(e.features[0]);
-                    hoveredGravesendIdLeft = e.features[0].id;
-                    beforeMap.setFeatureState(
-                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
-                        { hover: true }
-                    );
-					
-					//console.log(e.lngLat.lng);
-                    var PopUpHTML = "";
-					/*
-					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
-						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
-					} else {	
-						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
-					}
-					*/
-					PopUpHTML += "<b>Name : </b>" + e.features[0].properties.name + "</div>";
-					
-					coordinates = e.features[0].geometry.coordinates.slice();
-                //var description = e.features[0].properties.description;
-
-                // Ensure that if the map is zoomed out such that multiple
-                // copies of the feature are visible, the popup appears
-                // over the copy being pointed to.
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }
-
-
-                //AFTER MAP POP UP CONTENTS
-                beforeMapGravesendTwoPopUp
-                    .setLngLat(e.lngLat)
-					.setHTML(
-                        PopUpHTML
-                    );
-				
-				}
-				
-            });
-
-            //OFF HOVER
-			beforeMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-left', function () {
-                beforeMap.getCanvas().style.cursor = '';
-				if (hoveredGravesendIdLeft) {
-                    beforeMap.setFeatureState(
-                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
-                        { hover: false }
-                    );
-                }
-                hoveredGravesendIdLeft = null;		
-				if(beforeMapGravesendTwoPopUp.isOpen()) beforeMapGravesendTwoPopUp.remove();
-            });
-		/* REPLACE THIS */
-
-
-
-
-
 		//ADD TAX LOT POINTS
 		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
@@ -551,8 +419,170 @@ function addGrantLotsLinesBeforeLayers(date) {
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
 			
-			
 }
+
+
+
+/*REPLACE THIS*/
+////////////////////////////
+// Gravesend Dynamic Layers
+////////////////////////////
+
+function addGravesendBeforeLayers(date) {
+	
+		beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "gravesend_boundaries-c6qrbw-left-highlighted",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.49p6xmnm"
+			},
+			layout: {
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "gravesend_boundaries-c6qrbw",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+        beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "gravesend_boundaries-c6qrbw-left",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.49p6xmnm"
+			},
+			layout: {
+                visibility: document.getElementById('gravesend_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "gravesend_boundaries-c6qrbw",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.45
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+
+        //CURSOR ON HOVER
+            //ON HOVER
+			beforeMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapGravesendTwoPopUp.setLngLat(e.lngLat).addTo(beforeMap);
+			});
+			
+            beforeMap.on('mousemove', 'gravesend_boundaries-c6qrbw-left', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredGravesendIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredGravesendIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    var PopUpHTML = "";
+					/*
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					*/
+					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                beforeMapGravesendTwoPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			beforeMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredGravesendIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredGravesendIdLeft = null;		
+				if(beforeMapGravesendTwoPopUp.isOpen()) beforeMapGravesendTwoPopUp.remove();
+            });
+	
+}
+
+
+function addGravesendLinesBeforeLayers(date) {
+	
+	beforeMap.addLayer({
+                id: "gravesend-lines-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.860jt8v9"
+                },
+				layout: {
+                    visibility: document.getElementById('gravesend_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "gravesend_lines-7mtc93",
+                paint: {
+                    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.8
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+	
+}
+/*REPLACE THIS*/
+
+
 
 
 /////////////////////////
