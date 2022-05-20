@@ -290,13 +290,15 @@ function buildGravesendPopUpInfo(props) {
 	        var popup_html = "";
 
 			    popup_html = 
-				    "<h3>Land Patents</h3><hr>" +
-				    "<b>Name:</b> <i>" + props.Name + "</i><br>" +
-					"<br>" +
+				    "<h3>Boundaries</h3><hr>" +
+				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
+					"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/gravesend' target='_blank'>Gravesend</a>" +
+					"<br><br>" +
 					"<b>Date:</b> <i>" + props['Date Text'] + "</i><br>" +
-					"<br>" +
-					"<i>" + props.source + "</i><br><br>"
+					"<br>"
 				;
+
+
 
     
 	$("#infoLayerGravesend").html(popup_html);
