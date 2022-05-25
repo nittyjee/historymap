@@ -303,8 +303,8 @@ modal_content_html["settlements-info-layer"] = `
 
 modal_header_text["indian-paths-info-layer"] = "Paths: 1600-1664";
 modal_content_html["indian-paths-info-layer"] = `
-			This layer traces the paths that existed prior to and during the early colonial periods on Long Island. Currently it covers Brooklyn, and is used in conjunction with the "Indian Paths & Places" layer below. Paths are traced according to the map, which are likely a combination of Indian paths and paths used by colonists, which were created separately or shared. Many paths continued to be used and were eventually straightened and paved into the streets and highways used today. In many cases, the paths were likely drawn along the current streets where the exact paths were not known before.
-						`;
+			This layer traces the paths that existed prior to and during the early colonial period. Used in conjunction with the “Indian Paths & Places” map below, it helps to display paths that are likely a combination of Native American paths and those used by colonists. Some of these paths were eventually straightened and paved to become the streets and highways used today.
+			`;
 
 
 			/* Indian Paths & Places | 1600-64 */
