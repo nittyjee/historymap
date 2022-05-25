@@ -292,10 +292,13 @@ function buildGravesendPopUpInfo(props) {
 			    popup_html = 
 				    "<h3>Boundaries</h3><hr>" +
 				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
-					"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/gravesend' target='_blank'>Gravesend</a>" +
+					"<b>" + props.Name + "</b>" +
+					//"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/gravesend' target='_blank'>Gravesend</a>" +
 					"<br><br>" +
-					"<b>Date:</b> <i>" + props['Date Text'] + "</i><br>" +
-					"<br>"
+					"<b>Date:</b> <i>" + props['Date Text'] + "</i>" +
+					"<br><br>" +
+					"<i>" + props['Groups Dyl'] + "</i>" +
+					"<br><br>"
 				;
 
 
