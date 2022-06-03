@@ -328,6 +328,17 @@ modal_content_html["gravesend-map"] = `
 			
 
 
+			/* Indian Paths & Places | 1600-64 */
+
+modal_header_text["long-island-1734"] = "Long Island and Rhode Island, 1734";
+modal_content_html["long-island-1734"] = `
+			This map from 1734 shows Long Island in detail, and the coastline to the north from New Jersey through Connecticut and Rhode Island. Within the same eastern latitude there is a small part of the coast of Nova Scotia at Cape Conso, and part of Island Breton.
+			<p>
+			It was created by Cyprian Southack, an English cartographer and colonial naval commander in New England.
+			`;
+
+
+
 
 /*
 
