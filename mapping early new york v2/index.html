@@ -1503,6 +1503,28 @@ padding:2px 7px;
 		
 /* Style for Studio Menu */
 /* #demoLayerInfo */
+
+#rightInfoBar {
+    position: absolute;
+	display:block;
+	/* top: 80px; */
+	top: 82px;
+	right: 0;
+
+	/* Standard */
+	max-height: calc(100% - 230px);
+	/* Opera */
+	max-height: -o-calc(100% - 230px);
+	/* Firefox */
+	max-height: -moz-calc(100% - 230px);
+	/* WebKit */
+	max-height: -webkit-calc(100% - 230px);
+    overflow: auto;
+	/* background-color: transparent !important; */
+	background-color: #fff!important;
+	z-index: 100;
+}
+
 #studioMenu {
     position: absolute;
 	display:block;
@@ -1534,22 +1556,22 @@ padding:2px 7px;
 
 
 /* width */
-#studioMenu::-webkit-scrollbar {
+#studioMenu::-webkit-scrollbar, #rightInfoBar::-webkit-scrollbar {
   width: 7px;
 }
 
 /* Track */
-#studioMenu::-webkit-scrollbar-track {
+#studioMenu::-webkit-scrollbar-track, #rightInfoBar::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
 /* Handle */
-#studioMenu::-webkit-scrollbar-thumb {
+#studioMenu::-webkit-scrollbar-thumb, #rightInfoBar::-webkit-scrollbar-thumb {
   background: steelblue; /* #888; */
 }
 
 /* Handle on hover */
-#studioMenu::-webkit-scrollbar-thumb:hover {
+#studioMenu::-webkit-scrollbar-thumb:hover, #rightInfoBar::-webkit-scrollbar-thumb:hover {
   background: blue; /* #555; */
 }
 
@@ -1766,6 +1788,9 @@ img#logo-img {
 
 @media (max-width: 930px) {
     .map { top: 43px; }
+	
+	#rightInfoBar { display: none; }
+	
 	#studioMenu { 
 	    top: 45px; 
 		/* Standard */
@@ -1950,6 +1975,21 @@ i.slash-icon { font-size: 11px; }
 	<!---------------------->
 	
 	<button id="view-hide-layer-panel" ><br> <span id="dir-txt" >&#9204;</span> <br><br></button>
+	
+	
+	
+	<div id="rightInfoBar">
+	
+	  <div id="infoLayerGrantLots"></div>
+	  <div id="infoLayerDutchGrants"></div>
+	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
+	  <div id="infoLayerFarms"></div>
+	  <div id="infoLayerCastello"></div>
+	  <div id="infoLayerSettlements"></div>
+	  <div id="demoLayerInfo"></div>
+	  <div id="infoLayerCurrLots"></div>
+	
+	</div>
 	
 	
 	
@@ -2213,7 +2253,7 @@ i.slash-icon { font-size: 11px; }
 			<center>
 			<b>1660 | Castello Plan</b>
 			</center>
-			<p>
+			
 
 		<!--CASTELLO COLORED (DEFAULT)-->
 		<div class="layer-list-row" >
@@ -2255,7 +2295,7 @@ i.slash-icon { font-size: 11px; }
 		<center>
 		<b>Manhattan and Surrounding</b>
 		</center>
-		<p>
+	
 
         <!-- Manahatta MAP -->
 		<div class="layer-list-row" >
@@ -2375,17 +2415,8 @@ i.slash-icon { font-size: 11px; }
 		
 	  </div>
 
-	  <br>
-	
-	  <div id="infoLayerGrantLots"></div>
-	  <div id="infoLayerDutchGrants"></div>
-	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
-	  <div id="infoLayerFarms"></div>
-	  <div id="infoLayerCastello"></div>
-	  <div id="infoLayerSettlements"></div>
-	  <div id="demoLayerInfo"></div>
-	  <div id="infoLayerCurrLots"></div>
-	  
+	 
+	 
 	  
 	</div>
 
@@ -2497,5 +2528,6 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
 
