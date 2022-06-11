@@ -584,6 +584,164 @@ function addGravesendLinesBeforeLayers(date) {
 
 
 
+////////////////////////////
+// Karl Long Island Dynamic Layers
+////////////////////////////
+
+function addKarlBeforeLayers(date) {
+	
+		beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "karl_long_island-left-highlighted",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.d6t9wn0e"
+			},
+			layout: {
+                visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "karl_long_island_processed-6pryir",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+        beforeMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "karl_long_island-left",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.d6t9wn0e"
+			},
+			layout: {
+                visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "karl_long_island_processed-6pryir",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.45
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+
+        //CURSOR ON HOVER
+            //ON HOVER
+			beforeMap.on('mouseenter', 'karl_long_island-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapKarlTwoPopUp.setLngLat(e.lngLat).addTo(beforeMap);
+			});
+			
+            beforeMap.on('mousemove', 'karl_long_island-left', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredKarlIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'karl_long_island-left', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdLeft},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredKarlIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdLeft},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    var PopUpHTML = "";
+					/*
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					*/
+					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                beforeMapKarlTwoPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			beforeMap.on('mouseleave', 'karl_long_island-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredKarlIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdLeft},
+                        { hover: false }
+                    );
+                }
+                hoveredKarlIdLeft = null;		
+				if(beforeMapKarlTwoPopUp.isOpen()) beforeMapKarlTwoPopUp.remove();
+            });
+	
+}
+
+
+function addKarlLinesBeforeLayers(date) {
+	
+	beforeMap.addLayer({
+                id: "karl-lines-left",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.1iinsopm"
+                },
+				layout: {
+                    visibility: document.getElementById('karl_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "karl_long_island_lines-7hhtcy",
+                paint: {
+                    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.8
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+	
+}
+
+
 
 /////////////////////////
 //  Farms Dynamic Layer
@@ -1365,3 +1523,4 @@ function addIndianPathsBeforeLayers() {
 			
             });
 }
+
