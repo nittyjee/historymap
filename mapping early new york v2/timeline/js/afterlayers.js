@@ -574,6 +574,168 @@ function addGravesendLinesAfterLayers(date) {
 
 
 
+////////////////////////////
+// Karl Dynamic Layers
+////////////////////////////
+
+function addKarlAfterLayers(date) {
+	
+		afterMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "karl_long_island-right-highlighted",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.d6t9wn0e"
+			},
+			layout: {
+                visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "karl_long_island_processed-6pryir",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+        afterMap.addLayer({
+			//ID: CHANGE THIS, 1 OF 3
+			id: "karl_long_island-right",
+			type: "fill",
+			source: {
+				type: "vector",
+				//URL: CHANGE THIS, 2 OF 3
+				url: "mapbox://nittyjee.d6t9wn0e"
+			},
+			layout: {
+                visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
+            },
+			"source-layer": "karl_long_island_processed-6pryir",
+			paint: {
+				"fill-color": "#e3ed58",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.45
+                        ],
+				"fill-outline-color": "#FF0000"
+
+			},
+
+			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+		});
+
+
+        //CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'karl_long_island-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+				afterMapKarlTwoPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			});
+			
+            afterMap.on('mousemove', 'karl_long_island-right', function (e) {
+				console.warn(e.features[0].id);
+				console.log(e.features[0].properties);
+				
+				if (e.features.length > 0) {
+                    if (hoveredKarlIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredKarlIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdRight},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    var PopUpHTML = "";
+					/*
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					*/
+					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                console.log(PopUpHTML);
+                //AFTER MAP POP UP CONTENTS
+                afterMapKarlTwoPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			afterMap.on('mouseleave', 'karl_long_island-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredKarlIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-6pryir', id: hoveredKarlIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredKarlIdRight = null;		
+				if(afterMapKarlTwoPopUp.isOpen()) afterMapKarlTwoPopUp.remove();
+            });
+	
+}
+
+
+function addKarlLinesAfterLayers(date) {
+	
+	        afterMap.addLayer({
+                id: "karl-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.1iinsopm"
+                },
+				layout: {
+                    visibility: document.getElementById('karl_layer_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "karl_long_island_lines-7hhtcy",
+                paint: {
+                    "line-color": "#FF0000",
+					"line-width": 3,
+					"line-opacity": 0.8
+                },
+                filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+            });
+			
+}
+
+
+
 /////////////////////////
 // Farms Dynamic Layer
 /////////////////////////
@@ -1353,5 +1515,6 @@ function addIndianPathsAfterLayers() {
 			
             });
 }
+
 
 
