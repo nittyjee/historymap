@@ -311,6 +311,29 @@ function buildGravesendPopUpInfo(props) {
 
 
 
+function buildKarlPopUpInfo(props) {
+	        var popup_html = "";
+
+			    popup_html = 
+				    "<h3>Boundaries</h3><hr>" +
+				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
+					"<b>" + props.Name + "</b>" +
+					//"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/karl' target='_blank'>Karl</a>" +
+					"<br><br>" +
+					"<b>County:</b> <i>" + props.County + "</i>" +
+					"<br><br>" +
+					"<i>" + props.Event + "</i>" +
+					"<br><br>"
+				;
+
+    //console.log(props);
+
+    
+	$("#infoLayerKarl").html(popup_html);
+
+}
+
+
 function buildFarmsPopUpInfo(props) {
 	        var popup_html = "";
 			//console.log(props);
@@ -347,3 +370,4 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
+
