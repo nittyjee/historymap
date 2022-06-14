@@ -587,12 +587,12 @@ function addKarlAfterLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.3eukx58e"
+				url: "mapbox://nittyjee.5xhjikuq"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_long_island_processed-2i6o24",
+			"source-layer": "karl_reduced_temp-806dka",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -615,12 +615,12 @@ function addKarlAfterLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.3eukx58e"
+				url: "mapbox://nittyjee.5xhjikuq"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_long_island_processed-2i6o24",
+			"source-layer": "karl_reduced_temp-806dka",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -651,14 +651,14 @@ function addKarlAfterLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredKarlIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-2i6o24', id: hoveredKarlIdRight},
+                            { source: 'karl_long_island-right', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdRight},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredKarlIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-2i6o24', id: hoveredKarlIdRight},
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdRight},
                         { hover: true }
                     );
 					
@@ -700,7 +700,7 @@ function addKarlAfterLayers(date) {
                 afterMap.getCanvas().style.cursor = '';
 				if (hoveredKarlIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-2i6o24', id: hoveredKarlIdRight},
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdRight},
                         { hover: false }
                     );
                 }
