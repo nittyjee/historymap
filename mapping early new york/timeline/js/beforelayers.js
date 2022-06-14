@@ -597,12 +597,12 @@ function addKarlBeforeLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.5xhjikuq"
+				url: "mapbox://nittyjee.brx9n34m"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_reduced_temp-806dka",
+			"source-layer": "karl_reduced_temp-1t5hcx",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -625,12 +625,12 @@ function addKarlBeforeLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.5xhjikuq"
+				url: "mapbox://nittyjee.brx9n34m"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_reduced_temp-806dka",
+			"source-layer": "karl_reduced_temp-1t5hcx",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -658,14 +658,14 @@ function addKarlBeforeLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredKarlIdLeft) {
                         beforeMap.setFeatureState(
-                            { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdLeft},
+                            { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-1t5hcx', id: hoveredKarlIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredKarlIdLeft = e.features[0].id;
                     beforeMap.setFeatureState(
-                        { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdLeft},
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-1t5hcx', id: hoveredKarlIdLeft},
                         { hover: true }
                     );
 					
@@ -707,7 +707,7 @@ function addKarlBeforeLayers(date) {
                 beforeMap.getCanvas().style.cursor = '';
 				if (hoveredKarlIdLeft) {
                     beforeMap.setFeatureState(
-                        { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-806dka', id: hoveredKarlIdLeft},
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_reduced_temp-1t5hcx', id: hoveredKarlIdLeft},
                         { hover: false }
                     );
                 }

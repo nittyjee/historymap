@@ -990,11 +990,11 @@ afterMap.on("error", function (e) {
 									karl_layer_view_flag = false;
 									//*A#
 							        afterMap.setFeatureState(
-                                        { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                        { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                         { hover: false }
                                     );
 									beforeMap.setFeatureState(
-                                        { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                        { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                         { hover: false }
                                     );
 									if(afterHighMapKarlPopUp.isOpen()) afterHighMapKarlPopUp.remove();
@@ -1005,11 +1005,11 @@ afterMap.on("error", function (e) {
 								    karl_layer_view_flag = true;
 									//*A#
 									afterMap.setFeatureState(
-                                       { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                       { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                        { hover: true }
                                     );
 									beforeMap.setFeatureState(
-                                       { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                       { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                        { hover: true }
                                     );
 									afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1023,19 +1023,19 @@ afterMap.on("error", function (e) {
 								karl_layer_view_flag = true;
 								//*A#
 								afterMap.setFeatureState(
-                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                     { hover: false }
                                 );
 							    afterMap.setFeatureState(
-                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: event.features[0].id},
+                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: event.features[0].id},
                                     { hover: true }
                                 );
 								beforeMap.setFeatureState(
-                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                     { hover: false }
                                 );
 							    beforeMap.setFeatureState(
-                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: event.features[0].id},
+                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: event.features[0].id},
                                     { hover: true }
                                 );
                                 afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1050,19 +1050,19 @@ afterMap.on("error", function (e) {
 							$('#view-hide-layer-panel').trigger('click');
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: event.features[0].id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: event.features[0].id},
                                 { hover: true }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: karl_layer_view_id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-806dka', id: event.features[0].id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_reduced_temp-1t5hcx', id: event.features[0].id},
                                 { hover: true }
                             );
 							afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
