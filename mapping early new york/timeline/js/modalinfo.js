@@ -95,7 +95,7 @@ modal_content_html["boundaries-info-layer"] = `
 			`;
 
 
-modal_header_text["ny_towns"] = "Boundaries, 1636-Present";
+modal_header_text["ny_towns"] = "Long Island Towns, 1636-Present";
 modal_content_html["ny_towns"] = `
 			This layer shows town boundaries. In Brooklyn and Queens, and in much of Nassau county, towns were founded by the Dutch, while towns in Suffolk County and parts of Nassau were founded by the English.
 			<br>
@@ -334,7 +334,13 @@ modal_content_html["gravesend-map"] = `
 			This map is of Gravesend, a patent that was granted on December 19th, 1645, and was organized as a town. It is from the <i>Atlas of Long Island, New York</i> in 1873, and the borders shown had not changed since the town was created. However, the coastlines changed quite a bit, with infill over the following decades. Gravesend was the first patent granted to a woman, Deborah Moody. She and others fled religious persecution by the English colonists, and were welcomed by the Dutch. This town and patent was traced, which can be seen in the "Boundaries" layer above.
 			`;
 			
+			/*Beer's Map Long Island */
 
+modal_header_text["beers-long-island-map"] = "Long Island, 1873";
+modal_content_html["beers-long-island-map"] = `
+			This is a large map of Long Island from the <i>Atlas of Long Island, New York</i> in 1873. Most towns and their boundaries did not change much from when they were created in the 1600s. Queens County included what is now Nassau County, and there were towns in King's County that were later merged into Brooklyn. See the corresponding layer above called "Long Island Towns".
+			`;
+			
 
 			/* Indian Paths & Places | 1600-64 */
 
