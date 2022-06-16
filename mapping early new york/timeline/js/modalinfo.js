@@ -93,7 +93,15 @@ modal_content_html["boundaries-info-layer"] = `
 -->
 			This layer is intended to show administrative boundaries, including major patents and town boundaries, and possibly territorial claims. Boundaries take time to draw in precision, and will be done from written records and tracing maps. Currently the only boundary that exists is of Gravesend, a town created in 1645. We are starting with precise maps and will be adding towns and patents that share boundaries. You can see the corresponding map of Gravesend below.
 			`;
-	
+
+
+modal_header_text["ny_towns"] = "Boundaries, 1636-Present";
+modal_content_html["ny_towns"] = `
+			This layer shows town boundaries. In Brooklyn and Queens, and in much of Nassau county, towns were founded by the Dutch, while towns in Suffolk County and parts of Nassau were founded by the English.
+			<br>
+			<br>
+			Researched and drawn by Karl Phillips
+			`;
 
 
 
