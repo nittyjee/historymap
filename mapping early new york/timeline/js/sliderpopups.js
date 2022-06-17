@@ -313,11 +313,18 @@ function buildGravesendPopUpInfo(props) {
 
 function buildKarlPopUpInfo(props) {
 	        var popup_html = "";
-
+                var ref_name = props.Name.replace(/\s+/g, '');
 			    popup_html = 
-				    "<h3>Long Island Towns</h3><hr>" +
-				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
-					"<b>" + props.Name + "</b>" +
+				    "<h3>Long Island Towns</h3><hr>";
+				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" 
+					
+					if( typeof settlements_info[ref_name] == "undefined" ) {
+						popup_html += "<b>" + props.Name + "</b>";
+				    } else {
+						popup_html += "<b>" + settlements_info[ref_name].name + "</b>";
+					}
+					
+				popup_html +=	
 					"<br>" +
 					props.TownStart + "-" + props.TownEnd +
 					//"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/karl' target='_blank'>Karl</a>" +
