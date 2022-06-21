@@ -3,23 +3,28 @@
 // Dynamic Layers
 //////////////////
 
-function addAfterLayers(yr, date) {
+function addBeforeLayers(yr, date) {
 
-    //afterMap.on('load', function () {
-        
+
+
+	/////////////////
+	//NAHC POINTS MAP
+	/////////////////
+
+	//beforeMap.on('load', function () {
+		
 		//REMOVING TAX LOT POINTS IF EXIST
-        if (afterMap.getLayer("c7_dates-ajsksu-right")) afterMap.removeLayer("c7_dates-ajsksu-right");
-        if (afterMap.getSource("c7_dates-ajsksu")) afterMap.removeSource("c7_dates-ajsksu");
-		if (afterMap.getLayer("grants1-5sp9tb-right")) afterMap.removeLayer("grants1-5sp9tb-right");
-        if (afterMap.getSource("grants1-5sp9tb")) afterMap.removeSource("grants1-5sp9tb");
+		if (beforeMap.getLayer("c7_dates-ajsksu-left")) beforeMap.removeLayer("c7_dates-ajsksu-left");
+        if (beforeMap.getSource("c7_dates-ajsksu")) beforeMap.removeSource("c7_dates-ajsksu");
+		if (beforeMap.getLayer("grants1-5sp9tb-left")) beforeMap.removeLayer("grants1-5sp9tb-left");
+        if (beforeMap.getSource("grants1-5sp9tb")) beforeMap.removeSource("grants1-5sp9tb");
        
 	   
 	    //ADD GRANTS POLYGONS
-        
-		//*A#
-        afterMap.addLayer({
+        //*A#
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "grants1-5sp9tb-right-highlighted",
+			id: "grants1-5sp9tb-left-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -45,9 +50,10 @@ function addAfterLayers(yr, date) {
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
-        afterMap.addLayer({
+
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "grants1-5sp9tb-right",
+			id: "grants1-5sp9tb-left",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -64,46 +70,48 @@ function addAfterLayers(yr, date) {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.45
+                            0.5
                         ],
-				"fill-outline-color": "#FF0000"
+				"fill-outline-color": "#000000"
 
 			},
 
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
-
-
-        //CURSOR ON HOVER
+		
+		
+		//CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'grants1-5sp9tb-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'grants1-5sp9tb-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'grants1-5sp9tb-right', function (e) {
+            beforeMap.on('mousemove', 'grants1-5sp9tb-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredDutchGrantIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+                    if (hoveredDutchGrantIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredDutchGrantIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+                    hoveredDutchGrantIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
                         { hover: true }
                     );
 					
 					//console.log(e.lngLat.lng);
+                 
                     var PopUpHTML = "";
 					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
 					} else {	
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
 					}
-					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
+					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
+					
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -116,8 +124,8 @@ function addAfterLayers(yr, date) {
                 }
 
 
-                //AFTER MAP POP UP CONTENTS
-                afterMapDutchGrantPopUp
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapDutchGrantPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -128,26 +136,24 @@ function addAfterLayers(yr, date) {
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'grants1-5sp9tb-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredDutchGrantIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+			beforeMap.on('mouseleave', 'grants1-5sp9tb-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredDutchGrantIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'grants1-5sp9tb-left', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredDutchGrantIdRight = null;		
-				if(afterMapDutchGrantPopUp.isOpen()) afterMapDutchGrantPopUp.remove();
+                hoveredDutchGrantIdLeft = null;		
+				if(beforeMapDutchGrantPopUp.isOpen()) beforeMapDutchGrantPopUp.remove();
             });
-		
-		
-		
+			
+
 
 		//ADD TAX LOT POINTS
-
-		afterMap.addLayer({
+		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "c7_dates-ajsksu-right",
+			id: "c7_dates-ajsksu-left",
 			type: "circle",
 			source: {
 				type: "vector",
@@ -221,24 +227,25 @@ function addAfterLayers(yr, date) {
 
 		//TAX LOT POPUP
 		// CLICK AND OPEN POPUP
-		//*A
-		           
-		            
-                    
-					
+        //*A
+
+
+
 		// CHANGE TO CURSOR WHEN HOVERING
-		afterMap.on('mouseenter', 'c7_dates-ajsksu-right', function (e) {
-			afterMap.getCanvas().style.cursor = 'pointer';
+		beforeMap.on('mouseenter', 'c7_dates-ajsksu-left', function (e) {
+			beforeMap.getCanvas().style.cursor = 'pointer';
+			        //*A console.log(e.features[0].id);
+					//*A console.log(e.features[0]);
 					
-			        if (hoveredStateIdRightCircle) {
-                        afterMap.setFeatureState(
-                            { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+			        if (hoveredStateIdLeftCircle) {
+                        beforeMap.setFeatureState(
+                            { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
                             { hover: false }
                         );
                     }
-                    hoveredStateIdRightCircle = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+                    hoveredStateIdLeftCircle = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
                         { hover: true }
                     );
 					
@@ -252,38 +259,40 @@ function addAfterLayers(yr, date) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 				
-				        afterMapPopUp
+				        beforeMapPopUp
 				            .setLngLat(coordinates)
 							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
-                            .addTo(afterMap);
+                            .addTo(beforeMap);
+					
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
-		afterMap.on('mouseleave', 'c7_dates-ajsksu-right', function () {
-			afterMap.getCanvas().style.cursor = '';
-			    if (hoveredStateIdRightCircle) {
-                    afterMap.setFeatureState(
-                        { source: 'c7_dates-ajsksu-right', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdRightCircle},
+		beforeMap.on('mouseleave', 'c7_dates-ajsksu-left', function () {
+			beforeMap.getCanvas().style.cursor = '';
+			    if (hoveredStateIdLeftCircle) {
+                    beforeMap.setFeatureState(
+                        { source: 'c7_dates-ajsksu-left', sourceLayer: 'c7_dates-ajsksu', id: hoveredStateIdLeftCircle},
                         { hover: false }
                     );
                 }
-                hoveredStateIdRightCircle = null;		
-				if(afterMapPopUp.isOpen()) afterMapPopUp.remove();
-		})
-	//});
+                hoveredStateIdLeftCircle = null;		
+				if(beforeMapPopUp.isOpen()) beforeMapPopUp.remove();
+		});
+	//*A });
 }
 
 
 
-function addGrantLotsAfterLayers(date) {
+function addGrantLotsBeforeLayers(date) {
 	
 	//REMOVING TAX LOT POINTS IF EXIST
-	    if (afterMap.getLayer("grant-lots-right")) afterMap.removeLayer("grant-lots-right");
-        if (afterMap.getSource("grant_lot_c7-6s06if")) afterMap.removeSource("grant_lot_c7-6s06if");
-		
+		if (beforeMap.getLayer("grant-lots-left")) beforeMap.removeLayer("grant-lots-left");
+        if (beforeMap.getSource("grant_lot_c7-6s06if")) beforeMap.removeSource("grant_lot_c7-6s06if");
+	
+	
 	// Add a layer showing the places.
-	        afterMap.addLayer({
-                id: "grant-lots-right",
+	        beforeMap.addLayer({
+                id: "grant-lots-left",
                 type: "fill",
                 source: {
                     type: "vector",
@@ -306,27 +315,27 @@ function addGrantLotsAfterLayers(date) {
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
 			
-			
+					
 			
 			//CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'grant-lots-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapGrantLotPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'grant-lots-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapGrantLotPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'grant-lots-right', function (e) {
+            beforeMap.on('mousemove', 'grant-lots-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredGrantLotIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdRight},
+                    if (hoveredGrantLotIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredGrantLotIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdRight},
+                    hoveredGrantLotIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdLeft},
                         { hover: true }
                     );
 					
@@ -343,7 +352,7 @@ function addGrantLotsAfterLayers(date) {
 									"</div>";
 					
 					
-				coordinates = e.features[0].geometry.coordinates.slice();
+					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
 
                 // Ensure that if the map is zoomed out such that multiple
@@ -354,41 +363,45 @@ function addGrantLotsAfterLayers(date) {
                 }
 
 
-                //AFTER MAP POP UP CONTENTS
-                afterMapGrantLotPopUp
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapGrantLotPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
                     );
 				
 				}
+				
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'grant-lots-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredGrantLotIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'grant-lots-right', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdRight},
+			beforeMap.on('mouseleave', 'grant-lots-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredGrantLotIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'grant-lots-left', sourceLayer: 'grant_lot_c7-6s06if', id: hoveredGrantLotIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredGrantLotIdRight = null;		
-				if(afterMapGrantLotPopUp.isOpen()) afterMapGrantLotPopUp.remove();
+                hoveredGrantLotIdLeft = null;		
+				if(beforeMapGrantLotPopUp.isOpen()) beforeMapGrantLotPopUp.remove();
             });
+			
+			
 }
 
 
-function addGrantLotsLinesAfterLayers(date) {
+
+function addGrantLotsLinesBeforeLayers(date) {
 	
 	//REMOVING TAX LOT POINTS IF EXIST
-		if (afterMap.getLayer("grant-lots-lines-right")) afterMap.removeLayer("grant-lots-lines-right");
-        if (afterMap.getSource("dutch_grants_lines-1n0e0p")) afterMap.removeSource("dutch_grants_lines-1n0e0p");
+		if (beforeMap.getLayer("grant-lots-lines-left")) beforeMap.removeLayer("grant-lots-lines-left");
+        if (beforeMap.getSource("dutch_grants_lines-1n0e0p")) beforeMap.removeSource("dutch_grants_lines-1n0e0p");
 	
 	
 	// Add a layer showing the places.
-	        afterMap.addLayer({
-                id: "grant-lots-lines-right",
+	        beforeMap.addLayer({
+                id: "grant-lots-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -415,11 +428,11 @@ function addGrantLotsLinesAfterLayers(date) {
 // Gravesend Dynamic Layers
 ////////////////////////////
 
-function addGravesendAfterLayers(date) {
+function addGravesendBeforeLayers(date) {
 	
-		afterMap.addLayer({
+		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "gravesend_boundaries-c6qrbw-right-highlighted",
+			id: "gravesend_boundaries-c6qrbw-left-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -445,9 +458,9 @@ function addGravesendAfterLayers(date) {
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
-        afterMap.addLayer({
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "gravesend_boundaries-c6qrbw-right",
+			id: "gravesend_boundaries-c6qrbw-left",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -476,26 +489,23 @@ function addGravesendAfterLayers(date) {
 
         //CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapGravesendTwoPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'gravesend_boundaries-c6qrbw-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapGravesendTwoPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'gravesend_boundaries-c6qrbw-right', function (e) {
-				console.warn(e.features[0].id);
-				console.log(e.features[0].properties);
-				
+            beforeMap.on('mousemove', 'gravesend_boundaries-c6qrbw-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredGravesendIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
+                    if (hoveredGravesendIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredGravesendIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
+                    hoveredGravesendIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                         { hover: true }
                     );
 					
@@ -520,9 +530,9 @@ function addGravesendAfterLayers(date) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 
-                console.log(PopUpHTML);
+
                 //AFTER MAP POP UP CONTENTS
-                afterMapGravesendTwoPopUp
+                beforeMapGravesendTwoPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -533,25 +543,25 @@ function addGravesendAfterLayers(date) {
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredGravesendIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'gravesend_boundaries-c6qrbw-right', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdRight},
+			beforeMap.on('mouseleave', 'gravesend_boundaries-c6qrbw-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredGravesendIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'gravesend_boundaries-c6qrbw-left', sourceLayer: 'gravesend_boundaries-c6qrbw', id: hoveredGravesendIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredGravesendIdRight = null;		
-				if(afterMapGravesendTwoPopUp.isOpen()) afterMapGravesendTwoPopUp.remove();
+                hoveredGravesendIdLeft = null;		
+				if(beforeMapGravesendTwoPopUp.isOpen()) beforeMapGravesendTwoPopUp.remove();
             });
 	
 }
 
 
-function addGravesendLinesAfterLayers(date) {
+function addGravesendLinesBeforeLayers(date) {
 	
-	        afterMap.addLayer({
-                id: "gravesend-lines-right",
+	beforeMap.addLayer({
+                id: "gravesend-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -568,31 +578,31 @@ function addGravesendLinesAfterLayers(date) {
                 },
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
-			
+	
 }
 /*REPLACE THIS*/
 
 
 
 ////////////////////////////
-// Karl Dynamic Layers
+// Karl Long Island Dynamic Layers
 ////////////////////////////
 
-function addKarlAfterLayers(date) {
+function addKarlBeforeLayers(date) {
 	
-		afterMap.addLayer({
+		beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "karl_long_island-right-highlighted",
+			id: "karl_long_island-left-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.7xkhb8c1"
+				url: "mapbox://nittyjee.3ka71do0"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-904to6",
+			"source-layer": "karl_areas-82yt3f",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -608,19 +618,19 @@ function addKarlAfterLayers(date) {
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
-        afterMap.addLayer({
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "karl_long_island-right",
+			id: "karl_long_island-left",
 			type: "fill",
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.7xkhb8c1"
+				url: "mapbox://nittyjee.3ka71do0"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-904to6",
+			"source-layer": "karl_areas-82yt3f",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -639,26 +649,23 @@ function addKarlAfterLayers(date) {
 
         //CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'karl_long_island-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapKarlTwoPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'karl_long_island-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapKarlTwoPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'karl_long_island-right', function (e) {
-				console.warn(e.features[0].id);
-				console.log(e.features[0].properties);
-				
+            beforeMap.on('mousemove', 'karl_long_island-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredKarlIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'karl_long_island-right', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdRight},
+                    if (hoveredKarlIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'karl_long_island-left', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredKarlIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdRight},
+                    hoveredKarlIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdLeft},
                         { hover: true }
                     );
 					
@@ -671,8 +678,7 @@ function addKarlAfterLayers(date) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
 					}
 					*/
-					//e.features[0].properties.Name
-					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.corr_label + "</div>";
+					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -684,9 +690,9 @@ function addKarlAfterLayers(date) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 
-                console.log(PopUpHTML);
+
                 //AFTER MAP POP UP CONTENTS
-                afterMapKarlTwoPopUp
+                beforeMapKarlTwoPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -697,25 +703,25 @@ function addKarlAfterLayers(date) {
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'karl_long_island-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredKarlIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdRight},
+			beforeMap.on('mouseleave', 'karl_long_island-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredKarlIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredKarlIdRight = null;		
-				if(afterMapKarlTwoPopUp.isOpen()) afterMapKarlTwoPopUp.remove();
+                hoveredKarlIdLeft = null;		
+				if(beforeMapKarlTwoPopUp.isOpen()) beforeMapKarlTwoPopUp.remove();
             });
 	
 }
 
 
-function addKarlLinesAfterLayers(date) {
+function addKarlLinesBeforeLayers(date) {
 	
-	        afterMap.addLayer({
-                id: "karl-lines-right",
+	beforeMap.addLayer({
+                id: "karl-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -732,22 +738,22 @@ function addKarlLinesAfterLayers(date) {
                 },
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
-			
+	
 }
 
 
 
 /////////////////////////
-// Farms Dynamic Layer
+//  Farms Dynamic Layer
 /////////////////////////
 
-function addAfterFarmsLayer(date) {
+function addBeforeFarmsLayer(date) {
 	
 		//ADD FARMS POLYGONS
 		//*A fill pink #FFC0CB outline #C71585
-        afterMap.addLayer({
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "stokes_farms_complete_5_reduc-6k9tbl-right-highlighted",
+			id: "stokes_farms_complete_5_reduc-6k9tbl-left-highlighted",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -766,16 +772,16 @@ function addAfterFarmsLayer(date) {
                             0.8,
                             0
                         ],
-				"fill-outline-color": "#FF0000"
+				"fill-outline-color": "#000000"
 
 			},
             filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
         //*A fill pink #FFC0CB outline #C71585
-        afterMap.addLayer({
+        beforeMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
-			id: "stokes_farms_complete_5_reduc-6k9tbl-right",
+			id: "stokes_farms_complete_5_reduc-6k9tbl-left",
 			type: "fill",
 			source: {
 				type: "vector",
@@ -792,20 +798,20 @@ function addAfterFarmsLayer(date) {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.45
+                            0.5
                         ],
-				"fill-outline-color": "#FF0000"
+				"fill-outline-color": "#000000"
 
 			},
             filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 			
 		});
 
-
+        
 		//ADD FARMS LINES
         //*A golden #FFD700
-		    afterMap.addLayer({
-                id: "farms-lines-right",
+		    beforeMap.addLayer({
+                id: "farms-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -826,28 +832,28 @@ function addAfterFarmsLayer(date) {
 
         //CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'stokes_farms_complete_5_reduc-6k9tbl-right', function (e) {
-				console.log(e.features[0]);
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapFarmPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'stokes_farms_complete_5_reduc-6k9tbl-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapFarmPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'stokes_farms_complete_5_reduc-6k9tbl-right', function (e) {
+            beforeMap.on('mousemove', 'stokes_farms_complete_5_reduc-6k9tbl-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredFarmsIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+                    if (hoveredFarmsIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'stokes_farms_complete_5_reduc-6k9tbl-left', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredFarmsIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+                    hoveredFarmsIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-left', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdLeft},
                         { hover: true }
                     );
 					
-                    //console.log(e.lngLat.lng);
+					//console.log(e.lngLat.lng);
+                    					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
 
@@ -860,7 +866,7 @@ function addAfterFarmsLayer(date) {
 
 
                 //AFTER MAP POP UP CONTENTS
-                afterMapFarmPopUp
+                beforeMapFarmPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         "<div class='infoLayerFarmsPopUp'>" + e.features[0].properties.To + "</div>"
@@ -871,16 +877,16 @@ function addAfterFarmsLayer(date) {
             });
 
             //OFF HOVER
-			afterMap.on('mouseleave', 'stokes_farms_complete_5_reduc-6k9tbl-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredFarmsIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-right', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdRight},
+			beforeMap.on('mouseleave', 'stokes_farms_complete_5_reduc-6k9tbl-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredFarmsIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'stokes_farms_complete_5_reduc-6k9tbl-left', sourceLayer: 'stokes_farms_complete_5_reduc-6k9tbl', id: hoveredFarmsIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredFarmsIdRight = null;		
-				if(afterMapFarmPopUp.isOpen()) afterMapFarmPopUp.remove();
+                hoveredFarmsIdLeft = null;		
+				if(beforeMapFarmPopUp.isOpen()) beforeMapFarmPopUp.remove();
             });
             
 	
@@ -891,20 +897,20 @@ function addAfterFarmsLayer(date) {
 // Settlements Static Layer
 /////////////////////////
 
-function addSettlementsAfterLayers(date) {
+function addSettlementsBeforeLayers(date) {
 	
 	// Add a layer showing the places.
-	        afterMap.addLayer({
-                id: "settlements-right",
+	        beforeMap.addLayer({
+                id: "settlements-left",
                 type: "circle",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.9nbfolnk"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_points').checked ? "visible" : "none",
                 },
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_over_time-dqsn88",
                 paint: {
                     'circle-color': '#0b0ee5',
 					'circle-opacity':  [
@@ -927,19 +933,19 @@ function addSettlementsAfterLayers(date) {
 			
 			
 			//ON HOVER
-            afterMap.on('mouseenter', 'settlements-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
+            beforeMap.on('mouseenter', 'settlements-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
 			    //console.log(e.features[0].properties);
 				if (e.features.length > 0) {
-                    if (hoveredSettlementsIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+                    if (hoveredSettlementsIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'settlements-left', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdLeft},
                             { hover: false }
                         );
                     }
-                    hoveredSettlementsIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+                    hoveredSettlementsIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'settlements-left', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdLeft},
                         { hover: true }
                     );
 					
@@ -955,32 +961,34 @@ function addSettlementsAfterLayers(date) {
 
 
                 //BEFORE MAP POP UP CONTENTS
-                afterMapSettlementsPopUp
+                beforeMapSettlementsPopUp
                     .setLngLat(coordinates)
                     .setHTML(
                         "<div class='infoLayerSettlementsPopUp'><b>" + e.features[0].properties.Name + "</b><br>"
-                         //+ e.features[0].properties.Date 
+                        //+ e.features[0].properties.Date
                          + "</div>"
                     )
-                    .addTo(afterMap);
+                    .addTo(beforeMap);
 					
 				}
 			});
 			
 			//OFF HOVER
-            afterMap.on('mouseleave', 'settlements-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredSettlementsIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+            beforeMap.on('mouseleave', 'settlements-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredSettlementsIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'settlements-left', sourceLayer: 'locations_over_time-dqsn88', id: hoveredSettlementsIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredSettlementsIdRight = null;	
-				if(afterMapSettlementsPopUp.isOpen()) afterMapSettlementsPopUp.remove();
+                hoveredSettlementsIdLeft = null;	
+				if(beforeMapSettlementsPopUp.isOpen()) beforeMapSettlementsPopUp.remove();
             });
 
 }
+
+
 
 
 
@@ -988,19 +996,19 @@ function addSettlementsAfterLayers(date) {
 // Settlements Labels Static Layer
 /////////////////////////
 
-function addSettlementsLabelsAfterLayers(date) {
+function addSettlementsLabelsBeforeLayers(date) {
 	
 	// Add a layer showing the places.
-	        afterMap.addLayer({
-                id: "settlements-labels-right",
+	        beforeMap.addLayer({
+                id: "settlements-labels-left",
                 type: "symbol",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.9nbfolnk"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
-                    "text-field": "{corr_label}",
+                    "text-field": "{Name}",
 					"text-offset": [0,1],
                     "text-size": {
                     stops: [
@@ -1010,7 +1018,7 @@ function addSettlementsLabelsAfterLayers(date) {
                     }
                 },
 
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_over_time-dqsn88",
 
 
 
@@ -1029,7 +1037,6 @@ function addSettlementsLabelsAfterLayers(date) {
 
 
 
-
                 filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
             });
 
@@ -1039,22 +1046,23 @@ function addSettlementsLabelsAfterLayers(date) {
 
 
 
+
 /////////////////////////
 // Castello Static Layer
 /////////////////////////
 
-function addCastelloAfterLayers() {
+function addCastelloBeforeLayers() {
 	
 	// Add a layer showing the places.
-            afterMap.addLayer({
-                id: "places-right",
+	        beforeMap.addLayer({
+                id: "places-left",
                 type: "circle",
                 source: {
                     type: "vector",
                     url: "mapbox://nittyjee.ap08s4n9"
                 },
 				layout: {
-                    visibility:  document.getElementById('castello_points').checked ? "visible" : "none",
+                    visibility: document.getElementById('castello_points').checked ? "visible" : "none",
                 },
                 "source-layer": "castello_points_new-3qkr6t",
                 paint: {
@@ -1077,10 +1085,9 @@ function addCastelloAfterLayers() {
             });
 
 
-            // When a click event occurs on a feature in the places layer, open a popup at the
-            // location of the feature, with description HTML from its properties.
+            //POP UP
 			/*
-            afterMap.on('click', 'places-right', function (e) {
+            beforeMap.on('click', 'places-left', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice();
                 var description = e.features[0].properties.description;
 
@@ -1091,11 +1098,10 @@ function addCastelloAfterLayers() {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 
-
-                //AFTER MAP POP UP CONTENTS
                 new mapboxgl.Popup()
                     .setLngLat(coordinates)
 
+                    //BEFORE MAP POP UP CONTENTS
                     .setHTML(
                         e.features[0].properties.LOT2 +
                         "<br>" +
@@ -1106,30 +1112,27 @@ function addCastelloAfterLayers() {
                         '<a href="' + e.features[0].properties.new_link + '" target="_blank">' + e.features[0].properties.new_link + '</a>'
                     )
 
-                    .addTo(afterMap);
-					
+                    .addTo(beforeMap);
             });
-			*/
-
-
+            */
+			
             //CURSOR ON HOVER
 
             //ON HOVER
-            afterMap.on('mouseenter', 'places-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
+            beforeMap.on('mouseenter', 'places-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
 				if (e.features.length > 0) {
-                    if (hoveredStateIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+                    if (hoveredStateIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
                             { hover: false }
                         );
                     }
-                    hoveredStateIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+                    hoveredStateIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
                         { hover: true }
                     );
-					
 					
 			    coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -1142,44 +1145,46 @@ function addCastelloAfterLayers() {
                 }
 
 
-                //AFTER MAP POP UP CONTENTS
-                afterMapPlacesPopUp
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapPlacesPopUp
                     .setLngLat(coordinates)
                     .setHTML(
                         "<div class='infoLayerCastelloPopUp'><b>Taxlot (1660):</b><br>" + e.features[0].properties.LOT2 + "</div>"
                     )
-                    .addTo(afterMap);
+                    .addTo(beforeMap);
+					
 				}
             });
 
             //OFF HOVER
-            afterMap.on('mouseleave', 'places-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredStateIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'places-right', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdRight},
+            beforeMap.on('mouseleave', 'places-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredStateIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'places-left', sourceLayer: 'castello_points_new-3qkr6t', id: hoveredStateIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredStateIdRight = null;		
-				if(afterMapPlacesPopUp.isOpen()) afterMapPlacesPopUp.remove();
+                hoveredStateIdLeft = null;	
+				if(beforeMapPlacesPopUp.isOpen()) beforeMapPlacesPopUp.remove();
             });
 	
 }
+
 
 
 /////////////////////////
 // Current Static Layers
 /////////////////////////
 
-function addCurrentLotsAfterLayers() {
+function addCurrentLotsBeforeLayers() {
 	
-	//REMOVING CURRENT LOTS IF EXIST
-		if (afterMap.getLayer("curr-lots-right")) afterMap.removeLayer("curr-lots-right");
-        if (afterMap.getSource("current_lots_1-ca6kq1")) afterMap.removeSource("current_lots_1-ca6kq1");
+	    //REMOVING CURRENT LOTS IF EXIST
+		if (beforeMap.getLayer("curr-lots-left")) beforeMap.removeLayer("curr-lots-left");
+        if (beforeMap.getSource("current_lots_1-ca6kq1")) beforeMap.removeSource("current_lots_1-ca6kq1");
 	
-	    afterMap.addLayer({
-                id: "curr-lots-high-right",
+	        beforeMap.addLayer({
+                id: "curr-lots-high-left",
                 type: "fill",
                 source: {
                     type: "vector",
@@ -1195,15 +1200,15 @@ function addCurrentLotsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.5,
-                            0.0
+                            0
                         ],
-				"fill-outline-color": "transparent"
+				"fill-outline-color": "#000000"
                 }
 			
             });
 	
-	        afterMap.addLayer({
-                id: "curr-lots-right",
+	        beforeMap.addLayer({
+                id: "curr-lots-left",
                 type: "fill",
                 source: {
                     type: "vector",
@@ -1219,7 +1224,7 @@ function addCurrentLotsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.0
+                            0.1
                         ],
 				"fill-outline-color": "#000000"
                 }
@@ -1229,23 +1234,23 @@ function addCurrentLotsAfterLayers() {
 			
 			//CURSOR ON HOVER
             //ON HOVER
-			afterMap.on('mouseenter', 'curr-lots-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
-				afterMapCurrLotsPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			beforeMap.on('mouseenter', 'curr-lots-left', function (e) {
+                beforeMap.getCanvas().style.cursor = 'pointer';
+				beforeMapCurrLotsPopUp.setLngLat(e.lngLat).addTo(beforeMap);
 			});
 			
-            afterMap.on('mousemove', 'curr-lots-right', function (e) {
+            beforeMap.on('mousemove', 'curr-lots-left', function (e) {
 				if (e.features.length > 0) {
-                    if (hoveredCurrLotsIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+                    if (hoveredCurrLotsIdLeft) {
+                        beforeMap.setFeatureState(
+                            { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
-                    hoveredCurrLotsIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+                    hoveredCurrLotsIdLeft = e.features[0].id;
+                    beforeMap.setFeatureState(
+                        { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
                         { hover: true }
                     );
 					
@@ -1254,7 +1259,7 @@ function addCurrentLotsAfterLayers() {
                     //Address
 					//OwnerName
 					var PopUpHTML = "<div class='infoLayerCurrLotsPopUp'>" + "<b>" + e.features[0].properties.OwnerName + "</b>" + "<br>" +
-									e.features[0].properties.Address + "</div>";		
+									e.features[0].properties.Address + "</div>";	
 					
 					/*
 					coordinates = e.features[0].geometry.coordinates.slice();
@@ -1269,8 +1274,8 @@ function addCurrentLotsAfterLayers() {
 				*/
 
 
-                //AFTER MAP POP UP CONTENTS
-                afterMapCurrLotsPopUp
+                //BEFORE MAP POP UP CONTENTS
+                beforeMapCurrLotsPopUp
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
@@ -1279,31 +1284,31 @@ function addCurrentLotsAfterLayers() {
 				}
 				
             });
-	
-	
+
             //OFF HOVER
-			afterMap.on('mouseleave', 'curr-lots-right', function () {
-                afterMap.getCanvas().style.cursor = '';
-				if (hoveredCurrLotsIdRight) {
-                    afterMap.setFeatureState(
-                        { source: 'curr-lots-right', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdRight},
+			beforeMap.on('mouseleave', 'curr-lots-left', function () {
+                beforeMap.getCanvas().style.cursor = '';
+				if (hoveredCurrLotsIdLeft) {
+                    beforeMap.setFeatureState(
+                        { source: 'curr-lots-left', sourceLayer: 'current_lots_1-ca6kq1', id: hoveredCurrLotsIdLeft},
                         { hover: false }
                     );
                 }
-                hoveredCurrLotsIdRight = null;		
-				if(afterMapCurrLotsPopUp.isOpen()) afterMapCurrLotsPopUp.remove();
+                hoveredCurrLotsIdLeft = null;		
+				if(beforeMapCurrLotsPopUp.isOpen()) beforeMapCurrLotsPopUp.remove();
             });
+			
 }
 
 
-function addCurrentLotsLinesAfterLayers() {
+function addCurrentLotsLinesBeforeLayers() {
 	
 	//REMOVING CURRENT LOTS IF EXIST
-		if (afterMap.getLayer("curr-lots-lines-right")) afterMap.removeLayer("curr-lots-lines-right");
-        if (afterMap.getSource("selected_lots_lines-2qrhih")) afterMap.removeSource("selected_lots_lines-2qrhih");
+		if (beforeMap.getLayer("curr-lots-lines-left")) beforeMap.removeLayer("curr-lots-lines-left");
+        if (beforeMap.getSource("selected_lots_lines-2qrhih")) beforeMap.removeSource("selected_lots_lines-2qrhih");
 	
-	         afterMap.addLayer({
-                id: "curr-lots-lines-right",
+	         beforeMap.addLayer({
+                id: "curr-lots-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1314,24 +1319,24 @@ function addCurrentLotsLinesAfterLayers() {
                 },
                 "source-layer": "selected_lots_lines-2qrhih",
                 paint: {
-				    "line-color": "#000080",
+				    "line-color": "#00ff00",
 					"line-width": 3,
 					"line-opacity": 0.7
-				}
+                }
 			
             });
 	
 }
 
 
-function addCurrentBuildingsLinesAfterLayers() {
+function addCurrentBuildingsLinesBeforeLayers() {
 	
 	//REMOVING CURRENT LOTS IF EXIST
-		if (afterMap.getLayer("curr-builds-lines-right")) afterMap.removeLayer("curr-builds-lines-right");
-        if (afterMap.getSource("selected_buildings_lines-2gyw2x")) afterMap.removeSource("selected_buildings_lines-2gyw2x");
+		if (beforeMap.getLayer("curr-builds-lines-left")) beforeMap.removeLayer("curr-builds-lines-left");
+        if (beforeMap.getSource("selected_buildings_lines-2gyw2x")) beforeMap.removeSource("selected_buildings_lines-2gyw2x");
 	
-	         afterMap.addLayer({
-                id: "curr-builds-lines-right",
+	         beforeMap.addLayer({
+                id: "curr-builds-lines-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1345,20 +1350,20 @@ function addCurrentBuildingsLinesAfterLayers() {
 				    "line-color": "#0000FF",
 					"line-width": 2,
 					"line-opacity": 0.7
-				}
+                }
 			
             });
 	
 }
 
-function addCurrentBuildingsAfterLayers() {
+function addCurrentBuildingsBeforeLayers() {
 	
 	//REMOVING CURRENT LOTS IF EXIST
-		if (afterMap.getLayer("curr-builds-right")) afterMap.removeLayer("curr-builds-right");
-        if (afterMap.getSource("current_buildings_1-cjgsm")) afterMap.removeSource("current_buildings_1-cjgsm");
+		if (beforeMap.getLayer("curr-builds-left")) beforeMap.removeLayer("curr-builds-left");
+        if (beforeMap.getSource("current_buildings_1-cjgsm")) beforeMap.removeSource("current_buildings_1-cjgsm");
 	
-	        afterMap.addLayer({
-                id: "curr-builds-right",
+	         beforeMap.addLayer({
+                id: "curr-builds-left",
                 type: "fill",
                 source: {
                     type: "vector",
@@ -1374,19 +1379,20 @@ function addCurrentBuildingsAfterLayers() {
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
                             0.8,
-                            0.2
+                            0.3
                         ],
 				"fill-outline-color": "#000000"
                 }
 			
             });
+	
 }
 
 
-function addLongIslandCoastlineAfterLayers() {
+function addLongIslandCoastlineBeforeLayers() {
 
-	        afterMap.addLayer({
-                id: "long-island-right",
+	        beforeMap.addLayer({
+                id: "long-island-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1405,8 +1411,8 @@ function addLongIslandCoastlineAfterLayers() {
             });
 			
 			
-			afterMap.addLayer({
-                id: "long-island-area-right",
+			beforeMap.addLayer({
+                id: "long-island-area-left",
                 type: "fill",
                 source: {
                     type: "vector",
@@ -1428,13 +1434,14 @@ function addLongIslandCoastlineAfterLayers() {
                 }
 			
             });
+			
 }
 
 
-function addManahattaAfterLayers() {
-            
-			afterMap.addLayer({
-                id: "lenape-trails-right",
+function addManahattaBeforeLayers() {
+
+	        beforeMap.addLayer({
+                id: "lenape-trails-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1453,8 +1460,8 @@ function addManahattaAfterLayers() {
             });
 			
 			
-			 afterMap.addLayer({
-                id: "manahatta-shoreline-right",
+			 beforeMap.addLayer({
+                id: "manahatta-shoreline-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1473,8 +1480,8 @@ function addManahattaAfterLayers() {
             });
 			
 			
-			afterMap.addLayer({
-                id: "streams-right",
+			beforeMap.addLayer({
+                id: "streams-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1491,14 +1498,14 @@ function addManahattaAfterLayers() {
                 }
 			
             });
-			
+	
 }
 
 
-function addIndianPathsAfterLayers() {
+function addIndianPathsBeforeLayers() {
 
-	        afterMap.addLayer({
-                id: "indian-paths-right",
+	        beforeMap.addLayer({
+                id: "indian-paths-left",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1516,5 +1523,4 @@ function addIndianPathsAfterLayers() {
 			
             });
 }
-
 

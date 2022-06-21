@@ -855,11 +855,11 @@ my_tooltip.fadeOut(200);
 							karl_layer_view_flag = false;
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-904to6', id: karl_layer_view_id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-904to6', id: karl_layer_view_id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							if(afterHighMapKarlPopUp.isOpen()) afterHighMapKarlPopUp.remove();
@@ -905,11 +905,11 @@ my_tooltip.fadeOut(200);
 							karl_layer_view_flag = false;
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-904to6', id: karl_layer_view_id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-904to6', id: karl_layer_view_id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							if(afterHighMapKarlPopUp.isOpen()) afterHighMapKarlPopUp.remove();
@@ -2093,12 +2093,12 @@ i.slash-icon { font-size: 11px; }
 	<button id="view-hide-layer-panel" ><br> <span id="dir-txt" >&#9204;</span> <br><br></button>
 	
 	
-	<!--
+	
 	<div id="rightInfoBar">
 	
 	  <div id="infoLayerGrantLots"></div>
 	  <div id="infoLayerDutchGrants"></div>
-	  <div id="infoLayerGravesend"></div> 
+	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
 	  <div id="infoLayerKarl"></div>
 	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
@@ -2107,7 +2107,7 @@ i.slash-icon { font-size: 11px; }
 	  <div id="infoLayerCurrLots"></div>
 	
 	</div>
-	-->
+	
 	
 	
     <div id="studioMenu">
@@ -2322,7 +2322,7 @@ i.slash-icon { font-size: 11px; }
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="karl_layer_items" name="karl_layer_items">
 		<label for="karl_layer_items"> <i class="fas fa-caret-down"></i> 1636-Present | Long Island Towns</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="ny_towns"  title="Layer Info" ></i>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="boundaries-info-layer"  title="Layer Info" ></i>
 		</div>
   
 		<!-- Karl Long Island Area -->
@@ -2531,15 +2531,6 @@ i.slash-icon { font-size: 11px; }
 		<!-- REPLACE THIS -->
 
 
-        <!--Beer's Map -->
-		<div class="layer-list-row" >
-            <input class='cl4h2o6yp006d15mytksqocpt' type='radio' name='ltoggle' value='cl4h2o6yp006d15mytksqocpt'>
-                    <input class='cl4h2o6yp006d15mytksqocpt' type='radio' name='rtoggle' value='cl4h2o6yp006d15mytksqocpt'>
-		&nbsp;
-				<label for='cl4h2o6yp006d15mytksqocpt'>1873 | Long Island</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="beers-long-island-map"  title="Layer Info" ></i>
-		</div>
-
 		<br>
 		<center><b>New Netherland</b></center>
 	      
@@ -2558,18 +2549,6 @@ i.slash-icon { font-size: 11px; }
 		
 	  </div>
 
-	 
-	 
-	  <br>
-	  <div id="infoLayerGrantLots"></div>
-	  <div id="infoLayerDutchGrants"></div>
-	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
-	  <div id="infoLayerKarl"></div>
-	  <div id="infoLayerFarms"></div>
-	  <div id="infoLayerCastello"></div>
-	  <div id="infoLayerSettlements"></div>
-	  <div id="demoLayerInfo"></div>
-	  <div id="infoLayerCurrLots"></div>
 	 
 	 
 	  
@@ -2683,6 +2662,5 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
