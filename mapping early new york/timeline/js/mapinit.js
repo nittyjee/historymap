@@ -570,13 +570,14 @@ afterMap.on("error", function (e) {
 					if(cmp_name.includes(ref_name)) {
                 */
 				    if( typeof settlements_info[ref_name] == "undefined" ) {
-						settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
+						//settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
+						settlements_popup_html += "<h3>" + event.features[0].properties.enc_name + "</h3>";
 				    } else {
 						settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
 						"<b>" + "Current Location(s): " + "</b>" + "<br>" +
 						//"<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
 						( settlements_info[ref_name].curr_loc_url.length > 0 ? "<a href='https://nahc-mapping.org" + settlements_info[ref_name].curr_loc_url + "' target='_blank'>" : "" ) +
-						( typeof settlements_linked_location[settlements_info[ref_name].curr_loc_target] == "undefined" ? settlements_info[ref_name].curr_loc_name : settlements_linked_location[settlements_info[ref_name].curr_loc_target] ) +
+						( typeof settlements_linked_location[settlements_info[ref_name].curr_loc_target] == "undefined" ? "" : settlements_linked_location[settlements_info[ref_name].curr_loc_target] ) +
 						( settlements_info[ref_name].curr_loc_url.length > 0 ? "</a><br>"  : "" ) + 
 						( settlements_info[ref_name].curr_loc_name.length > 0 ? "<i>" + settlements_info[ref_name].curr_loc_name + "</i>" : "" ) + "<br><br>" +
 						"<b>" + "Date: " + "</b>" + "<i>" + settlements_info[ref_name].date + "</i>" + "<br>" +
@@ -601,17 +602,18 @@ afterMap.on("error", function (e) {
                 while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
                     coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
-				
+				    // event.features[0].properties.Name 
 					beforeHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" +
+                        .setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.corr_label + "</b><br>" +
 						// event.features[0].properties.Date + 
 						"</div>");
 					if(!beforeHighMapSettlementsPopUp.isOpen()) beforeHighMapSettlementsPopUp.addTo(beforeMap);
 					
+					// event.features[0].properties.Name 
 					afterHighMapSettlementsPopUp
                         .setLngLat(coordinates)
-						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.Name + "</b><br>" +
+						.setHTML("<div class='infoLayerSettlementsPopUp'><b>" + event.features[0].properties.corr_label + "</b><br>" +
 						// event.features[0].properties.Date + 
 						"</div>");
 					if(!afterHighMapSettlementsPopUp.isOpen()) afterHighMapSettlementsPopUp.addTo(afterMap);
@@ -980,8 +982,8 @@ afterMap.on("error", function (e) {
 
 
     function KarlClickHandle(event) {
-	
-			        var highPopUpHTML = "<div class='infoLayerKarlPopUp'><b>Name : </b>" + event.features[0].properties.Name + "</div>";
+	                // event.features[0].properties.Name
+			        var highPopUpHTML = "<div class='infoLayerKarlPopUp'><b>Name : </b>" + event.features[0].properties.corr_label + "</div>";
 						
 						if(layer_view_flag) {
 							if(karl_layer_view_id == event.features[0].id) {
@@ -990,11 +992,11 @@ afterMap.on("error", function (e) {
 									karl_layer_view_flag = false;
 									//*A#
 							        afterMap.setFeatureState(
-                                        { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                        { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                         { hover: false }
                                     );
 									beforeMap.setFeatureState(
-                                        { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                        { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                         { hover: false }
                                     );
 									if(afterHighMapKarlPopUp.isOpen()) afterHighMapKarlPopUp.remove();
@@ -1005,11 +1007,11 @@ afterMap.on("error", function (e) {
 								    karl_layer_view_flag = true;
 									//*A#
 									afterMap.setFeatureState(
-                                       { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                       { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                        { hover: true }
                                     );
 									beforeMap.setFeatureState(
-                                       { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                       { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                        { hover: true }
                                     );
 									afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1023,19 +1025,19 @@ afterMap.on("error", function (e) {
 								karl_layer_view_flag = true;
 								//*A#
 								afterMap.setFeatureState(
-                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                     { hover: false }
                                 );
 							    afterMap.setFeatureState(
-                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: event.features[0].id},
+                                    { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: event.features[0].id},
                                     { hover: true }
                                 );
 								beforeMap.setFeatureState(
-                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                     { hover: false }
                                 );
 							    beforeMap.setFeatureState(
-                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: event.features[0].id},
+                                    { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: event.features[0].id},
                                     { hover: true }
                                 );
                                 afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1050,19 +1052,19 @@ afterMap.on("error", function (e) {
 							$('#view-hide-layer-panel').trigger('click');
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							afterMap.setFeatureState(
-                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_areas-82yt3f', id: event.features[0].id},
+                                { source: 'karl_long_island-right-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: event.features[0].id},
                                 { hover: true }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: karl_layer_view_id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: karl_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_areas-82yt3f', id: event.features[0].id},
+                                { source: 'karl_long_island-left-highlighted', sourceLayer: 'karl_long_island_processed-4f31hh', id: event.features[0].id},
                                 { hover: true }
                             );
 							afterHighMapKarlPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1254,4 +1256,5 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
 
