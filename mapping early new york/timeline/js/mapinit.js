@@ -573,7 +573,8 @@ afterMap.on("error", function (e) {
 						//settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
 						settlements_popup_html += "<h3>" + event.features[0].properties.enc_name + "</h3>";
 				    } else {
-						settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
+						//settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
+						settlements_popup_html += "<h3>" + event.features[0].properties.enc_name + "</h3>" + "<br>" +
 						"<b>" + "Current Location(s): " + "</b>" + "<br>" +
 						//"<br>" + settlements_info[ref_name].curr_loc + "<br><br>" +
 						( settlements_info[ref_name].curr_loc_url.length > 0 ? "<a href='https://nahc-mapping.org" + settlements_info[ref_name].curr_loc_url + "' target='_blank'>" : "" ) +
