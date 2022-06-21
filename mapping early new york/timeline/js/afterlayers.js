@@ -587,12 +587,12 @@ function addKarlAfterLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.3ka71do0"
+				url: "mapbox://nittyjee.6nulr425"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-82yt3f",
+			"source-layer": "karl_long_island_processed-4f31hh",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -615,12 +615,12 @@ function addKarlAfterLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.3ka71do0"
+				url: "mapbox://nittyjee.6nulr425"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-82yt3f",
+			"source-layer": "karl_long_island_processed-4f31hh",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -651,14 +651,14 @@ function addKarlAfterLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredKarlIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'karl_long_island-right', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdRight},
+                            { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-4f31hh', id: hoveredKarlIdRight},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredKarlIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdRight},
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-4f31hh', id: hoveredKarlIdRight},
                         { hover: true }
                     );
 					
@@ -671,7 +671,8 @@ function addKarlAfterLayers(date) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
 					}
 					*/
-					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					//e.features[0].properties.Name
+					PopUpHTML += "<div class='infoLayerDutchGrantsPopUp'><b>Name : </b>" + e.features[0].properties.corr_label + "</div>";
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -700,7 +701,7 @@ function addKarlAfterLayers(date) {
                 afterMap.getCanvas().style.cursor = '';
 				if (hoveredKarlIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'karl_long_island-right', sourceLayer: 'karl_areas-82yt3f', id: hoveredKarlIdRight},
+                        { source: 'karl_long_island-right', sourceLayer: 'karl_long_island_processed-4f31hh', id: hoveredKarlIdRight},
                         { hover: false }
                     );
                 }
@@ -1515,6 +1516,5 @@ function addIndianPathsAfterLayers() {
 			
             });
 }
-
 
 
