@@ -898,12 +898,12 @@ function addSettlementsAfterLayers(date) {
                 type: "circle",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.b3r1u819"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_points').checked ? "visible" : "none",
                 },
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_layer_nahc-930jdy",
                 paint: {
                     'circle-color': '#0b0ee5',
 					'circle-opacity':  [
@@ -932,13 +932,13 @@ function addSettlementsAfterLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredSettlementsIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+                            { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
                             { hover: false }
                         );
                     }
                     hoveredSettlementsIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
                         { hover: true }
                     );
 					
@@ -971,7 +971,7 @@ function addSettlementsAfterLayers(date) {
                 afterMap.getCanvas().style.cursor = '';
 				if (hoveredSettlementsIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdRight},
+                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
                         { hover: false }
                     );
                 }
@@ -995,7 +995,7 @@ function addSettlementsLabelsAfterLayers(date) {
                 type: "symbol",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.b3r1u819"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
@@ -1009,7 +1009,7 @@ function addSettlementsLabelsAfterLayers(date) {
                     }
                 },
 
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_layer_nahc-930jdy",
 
 
 

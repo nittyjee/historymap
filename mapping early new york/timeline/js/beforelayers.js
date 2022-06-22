@@ -597,12 +597,12 @@ function addKarlBeforeLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.7xkhb8c1"
+				url: "mapbox://nittyjee.5u30zve2"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-904to6",
+			"source-layer": "karl_areas-8j4ru6",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -625,12 +625,12 @@ function addKarlBeforeLayers(date) {
 			source: {
 				type: "vector",
 				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.7xkhb8c1"
+				url: "mapbox://nittyjee.5u30zve2"
 			},
 			layout: {
                 visibility: document.getElementById('karl_layer').checked ? "visible" : "none",
             },
-			"source-layer": "karl_areas-904to6",
+			"source-layer": "karl_areas-8j4ru6",
 			paint: {
 				"fill-color": "#e3ed58",
 				"fill-opacity": [ 
@@ -658,14 +658,14 @@ function addKarlBeforeLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredKarlIdLeft) {
                         beforeMap.setFeatureState(
-                            { source: 'karl_long_island-left', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdLeft},
+                            { source: 'karl_long_island-left', sourceLayer: 'karl_areas-8j4ru6', id: hoveredKarlIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredKarlIdLeft = e.features[0].id;
                     beforeMap.setFeatureState(
-                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdLeft},
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-8j4ru6', id: hoveredKarlIdLeft},
                         { hover: true }
                     );
 					
@@ -708,7 +708,7 @@ function addKarlBeforeLayers(date) {
                 beforeMap.getCanvas().style.cursor = '';
 				if (hoveredKarlIdLeft) {
                     beforeMap.setFeatureState(
-                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-904to6', id: hoveredKarlIdLeft},
+                        { source: 'karl_long_island-left', sourceLayer: 'karl_areas-8j4ru6', id: hoveredKarlIdLeft},
                         { hover: false }
                     );
                 }
@@ -906,12 +906,12 @@ function addSettlementsBeforeLayers(date) {
                 type: "circle",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.b3r1u819"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_points').checked ? "visible" : "none",
                 },
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_layer_nahc-930jdy",
                 paint: {
                     'circle-color': '#0b0ee5',
 					'circle-opacity':  [
@@ -940,13 +940,13 @@ function addSettlementsBeforeLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredSettlementsIdLeft) {
                         beforeMap.setFeatureState(
-                            { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdLeft},
+                            { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdLeft},
                             { hover: false }
                         );
                     }
                     hoveredSettlementsIdLeft = e.features[0].id;
                     beforeMap.setFeatureState(
-                        { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdLeft},
+                        { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdLeft},
                         { hover: true }
                     );
 					
@@ -979,7 +979,7 @@ function addSettlementsBeforeLayers(date) {
                 beforeMap.getCanvas().style.cursor = '';
 				if (hoveredSettlementsIdLeft) {
                     beforeMap.setFeatureState(
-                        { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-707dsb', id: hoveredSettlementsIdLeft},
+                        { source: 'settlements-left', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdLeft},
                         { hover: false }
                     );
                 }
@@ -1005,7 +1005,7 @@ function addSettlementsLabelsBeforeLayers(date) {
                 type: "symbol",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.3tim9u5z"
+                    url: "mapbox://nittyjee.b3r1u819"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
@@ -1019,7 +1019,7 @@ function addSettlementsLabelsBeforeLayers(date) {
                     }
                 },
 
-                "source-layer": "locations_layer_nahc-707dsb",
+                "source-layer": "locations_layer_nahc-930jdy",
 
 
 
