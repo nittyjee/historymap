@@ -559,6 +559,7 @@ afterMap.on("error", function (e) {
 				clickedSettlementsId = event.features[0].id;
 				
 				var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');
+				//var ref_name = event.features[0].properties.enc_name.replace(/\s+/g, '');
 				console.log(ref_name);
 				console.log(settlements_info.length);
 				settlements_popup_html = "<h3>Settlement</h3><hr>";
@@ -573,8 +574,7 @@ afterMap.on("error", function (e) {
 						//settlements_popup_html += "<h3>" + event.features[0].properties.Name + "</h3>";
 						settlements_popup_html += "<h3>" + event.features[0].properties.enc_name + "</h3>";
 				    } else {
-						//settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
-						settlements_popup_html += "<h3>" + event.features[0].properties.enc_name + "</h3>" +
+						settlements_popup_html += "<h3>" + settlements_info[ref_name].name + "</h3>" + "<br>" +
 						
 
 						/* COMMENTING OUT CURRENT LOCATIONS PART OF SIDEBAR UNTIL "Current Location(s): " does not appear when there is no current location.
@@ -1265,5 +1265,6 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
 
 
