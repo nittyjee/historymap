@@ -558,7 +558,8 @@ afterMap.on("error", function (e) {
 		    } else {
 				clickedSettlementsId = event.features[0].id;
 				
-				var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');
+				//var ref_name = event.features[0].properties.Name.replace(/\s+/g, '');
+				var ref_name = event.features[0].properties.node_id.replace(/\/node\//g, '');
 				//var ref_name = event.features[0].properties.enc_name.replace(/\s+/g, '');
 				console.log(ref_name);
 				console.log(settlements_info.length);
@@ -1265,6 +1266,9 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
+
+
 
 
 
