@@ -1261,11 +1261,13 @@ function getSettlementsInfo() {
 		    //console.warn("\n\n\nLOAD JSON REST API\n\n\n");
 		    for(let i = 0; i < data.length; i++){
                 // old api
-				if( typeof data[i].title[0].value != "undefined" ) {
+				//if( typeof data[i].title[0].value != "undefined" ) {
+				if( typeof data[i].nid[0].value != "undefined" ) {
 				    //console.log(data[i].title[0].value);
-					data_info_index = data[i].title[0].value;
-					data_info_index = data_info_index.replace(/\s+/g, '');
+					//data_info_index = data[i].title[0].value;
+					//data_info_index = data_info_index.replace(/\s+/g, '');
 					//data_info_index = data_info_index.toLowerCase();
+					data_info_index = "" + data[i].nid[0].value + "";
 
 				    settlements_info[data_info_index] = { 
 					    //name: data[i].title.length > 0 ? data[i].title[0].value : "", 
@@ -2683,6 +2685,7 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
 
 
