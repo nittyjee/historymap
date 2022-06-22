@@ -313,17 +313,20 @@ function buildGravesendPopUpInfo(props) {
 
 function buildKarlPopUpInfo(props) {
 	        var popup_html = "";
-            var ref_name = props.Name.replace(/\s+/g, '');
+            //var ref_name = props.Name.replace(/\s+/g, '');
 			//var ref_name = props.enc_name.replace(/\s+/g, '');
+			var node_id = props.node_id.replace(/\/node\//g, '');
 			
 			    popup_html = 
 				    "<h3>Long Island Towns</h3><hr>";
 				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" 
-					if( typeof settlements_info[ref_name] == "undefined" ) {
+					//if( typeof settlements_info[ref_name] == "undefined" ) {
+					if( typeof settlements_info[node_id] == "undefined" ) {
 						//popup_html += "<b>" + props.Name + "</b>";
 						popup_html += "<b>" + props.enc_name + "</b>";
 				    } else {
-						popup_html += "<b>" + settlements_info[ref_name].name + "</b>";
+						//popup_html += "<b>" + settlements_info[ref_name].name + "</b>";
+						popup_html += "<b>" + settlements_info[node_id].name + "</b>";
 					}
 					
 					
@@ -337,7 +340,7 @@ function buildKarlPopUpInfo(props) {
 					props.Event
 				;
 
-    //console.log(props);
+    console.log(props);
 
     
 	$("#infoLayerKarl").html(popup_html);
@@ -381,5 +384,7 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
+
+
 
 
