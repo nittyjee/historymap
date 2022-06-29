@@ -358,9 +358,11 @@ modal_header_text["new-england-1670"] = "New England, 1670";
 modal_content_html["new-england-1670"] = `
 
 <i>A map of New England from Sandy Point in the south to the Saco River in the north New England and part of New York, including Long Island</i>
-			<br><br>This map of the New England area showed the most detail of Long Island at the time it was created, around 1670.
-			 It was was made by John Scott, a notorious figure in Long Island history. Previously English cartographers relied on Dutch maps for Long Island and the Hudson Valley.
-			  The map is detailed and colorful but also faded over time.
+			<br><br>This map was created in 1670, shortly after the English captured New Netherland. 
+			Previously the English relied on Dutch maps for areas to the west of New England, and this was the first 
+			English map that showed the Hudson Valley in detail, and the most detail of Long Island in any map at the time.
+			 Eastward is the central area of New England at the time - Connecticut, Rhode Island, Massachussets, and the southern parts of Vermont and New Hampshire.
+			  The map was created by John Scott, a notorious figure in Long Island history, and faded considerably over time.
 			`;
 
 
