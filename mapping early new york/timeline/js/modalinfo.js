@@ -365,7 +365,18 @@ modal_content_html["new-england-1670"] = `
 			  The map was created by John Scott, a notorious figure in Long Island history, and faded considerably over time.
 			`;
 
+			/* Manatus Map */
+			modal_header_text["manatus-map"] = "Manatus Map, 1639";
+			modal_content_html["manatus-map"] = `
+			
+			<i>Manatvs Gelegen op de Noot Riuier</i>
+			<br>(Manhattan Lying on the North River)
+			<br><br>
+			This is the first true map of Manhattan and settlements of New Netherland surrounding the harbor. Shown are 45 houses or farms and their owners, and Lenape settlements and slave quarters. It was created in 1639 following a survey commissioned the year before.
+			<p>
+			The author is believed by some to be Johannes Vingboons, but historians such as I. N. Stokes and Richard Stephenson consider that unlikely. This colorful copy created around 1670 by an unknown artist.
 
+			`;
 
 /*
 
