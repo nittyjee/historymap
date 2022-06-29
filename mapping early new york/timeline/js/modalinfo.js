@@ -243,6 +243,7 @@ modal_content_html["ratzer-map"] = `
 			<br><br>This is a colored version of the <i>Ratzer Map</i>, which It shows the city and vicinity in the years before the Revolutionary Era, full of the city streets, harbors, farms and fields, and hills, and many well illustrated details. Shown are Brooklyn and Manhattan, and the edges of Queens and New Jersey, right across from Manhattan.
             `;
 
+
 			/* Novi Belgii Map */
 modal_header_text["novi-belgii-map"] = "Belgii novi, 1651";
 modal_content_html["novi-belgii-map"] = `
@@ -350,7 +351,17 @@ modal_content_html["long-island-1734"] = `
 			<p>
 			It was created by Cyprian Southack, an English cartographer and colonial naval commander in New England.
 			`;
+			
+			
+			/* New England 1670 */
+modal_header_text["new-england-1670"] = "New England, 1670";
+modal_content_html["new-england-1670"] = `
 
+<i>A map of New England from Sandy Point in the south to the Saco River in the north New England and part of New York, including Long Island</i>
+			<br><br>This map of the New England area showed the most detail of Long Island at the time it was created, around 1670.
+			 It was was made by John Scott, a notorious figure in Long Island history. Previously English cartographers relied on Dutch maps for Long Island and the Hudson Valley.
+			  The map is detailed and colorful but also faded over time.
+			`;
 
 
 
