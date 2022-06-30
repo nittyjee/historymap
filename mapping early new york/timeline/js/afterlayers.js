@@ -1518,3 +1518,85 @@ function addIndianPathsAfterLayers() {
 }
 
 
+
+function addLongIslandNativeGroupsAfterLayers() {
+
+	        afterMap.addLayer({
+                id: "native-groups-lines-right",
+                type: "line",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.c2l6ln96"
+                },
+				layout: {
+                    visibility: document.getElementById('native_groups_lines').checked ? "visible" : "none",
+                },
+                "source-layer": "indian_long_island_borders-53ni21",
+                paint: {
+                "line-color": "#FF0000",
+                "line-width": 2,
+                "line-opacity": 1.0
+                }
+			
+            });
+			
+			
+			afterMap.addLayer({
+                id: "native-groups-area-right",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.cra18cur"
+                },
+				layout: {
+                    visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
+                },
+                "source-layer": "indian_long_island_groups-6ez1na",
+                paint: {
+				"fill-color": "#FF1493",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.8,
+                            0.2
+                        ],
+				"fill-outline-color": "#FF4500"
+                }
+            });
+			
+			
+			afterMap.addLayer({
+                id: "native-groups-labels-right",
+                type: "symbol",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.cwnynmaz"
+                },
+				layout: {
+                    visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
+				"text-field": "{Name}",
+					"text-offset": [0,1],
+                    "text-size": {
+                    stops: [
+                        [0, 4],
+                        [22, 34]
+                    ]
+                    }
+                },
+                "source-layer": "indian_long_island_labels-cw0yuw",
+                paint: {
+                    "text-color": "#0b0ee5",
+                    "text-halo-color": "#ffffff",
+                    "text-halo-width": 5,
+                    "text-halo-blur": 1,
+                    "text-opacity": {
+                        stops: [
+                        [6, 0],
+                        [7, 1]
+                        ]
+                    }
+                }
+            });
+}
+
+
