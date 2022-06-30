@@ -1214,6 +1214,7 @@ beforeMap.on('style.load', function () {
 	addManahattaBeforeLayers();
 	addLongIslandCoastlineBeforeLayers();
 	addIndianPathsBeforeLayers();
+	addLongIslandNativeGroupsBeforeLayers();
 /*REPLACE THIS*/
 addGravesendBeforeLayers(date);
 addGravesendLinesBeforeLayers(date);
@@ -1253,6 +1254,7 @@ afterMap.on('style.load', function () {
 	addManahattaAfterLayers();
 	addLongIslandCoastlineAfterLayers();
 	addIndianPathsAfterLayers();
+	addLongIslandNativeGroupsAfterLayers();
 
 /*REPLACE THIS*/
 addGravesendAfterLayers(date);
@@ -1266,6 +1268,7 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
 
 
 
