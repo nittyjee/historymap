@@ -1557,10 +1557,34 @@ function addLongIslandNativeGroupsAfterLayers() {
 				"fill-opacity": [ 
 					    'case',
                         ['boolean', ['feature-state', 'hover'], false],
-                            0.8,
+                            0.5,
                             0.2
                         ],
-				"fill-outline-color": "#FF4500"
+				"fill-outline-color": "#FFD700"
+                }
+            });
+			
+			
+			afterMap.addLayer({
+                id: "native-groups-area-right-highlighted",
+                type: "fill",
+                source: {
+                    type: "vector",
+                    url: "mapbox://nittyjee.cra18cur"
+                },
+				layout: {
+                    visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
+                },
+                "source-layer": "indian_long_island_groups-6ez1na",
+                paint: {
+				"fill-color": "#FF1493",
+				"fill-opacity": [ 
+					    'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                            0.3,
+                            0
+                        ],
+				"fill-outline-color": "#FFD700"
                 }
             });
 			
@@ -1585,7 +1609,7 @@ function addLongIslandNativeGroupsAfterLayers() {
                 },
                 "source-layer": "indian_long_island_labels-cw0yuw",
                 paint: {
-                    "text-color": "#0b0ee5",
+                    "text-color": "#000080",
                     "text-halo-color": "#ffffff",
                     "text-halo-width": 5,
                     "text-halo-blur": 1,
@@ -1597,6 +1621,77 @@ function addLongIslandNativeGroupsAfterLayers() {
                     }
                 }
             });
+			
+			
+			//CURSOR ON HOVER
+            //ON HOVER
+			afterMap.on('mouseenter', 'native-groups-area-right', function (e) {
+                afterMap.getCanvas().style.cursor = 'pointer';
+				afterMapNativeGroupsPopUp.setLngLat(e.lngLat).addTo(afterMap);
+			});
+			
+            afterMap.on('mousemove', 'native-groups-area-right', function (e) {
+				if (e.features.length > 0) {
+                    if (hoveredNativeGroupsIdRight) {
+                        afterMap.setFeatureState(
+                            { source: 'native-groups-area-right', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdRight},
+                            { hover: false }
+                        );
+                    }
+					//console.log(e.features[0]);
+                    hoveredNativeGroupsIdRight = e.features[0].id;
+                    afterMap.setFeatureState(
+                        { source: 'native-groups-area-right', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdRight},
+                        { hover: true }
+                    );
+					
+					//console.log(e.lngLat.lng);
+                    var PopUpHTML = "";
+					/*
+					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
+						PopUpHTML = "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.name + "<br>";	
+					} else {	
+						PopUpHTML = "<div class='infoLayerCastelloPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+					}
+					*/
+					PopUpHTML += "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					
+					coordinates = e.features[0].geometry.coordinates.slice();
+                //var description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                //AFTER MAP POP UP CONTENTS
+                afterMapNativeGroupsPopUp
+                    .setLngLat(e.lngLat)
+					.setHTML(
+                        PopUpHTML
+                    );
+				
+				}
+				
+            });
+
+            //OFF HOVER
+			afterMap.on('mouseleave', 'native-groups-area-right', function () {
+                afterMap.getCanvas().style.cursor = '';
+				if (hoveredNativeGroupsIdRight) {
+                    afterMap.setFeatureState(
+                        { source: 'native-groups-area-right', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdRight},
+                        { hover: false }
+                    );
+                }
+                hoveredNativeGroupsIdRight = null;		
+				if(afterMapNativeGroupsPopUp.isOpen()) afterMapNativeGroupsPopUp.remove();
+            });
 }
+
+
 
 
