@@ -829,8 +829,8 @@ my_tooltip.fadeOut(200);
 					if( $( this ).prop('checked') ) {
 					    beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "visible" );
 						afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "visible" ); 
-						//beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
-						//afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "visible" );
+						beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
+						afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "visible" );
 						
 						beforeMap.setLayoutProperty( "native-groups-lines-left", "visibility", "visible" );
 						afterMap.setLayoutProperty( "native-groups-lines-right", "visibility", "visible" ); 
@@ -839,31 +839,29 @@ my_tooltip.fadeOut(200);
 					} else {
 					    beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "none" );
-						//beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
-						//afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "none" );
+						beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
+						afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "none" );
 						
 						beforeMap.setLayoutProperty( "native-groups-lines-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "native-groups-lines-right", "visibility", "none" );
 						beforeMap.setLayoutProperty( "native-groups-labels-left", "visibility", "none" ); 
 					    afterMap.setLayoutProperty( "native-groups-labels-right", "visibility", "none" );
 						
-						/*
-						if(gravesend_layer_view_flag) { 
-							$("#infoLayerGravesend").slideUp(); 
-							gravesend_layer_view_flag = false;
+						if(native_group_layer_view_flag) { 
+							$("#infoLayerNativeGroups").slideUp(); 
+							native_group_layer_view_flag = false;
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
                                 { hover: false }
                             );
-							if(afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.remove();
-							if(beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.remove();
+							if(afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.remove();
+							if(beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.remove();
 						}
-						*/
 					}
                 });
     
@@ -881,30 +879,29 @@ my_tooltip.fadeOut(200);
 
 					        beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "visible" ); 
 					        afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "visible" ); 
-							//beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
-							//afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "visible" );
+							beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
+							afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "visible" );
 					} else {
 					        beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "none" ); 
 					        afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "none" );
-							//beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "none" );
-							//afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "none" );
-						/*
-						if(gravesend_layer_view_flag) { 
-							$("#infoLayerGravesend").slideUp(); 
-							gravesend_layer_view_flag = false;
+							beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "none" );
+							afterMap.setLayoutProperty( "native-groups-area-right-highlighted", "visibility", "none" );
+
+						if(native_group_layer_view_flag) { 
+							$("#infoLayerNativeGroups").slideUp(); 
+							native_group_layer_view_flag = false;
 
 							afterMap.setFeatureState(
-                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'gravesend_boundaries-c6qrbw', id: gravesend_layer_view_id},
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
                                 { hover: false }
                             );
-							if(afterHighMapGravesendPopUp.isOpen()) afterHighMapGravesendPopUp.remove();
-							if(beforeHighMapGravesendPopUp.isOpen()) beforeHighMapGravesendPopUp.remove();
+							if(afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.remove();
+							if(beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.remove();
 						}
-						*/
 					}
 				});
 				
@@ -1812,7 +1809,7 @@ padding:2px 7px;
 }
 
 #studioMenu { width: 300px; }
-#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerGravesend, #infoLayerKarl, #infoLayerFarms, #infoLayerCurrLots, #infoLayerSettlements { 
+#demoLayerInfo, #infoLayerCastello, #infoLayerGrantLots, #infoLayerDutchGrants, #infoLayerGravesend, #infoLayerNativeGroups, #infoLayerKarl, #infoLayerFarms, #infoLayerCurrLots, #infoLayerSettlements { 
     padding: 5px;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -1862,6 +1859,11 @@ padding:2px 7px;
     border: solid #FFFF00 2px;
 }
 /* REPLACE THIS */
+
+#infoLayerNativeGroups, .infoLayerNativeGroupsPopUp { 
+    background-color: rgb(255, 192, 203, 0.3);  /* #FFC0CB Pink */
+    border: solid pink 2px;
+}
 
 #infoLayerKarl, .infoLayerKarlPopUp { 
     background-color: rgb(255, 255, 0, 0.5); /* #FFFF00 Yellow */
@@ -2213,6 +2215,7 @@ i.slash-icon { font-size: 11px; }
 	  <div id="infoLayerGrantLots"></div>
 	  <div id="infoLayerDutchGrants"></div>
 	  <div id="infoLayerGravesend"></div> 
+	  <div id="infoLayerNativeGroups"></div>
 	  <div id="infoLayerKarl"></div>
 	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
@@ -2414,7 +2417,7 @@ i.slash-icon { font-size: 11px; }
         <div class="layer-list-row" >
 		<input type="checkbox" id="native_groups_layer_items" name="native_groups_layer_items">
 		<label for="native_groups_layer_items"> <i class="fas fa-caret-down"></i> 1600s | Long Island Native Groups</label>
-		<i  class="fa fa-info-circle layer-info trigger-popup" id="boundaries-info-layer"  title="Layer Info" ></i>
+		<i  class="fa fa-info-circle layer-info trigger-popup" id="native-groups-info-layer"  title="Layer Info" ></i>
 		</div>
   
         <!-- Long Island Native Groups Labels -->
@@ -2426,13 +2429,13 @@ i.slash-icon { font-size: 11px; }
 		<!-- Long Island Native Groups Area -->
 		<div class="layer-list-row" >
 		&nbsp; &nbsp; <input type="checkbox" id="native_groups_area" class="native_groups_layer" name="native_groups_area">
-		<label for="native_groups_area"> <i class="fa fa-square" style="color: #FF1493;" ></i> Information</label>
+		<label for="native_groups_area"> <i class="fa fa-square" style="color: #FF1493;" ></i> Area</label>
 		</div>
 		
 		<!-- Long Island Native Groups Lines -->
 		<div class="layer-list-row" >
 		&nbsp; &nbsp; <input type="checkbox" id="native_groups_lines" class="native_groups_layer" name="native_groups_lines">
-		<label for="native_groups_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
+		<label for="native_groups_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Borders</label>
 		</div>
 
 
@@ -2722,6 +2725,7 @@ i.slash-icon { font-size: 11px; }
 	  <div id="infoLayerGrantLots"></div>
 	  <div id="infoLayerDutchGrants"></div>
 	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
+	  <div id="infoLayerNativeGroups"></div>
 	  <div id="infoLayerKarl"></div>
 	  <div id="infoLayerFarms"></div>
 	  <div id="infoLayerCastello"></div>
@@ -2841,7 +2845,6 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
 
