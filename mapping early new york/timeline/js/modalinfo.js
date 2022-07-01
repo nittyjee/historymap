@@ -182,6 +182,16 @@ modal_content_html["demo-taxlot-info-layer"] = `
 			For more information, see the “Castello Taxlots” map overlay.
 			`;
 
+modal_header_text["native-groups-info-layer"] = "1600s | Long Island Native Groups ";
+modal_content_html["native-groups-info-layer"] = `
+        
+		<ol>
+		<li>Labels</li>
+		<li>Area</li>
+		<li>Borders</li>
+		</ol>
+
+			`;
 
 modal_header_text["demo-grant-info-layer"] = "Demo Grant Divisions Layer";
 modal_content_html["demo-grant-info-layer"] = `
@@ -387,3 +397,4 @@ modal_content_html["settlements-labels-info-layer"] = `
 			Description coming soon.
 			`;
 */
+
