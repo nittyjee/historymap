@@ -1,6 +1,7 @@
 var grant_lots_view_id = null,
     dgrants_layer_view_id = null,
 	gravesend_layer_view_id = null,   // REPLACE THIS 
+	native_group_layer_view_id = null,
 	karl_layer_view_id = null,
 	farms_layer_view_id = null,
 	curr_layer_view_id = null,
@@ -10,6 +11,7 @@ var grant_lots_view_id = null,
 	settlements_layer_view_flag = false,
 	dgrants_layer_view_flag = false,
 	gravesend_layer_view_flag = false,   // REPLACE THIS
+	native_group_layer_view_flag = false,
     karl_layer_view_flag = false,
 	farms_layer_view_flag = false,
 	curr_layer_view_flag = false;
@@ -22,6 +24,7 @@ $("#infoLayerCastello").slideUp();
 $("#infoLayerCurrLots").slideUp();
 $("#infoLayerSettlements").slideUp();
 $("#infoLayerGravesend").slideUp();   // REPLACE THIS 
+$("#infoLayerNativeGroups").slideUp();
 $("#infoLayerKarl").slideUp();
 
 /////////////////////////////
@@ -119,6 +122,7 @@ var castello_click_ev = false,
 	demo_taxlot_click_ev = false,
 	dutch_grant_click_ev = false,
 	gravesend_click_ev = false,     // REPLACE THIS
+	native_groups_click_ev = false,
 	karl_click_ev = false,
 	farms_click_ev = false,
 	curr_layer_click_ev = false,
@@ -169,6 +173,13 @@ var afterMapGravesendTwoPopUp = new mapboxgl.Popup({ closeButton: false, closeOn
 /* REPLACE THIS */
 
 
+var afterMapNativeGroupsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeMapNativeGroupsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+var afterHighMapNativeGroupsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
+    beforeHighMapNativeGroupsPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+
+
 var afterMapKarlPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 }),
     beforeMapKarlPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
@@ -208,6 +219,8 @@ var hoveredStateIdRight = null,
 	hoveredGravesendIdRight = null,
 	hoveredGravesendIdLeft = null,
 	/* REPLACE THIS */
+	hoveredNativeGroupsIdRight = null,
+	hoveredNativeGroupsIdLeft = null,
 	hoveredKarlIdRight = null,
 	hoveredKarlIdLeft = null,
 	hoveredFarmsIdRight = null,
@@ -257,6 +270,10 @@ beforeMap.on("load", function () {
 		}).on('click', 'gravesend_boundaries-c6qrbw-left' , function (e) {
 					
 		    GravesendClickHandle(e);
+						
+		}).on('click', 'native-groups-area-left' , function (e) {
+					
+		    NativeGroupsClickHandle(e);
 						
 		}).on('click', 'karl_long_island-left' , function (e) {
 					
@@ -312,6 +329,10 @@ afterMap.on("load", function () {
 					
 		    GravesendClickHandle(e);
 						
+		}).on('click', 'native-groups-area-right' , function (e) {
+					
+		    NativeGroupsClickHandle(e);
+						
 		}).on('click', 'karl_long_island-right' , function (e) {
 					
 		    KarlClickHandle(e);
@@ -346,7 +367,7 @@ afterMap.on("error", function (e) {
 	    
 		function DefaultHandle() {
 		
-		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev && !gravesend_click_ev && !karl_click_ev) {
+		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev && !gravesend_click_ev && !native_groups_click_ev && !karl_click_ev) {
                         if(windoWidth > 555)
 			                $('#view-hide-layer-panel').trigger('click');
 					}
@@ -359,6 +380,7 @@ afterMap.on("error", function (e) {
 					curr_layer_click_ev = false;
 					settlements_click_ev = false;
 					gravesend_click_ev = false;
+					native_groups_click_ev = false;
 					karl_click_ev = false;
 		
 		}
@@ -991,6 +1013,103 @@ afterMap.on("error", function (e) {
     /*REPLACE THIS*/
 
 
+    function NativeGroupsClickHandle(event) {
+		var highPopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + event.features[0].properties.Name + "</div>";
+						
+						if(layer_view_flag) {
+							if(native_group_layer_view_id == event.features[0].id) {
+								if(native_group_layer_view_flag) {
+							        $("#infoLayerNativeGroups").slideUp(); 
+									native_group_layer_view_flag = false;
+									//*A#
+							        afterMap.setFeatureState(
+                                        { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                        { hover: false }
+                                    );
+									beforeMap.setFeatureState(
+                                        { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                        { hover: false }
+                                    );
+									if(afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.remove();
+									if(beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.remove();
+								} else {
+									buildNativeGroupPopUpInfo(event.features[0].properties);
+							        $("#infoLayerNativeGroups").slideDown();
+								    native_group_layer_view_flag = true;
+									//*A#
+									afterMap.setFeatureState(
+                                       { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                       { hover: true }
+                                    );
+									beforeMap.setFeatureState(
+                                       { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                       { hover: true }
+                                    );
+									afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.addTo(afterMap);
+									beforeHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									if(!beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.addTo(beforeMap);
+								}
+							} else {
+								buildNativeGroupPopUpInfo(event.features[0].properties);
+							    $("#infoLayerNativeGroups").slideDown();
+								native_group_layer_view_flag = true;
+								//*A#
+								afterMap.setFeatureState(
+                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                    { hover: false }
+                                );
+							    afterMap.setFeatureState(
+                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                    { hover: true }
+                                );
+								beforeMap.setFeatureState(
+                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                    { hover: false }
+                                );
+							    beforeMap.setFeatureState(
+                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                    { hover: true }
+                                );
+                                afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								if(!afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.addTo(afterMap);
+								beforeHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							    if(!beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.addTo(beforeMap);
+							}
+							native_group_layer_view_id = event.features[0].id;
+						} else {
+							buildNativeGroupPopUpInfo(event.features[0].properties);
+							$("#infoLayerNativeGroups").slideDown();
+							$('#view-hide-layer-panel').trigger('click');
+							//*A#
+							afterMap.setFeatureState(
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                { hover: false }
+                            );
+							afterMap.setFeatureState(
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                { hover: true }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                { hover: false }
+                            );
+							beforeMap.setFeatureState(
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                { hover: true }
+                            );
+							afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.addTo(afterMap);
+							beforeHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							if(!beforeHighMapNativeGroupsPopUp.isOpen()) beforeHighMapNativeGroupsPopUp.addTo(beforeMap);
+							native_group_layer_view_id = event.features[0].id;
+							//native_group_layer_view_id = null;
+					    } 
+						
+						native_groups_click_ev = true;
+    }
+
+
     function KarlClickHandle(event) {
 	                // event.features[0].properties.Name
 			        var highPopUpHTML = "<div class='infoLayerKarlPopUp'><b>Name : </b>" + event.features[0].properties.corr_label + "</div>";
@@ -1268,6 +1387,7 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
+
 
 
 
