@@ -311,6 +311,26 @@ function buildGravesendPopUpInfo(props) {
 
 
 
+function buildNativeGroupPopUpInfo(props) {
+	        var popup_html = "";
+                
+			
+			    popup_html = 
+				    "<h3>Long Island Native</h3><hr>" +
+				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
+					"<b>" + props.Name + "</b>" +
+					"<br><br>"
+				;
+				
+				console.log(props);
+
+	$("#infoLayerNativeGroups").html(popup_html);
+
+}
+
+
+
+
 function buildKarlPopUpInfo(props) {
 	        var popup_html = "";
             //var ref_name = props.Name.replace(/\s+/g, '');
@@ -384,7 +404,6 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
-
 
 
 
