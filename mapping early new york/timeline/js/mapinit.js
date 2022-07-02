@@ -1023,11 +1023,11 @@ afterMap.on("error", function (e) {
 									native_group_layer_view_flag = false;
 									//*A#
 							        afterMap.setFeatureState(
-                                        { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                        { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                         { hover: false }
                                     );
 									beforeMap.setFeatureState(
-                                        { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                        { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                         { hover: false }
                                     );
 									if(afterHighMapNativeGroupsPopUp.isOpen()) afterHighMapNativeGroupsPopUp.remove();
@@ -1038,11 +1038,11 @@ afterMap.on("error", function (e) {
 								    native_group_layer_view_flag = true;
 									//*A#
 									afterMap.setFeatureState(
-                                       { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                       { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                        { hover: true }
                                     );
 									beforeMap.setFeatureState(
-                                       { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                       { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                        { hover: true }
                                     );
 									afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1056,19 +1056,19 @@ afterMap.on("error", function (e) {
 								native_group_layer_view_flag = true;
 								//*A#
 								afterMap.setFeatureState(
-                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                     { hover: false }
                                 );
 							    afterMap.setFeatureState(
-                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                    { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: event.features[0].id},
                                     { hover: true }
                                 );
 								beforeMap.setFeatureState(
-                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                     { hover: false }
                                 );
 							    beforeMap.setFeatureState(
-                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                    { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: event.features[0].id},
                                     { hover: true }
                                 );
                                 afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
@@ -1083,19 +1083,19 @@ afterMap.on("error", function (e) {
 							$('#view-hide-layer-panel').trigger('click');
 							//*A#
 							afterMap.setFeatureState(
-                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                 { hover: false }
                             );
 							afterMap.setFeatureState(
-                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                { source: 'native-groups-area-right-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: event.features[0].id},
                                 { hover: true }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: native_group_layer_view_id},
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: native_group_layer_view_id},
                                 { hover: false }
                             );
 							beforeMap.setFeatureState(
-                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'indian_long_island_groups-6ez1na', id: event.features[0].id},
+                                { source: 'native-groups-area-left-highlighted', sourceLayer: 'long_island_indians_areas-2pmzkw', id: event.features[0].id},
                                 { hover: true }
                             );
 							afterHighMapNativeGroupsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);

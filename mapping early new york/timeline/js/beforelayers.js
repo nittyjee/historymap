@@ -1533,12 +1533,12 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 type: "line",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.c2l6ln96"
+                    url: "mapbox://nittyjee.02m6t3qm"
                 },
 				layout: {
                     visibility: document.getElementById('native_groups_lines').checked ? "visible" : "none",
                 },
-                "source-layer": "indian_long_island_borders-53ni21",
+                "source-layer": "long_island_indian_area_lines-b7m3lt",
                 paint: {
                 "line-color": "#FF0000",
                 "line-width": 2,
@@ -1552,12 +1552,12 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 type: "fill",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.cra18cur"
+                    url: "mapbox://nittyjee.90im730b"
                 },
 				layout: {
                     visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
                 },
-                "source-layer": "indian_long_island_groups-6ez1na",
+                "source-layer": "long_island_indians_areas-2pmzkw",
                 paint: {
 				"fill-color": "#FF1493",
 				"fill-opacity": [ 
@@ -1576,12 +1576,12 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 type: "fill",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.cra18cur"
+                    url: "mapbox://nittyjee.90im730b"
                 },
 				layout: {
                     visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
                 },
-                "source-layer": "indian_long_island_groups-6ez1na",
+                "source-layer": "long_island_indians_areas-2pmzkw",
                 paint: {
 				"fill-color": "#FF1493",
 				"fill-opacity": [ 
@@ -1646,14 +1646,14 @@ function addLongIslandNativeGroupsBeforeLayers() {
 				if (e.features.length > 0) {
                     if (hoveredNativeGroupsIdLeft) {
                         beforeMap.setFeatureState(
-                            { source: 'native-groups-area-left', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdLeft},
+                            { source: 'native-groups-area-left', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdLeft},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredNativeGroupsIdLeft = e.features[0].id;
                     beforeMap.setFeatureState(
-                        { source: 'native-groups-area-left', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdLeft},
+                        { source: 'native-groups-area-left', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdLeft},
                         { hover: true }
                     );
 					
@@ -1695,7 +1695,7 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 beforeMap.getCanvas().style.cursor = '';
 				if (hoveredNativeGroupsIdLeft) {
                     beforeMap.setFeatureState(
-                        { source: 'native-groups-area-left', sourceLayer: 'indian_long_island_groups-6ez1na', id: hoveredNativeGroupsIdLeft},
+                        { source: 'native-groups-area-left', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdLeft},
                         { hover: false }
                     );
                 }
