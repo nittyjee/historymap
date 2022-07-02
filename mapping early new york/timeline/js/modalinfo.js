@@ -338,6 +338,20 @@ modal_content_html["indian-paths-places"] = `
 			`;
 
 
+			
+
+			/* Indian Groups of Long Island */
+
+			modal_header_text["indians-long-island"] = "The Indian tribes of Long Island, 1600-1700s";
+			modal_content_html["indians-long-island"] = `
+			
+			A drawing of Long Island Native groups by Victor G. Becker in 1934.
+			<p>
+			<br>
+			The notion has persisted for many decades that there were 13 tribes on Long Island. Reviews are needed to verify the accuracy of this, as well as their geographical range. Natives of Long Island did not have borders and land ownership in the same way as the Dutch and English, and tribes were often formed in order to negotiate with and form relationships with colonists. While documents and scholarship over the past centuries have used the term "tribe", many have found it more accurate to use terms like "groups" or "communities" to describe their relationships.
+			`;
+
+
 			/* Gravesend Map */
 
 modal_header_text["gravesend-map"] = "Gravesend Map, 1873";
