@@ -1640,7 +1640,7 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 type: "symbol",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.cwnynmaz"
+                    url: "mapbox://nittyjee.978p2v80"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
@@ -1653,7 +1653,7 @@ function addLongIslandNativeGroupsBeforeLayers() {
                     ]
                     }
                 },
-                "source-layer": "indian_long_island_labels-cw0yuw",
+                "source-layer": "indian_long_island_labels-483rzu",
                 paint: {
                     "text-color": "#000080",
                     "text-halo-color": "#ffffff",
