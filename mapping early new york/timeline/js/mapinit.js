@@ -1014,8 +1014,14 @@ afterMap.on("error", function (e) {
 
 
     function NativeGroupsClickHandle(event) {
-		var highPopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + event.features[0].properties.Name + "</div>";
-						
+		var highPopUpHTML = "";
+		    
+			if( (typeof taxlot_event_entities_info[event.features[0].properties.nid] == "undefined") || (event.features[0].properties.nid == "") ) {
+		        highPopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + event.features[0].properties.name + "</div>";
+	        } else {
+				highPopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + ( taxlot_event_entities_info[event.features[0].properties.nid].name.length > 0 ? taxlot_event_entities_info[event.features[0].properties.nid].name : event.features[0].properties.name ) + "</div>";
+			}
+			
 						if(layer_view_flag) {
 							if(native_group_layer_view_id == event.features[0].id) {
 								if(native_group_layer_view_flag) {
@@ -1387,7 +1393,6 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
-
 
 
 
