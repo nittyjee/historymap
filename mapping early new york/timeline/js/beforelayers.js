@@ -1659,14 +1659,12 @@ function addLongIslandNativeGroupsBeforeLayers() {
 					
 					//console.log(e.lngLat.lng);
                     var PopUpHTML = "";
-					/*
-					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
-						PopUpHTML = "<div class='infoLayerCastelloPopUp'>" + e.features[0].properties.name + "<br>";	
+					if( (typeof taxlot_event_entities_info[e.features[0].properties.nid] == "undefined") || (e.features[0].properties.nid == "") ) {
+						PopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + e.features[0].properties.name + "</div>";	
 					} else {	
-						PopUpHTML = "<div class='infoLayerCastelloPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
+						PopUpHTML = "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + ( taxlot_event_entities_info[e.features[0].properties.nid].name.length > 0 ? taxlot_event_entities_info[e.features[0].properties.nid].name : e.features[0].properties.name ) + "</div>";
 					}
-					*/
-					PopUpHTML += "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + e.features[0].properties.Name + "</div>";
+					//PopUpHTML += "<div class='infoLayerCastelloPopUp'><b>Name : </b>" + e.features[0].properties.name + "</div>";
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -1703,5 +1701,7 @@ function addLongIslandNativeGroupsBeforeLayers() {
 				if(beforeMapNativeGroupsPopUp.isOpen()) beforeMapNativeGroupsPopUp.remove();
             });
 }
+
+
 
 
