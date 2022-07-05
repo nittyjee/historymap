@@ -84,11 +84,15 @@
     // get Dutch Grants Lots Info from REST API
     var dutch_grant_lots_info = new Array(),
 	    settlements_info = new Array(),
-		settlements_linked_location = new Array();
+		settlements_linked_location = new Array(),
+		taxlot_event_entities_info = new Array();
 	var dutch_grant_lots_info_length = 0,
-	    settlements_info_length = 0;
+	    settlements_info_length = 0,
+		taxlot_entities_info_length = 0;
+		
     getDutchGrantsInfo();
 	getSettlementsInfo();
+	getTaxlotEventEntitiesDescrInfo();
 
 		    var layer_view_flag = true;
 			var timeline_pointer_flag = true;
@@ -827,6 +831,10 @@ my_tooltip.fadeOut(200);
 				$('#native_groups_layer_items').change(function(){
                     $('.native_groups_layer').prop('checked',this.checked);
 					if( $( this ).prop('checked') ) {
+					    // sizeOfArray(dutch_grant_lots_info)     for assoc arrays
+					    if(taxlot_entities_info_length == 0) {
+					        getTaxlotEventEntitiesDescrInfo();
+					    }
 					    beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "visible" );
 						afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "visible" ); 
 						beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
@@ -876,7 +884,10 @@ my_tooltip.fadeOut(200);
 				
 				$('#native_groups_area').click(function() {
 				    if( $( this ).prop('checked') ) {
-
+                            // sizeOfArray(dutch_grant_lots_info)     for assoc arrays
+					        if(taxlot_entities_info_length == 0) {
+					            getTaxlotEventEntitiesDescrInfo();
+					        }
 					        beforeMap.setLayoutProperty( "native-groups-area-left", "visibility", "visible" ); 
 					        afterMap.setLayoutProperty( "native-groups-area-right", "visibility", "visible" ); 
 							beforeMap.setLayoutProperty( "native-groups-area-left-highlighted", "visibility", "visible" );
@@ -1409,7 +1420,7 @@ function getSettlementsInfo() {
 				}
 			}
 		}
-		console.log(settlements_info);
+		//console.log(settlements_info);
 
     })
     .fail( function(xhr, textStatus, errorThrown) {
@@ -1419,6 +1430,65 @@ function getSettlementsInfo() {
         console.log(textStatus);
     });
 }
+
+
+// for test local host REST_API/taxlot-entities-export.json
+// REST API https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-entities-export
+
+function getTaxlotEventEntitiesDescrInfo() {
+    
+	var data_info_index = "";
+	taxlot_entities_info_length = 0;
+	
+	$.ajax({
+				url: 'https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-entities-export',
+				headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+				type: 'get',
+                dataType: 'json',
+				data: {}
+    })
+	.done(function(data) { 
+	  
+		//console.log(data);
+		if(data.length > 0) {
+		    //console.warn("\n\n\nLOAD JSON REST API\n\n\n");
+		    for(let i = 0; i < data.length; i++){
+                // old api
+				//if( typeof data[i].title[0].value != "undefined" ) {
+				if( typeof data[i].nid[0].value != "undefined" ) {
+				    //console.log(data[i].title[0].value);
+					//data_info_index = data[i].title[0].value;
+					//data_info_index = data_info_index.replace(/\s+/g, '');
+					//data_info_index = data_info_index.toLowerCase();
+					data_info_index = "" + data[i].nid[0].value + "";
+
+				    taxlot_event_entities_info[data_info_index] = { 
+					    name: data[i].title.length > 0 ? data[i].title[0].value : "", 
+						name_html: data[i].title.length > 0 ? (  
+						    ( data[i].path.length > 0 ? "<a href='https://nahc-mapping.org/mappingNY/encyclopedia/node/" + data_info_index + "' target='_blank'>" : "" ) +
+						     data[i].title[0].value  +
+							( data[i].path.length > 0 ? "</a>"  : "" )
+						) : ""
+					};  
+					
+                    taxlot_entities_info_length += 1;
+                    //console.log(taxlot_event_entities_info);					
+				}
+			}
+		}
+		console.log(taxlot_entities_info);
+
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        // LOADING ERROR!
+		console.warn("jQuery AJAX request  ERROR !!!");
+		console.log(xhr.responseText);
+        console.log(textStatus);
+    });
+}
+
 
 
     // Function to calculate the
