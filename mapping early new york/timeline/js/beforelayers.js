@@ -1528,8 +1528,16 @@ function addIndianPathsBeforeLayers() {
 
 function addLongIslandNativeGroupsBeforeLayers() {
 
-	beforeMap.addLayer({
-                id: "native-groups-lines-left",
+
+
+    /* Long Island Indian Borders - 2 Versions: With Coastlines and Without coastlines */
+
+    /* With Coastlines */
+
+    /*
+
+	        beforeMap.addLayer({
+                id: "native-groups-lines-right",
                 type: "line",
                 source: {
                     type: "vector",
@@ -1546,6 +1554,38 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 }
 			
             });
+	*/	
+
+
+    /* Without coastlines*/
+
+    beforeMap.addLayer({
+        id: "native-groups-lines-left",
+        type: "line",
+        source: {
+            type: "vector",
+            url: "mapbox://nittyjee.bxsaikea"
+        },
+        layout: {
+            visibility: document.getElementById('native_groups_lines').checked ? "visible" : "none",
+        },
+        "source-layer": "simplified_indian_long_island-d223sy",
+        paint: {
+        //Light Blue:
+        //"line-color": "#3a96f8",
+        //Orange:
+        "line-color": "#ff9900",
+        //Red:
+        //"line-color": "#FF0000",
+        "line-width": 15,
+        "line-blur" : 20,
+        "line-opacity": 1.0
+        }
+    
+    });
+
+
+
 			
 	beforeMap.addLayer({
                 id: "native-groups-area-left",
