@@ -312,17 +312,17 @@ function buildGravesendPopUpInfo(props) {
 
 
 function buildNativeGroupPopUpInfo(props) {
-	        var popup_html = "";
+	        var popup_html = "<h3>Long Island Native</h3><hr>";
                 
+			if( (typeof taxlot_event_entities_info[props.nid] == "undefined") || (props.nid == "") ) {
+			    popup_html += "<b>" + props.name + "</b>";
+			} else {
+				popup_html += "<b>" + ( taxlot_event_entities_info[props.nid].name_html.length > 0 ? taxlot_event_entities_info[props.nid].name_html : props.name ) + "</b>";
+			}
 			
-			    popup_html = 
-				    "<h3>Long Island Native</h3><hr>" +
-				    //"<b>Name:</b> <i>" + props.Name + "</i><br>" +
-					"<b>" + props.Name + "</b>" +
-					"<br><br>"
-				;
-				
-				console.log(props);
+			popup_html += "<br><br>";
+			
+			console.log(props);
 
 	$("#infoLayerNativeGroups").html(popup_html);
 
@@ -404,6 +404,7 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
+
 
 
 
