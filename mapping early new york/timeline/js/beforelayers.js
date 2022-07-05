@@ -1644,7 +1644,7 @@ function addLongIslandNativeGroupsBeforeLayers() {
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
-				"text-field": "{Name}",
+				"text-field": "{name}",
 					"text-offset": [0,1],
                     "text-size": {
                     stops: [
