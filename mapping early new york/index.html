@@ -154,8 +154,13 @@ my_tooltip.fadeOut(200);
 				
 				// console.log(window.name);
 				
-				
-				
+				$(".manahatta_layer_item").hide();
+				$(".farms_layer_item").hide();
+				$(".dutch_grants_layer_item").hide();
+				$(".current_lots_layer_item").hide();
+                $("#long-island-section-layers").slideUp();
+				$("#manahatta-maps-section").slideUp();
+				$("#long-island-maps-section").slideUp();
 					
 				$("#ruler-date1").text(moment.unix(date_ruler1).format('YYYY')); // .format('DD MMM YYYY')
 				$("#ruler-date2").text(moment.unix(date_ruler2).format('YYYY')); // .format('DD MMM YYYY')
@@ -1470,7 +1475,8 @@ function getTaxlotEventEntitiesDescrInfo() {
 						    ( data[i].path.length > 0 ? "<a href='https://nahc-mapping.org/mappingNY/encyclopedia/node/" + data_info_index + "' target='_blank'>" : "" ) +
 						     data[i].title[0].value  +
 							( data[i].path.length > 0 ? "</a>"  : "" )
-						) : ""
+						) : "",
+						descr: data[i].field_description14.length > 0 ? data[i].field_description14[0].value : "" 
 					};  
 					
                     taxlot_entities_info_length += 1;
@@ -1512,6 +1518,27 @@ function getTaxlotEventEntitiesDescrInfo() {
         // Return the size
         return size;
     }
+
+
+    function itemsCompressExpand(items_class,caret_id) {
+	    if($(caret_id).hasClass("fa-caret-square-down")) {
+		    $(caret_id).removeClass("fa-caret-square-down").addClass("fa-caret-square-right");
+			$(items_class).hide();
+		} else if($(caret_id).hasClass("fa-caret-square-right")) {
+		    $(caret_id).removeClass("fa-caret-square-right").addClass("fa-caret-square-down");
+			$(items_class).show();
+		}
+	}
+
+    function sectionCompressExpand(section_id,caret_id) {
+	    if($(caret_id).hasClass("fa-minus-square")) {
+		    $(caret_id).removeClass("fa-minus-square").addClass("fa-plus-square");
+			$(section_id).slideUp();
+		} else if($(caret_id).hasClass("fa-plus-square")) {
+		    $(caret_id).removeClass("fa-plus-square").addClass("fa-minus-square");
+			$(section_id).slideDown();
+		}
+	}
 
 		</script>
 
@@ -1952,8 +1979,9 @@ padding:2px 7px;
     border: solid #7B68EE 2px;
 }
 
+i.compress-expand-icon { cursor: pointer; color: #555; }
 i.layer-info { cursor: pointer; float: right; margin-top: 2px; margin-right: 5px;}
-i.layer-info:hover { opacity: 0.7; }
+i.layer-info:hover, i.compress-expand-icon:hover { opacity: 0.7; }
 
 /*
 .demoLayerInfoPopUp { 
@@ -2310,33 +2338,35 @@ i.slash-icon { font-size: 11px; }
 	  <br>
 	  -->
 	  <center>
-	  <b>Manhattan</b>
+	  <b>Manhattan <i class="fas fa-minus-square compress-expand-icon" id="manahatta-section-caret" onclick="sectionCompressExpand('#manahatta-section-layers','#manahatta-section-caret')" ></i></b>
 	  </center>
 	  <p>
 
+	  <div id="manahatta-section-layers">
 	  
 	  <!-- Manahatta Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" class="manahatta_items" id="manahatta_items" name="manahatta_items">
-		<label for="manahatta_items"> <i class="fas fa-caret-down"></i>1609 | Manahatta</label>
+		<i class="fas fa-caret-square-right compress-expand-icon" id="manahatta-layer-caret" onclick="itemsCompressExpand('.manahatta_layer_item','#manahatta-layer-caret')" ></i>
+		<label for="manahatta_items"> 1609 | Manahatta</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-info"  title="Layer Info" ></i>
 		</div>
 		
 		<!-- Lenape Trails -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" class="manahatta" id="lenape_trails" name="lenape_trails">
+		<div class="layer-list-row manahatta_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="lenape_trails" name="lenape_trails">
 		<label for="lenape_trails"> <i class="fas fa-slash slash-icon" style="color: #FF0000;"></i> Lenape Trails</label>
 		</div>
 		
 		<!-- Manahatta Shoreline -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" class="manahatta"  id="manahatta_shoreline" name="manahatta_shoreline">
+		<div class="layer-list-row manahatta_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="manahatta"  id="manahatta_shoreline" name="manahatta_shoreline">
 		<label for="manahatta_shoreline"> <i class="fas fa-slash slash-icon" style="color: #FFD700;"></i> Manahatta Shoreline</label>
 		</div>
 		
 		<!-- Streams (c 1600) -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" class="manahatta" id="manahatta_streams" name="manahatta_streams">
+		<div class="layer-list-row manahatta_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="manahatta" id="manahatta_streams" name="manahatta_streams">
 		<label for="manahatta_streams"> <i class="fas fa-slash slash-icon" style="color: #0000FF;"></i> Streams (c 1600)</label>
 		</div>
 		
@@ -2344,20 +2374,21 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Farms Layers Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="farms_layer_items" name="farms_layer_items">
-		<label for="farms_layer_items"> <i class="fas fa-caret-down"></i> 1638-83 | Original Grants &amp; Farms</label>
+		<i class="fas fa-caret-square-right compress-expand-icon" id="farms-layer-caret" onclick="itemsCompressExpand('.farms_layer_item','#farms-layer-caret')" ></i>
+		<label for="farms_layer_items"> 1638-83 | Original Grants &amp; Farms</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="farms-info-layer"  title="Layer Info" ></i>
 		</div>
   
 		
 		<!-- Farms Layers #FFC0CB -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="farms_layer" class="farms_layer" name="farms_layer">
+		<div class="layer-list-row farms_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="farms_layer" class="farms_layer" name="farms_layer">
 		<label for="farms_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
 		</div>
 		
 		<!-- Farms Layers Lines #FFD700 -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="farms_layer_lines" class="farms_layer" name="farms_layer_lines">
+		<div class="layer-list-row farms_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="farms_layer_lines" class="farms_layer" name="farms_layer_lines">
 		<label for="farms_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 		</div>
 		
@@ -2366,19 +2397,20 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Dutch Grants  -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
-      <label for="grants_layer_items"> <i class="fas fa-caret-down"></i> 1640-64 | Dutch Grants</label>
+	  <i class="fas fa-caret-square-right compress-expand-icon" id="dutch-grants-layer-caret" onclick="itemsCompressExpand('.dutch_grants_layer_item','#dutch-grants-layer-caret')" ></i>
+      <label for="grants_layer_items"> 1640-64 | Dutch Grants</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer"  title="Layer Info" ></i>
 	  </div>
 
 	  <!-- Dutch Grants Layers -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer" class="grants_layer" name="grants_layer">
+	  <div class="layer-list-row dutch_grants_layer_item" >
+	  &nbsp; &nbsp; &nbsp; <input type="checkbox" id="grants_layer" class="grants_layer" name="grants_layer">
       <label for="grants_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
 	  </div>
 	  
 	  <!-- Dutch Grants Layers Lines -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
+	  <div class="layer-list-row dutch_grants_layer_item" >
+	  &nbsp; &nbsp; &nbsp; <input type="checkbox" id="grants_layer_lines" class="grants_layer" name="grants_layer_lines">
       <label for="grants_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 	  </div>
 
@@ -2412,19 +2444,20 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Current Lots Items -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
-      <label for="current_lots_items"> <i class="fas fa-caret-down"></i> Current Lots</label>
+	  <i class="fas fa-caret-square-right compress-expand-icon" id="current-lots-layer-caret" onclick="itemsCompressExpand('.current_lots_layer_item','#current-lots-layer-caret')" ></i>
+      <label for="current_lots_items"> Current Lots</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer"  title="Layer Info" ></i><br>
 	  </div>
 	  
       <!-- Current Lots -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots" name="current_lots">
+	  <div class="layer-list-row current_lots_layer_item" >
+	  &nbsp; &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots" name="current_lots">
       <label for="current_lots"> <i class="fa fa-square" style="color: #7B68EE;" ></i> Information</label>
 	  </div>
 	  
 	  <!-- Current Lots Lines -->
-	  <div class="layer-list-row" >
-	  &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots_lines" name="current_lots_lines">
+	  <div class="layer-list-row current_lots_layer_item" >
+	  &nbsp; &nbsp; &nbsp; <input type="checkbox" class="current_lots" id="current_lots_lines" name="current_lots_lines">
       <label for="current_lots_lines"> <i class="far fa-square" style="color: #000080;"></i> Lines</label>
 	  </div>
 	  
@@ -2447,31 +2480,34 @@ i.slash-icon { font-size: 11px; }
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-buildings-lines-info-layer"  title="Layer Info" ></i>
 	  </div>
 
-	  
+	  </div>
 
 	  <p>
 	  <center>
-	  <b>Long Island</b>
+	  <b>Long Island <i class="fas fa-plus-square compress-expand-icon" id="long-island-section-caret" onclick="sectionCompressExpand('#long-island-section-layers','#long-island-section-caret')" ></i></b>
 	  </center>
 	  <p>
+
+      <div id="long-island-section-layers" >
 
       <!-- Settlements Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="settlements_items" name="settlements_items">
-		<label for="settlements_items"> <i class="fas fa-caret-down"></i>  1600-64 | Settlements</label>
+		<i class="fas fa-caret-square-down compress-expand-icon" id="settlements-layer-caret" onclick="itemsCompressExpand('.settlements_layer_item','#settlements-layer-caret')" ></i>
+		<label for="settlements_items"> 1600-64 | Settlements</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
 		</div>
   
 		<!-- Settlements Points -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_points" name="settlements_points">
+		<div class="layer-list-row settlements_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_points" name="settlements_points">
 		<label for="settlements_points"> <i class="fa fa-circle"  style="color: #0b0ee5;" ></i>  Locations</label>
 		</div>
 
   
 		<!-- Settlements Labels -->
-		<div class="layer-list-row" >
-		  &nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_labels" name="settlements_labels">
+		<div class="layer-list-row settlements_layer_item" >
+		  &nbsp; &nbsp; &nbsp; <input type="checkbox" class="settlements" id="settlements_labels" name="settlements_labels">
 		  <label for="settlements_labels"> <i class="fa fa-comment-dots"  style="color: #0b0ee5;" ></i>  Labels</label>
 		  </div>
 
@@ -2486,25 +2522,26 @@ i.slash-icon { font-size: 11px; }
         <!-- Long Island Native Groups Layers -->
         <div class="layer-list-row" >
 		<input type="checkbox" id="native_groups_layer_items" name="native_groups_layer_items">
-		<label for="native_groups_layer_items"> <i class="fas fa-caret-down"></i> 1600s | Long Island Native Groups</label>
+		<i class="fas fa-caret-square-down compress-expand-icon" id="native-groups-layer-caret" onclick="itemsCompressExpand('.native_groups_layer_item','#native-groups-layer-caret')" ></i>
+		<label for="native_groups_layer_items"> 1600s | Long Island Native Groups</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="native-groups-info-layer"  title="Layer Info" ></i>
 		</div>
   
         <!-- Long Island Native Groups Labels -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" class="native_groups_layer" id="native_groups_labels" name="native_groups_labels">
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="native_groups_layer" id="native_groups_labels" name="native_groups_labels">
 		<label for="native_groups_labels"> <i class="fa fa-comment-dots"  style="color: #0b0ee5;" ></i>  Labels</label>
 		</div>
   
 		<!-- Long Island Native Groups Area -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="native_groups_area" class="native_groups_layer" name="native_groups_area">
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="native_groups_area" class="native_groups_layer" name="native_groups_area">
 		<label for="native_groups_area"> <i class="fa fa-square" style="color: #FF1493;" ></i> Area</label>
 		</div>
 		
 		<!-- Long Island Native Groups Lines -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="native_groups_lines" class="native_groups_layer" name="native_groups_lines">
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="native_groups_lines" class="native_groups_layer" name="native_groups_lines">
 		<label for="native_groups_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Borders</label>
 		</div>
 
@@ -2513,19 +2550,20 @@ i.slash-icon { font-size: 11px; }
       <!-- Gravesend Layers -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="gravesend_layer_items" name="gravesend_layer_items">
-		<label for="gravesend_layer_items"> <i class="fas fa-caret-down"></i> 1609-Present | Brooklyn Grants</label>
+		<i class="fas fa-caret-square-down compress-expand-icon" id="gravesend-layer-caret" onclick="itemsCompressExpand('.gravesend_layer_item','#gravesend-layer-caret')" ></i>
+		<label for="gravesend_layer_items"> 1609-Present | Brooklyn Grants</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="boundaries-info-layer"  title="Layer Info" ></i>
 		</div>
   
 		<!-- Gravesend Area -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="gravesend_layer" class="gravesend_layer" name="gravesend_layer">
+		<div class="layer-list-row gravesend_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="gravesend_layer" class="gravesend_layer" name="gravesend_layer">
 		<label for="gravesend_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
 		</div>
 		
 		<!-- Gravesend Lines -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="gravesend_layer_lines" class="gravesend_layer" name="gravesend_layer_lines">
+		<div class="layer-list-row gravesend_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="gravesend_layer_lines" class="gravesend_layer" name="gravesend_layer_lines">
 		<label for="gravesend_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 		</div>
 		<!-- REPLACE THIS -->
@@ -2533,19 +2571,20 @@ i.slash-icon { font-size: 11px; }
       <!-- Karl Long Island Lyers -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="karl_layer_items" name="karl_layer_items">
-		<label for="karl_layer_items"> <i class="fas fa-caret-down"></i> 1636-Present | Long Island Towns</label>
+		<i class="fas fa-caret-square-down compress-expand-icon" id="karl-layer-caret" onclick="itemsCompressExpand('.karl_layer_item','#karl-layer-caret')" ></i>
+		<label for="karl_layer_items"> 1636-Present | Long Island Towns</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="ny_towns"  title="Layer Info" ></i>
 		</div>
   
 		<!-- Karl Long Island Area -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="karl_layer" class="karl_layer" name="karl_layer">
+		<div class="layer-list-row karl_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="karl_layer" class="karl_layer" name="karl_layer">
 		<label for="karl_layer"> <i class="fa fa-square" style="color: #e3ed58;" ></i> Information</label>
 		</div>
 		
 		<!-- Karl Long Island Lines -->
-		<div class="layer-list-row" >
-		&nbsp; &nbsp; <input type="checkbox" id="karl_layer_lines" class="karl_layer" name="karl_layer_lines">
+		<div class="layer-list-row karl_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="karl_layer_lines" class="karl_layer" name="karl_layer_lines">
 		<label for="karl_layer_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Lines</label>
 	  </div>
 
@@ -2553,23 +2592,25 @@ i.slash-icon { font-size: 11px; }
   	  <!-- Long Island Items -->
 		<div class="layer-list-row" >
 			<input type="checkbox" id="longisland_items" name="longisland_items">
-			<label for="longisland_items"> <i class="fas fa-caret-down"></i>  Long Island Area Coastline</label>
+			<i class="fas fa-caret-square-down compress-expand-icon" id="long-island-caret" onclick="itemsCompressExpand('.long_island_item','#long-island-caret')" ></i>
+			<label for="longisland_items">Long Island Area Coastline</label>
 			<i  class="fa fa-info-circle layer-info trigger-popup" id="longisland-info-layer"  title="Layer Info" ></i>
 			</div>
 			
 			<!-- Long Island Area -->
-			<div class="layer-list-row" >
-			&nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_area" name="longisland_area">
+			<div class="layer-list-row long_island_item" >
+			&nbsp; &nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_area" name="longisland_area">
 			<label for="longisland_area"> <i class="fa fa-square" style="color: #00FF7F;" ></i> Area</label>
 			</div>
 			
 			<!-- Long Island Coastline -->
-			<div class="layer-list-row" >
-			&nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_coastline" name="longisland_coastline">
+			<div class="layer-list-row long_island_item" >
+			&nbsp; &nbsp; &nbsp; <input type="checkbox" class="long_island" id="longisland_coastline" name="longisland_coastline">
 			<label for="longisland_coastline"> <i class="fas fa-slash slash-icon"  style="color: #006400;" ></i> Coastline</label>
 			</div>
 			
-        
+      </div>        
+
 
 
 
@@ -2595,10 +2636,12 @@ i.slash-icon { font-size: 11px; }
 	
 			<br>
 			<center>
-			<b>1660 | Castello Plan</b>
+			<b>1660 | Castello Plan <i class="fas fa-minus-square compress-expand-icon" id="castello-maps-section-caret" onclick="sectionCompressExpand('#castello-maps-section','#castello-maps-section-caret')" ></i></b>
 			</center>
 			
-
+          
+		<div id="castello-maps-section">
+		  
 		<!--CASTELLO COLORED (DEFAULT)-->
 		<div class="layer-list-row" >
 		<input class='cjowjzrig5pje2rmmnjb5b0y2' type='radio' name='ltoggle' value='cjowjzrig5pje2rmmnjb5b0y2'>
@@ -2635,11 +2678,16 @@ i.slash-icon { font-size: 11px; }
         <i  class="fa fa-info-circle layer-info trigger-popup" id="new-amsterdam-legend"  title="Layer Info" ></i>
         </div>
 
+        </div>
+
+
 		<br>
 		<center>
-		<b>Manhattan and Surrounding</b>
+		<b>Manhattan and Surrounding <i class="fas fa-plus-square compress-expand-icon" id="manahatta-maps-section-caret" onclick="sectionCompressExpand('#manahatta-maps-section','#manahatta-maps-section-caret')" ></i></b>
 		</center>
 	
+
+        <div id="manahatta-maps-section">
 
         <!-- Manahatta MAP -->
 		<div class="layer-list-row" >
@@ -2702,6 +2750,8 @@ i.slash-icon { font-size: 11px; }
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="ratzer-map"  title="Layer Info" ></i>
 		</div>
 
+        </div>
+
 
         <br>
 		<center><b>Long Island</b></center>
@@ -2718,8 +2768,9 @@ i.slash-icon { font-size: 11px; }
 
 
 		<br>
-		<center><b>Long Island</b></center>
+		<center><b>Long Island <i class="fas fa-plus-square compress-expand-icon" id="long-island-maps-section-caret" onclick="sectionCompressExpand('#long-island-maps-section','#long-island-maps-section-caret')" ></i></b></center>
 	      
+        <div id="long-island-maps-section">
 
 	    <!-- Indian Groups of Long Island -->
 		<div class="layer-list-row" >
@@ -2772,6 +2823,9 @@ i.slash-icon { font-size: 11px; }
 				<label for='cl4h2o6yp006d15mytksqocpt'>1873 | Long Island</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="beers-long-island-map"  title="Layer Info" ></i>
 		</div>
+		
+		</div>
+		
 
 		<br>
 		<center><b>New Netherland</b></center>
