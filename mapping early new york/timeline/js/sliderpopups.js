@@ -317,7 +317,12 @@ function buildNativeGroupPopUpInfo(props) {
 			if( (typeof taxlot_event_entities_info[props.nid] == "undefined") || (props.nid == "") ) {
 			    popup_html += "<b>" + props.name + "</b>";
 			} else {
-				popup_html += "<b>" + ( taxlot_event_entities_info[props.nid].name_html.length > 0 ? taxlot_event_entities_info[props.nid].name_html : props.name ) + "</b>";
+				popup_html += "<b>" + ( taxlot_event_entities_info[props.nid].name_html.length > 0 ? taxlot_event_entities_info[props.nid].name_html : props.name ) + "</b>" +
+				              "<br><br>" +
+							  "<b>Description:</b>" +
+					          "<br>" +
+					          taxlot_event_entities_info[props.nid].descr + "<br><br>"
+							  ;
 			}
 			
 			popup_html += "<br><br>";
@@ -404,6 +409,7 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
+
 
 
 
