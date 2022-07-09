@@ -161,6 +161,9 @@ my_tooltip.fadeOut(200);
                 $("#long-island-section-layers").slideUp();
 				$("#manahatta-maps-section").slideUp();
 				$("#long-island-maps-section").slideUp();
+				$("#long-island-maps-section1").slideUp();
+				$("#new-netherland-maps-section").slideUp();
+				$("#new-england-maps-section").slideUp();
 					
 				$("#ruler-date1").text(moment.unix(date_ruler1).format('YYYY')); // .format('DD MMM YYYY')
 				$("#ruler-date2").text(moment.unix(date_ruler2).format('YYYY')); // .format('DD MMM YYYY')
@@ -1521,11 +1524,11 @@ function getTaxlotEventEntitiesDescrInfo() {
 
 
     function itemsCompressExpand(items_class,caret_id) {
-	    if($(caret_id).hasClass("fa-caret-square-down")) {
-		    $(caret_id).removeClass("fa-caret-square-down").addClass("fa-caret-square-right");
+	    if($(caret_id).hasClass("fa-minus-square")) {
+		    $(caret_id).removeClass("fa-minus-square").addClass("fa-plus-square");
 			$(items_class).hide();
-		} else if($(caret_id).hasClass("fa-caret-square-right")) {
-		    $(caret_id).removeClass("fa-caret-square-right").addClass("fa-caret-square-down");
+		} else if($(caret_id).hasClass("fa-plus-square")) {
+		    $(caret_id).removeClass("fa-plus-square").addClass("fa-minus-square");
 			$(items_class).show();
 		}
 	}
@@ -1842,6 +1845,10 @@ padding:2px 7px;
 	/* background-color: transparent !important; */
 	background-color: #fff!important;
 	z-index: 100;
+}
+
+.rightInfoBarBorder {
+    border: solid #FFFFFF 3px;
 }
 
 #studioMenu {
@@ -2308,18 +2315,18 @@ i.slash-icon { font-size: 11px; }
 	
 	
 	<!--
-	<div id="rightInfoBar">
+	<div id="rightInfoBar" class="rightInfoBarBorder">
 	
-	  <div id="infoLayerGrantLots"></div>
-	  <div id="infoLayerDutchGrants"></div>
-	  <div id="infoLayerGravesend"></div> 
-	  <div id="infoLayerNativeGroups"></div>
-	  <div id="infoLayerKarl"></div>
-	  <div id="infoLayerFarms"></div>
-	  <div id="infoLayerCastello"></div>
-	  <div id="infoLayerSettlements"></div>
-	  <div id="demoLayerInfo"></div>
-	  <div id="infoLayerCurrLots"></div>
+	  <div class="infoLayerElem" id="infoLayerGrantLots"></div>
+	  <div class="infoLayerElem" id="infoLayerDutchGrants"></div>
+	  <div class="infoLayerElem" id="infoLayerGravesend"></div> 
+	  <div class="infoLayerElem" id="infoLayerNativeGroups"></div>
+	  <div class="infoLayerElem" id="infoLayerKarl"></div>
+	  <div class="infoLayerElem" id="infoLayerFarms"></div>
+	  <div class="infoLayerElem" id="infoLayerCastello"></div>
+	  <div class="infoLayerElem" id="infoLayerSettlements"></div>
+	  <div class="infoLayerElem" id="demoLayerInfo"></div>
+	  <div class="infoLayerElem" id="infoLayerCurrLots"></div>
 	
 	</div>
 	-->
@@ -2347,7 +2354,7 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Manahatta Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" class="manahatta_items" id="manahatta_items" name="manahatta_items">
-		<i class="fas fa-caret-square-right compress-expand-icon" id="manahatta-layer-caret" onclick="itemsCompressExpand('.manahatta_layer_item','#manahatta-layer-caret')" ></i>
+		<i class="fas fa-plus-square compress-expand-icon" id="manahatta-layer-caret" onclick="itemsCompressExpand('.manahatta_layer_item','#manahatta-layer-caret')" ></i>
 		<label for="manahatta_items"> 1609 | Manahatta</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="manahatta-info"  title="Layer Info" ></i>
 		</div>
@@ -2374,7 +2381,7 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Farms Layers Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="farms_layer_items" name="farms_layer_items">
-		<i class="fas fa-caret-square-right compress-expand-icon" id="farms-layer-caret" onclick="itemsCompressExpand('.farms_layer_item','#farms-layer-caret')" ></i>
+		<i class="fas fa-plus-square compress-expand-icon" id="farms-layer-caret" onclick="itemsCompressExpand('.farms_layer_item','#farms-layer-caret')" ></i>
 		<label for="farms_layer_items"> 1638-83 | Original Grants &amp; Farms</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="farms-info-layer"  title="Layer Info" ></i>
 		</div>
@@ -2397,7 +2404,7 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Dutch Grants  -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
-	  <i class="fas fa-caret-square-right compress-expand-icon" id="dutch-grants-layer-caret" onclick="itemsCompressExpand('.dutch_grants_layer_item','#dutch-grants-layer-caret')" ></i>
+	  <i class="fas fa-plus-square compress-expand-icon" id="dutch-grants-layer-caret" onclick="itemsCompressExpand('.dutch_grants_layer_item','#dutch-grants-layer-caret')" ></i>
       <label for="grants_layer_items"> 1640-64 | Dutch Grants</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="grants-info-layer"  title="Layer Info" ></i>
 	  </div>
@@ -2444,7 +2451,7 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Current Lots Items -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="current_lots_items" name="current_lots_items">
-	  <i class="fas fa-caret-square-right compress-expand-icon" id="current-lots-layer-caret" onclick="itemsCompressExpand('.current_lots_layer_item','#current-lots-layer-caret')" ></i>
+	  <i class="fas fa-plus-square compress-expand-icon" id="current-lots-layer-caret" onclick="itemsCompressExpand('.current_lots_layer_item','#current-lots-layer-caret')" ></i>
       <label for="current_lots_items"> Current Lots</label>
 	  <i  class="fa fa-info-circle layer-info trigger-popup" id="current-lots-info-layer"  title="Layer Info" ></i><br>
 	  </div>
@@ -2493,7 +2500,7 @@ i.slash-icon { font-size: 11px; }
       <!-- Settlements Items -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="settlements_items" name="settlements_items">
-		<i class="fas fa-caret-square-down compress-expand-icon" id="settlements-layer-caret" onclick="itemsCompressExpand('.settlements_layer_item','#settlements-layer-caret')" ></i>
+		<i class="fas fa-minus-square compress-expand-icon" id="settlements-layer-caret" onclick="itemsCompressExpand('.settlements_layer_item','#settlements-layer-caret')" ></i>
 		<label for="settlements_items"> 1600-64 | Settlements</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="settlements-info-layer"  title="Layer Info" ></i>
 		</div>
@@ -2522,7 +2529,7 @@ i.slash-icon { font-size: 11px; }
         <!-- Long Island Native Groups Layers -->
         <div class="layer-list-row" >
 		<input type="checkbox" id="native_groups_layer_items" name="native_groups_layer_items">
-		<i class="fas fa-caret-square-down compress-expand-icon" id="native-groups-layer-caret" onclick="itemsCompressExpand('.native_groups_layer_item','#native-groups-layer-caret')" ></i>
+		<i class="fas fa-minus-square compress-expand-icon" id="native-groups-layer-caret" onclick="itemsCompressExpand('.native_groups_layer_item','#native-groups-layer-caret')" ></i>
 		<label for="native_groups_layer_items"> 1600s | Long Island Native Groups</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="native-groups-info-layer"  title="Layer Info" ></i>
 		</div>
@@ -2550,7 +2557,7 @@ i.slash-icon { font-size: 11px; }
       <!-- Gravesend Layers -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="gravesend_layer_items" name="gravesend_layer_items">
-		<i class="fas fa-caret-square-down compress-expand-icon" id="gravesend-layer-caret" onclick="itemsCompressExpand('.gravesend_layer_item','#gravesend-layer-caret')" ></i>
+		<i class="fas fa-minus-square compress-expand-icon" id="gravesend-layer-caret" onclick="itemsCompressExpand('.gravesend_layer_item','#gravesend-layer-caret')" ></i>
 		<label for="gravesend_layer_items"> 1609-Present | Brooklyn Grants</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="boundaries-info-layer"  title="Layer Info" ></i>
 		</div>
@@ -2571,7 +2578,7 @@ i.slash-icon { font-size: 11px; }
       <!-- Karl Long Island Lyers -->
 	  <div class="layer-list-row" >
 		<input type="checkbox" id="karl_layer_items" name="karl_layer_items">
-		<i class="fas fa-caret-square-down compress-expand-icon" id="karl-layer-caret" onclick="itemsCompressExpand('.karl_layer_item','#karl-layer-caret')" ></i>
+		<i class="fas fa-minus-square compress-expand-icon" id="karl-layer-caret" onclick="itemsCompressExpand('.karl_layer_item','#karl-layer-caret')" ></i>
 		<label for="karl_layer_items"> 1636-Present | Long Island Towns</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="ny_towns"  title="Layer Info" ></i>
 		</div>
@@ -2592,7 +2599,7 @@ i.slash-icon { font-size: 11px; }
   	  <!-- Long Island Items -->
 		<div class="layer-list-row" >
 			<input type="checkbox" id="longisland_items" name="longisland_items">
-			<i class="fas fa-caret-square-down compress-expand-icon" id="long-island-caret" onclick="itemsCompressExpand('.long_island_item','#long-island-caret')" ></i>
+			<i class="fas fa-minus-square compress-expand-icon" id="long-island-caret" onclick="itemsCompressExpand('.long_island_item','#long-island-caret')" ></i>
 			<label for="longisland_items">Long Island Area Coastline</label>
 			<i  class="fa fa-info-circle layer-info trigger-popup" id="longisland-info-layer"  title="Layer Info" ></i>
 			</div>
@@ -2754,8 +2761,9 @@ i.slash-icon { font-size: 11px; }
 
 
         <br>
-		<center><b>Long Island</b></center>
+		<center><b>Long Island <i class="fas fa-plus-square compress-expand-icon" id="long-island-maps-section-caret1" onclick="sectionCompressExpand('#long-island-maps-section1','#long-island-maps-section-caret1')" ></i></b></center>
 	      
+        <div id="long-island-maps-section1">
 
 	    <!-- Indian Paths and Places -->
 		<div class="layer-list-row" >
@@ -2764,6 +2772,8 @@ i.slash-icon { font-size: 11px; }
 		&nbsp;
 				<label for='cl2nz11p2001u14p8z2yl1zho'>1600-64 | Indian Paths & Places</label>
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="indian-paths-places"  title="Layer Info" ></i>
+		</div>
+		
 		</div>
 
 
@@ -2828,8 +2838,10 @@ i.slash-icon { font-size: 11px; }
 		
 
 		<br>
-		<center><b>New Netherland</b></center>
+		<center><b>New Netherland <i class="fas fa-plus-square compress-expand-icon" id="new-netherland-maps-section-caret" onclick="sectionCompressExpand('#new-netherland-maps-section','#new-netherland-maps-section-caret')" ></i></b></center>
 	      
+		<div id="new-netherland-maps-section">
+		  
 	      <!-- Novi Belgii MAP -->
 		<div class="layer-list-row" >
 		<input class='cl0wzrvli003j15mmrlkdzp8f' type='radio' name='ltoggle' value='cl0wzrvli003j15mmrlkdzp8f'>
@@ -2839,10 +2851,14 @@ i.slash-icon { font-size: 11px; }
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="novi-belgii-map"  title="Layer Info" ></i>
 		</div>
 
+        </div>
+
 
 		<br>
-		<center><b>New England</b></center>
-	      
+		<center><b>New England <i class="fas fa-plus-square compress-expand-icon" id="new-england-maps-section-caret" onclick="sectionCompressExpand('#new-england-maps-section','#new-england-maps-section-caret')" ></i></b></center>
+	     
+		<div id="new-england-maps-section">
+		
 	      <!--New England 1670 -->
 		<div class="layer-list-row" >
 		<input class='cl4ygcmxl000114qrezbde60w' type='radio' name='ltoggle' value='cl4ygcmxl000114qrezbde60w'>
@@ -2852,6 +2868,7 @@ i.slash-icon { font-size: 11px; }
 		<i  class="fa fa-info-circle layer-info trigger-popup" id="new-england-1670"  title="Layer Info" ></i>
 		</div>    
 
+        </div>
 
 
 	  </div>
@@ -2859,16 +2876,16 @@ i.slash-icon { font-size: 11px; }
 	 
 	 
 	  <br>
-	  <div id="infoLayerGrantLots"></div>
-	  <div id="infoLayerDutchGrants"></div>
-	  <div id="infoLayerGravesend"></div> <!-- REPLACE THIS -->
-	  <div id="infoLayerNativeGroups"></div>
-	  <div id="infoLayerKarl"></div>
-	  <div id="infoLayerFarms"></div>
-	  <div id="infoLayerCastello"></div>
-	  <div id="infoLayerSettlements"></div>
-	  <div id="demoLayerInfo"></div>
-	  <div id="infoLayerCurrLots"></div>
+	  <div class="infoLayerElem" id="infoLayerGrantLots"></div>
+	  <div class="infoLayerElem" id="infoLayerDutchGrants"></div>
+	  <div class="infoLayerElem" id="infoLayerGravesend"></div> 
+	  <div class="infoLayerElem" id="infoLayerNativeGroups"></div>
+	  <div class="infoLayerElem" id="infoLayerKarl"></div>
+	  <div class="infoLayerElem" id="infoLayerFarms"></div>
+	  <div class="infoLayerElem" id="infoLayerCastello"></div>
+	  <div class="infoLayerElem" id="infoLayerSettlements"></div>
+	  <div class="infoLayerElem" id="demoLayerInfo"></div>
+	  <div class="infoLayerElem" id="infoLayerCurrLots"></div>
 	 
 	 
 	  
@@ -2982,8 +2999,6 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
-
 
 
 
