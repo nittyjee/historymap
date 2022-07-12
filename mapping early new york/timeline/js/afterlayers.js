@@ -899,12 +899,12 @@ function addSettlementsAfterLayers(date) {
                 type: "circle",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.b3r1u819"
+                    url: "mapbox://nittyjee.bdnqfl4c"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_points').checked ? "visible" : "none",
                 },
-                "source-layer": "locations_layer_nahc-930jdy",
+                "source-layer": "locations_layer_nahc-797jyh",
                 paint: {
                     'circle-color': '#0b0ee5',
 					'circle-opacity':  [
@@ -933,13 +933,13 @@ function addSettlementsAfterLayers(date) {
 				if (e.features.length > 0) {
                     if (hoveredSettlementsIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
+                            { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-797jyh', id: hoveredSettlementsIdRight},
                             { hover: false }
                         );
                     }
                     hoveredSettlementsIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
+                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-797jyh', id: hoveredSettlementsIdRight},
                         { hover: true }
                     );
 					
@@ -972,7 +972,7 @@ function addSettlementsAfterLayers(date) {
                 afterMap.getCanvas().style.cursor = '';
 				if (hoveredSettlementsIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-930jdy', id: hoveredSettlementsIdRight},
+                        { source: 'settlements-right', sourceLayer: 'locations_layer_nahc-797jyh', id: hoveredSettlementsIdRight},
                         { hover: false }
                     );
                 }
@@ -996,7 +996,7 @@ function addSettlementsLabelsAfterLayers(date) {
                 type: "symbol",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.b3r1u819"
+                    url: "mapbox://nittyjee.bdnqfl4c"
                 },
 				layout: {
                     visibility: document.getElementById('settlements_labels').checked ? "visible" : "none",
@@ -1010,7 +1010,7 @@ function addSettlementsLabelsAfterLayers(date) {
                     }
                 },
 
-                "source-layer": "locations_layer_nahc-930jdy",
+                "source-layer": "locations_layer_nahc-797jyh",
 
 
 
@@ -1583,12 +1583,12 @@ function addLongIslandNativeGroupsAfterLayers() {
                 type: "fill",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.90im730b"
+                    url: "mapbox://nittyjee.9dmuvuk4"
                 },
 				layout: {
                     visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
                 },
-                "source-layer": "long_island_indians_areas-2pmzkw",
+                "source-layer": "long_island_indian_areas-3o4hr7",
                 paint: {
 				"fill-color": "#FF1493",
 				"fill-opacity": [ 
@@ -1607,12 +1607,12 @@ function addLongIslandNativeGroupsAfterLayers() {
                 type: "fill",
                 source: {
                     type: "vector",
-                    url: "mapbox://nittyjee.90im730b"
+                    url: "mapbox://nittyjee.9dmuvuk4"
                 },
 				layout: {
                     visibility: document.getElementById('native_groups_area').checked ? "visible" : "none",
                 },
-                "source-layer": "long_island_indians_areas-2pmzkw",
+                "source-layer": "long_island_indian_areas-3o4hr7",
                 paint: {
 				"fill-color": "#FF1493",
 				"fill-opacity": [ 
@@ -1671,14 +1671,14 @@ function addLongIslandNativeGroupsAfterLayers() {
 				if (e.features.length > 0) {
                     if (hoveredNativeGroupsIdRight) {
                         afterMap.setFeatureState(
-                            { source: 'native-groups-area-right', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdRight},
+                            { source: 'native-groups-area-right', sourceLayer: 'long_island_indian_areas-3o4hr7', id: hoveredNativeGroupsIdRight},
                             { hover: false }
                         );
                     }
 					//console.log(e.features[0]);
                     hoveredNativeGroupsIdRight = e.features[0].id;
                     afterMap.setFeatureState(
-                        { source: 'native-groups-area-right', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdRight},
+                        { source: 'native-groups-area-right', sourceLayer: 'long_island_indian_areas-3o4hr7', id: hoveredNativeGroupsIdRight},
                         { hover: true }
                     );
 					
@@ -1718,7 +1718,7 @@ function addLongIslandNativeGroupsAfterLayers() {
                 afterMap.getCanvas().style.cursor = '';
 				if (hoveredNativeGroupsIdRight) {
                     afterMap.setFeatureState(
-                        { source: 'native-groups-area-right', sourceLayer: 'long_island_indians_areas-2pmzkw', id: hoveredNativeGroupsIdRight},
+                        { source: 'native-groups-area-right', sourceLayer: 'long_island_indian_areas-3o4hr7', id: hoveredNativeGroupsIdRight},
                         { hover: false }
                     );
                 }

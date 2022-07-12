@@ -312,7 +312,7 @@ function buildGravesendPopUpInfo(props) {
 
 
 function buildNativeGroupPopUpInfo(props) {
-	        var popup_html = "<h3>Long Island Native</h3><hr>";
+	        var popup_html = "<h3>Long Island Native Groups</h3><hr>";
                 
 			if( (typeof taxlot_event_entities_info[props.nid] == "undefined") || (props.nid == "") ) {
 			    popup_html += "<b>" + props.name + "</b>";
