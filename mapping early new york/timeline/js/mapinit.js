@@ -45,6 +45,7 @@ mapboxgl.accessToken =
             container: 'before',
             style: 'mapbox://styles/nittyjee/cjooubzup2kx52sqdf9zmmv2j',
             center: [0, 0],
+            hash: true,
             zoom: 0,
 			attributionControl: false
         });
@@ -53,6 +54,7 @@ mapboxgl.accessToken =
             container: 'after',
             style: 'mapbox://styles/nittyjee/cjowjzrig5pje2rmmnjb5b0y2',
             center: [0, 0],
+            hash: true,
             zoom: 0,
 			attributionControl: false
         });
