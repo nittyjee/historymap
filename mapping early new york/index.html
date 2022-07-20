@@ -189,7 +189,7 @@ my_tooltip.fadeOut(200);
 						$("#date").val(moment.unix(ui.value).format('MM/DD/YYYY'));
 						*/
 						
-						urlHash = window.location.hash + '/' + ui.value;
+						//urlHash = window.location.hash + '/' + ui.value;
 						// console.log(urlHash);
 						// hash.onMapMove();
 						if(timeline_pointer_flag) {
@@ -249,6 +249,7 @@ my_tooltip.fadeOut(200);
 				$('.footnote').click(function () {
 				$('#footnotediv').toggle('slide');
 				});
+				
 				
 				$('#current_lots_items').change(function(){
                     $('.current_lots').prop('checked',this.checked);
@@ -2917,6 +2918,38 @@ i.slash-icon { font-size: 11px; }
 		<div id="styleSwitcher"></div>
 		-->
 		<div id="mobi-view-sidebar" ><i  class="fa fa-bars fa-2x"></i></div>
+
+        <!-- NAVIGATION PANEL DIV -->
+		<div id='navpanel'>
+		<b>NAVIGATION</b>
+		<div style="line-height: 58px; height: 58px; vertical-align: middle; width: 100%; margin-top: 3px;">
+		<i class="fas fa-3x fas fa-3x fa-caret-square-left nav-btn" onmousedown="rotateLoopASC()" onmouseup="rotateLoopASCend()"></i>
+		<!-- onclick="rotatex(5)" -->
+		<svg version="1.1" id="Layer_1" style="margin-bottom: -10px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="55px" height="55px" viewBox="0 0 512 512" enable-background="new 0 0 160 160" xml:space="preserve">
+	    <g>
+	        <g id="compass-pointer" >
+                <path class="north-arr" d="M248.156,225.531l-26.094-26.094l147.063-56.563l-56.563,147.063l-26.094-26.094c2.688-10.594,0.438-22.188-7.844-30.469 S258.75,222.813,248.156,225.531z" />
+	            <path class="south-arr"  d="M233.375,278.625c-8.281-8.281-10.563-19.875-7.844-30.469l-26.094-26.094l-56.563,147.063 l147.063-56.563l-26.094-26.094C253.25,289.188,241.656,286.906,233.375,278.625z" >
+            </g>
+	        <path  class="compass-ring" d="M512,256c0,141.375-114.625,256-256,256
+	        S0,397.375,0,256S114.625,0,256,0S512,114.625,512,256z M240,32c0,8.844,7.156,16,16,16s16-7.156,16-16s-7.156-16-16-16
+	        S240,23.156,240,32z M48,256c0-8.844-7.156-16-16-16s-16,7.156-16,16s7.156,16,16,16S48,264.844,48,256z M272,480
+	        c0-8.844-7.156-16-16-16s-16,7.156-16,16s7.156,16,16,16S272,488.844,272,480z M448,256c0-105.875-86.125-192-192-192
+	        S64,150.125,64,256s86.125,192,192,192S448,361.875,448,256z M496,256c0-8.844-7.156-16-16-16s-16,7.156-16,16s7.156,16,16,16
+	        S496,264.844,496,256z"/>
+	    </g>
+        </svg>
+		<!-- onclick="rotatex(-5)" -->
+        <i class="fas fa-3x fa-caret-square-right nav-btn" onmousedown="rotateLoopDESC()" onmouseup="rotateLoopDESCend()"></i> 
+	    </div>
+	    
+		<span>
+        <i class="fas fa-3x fa-plus-square nav-btn" onclick="setZoom(1)"></i>&nbsp;
+        <i class="fas fa-3x fa-crosshairs nav-init" onclick="zoomtofit()"></i>&nbsp;
+        <i class="fas fa-3x fa-minus-square nav-btn" onclick="setZoom(-1)"></i>
+		</span>
+		
+		</div>
 
 		<!-- TIMELINE PANEL DIV -->
 		<div id='datepanel'><b><span id="date"></span></b></div>
