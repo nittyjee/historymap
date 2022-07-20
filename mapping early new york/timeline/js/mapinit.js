@@ -67,7 +67,7 @@ mapboxgl.accessToken =
         /////////////////////////////
         //ADD NAVIGATION CONTROLS (ZOOM IN AND OUT)
         /////////////////////////////
-
+		/*
         //Before map
         var nav = new mapboxgl.NavigationControl();
         beforeMap.addControl(nav, "top-right");
@@ -75,8 +75,66 @@ mapboxgl.accessToken =
         //After map
         var nav = new mapboxgl.NavigationControl();
         afterMap.addControl(nav, "top-right");
+		*/
+		var init_bearing,
+		    init_center,
+			init_zoom,
+			rotate_loop,
+			rotate_loop_flag = false;
+		var rotation =  0; //-51.3;
+        var innerArrow = document.getElementById("compass-pointer");
+        innerArrow.setAttribute("transform", "rotate(-45, 256, 256)")
+        console.log(beforeMap.getBearing());
+		
+		function rotatex(deg) {
+            //rotation += deg;
+			var rotation = Math.round(beforeMap.getBearing()) + deg;
+			var rtt = - rotation - 45
+			
+	        innerArrow.setAttribute("transform", "rotate(" + rtt + ", 256, 256)");
+	
+	        beforeMap.easeTo({bearing: rotation});
+	        afterMap.easeTo({bearing: rotation});
+	        console.log(beforeMap.getBearing());
+        }
+		
+		function rotateLoopASC() {
+			rotate_loop = setInterval(function () { rotate_loop_flag = true; rotatex(1); }, 250);
+			console.warn("rotate");
+		}
+        
+		function rotateLoopDESC() {
+			rotate_loop = setInterval(function () { rotate_loop_flag = true; rotatex(-1) }, 250);
+		}
+		
+		function rotateLoopASCend() {
+			if(!rotate_loop_flag) {
+				rotatex(5);
+			}
+			clearInterval(rotate_loop);
+		    rotate_loop_flag = false;
+		}
+		
+		function rotateLoopDESCend() {
+			if(!rotate_loop_flag) {
+				rotatex(-5);
+			}
+			clearInterval(rotate_loop);
+		    rotate_loop_flag = false;
+		}
+		
+		function setZoom(zoom_step){
+            var zoom_level = Math.round(beforeMap.getZoom()) + zoom_step;
+	        beforeMap.easeTo({zoom: zoom_level});
+			afterMap.easeTo({zoom: zoom_level});
+        }
 
-
+        function zoomtofit(){
+			//{center: [-74.01255, 40.704882], zoom: 16.34, bearing: -51.3}
+			innerArrow.setAttribute("transform", "rotate( " + (-45 - init_bearing) + ", 256, 256)");
+            beforeMap.easeTo({center: init_center, zoom: init_zoom, bearing: init_bearing});
+			afterMap.easeTo({center: init_center, zoom: init_zoom, bearing: init_bearing});
+		}
 
         /////////////////////////////
         //BASEMAP MENU SWITCHING FUNCTIONALITY
@@ -239,6 +297,16 @@ var demo_layer_features = null;
 
 beforeMap.on("load", function () {
 	console.log("load");
+	/*
+	console.log(beforeMap.getBearing());
+	console.log(beforeMap.getZoom());
+	console.log(beforeMap.getCenter());
+	*/
+	init_zoom = beforeMap.getZoom();
+	init_bearing = beforeMap.getBearing();
+	init_center = beforeMap.getCenter();
+	rotate = init_bearing;
+	innerArrow.setAttribute("transform", "rotate( " + (-45 - init_bearing) + ", 256, 256)");
 	var sliderVal = moment($("#date").val()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
 	var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
@@ -1445,7 +1513,4 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
-
-
-
 
