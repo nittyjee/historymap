@@ -85,6 +85,29 @@ p {
   text-align: right;
 }
 
+div#navpanel {
+    color: #3989c1;
+    position: absolute;
+    float: right;
+    bottom: 80px;
+    right: 300px;
+    height: 135px;
+    width: 160px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 7px;
+    border: 2px solid #000;
+}
+
+.compass-ring{fill:#3989c1;}
+.north-arr{fill:blue;}
+.south-arr{fill:red;}
+
+.nav-btn { color: #5F9EA0; cursor: pointer; }
+.nav-init { color: #5F9EA0; cursor: pointer; }
+.nav-btn:hover, .nav-init:hover { opacity: 0.7; }
+.nav-btn:active, .nav-init:active { color: #FFD700; }
+	
 #slider,
 #slider2 {
   /* width: 240px; */
@@ -441,6 +464,18 @@ h1 {
         padding: 3px 15px 3px 0px;
         min-width: 134px;
     }
+	
+	div#navpanel {
+		bottom: 138px;
+		right: 15px;
+	}
+}
+
+@media (max-width: 555px) {
+	div#navpanel {
+		left: 15px;
+		bottom: 77px;
+	}
 }
 
 <style>
@@ -449,4 +484,3 @@ h1 {
         font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     }
 </style>
-
