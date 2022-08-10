@@ -27,6 +27,15 @@ $("#infoLayerGravesend").slideUp();   // REPLACE THIS
 $("#infoLayerNativeGroups").slideUp();
 $("#infoLayerKarl").slideUp();
 
+// area bounds
+	var LongIslandBounds = [[-74.0419692,40.5419011],[-71.8562705,41.161155]],
+        ManhattanBounds = [[-74.04772962697074,40.682916945445164],[-73.90665099539478,40.879038046804695]],
+		NYCbounds = [[-74.25559136315213,40.496133987611834],[-73.7000090638712,40.91553277650267]],
+		BronxBounds = [[-73.93360592036706,40.785356620508495],[-73.76533243995276,40.91553277650267]],
+		BrooklynBounds = [[-74.04189660705046,40.56952999398417],[-73.8335592388046,40.73912795313439]],
+		QueensBounds = [[-73.96262015898652,40.54183396045311],[-73.7000090638712,40.80101146781903]],
+		StatenIslandBounds = [[-74.25559136315213,40.496133987611834],[-74.04923629842045,40.648925552276076]];
+
 /////////////////////////////
 //ACCESS TOKEN
 /////////////////////////////
@@ -78,7 +87,8 @@ mapboxgl.accessToken =
 		*/
 		var init_bearing,
 		    init_center,
-			init_zoom,
+			init_zoom;
+		/*
 			rotate_loop,
 			rotate_loop_flag = false;
 		var rotation =  0; //-51.3;
@@ -128,12 +138,46 @@ mapboxgl.accessToken =
 	        beforeMap.easeTo({zoom: zoom_level});
 			afterMap.easeTo({zoom: zoom_level});
         }
-
+        
         function zoomtofit(){
 			//{center: [-74.01255, 40.704882], zoom: 16.34, bearing: -51.3}
 			innerArrow.setAttribute("transform", "rotate( " + (-45 - init_bearing) + ", 256, 256)");
             beforeMap.easeTo({center: init_center, zoom: init_zoom, bearing: init_bearing});
 			afterMap.easeTo({center: init_center, zoom: init_zoom, bearing: init_bearing});
+		}
+		*/
+
+        function zoomtobounds(boundsName){
+			switch(boundsName){
+				case 'LongIsland':
+			    beforeMap.fitBounds(LongIslandBounds, {bearing: init_bearing});
+				afterMap.fitBounds(LongIslandBounds, {bearing: init_bearing});
+				break;
+				case 'Manhattan':
+			    beforeMap.fitBounds(ManhattanBounds, {bearing: init_bearing});
+				afterMap.fitBounds(ManhattanBounds, {bearing: init_bearing});
+				break;
+				case 'NYC':
+			    beforeMap.fitBounds(NYCbounds, {bearing: init_bearing});
+				afterMap.fitBounds(NYCbounds, {bearing: init_bearing});
+				break;
+				case 'Bronx':
+			    beforeMap.fitBounds(BronxBounds, {bearing: init_bearing});
+				afterMap.fitBounds(BronxBounds, {bearing: init_bearing});
+				break;
+				case 'Brooklyn':
+			    beforeMap.fitBounds(BrooklynBounds, {bearing: init_bearing});
+				afterMap.fitBounds(BrooklynBounds, {bearing: init_bearing});
+				break;
+				case 'Queens':
+			    beforeMap.fitBounds(QueensBounds, {bearing: init_bearing});
+				afterMap.fitBounds(QueensBounds, {bearing: init_bearing});
+				break;
+				case 'StatenIsland':
+			    beforeMap.fitBounds(StatenIslandBounds, {bearing: init_bearing});
+				afterMap.fitBounds(StatenIslandBounds, {bearing: init_bearing});
+				break;
+			}
 		}
 
         /////////////////////////////
@@ -305,8 +349,10 @@ beforeMap.on("load", function () {
 	init_zoom = beforeMap.getZoom();
 	init_bearing = beforeMap.getBearing();
 	init_center = beforeMap.getCenter();
+	/*
 	rotate = init_bearing;
 	innerArrow.setAttribute("transform", "rotate( " + (-45 - init_bearing) + ", 256, 256)");
+	*/
 	var sliderVal = moment($("#date").val()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
 	var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
@@ -1513,4 +1559,3 @@ addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
 });
-
