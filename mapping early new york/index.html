@@ -2338,12 +2338,22 @@ i.slash-icon { font-size: 11px; }
     <div id="studioMenu">
 	  
 	  <i id="mobi-hide-sidebar"  class="fa fa-arrow-circle-left fa-3x"></i>
-	
+	  
+	  <p class="title">
+        ZOOM TO LAYERS
+      </p>
+	  <button onclick="zoomtobounds('LongIsland')">Long Island</button>
+	  <button onclick="zoomtobounds('Manhattan')">Manhattan</button>
+	  <button onclick="zoomtobounds('NYC')">New York City</button>
+	  <button onclick="zoomtobounds('Bronx')">Bronx</button>
+	  <button onclick="zoomtobounds('Brooklyn')">Brooklyn</button>
+	  <button onclick="zoomtobounds('Queens')">Queens</button>
+	  <button onclick="zoomtobounds('StatenIsland')">Staten Island</button>
+	  <br><br>
 
       <p class="title">
         LAYERS
       </p>
-	  
 	  <!-- #*A
 	  <br>
 	  -->
@@ -2920,11 +2930,12 @@ i.slash-icon { font-size: 11px; }
 		<div id="mobi-view-sidebar" ><i  class="fa fa-bars fa-2x"></i></div>
 
         <!-- NAVIGATION PANEL DIV -->
+		<!--
 		<div id='navpanel'>
 		<b>NAVIGATION</b>
 		<div style="line-height: 58px; height: 58px; vertical-align: middle; width: 100%; margin-top: 3px;">
 		<i class="fas fa-3x fas fa-3x fa-caret-square-left nav-btn" onmousedown="rotateLoopASC()" onmouseup="rotateLoopASCend()"></i>
-		<!-- onclick="rotatex(5)" -->
+		// onclick="rotatex(5)"
 		<svg version="1.1" id="Layer_1" style="margin-bottom: -10px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="55px" height="55px" viewBox="0 0 512 512" enable-background="new 0 0 160 160" xml:space="preserve">
 	    <g>
 	        <g id="compass-pointer" >
@@ -2939,7 +2950,7 @@ i.slash-icon { font-size: 11px; }
 	        S496,264.844,496,256z"/>
 	    </g>
         </svg>
-		<!-- onclick="rotatex(-5)" -->
+		// onclick="rotatex(-5)"
         <i class="fas fa-3x fa-caret-square-right nav-btn" onmousedown="rotateLoopDESC()" onmouseup="rotateLoopDESCend()"></i> 
 	    </div>
 	    
@@ -2950,7 +2961,8 @@ i.slash-icon { font-size: 11px; }
 		</span>
 		
 		</div>
-
+        -->
+		
 		<!-- TIMELINE PANEL DIV -->
 		<div id='datepanel'><b><span id="date"></span></b></div>
 		<!--
@@ -3033,6 +3045,5 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
 
 
