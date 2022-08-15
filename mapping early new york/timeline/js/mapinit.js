@@ -27,6 +27,12 @@ $("#infoLayerGravesend").slideUp();   // REPLACE THIS
 $("#infoLayerNativeGroups").slideUp();
 $("#infoLayerKarl").slideUp();
 
+// world bounds
+const worldbounds = [
+    [-180,-90], // [west, south]
+    [180,90]  // [east, north]
+];
+
 // area bounds
 	var LongIslandBounds = [[-74.0419692,40.5419011],[-71.8562705,41.161155]],
         ManhattanBounds = [[-74.04772962697074,40.682916945445164],[-73.90665099539478,40.879038046804695]],
@@ -73,6 +79,11 @@ mapboxgl.accessToken =
             // mousemove: true
         });
 
+        // Set the map's max bounds
+		/*
+		beforeMap.setMaxBounds(worldbounds);
+        afterMap.setMaxBounds(worldbounds);
+        */
         /////////////////////////////
         //ADD NAVIGATION CONTROLS (ZOOM IN AND OUT)
         /////////////////////////////
@@ -88,6 +99,10 @@ mapboxgl.accessToken =
 		var init_bearing,
 		    init_center,
 			init_zoom;
+			
+		var na_bearing = -51.3,
+		    na_center = [-74.01255, 40.704882],
+			na_zoom = 16.34;
 		/*
 			rotate_loop,
 			rotate_loop_flag = false;
@@ -146,38 +161,40 @@ mapboxgl.accessToken =
 			afterMap.easeTo({center: init_center, zoom: init_zoom, bearing: init_bearing});
 		}
 		*/
+		
 
+		function testZoom() {
+            var current_bearing = beforeMap.getBearing();
+            var TestBounds = [-74.01507471506183, 40.70239266372983, -74.00734180289922, 40.709035402164524]; //dutch grants
+            //[-74.0128690093802, 40.705887398291175, -73.9457283353804, 40.817639419566085]; //Farms Layer
+            beforeMap.fitBounds(TestBounds, {bearing: current_bearing});
+				afterMap.fitBounds(TestBounds, {bearing: current_bearing});
+		}
+		
         function zoomtobounds(boundsName){
 			switch(boundsName){
 				case 'LongIsland':
-			    beforeMap.fitBounds(LongIslandBounds, {bearing: init_bearing});
-				afterMap.fitBounds(LongIslandBounds, {bearing: init_bearing});
-				break;
-				case 'Manhattan':
-			    beforeMap.fitBounds(ManhattanBounds, {bearing: init_bearing});
-				afterMap.fitBounds(ManhattanBounds, {bearing: init_bearing});
-				break;
-				case 'NYC':
-			    beforeMap.fitBounds(NYCbounds, {bearing: init_bearing});
-				afterMap.fitBounds(NYCbounds, {bearing: init_bearing});
-				break;
-				case 'Bronx':
-			    beforeMap.fitBounds(BronxBounds, {bearing: init_bearing});
-				afterMap.fitBounds(BronxBounds, {bearing: init_bearing});
+			    beforeMap.fitBounds(LongIslandBounds, {bearing: 0});
+				afterMap.fitBounds(LongIslandBounds, {bearing: 0});
 				break;
 				case 'Brooklyn':
-			    beforeMap.fitBounds(BrooklynBounds, {bearing: init_bearing});
-				afterMap.fitBounds(BrooklynBounds, {bearing: init_bearing});
+			    beforeMap.fitBounds(BrooklynBounds, {bearing: 0});
+				afterMap.fitBounds(BrooklynBounds, {bearing: 0});
 				break;
-				case 'Queens':
-			    beforeMap.fitBounds(QueensBounds, {bearing: init_bearing});
-				afterMap.fitBounds(QueensBounds, {bearing: init_bearing});
+				case 'NYC':
+			    beforeMap.fitBounds(NYCbounds, {bearing: 0});
+				afterMap.fitBounds(NYCbounds, {bearing: 0});
 				break;
-				case 'StatenIsland':
-			    beforeMap.fitBounds(StatenIslandBounds, {bearing: init_bearing});
-				afterMap.fitBounds(StatenIslandBounds, {bearing: init_bearing});
+				case 'Manhattan':
+			    beforeMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
+				afterMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
 				break;
 			}
+		}
+		
+		function zoomtoNA(){
+			beforeMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
+			afterMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
 		}
 
         /////////////////////////////
@@ -1558,4 +1575,9 @@ addKarlLinesAfterLayers(date);
 addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
+
 });
+
+
+
+
