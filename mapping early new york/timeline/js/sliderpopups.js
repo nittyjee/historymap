@@ -356,13 +356,16 @@ function buildKarlPopUpInfo(props) {
 					
 					
 				popup_html +=	
-					"<br>" +
-					props.TownStart + "-" + props.TownEnd +
+					"<br>"
+					// +
+					//props.TownStart + "-" + props.TownEnd +
 					//"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/karl' target='_blank'>Karl</a>" +
+					/*
 					"<br><br>" +
 					props.YearDisp +
 					"<br>" +
 					props.Event
+					*/
 				;
 
     console.log(props);
