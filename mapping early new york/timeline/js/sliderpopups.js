@@ -351,12 +351,13 @@ function buildKarlPopUpInfo(props) {
 						popup_html += "<b>" + props.enc_name + "</b>";
 				    } else {
 						//popup_html += "<b>" + settlements_info[ref_name].name + "</b>";
-						popup_html += "<b>" + settlements_info[node_id].name + "</b>";
+						popup_html += "<b>" + settlements_info[node_id].name + "</b><br>" +
+						              "<b>Date:</b> <i>" + settlements_info[node_id].date + "</i>";
 					}
 					
 					
 				popup_html +=	
-					"<br>"
+					"<br>";
 					// +
 					//props.TownStart + "-" + props.TownEnd +
 					//"<a href = 'https://nahc-mapping.org/mappingNY/encyclopedia/place/karl' target='_blank'>Karl</a>" +
@@ -412,7 +413,6 @@ function buildCurrLotsPopUpInfo(props) {
 	$("#infoLayerCurrLots").html(popup_html);
 
 }
-
 
 
 
