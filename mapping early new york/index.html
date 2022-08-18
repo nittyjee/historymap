@@ -1942,6 +1942,9 @@ padding:2px 7px;
   hyphens: auto;
 }
 
+button#zoom-world { padding: 5px 0 5px 0; cursor: pointer; }
+button#zoom-world > i { color: #555; }
+
 #demoLayerInfo, .demoLayerInfoPopUp { 
     background-color: rgb(50, 205, 50, 0.3); /* #32CD32 LimeGreen */
     border: solid #32CD32 2px;
@@ -2094,7 +2097,7 @@ div#mobi-year {
 }
    
 img#logo-img-wide {   
-    padding: 6px 0px 0px 30px; 
+    padding: 6px 0px 0px 21px; 
     float: left;
 	height: 70px;
 }
@@ -2118,13 +2121,14 @@ img#logo-img {
 
 }
 
-@media (max-width: 438px) {
+/*438*/
+@media (max-width: 503px) {
     .header a.encyclopedia, .header label#about { display: none; }
 	.header i#info { display: inline-block; }
 }
 
 /*555*/
-@media (max-width: 637px) {
+@media (max-width: 657px) {
     #studioMenu { width: 100%; }
 	#view-hide-layer-panel { display: none; }
 	#rightInfoBar { display: none; }
@@ -2132,15 +2136,27 @@ img#logo-img {
 	div.layer-buttons-block { width: 111px; }
 	div.dummy-label-layer-space { width: 100px; }
 	div.layer-buttons-list { justify-content: space-around; }
+	
+	img.img2 { display: none; }
+	
+	img#logo-img-wide {  
+		display: none;
+	}
+	
+	img#logo-img {  
+	    height: 34px;
+		display: inline-block;
+	}
 }
 
 
 /*555*/
-@media (min-width: 637px) {
+@media (min-width: 657px) {
     #mobi-hide-sidebar, #mobi-view-sidebar { display: none; }
 }
 
-@media (max-width: 930px) {
+/*930*/
+@media (max-width: 1025px) {
     .map { top: 43px; }
 	
 	#rightInfoBar { top: 45px; }
@@ -2192,16 +2208,10 @@ img#logo-img {
 				  margin-top: 3px;
 					margin: 3px;
 				}
-				
-	img.img2 { display: none; }
-	
-	img#logo-img-wide {  
-		display: none;
-	}
-	
-	img#logo-img {  
-	    height: 34px;
-		display: inline-block;
+		
+    img#logo-img-wide {  
+		height: 39px;
+		padding: 2px 0px 0px 3px; 
 	}
 	
 	.header-right {
@@ -2375,7 +2385,7 @@ i.slash-icon { font-size: 11px; }
 	  -->
 	  <br>
 	  <center>
-	  <b>Manhattan <i class="fas fa-minus-square compress-expand-icon" id="manahatta-section-caret" onclick="sectionCompressExpand('#manahatta-section-layers','#manahatta-section-caret')" ></i></b>
+	  <b><i class="fas fa-minus-square compress-expand-icon" id="manahatta-section-caret" onclick="sectionCompressExpand('#manahatta-section-layers','#manahatta-section-caret')" ></i> &nbsp; Manhattan</b>
 	  </center>
 	  <p>
 
@@ -2562,7 +2572,7 @@ i.slash-icon { font-size: 11px; }
 	  <p>
 		<br>
 	  <center>
-	  <b>Long Island <i class="fas fa-plus-square compress-expand-icon" id="long-island-section-caret" onclick="sectionCompressExpand('#long-island-section-layers','#long-island-section-caret')" ></i></b>
+	  <b><i class="fas fa-plus-square compress-expand-icon" id="long-island-section-caret" onclick="sectionCompressExpand('#long-island-section-layers','#long-island-section-caret')" ></i> &nbsp; Long Island</b>
 	  </center>
 	  <p>
 
@@ -2752,7 +2762,7 @@ i.slash-icon { font-size: 11px; }
 	
 			<br>
 			<center>
-			<b>1660 | Castello Plan <i class="fas fa-minus-square compress-expand-icon" id="castello-maps-section-caret" onclick="sectionCompressExpand('#castello-maps-section','#castello-maps-section-caret')" ></i></b>
+			<b><i class="fas fa-minus-square compress-expand-icon" id="castello-maps-section-caret" onclick="sectionCompressExpand('#castello-maps-section','#castello-maps-section-caret')" ></i> &nbsp; 1660 | Castello Plan</b>
 			</center>
 			
           
@@ -2819,7 +2829,7 @@ i.slash-icon { font-size: 11px; }
 
 		<br>
 		<center>
-		<b>Manhattan and Surrounding <i class="fas fa-plus-square compress-expand-icon" id="manahatta-maps-section-caret" onclick="sectionCompressExpand('#manahatta-maps-section','#manahatta-maps-section-caret')" ></i></b>
+		<b><i class="fas fa-plus-square compress-expand-icon" id="manahatta-maps-section-caret" onclick="sectionCompressExpand('#manahatta-maps-section','#manahatta-maps-section-caret')" ></i> &nbsp; Manhattan and Surrounding</b>
 		</center>
 	
 
@@ -2921,7 +2931,7 @@ i.slash-icon { font-size: 11px; }
 
         <br>
 
-		<center><b>Long Island <i class="fas fa-plus-square compress-expand-icon" id="long-island-maps-section-caret" onclick="sectionCompressExpand('#long-island-maps-section','#long-island-maps-section-caret')" ></i></b></center>
+		<center><b><i class="fas fa-plus-square compress-expand-icon" id="long-island-maps-section-caret" onclick="sectionCompressExpand('#long-island-maps-section','#long-island-maps-section-caret')" ></i> &nbsp; Long Island</b></center>
 	      
         <div id="long-island-maps-section">
 
@@ -3021,7 +3031,7 @@ i.slash-icon { font-size: 11px; }
 		
 
 		<br>
-		<center><b>New Netherland <i class="fas fa-plus-square compress-expand-icon" id="new-netherland-maps-section-caret" onclick="sectionCompressExpand('#new-netherland-maps-section','#new-netherland-maps-section-caret')" ></i></b></center>
+		<center><b><i class="fas fa-plus-square compress-expand-icon" id="new-netherland-maps-section-caret" onclick="sectionCompressExpand('#new-netherland-maps-section','#new-netherland-maps-section-caret')" ></i> &nbsp; New Netherland</b></center>
 	      
 		<div id="new-netherland-maps-section">
 		  
@@ -3043,7 +3053,7 @@ i.slash-icon { font-size: 11px; }
 
 
 		<br>
-		<center><b>New England <i class="fas fa-plus-square compress-expand-icon" id="new-england-maps-section-caret" onclick="sectionCompressExpand('#new-england-maps-section','#new-england-maps-section-caret')" ></i></b></center>
+		<center><b><i class="fas fa-plus-square compress-expand-icon" id="new-england-maps-section-caret" onclick="sectionCompressExpand('#new-england-maps-section','#new-england-maps-section-caret')" ></i> &nbsp; New England</b></center>
 	     
 		<div id="new-england-maps-section">
 		
@@ -3062,7 +3072,11 @@ i.slash-icon { font-size: 11px; }
 		</div>    
 
         </div>
-
+        
+		<br>
+		<center>
+            <button onclick="zoomtobounds('World')" id="zoom-world"> &nbsp; &nbsp; <i class="fa fa-globe"></i> &nbsp; <b>Zoom to World</b> &nbsp; &nbsp; &nbsp; </button>
+		</center>
 
 	  </div>
 
@@ -3226,5 +3240,3 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
-
-
