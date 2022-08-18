@@ -28,7 +28,7 @@ $("#infoLayerNativeGroups").slideUp();
 $("#infoLayerKarl").slideUp();
 
 // world bounds
-const worldbounds = [
+const WorldBounds = [
     [-180,-90], // [west, south]
     [180,90]  // [east, north]
 ];
@@ -81,8 +81,8 @@ mapboxgl.accessToken =
 
         // Set the map's max bounds
 		/*
-		beforeMap.setMaxBounds(worldbounds);
-        afterMap.setMaxBounds(worldbounds);
+		beforeMap.setMaxBounds(WorldBounds);
+        afterMap.setMaxBounds(WorldBounds);
         */
         /////////////////////////////
         //ADD NAVIGATION CONTROLS (ZOOM IN AND OUT)
@@ -188,6 +188,10 @@ mapboxgl.accessToken =
 				case 'Manhattan':
 			    beforeMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
 				afterMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
+				break;
+				case 'World':
+			    beforeMap.fitBounds(WorldBounds, {bearing: 0});
+				afterMap.fitBounds(WorldBounds, {bearing: 0});
 				break;
 			}
 		}
@@ -1577,7 +1581,5 @@ addSettlementsLabelsAfterLayers(date);
 
 
 });
-
-
 
 
