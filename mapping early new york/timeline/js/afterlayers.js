@@ -1729,3 +1729,83 @@ function addLongIslandNativeGroupsAfterLayers() {
 
 
 
+
+
+////////////////////////////////
+// Interactive Zoom Labels Layer
+////////////////////////////////
+
+
+function addAfterLabelsLayer() {
+	
+          afterMap.addLayer(LongIslandZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-long-island', function (e) {
+              afterMap.setPaintProperty("label-long-island", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-long-island', function () {
+              afterMap.setPaintProperty("label-long-island", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-long-island', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtobounds('LongIsland');
+          });
+		  
+		  afterMap.addLayer(BrooklynZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-brooklyn', function (e) {
+              afterMap.setPaintProperty("label-brooklyn", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-brooklyn', function () {
+              afterMap.setPaintProperty("label-brooklyn", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-brooklyn', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtobounds('Brooklyn');
+          });
+		  
+		  afterMap.addLayer(NewAmsterdamZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-new-amsterdam', function (e) {
+              afterMap.setPaintProperty("label-new-amsterdam", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-new-amsterdam', function () {
+              afterMap.setPaintProperty("label-new-amsterdam", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-new-amsterdam', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtoNA();
+          });
+		  
+		  afterMap.addLayer(ManhattanZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-manhattan', function (e) {
+              afterMap.setPaintProperty("label-manhattan", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-manhattan', function () {
+              afterMap.setPaintProperty("label-manhattan", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-manhattan', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtobounds('Manhattan');
+          });
+		  
+}
+
+
