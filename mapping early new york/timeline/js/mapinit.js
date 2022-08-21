@@ -241,7 +241,7 @@ mapboxgl.accessToken =
 // on Map events
 /////////////////////////////
 
-urlHash = window.location.hash;
+var urlHash = window.location.hash;
 var castello_click_ev = false,
     grant_lots_click_ev = false,
 	demo_taxlot_click_ev = false,
@@ -251,7 +251,8 @@ var castello_click_ev = false,
 	karl_click_ev = false,
 	farms_click_ev = false,
 	curr_layer_click_ev = false,
-	settlements_click_ev = false;
+	settlements_click_ev = false,
+	zoom_labels_click_ev = false;
     
 
 var afterMapPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false }),
@@ -504,7 +505,7 @@ afterMap.on("error", function (e) {
 	    
 		function DefaultHandle() {
 		
-		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev && !gravesend_click_ev && !native_groups_click_ev && !karl_click_ev) {
+		            if(!demo_taxlot_click_ev && !castello_click_ev && !grant_lots_click_ev && !dutch_grant_click_ev && !farms_click_ev && !curr_layer_click_ev && !settlements_click_ev && !gravesend_click_ev && !native_groups_click_ev && !karl_click_ev && !zoom_labels_click_ev) {
                         if(windoWidth > 555)
 			                $('#view-hide-layer-panel').trigger('click');
 					}
@@ -519,6 +520,7 @@ afterMap.on("error", function (e) {
 					gravesend_click_ev = false;
 					native_groups_click_ev = false;
 					karl_click_ev = false;
+					zoom_labels_click_ev = false;
 		
 		}
 		
@@ -1494,6 +1496,152 @@ function changeDate(unixDate) {
 }//end function changeDate
 
 
+/////////////////////////////
+//   ZOOM LABELS
+/////////////////////////////
+var lbl_color = "#482525";
+var lbl_color_hover = "#ff0000";
+
+var LongIslandZoomLabel = {
+            id: "label-long-island",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      title: "Long Island",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-72.94912,40.85225]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 21,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 8,
+              "text-halo-color": "#ffffff",
+            },
+};
+
+var BrooklynZoomLabel = {
+            id: "label-brooklyn",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+				  {
+                    type: "Feature",
+                    properties: {
+                      title: "Brooklyn",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-73.93772792292754,40.65432897355928]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 17,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 5,
+              "text-halo-color": "#ffffff",
+            },
+};
+
+var NewAmsterdamZoomLabel = {
+            id: "label-new-amsterdam",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      title: "New Amsterdam",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-74.01255, 40.704882]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 13,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 8,
+              "text-halo-color": "#ffffff",
+            },
+};
+
+var ManhattanZoomLabel = {
+            id: "label-manhattan",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+				  {
+                    type: "Feature",
+                    properties: {
+                      title: "Manhattan",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-73.97719031118277,40.78097749612493]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 16,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 5,
+              "text-halo-color": "#ffffff",
+            },
+};
+
 
 /////////////////////////////
 //LAYER CHANGING
@@ -1536,6 +1684,7 @@ addKarlLinesBeforeLayers(date);
 addSettlementsBeforeLayers(date);
 addSettlementsLabelsBeforeLayers(date);
 
+addBeforeLabelsLayer();
 
 });
 
@@ -1579,7 +1728,10 @@ addKarlLinesAfterLayers(date);
 addSettlementsAfterLayers(date);
 addSettlementsLabelsAfterLayers(date);
 
+addAfterLabelsLayer();
 
 });
+
+
 
 
