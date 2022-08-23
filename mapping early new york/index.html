@@ -129,6 +129,7 @@ my_tooltip.fadeOut(200);
 });
 });
 }
+
 			
 			
 			$(document).ready(function () {
@@ -1942,8 +1943,9 @@ padding:2px 7px;
   hyphens: auto;
 }
 
-button#zoom-world { padding: 5px 0 5px 0; cursor: pointer; }
-button#zoom-world > i { color: #555; }
+button#zoom-world, button.zoom-labels { padding: 5px 0 5px 0; cursor: pointer; }
+button#zoom-world > i, button.zoom-labels > i  { color: #555; }
+button#hide-zoom-label {display: none;}
 
 #demoLayerInfo, .demoLayerInfoPopUp { 
     background-color: rgb(50, 205, 50, 0.3); /* #32CD32 LimeGreen */
@@ -3043,7 +3045,7 @@ i.slash-icon { font-size: 11px; }
                 <label for='cl0wzrvli003j15mmrlkdzp8f'>1651 | Belgii Novi <div class="dummy-label-layer-space"></div></label>
 		    <div class="layer-buttons-block">
 		        <div class="layer-buttons-list">
-		            <i  class="fa fa-crosshairs zoom-to-layer" onclick="zoomtobounds('LongIsland')" title="Zoom to Layer" ></i>
+		            <i  class="fa fa-crosshairs zoom-to-layer" onclick="zoomtobounds('NewNL')" title="Zoom to Layer" ></i>
 		            <i  class="fa fa-info-circle layer-info trigger-popup" id="novi-belgii-map"  title="Layer Info" ></i>
 		        </div>
 		    </div>
@@ -3065,7 +3067,7 @@ i.slash-icon { font-size: 11px; }
                 <label for='cl4ygcmxl000114qrezbde60w'>1670 | New England <div class="dummy-label-layer-space"></div></label>
 		    <div class="layer-buttons-block">
 		        <div class="layer-buttons-list">
-		            <i  class="fa fa-crosshairs zoom-to-layer" onclick="zoomtobounds('LongIsland')" title="Zoom to Layer" ></i>
+		            <i  class="fa fa-crosshairs zoom-to-layer" onclick="zoomtobounds('NewEngland')" title="Zoom to Layer" ></i>
 		            <i  class="fa fa-info-circle layer-info trigger-popup" id="new-england-1670"  title="Layer Info" ></i>
 		        </div>
 		    </div>
@@ -3075,6 +3077,8 @@ i.slash-icon { font-size: 11px; }
         
 		<br>
 		<center>
+		    <button onclick="zoomLabels('hide')" id="show-zoom-label" class="zoom-labels"> &nbsp; &nbsp; <i class="fa fa-eye"></i> &nbsp; <b>Labels</b> &nbsp; &nbsp; &nbsp; </button>
+		    <button onclick="zoomLabels('show')" id="hide-zoom-label" class="zoom-labels"> &nbsp; &nbsp; <i class="fa fa-eye-slash"></i> &nbsp; <b>Labels</b> &nbsp; &nbsp; &nbsp; </button> &nbsp;
             <button onclick="zoomtobounds('World')" id="zoom-world"> &nbsp; &nbsp; <i class="fa fa-globe"></i> &nbsp; <b>Zoom to World</b> &nbsp; &nbsp; &nbsp; </button>
 		</center>
 
@@ -3240,3 +3244,7 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
+
+
+
