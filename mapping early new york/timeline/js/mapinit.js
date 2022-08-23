@@ -40,7 +40,9 @@ const WorldBounds = [
 		BronxBounds = [[-73.93360592036706,40.785356620508495],[-73.76533243995276,40.91553277650267]],
 		BrooklynBounds = [[-74.04189660705046,40.56952999398417],[-73.8335592388046,40.73912795313439]],
 		QueensBounds = [[-73.96262015898652,40.54183396045311],[-73.7000090638712,40.80101146781903]],
-		StatenIslandBounds = [[-74.25559136315213,40.496133987611834],[-74.04923629842045,40.648925552276076]];
+		StatenIslandBounds = [[-74.25559136315213,40.496133987611834],[-74.04923629842045,40.648925552276076]],
+		NewNLbounds = [[-75.5588888888889,39.5483333333333],[-71.6483333333333,42.64485]],
+		NewEnglandBounds = [[-73.6468505859375, 41.017210578228436],[-69.708251953125,43.97700467496408]];
 
 /////////////////////////////
 //ACCESS TOKEN
@@ -185,6 +187,14 @@ mapboxgl.accessToken =
 			    beforeMap.fitBounds(NYCbounds, {bearing: 0});
 				afterMap.fitBounds(NYCbounds, {bearing: 0});
 				break;
+				case 'NewNL':
+			    beforeMap.fitBounds(NewNLbounds, {bearing: 0});
+				afterMap.fitBounds(NewNLbounds, {bearing: 0});
+				break;
+				case 'NewEngland':
+			    beforeMap.fitBounds(NewEnglandBounds, {bearing: 0});
+				afterMap.fitBounds(NewEnglandBounds, {bearing: 0});
+				break;
 				case 'Manhattan':
 			    beforeMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
 				afterMap.fitBounds(ManhattanBounds, {bearing: na_bearing});
@@ -200,6 +210,40 @@ mapboxgl.accessToken =
 			beforeMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
 			afterMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
 		}
+
+        function zoomLabels(sel_opt) {
+                    if( sel_opt == "show") {
+					    beforeMap.setLayoutProperty( "label-long-island", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-long-island", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "label-brooklyn", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-brooklyn", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "label-manhattan", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-manhattan", "visibility", "visible" ); 
+					    beforeMap.setLayoutProperty( "label-new-amsterdam", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-new-amsterdam", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "label-new-netherland", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-new-netherland", "visibility", "visible" ); 
+						beforeMap.setLayoutProperty( "label-new-england", "visibility", "visible" );
+						afterMap.setLayoutProperty( "label-new-england", "visibility", "visible" ); 
+						document.getElementById("show-zoom-label").style.display = "inline-block";
+						document.getElementById("hide-zoom-label").style.display = "none";
+					} else {
+					    beforeMap.setLayoutProperty( "label-long-island", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-long-island", "visibility", "none" );
+					    beforeMap.setLayoutProperty( "label-brooklyn", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-brooklyn", "visibility", "none" );
+					    beforeMap.setLayoutProperty( "label-manhattan", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-manhattan", "visibility", "none" );
+					    beforeMap.setLayoutProperty( "label-new-amsterdam", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-new-amsterdam", "visibility", "none" );
+						beforeMap.setLayoutProperty( "label-new-netherland", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-new-netherland", "visibility", "none" );
+						beforeMap.setLayoutProperty( "label-new-england", "visibility", "none" ); 
+					    afterMap.setLayoutProperty( "label-new-england", "visibility", "none" );
+						document.getElementById("hide-zoom-label").style.display = "inline-block";
+						document.getElementById("show-zoom-label").style.display = "none";
+					}
+        }
 
         /////////////////////////////
         //BASEMAP MENU SWITCHING FUNCTIONALITY
@@ -1525,6 +1569,7 @@ var LongIslandZoomLabel = {
               },
             },
             layout: {
+			  "visibility": "visible",
               "text-font": ["Open Sans Regular"],
               "text-field": "{title}",
               "text-size": 21,
@@ -1560,6 +1605,7 @@ var BrooklynZoomLabel = {
               },
             },
             layout: {
+			  "visibility": "visible",
               "text-font": ["Open Sans Regular"],
               "text-field": "{title}",
               "text-size": 17,
@@ -1595,6 +1641,7 @@ var NewAmsterdamZoomLabel = {
               },
             },
             layout: {
+			  "visibility": "visible",
               "text-font": ["Open Sans Regular"],
               "text-field": "{title}",
               "text-size": 13,
@@ -1630,6 +1677,7 @@ var ManhattanZoomLabel = {
               },
             },
             layout: {
+			  "visibility": "visible",
               "text-font": ["Open Sans Regular"],
               "text-field": "{title}",
               "text-size": 16,
@@ -1638,6 +1686,78 @@ var ManhattanZoomLabel = {
             paint: {
               "text-color": lbl_color,
               "text-halo-width": 5,
+              "text-halo-color": "#ffffff",
+            },
+};
+
+var NewNetherlandZoomLabel = {
+            id: "label-new-netherland",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      title: "New Netherland",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-73.60361111111109, 41.09659166666665]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+			  "visibility": "visible",
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 19,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 8,
+              "text-halo-color": "#ffffff",
+            },
+};
+
+var NewEnglandZoomLabel = {
+            id: "label-new-england",
+            type: "symbol",
+            source: {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      title: "New England",
+                      icon: "circle"
+                    },
+                    geometry: {
+                      type: "Point",
+                      coordinates: [-71.67755127,42.4971076267]
+                    },
+                  }
+                ],
+              },
+            },
+            layout: {
+			  "visibility": "visible",
+              "text-font": ["Open Sans Regular"],
+              "text-field": "{title}",
+              "text-size": 19,
+              //"text-anchor": "center"
+            },
+            paint: {
+              "text-color": lbl_color,
+              "text-halo-width": 8,
               "text-halo-color": "#ffffff",
             },
 };
@@ -1731,7 +1851,6 @@ addSettlementsLabelsAfterLayers(date);
 addAfterLabelsLayer();
 
 });
-
 
 
 
