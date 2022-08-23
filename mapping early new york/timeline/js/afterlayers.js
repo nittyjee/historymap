@@ -1806,6 +1806,41 @@ function addAfterLabelsLayer() {
               zoomtobounds('Manhattan');
           });
 		  
+		  afterMap.addLayer(NewNetherlandZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-new-netherland', function (e) {
+              afterMap.setPaintProperty("label-new-netherland", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-new-netherland', function () {
+              afterMap.setPaintProperty("label-new-netherland", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-new-netherland', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtobounds('NewNL');
+          });
+		  
+		  afterMap.addLayer(NewEnglandZoomLabel);
+		  
+		  afterMap.on('mouseenter', 'label-new-england', function (e) {
+              afterMap.setPaintProperty("label-new-england", "text-color", lbl_color_hover);
+              afterMap.getCanvas().style.cursor = "pointer";
+          });
+		  
+		  afterMap.on('mouseleave', 'label-new-england', function () {
+              afterMap.setPaintProperty("label-new-england", "text-color", lbl_color);
+              afterMap.getCanvas().style.cursor = "";
+          });
+		  
+		  afterMap.on('click', 'label-new-england', function (e) {
+			  zoom_labels_click_ev = true;
+              zoomtobounds('NewEngland');
+          });
 }
+
+
 
 
