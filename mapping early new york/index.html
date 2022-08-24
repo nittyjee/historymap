@@ -1628,9 +1628,15 @@ function getTaxlotEventEntitiesDescrInfo() {
 				}
 				
 				
-				.mapboxgl-ctrl {
-                    display: none !important;
+				.mapboxgl-ctrl-bottom-left {
+                     display: none !important;
                 }
+				
+				.mapboxgl-ctrl-bottom-right {
+				    bottom: 78px;
+					right: 13px;
+					z-index: 100;
+				}
 				
 			</style>
 			
@@ -2120,7 +2126,12 @@ img#logo-img {
 	    margin-bottom: -5px;
         display: block;
 	}
+}
 
+@media (max-width: 930px) {
+    .mapboxgl-ctrl-bottom-right {
+	    bottom: 55px;
+	}
 }
 
 /*438*/
@@ -2148,6 +2159,12 @@ img#logo-img {
 	img#logo-img {  
 	    height: 34px;
 		display: inline-block;
+	}
+	
+	.mapboxgl-ctrl-bottom-right {
+	    z-index: 2;
+		bottom: 121px;
+		right: 21px;
 	}
 }
 
@@ -3080,8 +3097,8 @@ i.slash-icon { font-size: 11px; }
 		    <!--
 		    <button onclick="zoomLabels('hide')" id="show-zoom-label" class="zoom-labels"> &nbsp; &nbsp; <i class="fa fa-eye"></i> &nbsp; <b>Labels</b> &nbsp; &nbsp; &nbsp; </button>
 		    <button onclick="zoomLabels('show')" id="hide-zoom-label" class="zoom-labels"> &nbsp; &nbsp; <i class="fa fa-eye-slash"></i> &nbsp; <b>Labels</b> &nbsp; &nbsp; &nbsp; </button> &nbsp;
-                    -->
-                    <button onclick="zoomtobounds('World')" id="zoom-world"> &nbsp; &nbsp; <i class="fa fa-globe"></i> &nbsp; <b>Zoom to World</b> &nbsp; &nbsp; &nbsp; </button>
+			-->
+            <button onclick="zoomtobounds('World')" id="zoom-world"> &nbsp; &nbsp; <i class="fa fa-globe"></i> &nbsp; <b>Zoom to World</b> &nbsp; &nbsp; &nbsp; </button>
 		</center>
 
 	  </div>
