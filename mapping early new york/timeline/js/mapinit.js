@@ -93,11 +93,15 @@ mapboxgl.accessToken =
         //Before map
         var nav = new mapboxgl.NavigationControl();
         beforeMap.addControl(nav, "top-right");
-
+        */
+		
         //After map
         var nav = new mapboxgl.NavigationControl();
-        afterMap.addControl(nav, "top-right");
-		*/
+        afterMap.addControl(nav, "bottom-right");
+		
+
+		
+		
 		var init_bearing,
 		    init_center,
 			init_zoom;
@@ -1851,6 +1855,7 @@ addSettlementsLabelsAfterLayers(date);
 addAfterLabelsLayer();
 
 });
+
 
 
 
