@@ -1633,10 +1633,24 @@ function getTaxlotEventEntitiesDescrInfo() {
                 }
 				
 				.mapboxgl-ctrl-bottom-right {
-				    bottom: 78px;
-					right: 13px;
-					z-index: 100;
+					bottom: 17px;
+					right: 275px;
 				}
+				
+				.mapboxgl-ctrl-group {
+				    height: 30px;
+				}
+				
+				/* make from vertical to horizontal */  
+				.mapboxgl-ctrl-group > button {
+				    display: inline-block;
+				}
+				
+				.mapboxgl-ctrl-group > button + button {
+				    border-top: 0; 
+                    border-left: 1px solid #ddd;
+                }
+
 				
 			</style>
 			
@@ -2130,7 +2144,8 @@ img#logo-img {
 
 @media (max-width: 930px) {
     .mapboxgl-ctrl-bottom-right {
-	    bottom: 55px;
+	    bottom: 7px;
+	    right: 170px;
 	}
 }
 
@@ -2150,6 +2165,7 @@ img#logo-img {
 	div.dummy-label-layer-space { width: 100px; }
 	div.layer-buttons-list { justify-content: space-around; }
 	
+	/*
 	img.img2 { display: none; }
 	
 	img#logo-img-wide {  
@@ -2160,12 +2176,10 @@ img#logo-img {
 	    height: 34px;
 		display: inline-block;
 	}
+	*/
 	
-	.mapboxgl-ctrl-bottom-right {
-	    z-index: 2;
-		bottom: 121px;
-		right: 21px;
-	}
+	#headerTextSuffix, .headerText { display: none; }
+	
 }
 
 
@@ -2200,7 +2214,9 @@ img#logo-img {
 	max-height: -webkit-calc(100% - 134px);
 	}
 	
-    #headerTextSuffix { display: none; }
+    /*
+	#headerTextSuffix { display: none; }
+	*/
 	
 	.headerText {
 					margin-top: 11px;
@@ -3263,6 +3279,7 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
 
 
