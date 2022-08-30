@@ -1571,17 +1571,25 @@ var LongIslandZoomLabel = {
               },
             },
             layout: {
-			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
-              "text-field": "{title}",
-              "text-size": 21,
-              //"text-anchor": "center"
-            },
-            paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 8,
-              "text-halo-color": "#ffffff",
-            },
+				"visibility": "visible",
+				"text-font": ["Asap Medium"],
+				"text-field": "{title}",
+				"text-size": 18,
+				//"text-anchor": "center"
+			  },
+			  paint: {
+				"text-color": "#000000",
+				"text-halo-width": 3,
+				"text-halo-blur": 2,
+				"text-halo-color": "#ffffff",
+				'text-opacity': {
+				  default: 1,
+				  stops: [
+					[7.5, 0],
+					[8, 1]
+				  ]
+				},
+			  },
 };
 
 var BrooklynZoomLabel = {
@@ -1608,15 +1616,23 @@ var BrooklynZoomLabel = {
             },
             layout: {
 			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
+              "text-font": ["Asap Medium"],
               "text-field": "{title}",
-              "text-size": 17,
+              "text-size": 18,
               //"text-anchor": "center"
             },
             paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 5,
+              "text-color": "#000000",
+              "text-halo-width": 3,
+			  "text-halo-blur": 2,
               "text-halo-color": "#ffffff",
+			  'text-opacity': {
+				default: 1,
+				stops: [
+				  [10.2, 0],
+				  [10.5, 1]
+				]
+			  },
             },
 };
 
@@ -1643,17 +1659,25 @@ var NewAmsterdamZoomLabel = {
               },
             },
             layout: {
-			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
-              "text-field": "{title}",
-              "text-size": 13,
-              //"text-anchor": "center"
-            },
-            paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 8,
-              "text-halo-color": "#ffffff",
-            },
+				"visibility": "visible",
+				"text-font": ["Asap Medium"],
+				"text-field": "{title}",
+				"text-size": 18,
+				//"text-anchor": "center"
+			  },
+			  paint: {
+				"text-color": "#000000",
+				"text-halo-width": 3,
+				"text-halo-blur": 2,
+				"text-halo-color": "#ffffff",
+				'text-opacity': {
+				  default: 1,
+				  stops: [
+					[6, 0],
+					[6.5, 1]
+				  ]
+				},
+			  },
 };
 
 var ManhattanZoomLabel = {
@@ -1680,15 +1704,23 @@ var ManhattanZoomLabel = {
             },
             layout: {
 			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
+              "text-font": ["Asap Medium"],
               "text-field": "{title}",
-              "text-size": 16,
+              "text-size": 18,
               //"text-anchor": "center"
             },
             paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 5,
+              "text-color": "#000000",
+              "text-halo-width": 3,
+			  "text-halo-blur": 2,
               "text-halo-color": "#ffffff",
+			  'text-opacity': {
+				default: 1,
+				stops: [
+				  [10.2, 0],
+				  [10.5, 1]
+				]
+			  },
             },
 };
 
@@ -1716,52 +1748,77 @@ var NewNetherlandZoomLabel = {
             },
             layout: {
 			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
+              "text-font": ["Asap Medium"],
               "text-field": "{title}",
-              "text-size": 19,
+              "text-size": 18,
               //"text-anchor": "center"
             },
             paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 8,
+              "text-color": "#000000",
+              "text-halo-width": 3,
+			  "text-halo-blur": 2,
               "text-halo-color": "#ffffff",
+			  /*
+			  'text-opacity': {
+				default: 1,
+				stops: [
+				  [5.2, 0],
+				  [5.6, 1]
+				]
+			  },
+			  */
             },
 };
 
+
+
+
 var NewEnglandZoomLabel = {
-            id: "label-new-england",
-            type: "symbol",
-            source: {
-              type: "geojson",
-              data: {
-                type: "FeatureCollection",
-                features: [
-                  {
-                    type: "Feature",
-                    properties: {
-                      title: "New England",
-                      icon: "circle"
-                    },
-                    geometry: {
-                      type: "Point",
-                      coordinates: [-71.67755127,42.4971076267]
-                    },
-                  }
-                ],
-              },
-            },
-            layout: {
-			  "visibility": "visible",
-              "text-font": ["Open Sans Regular"],
-              "text-field": "{title}",
-              "text-size": 19,
-              //"text-anchor": "center"
-            },
-            paint: {
-              "text-color": lbl_color,
-              "text-halo-width": 8,
-              "text-halo-color": "#ffffff",
-            },
+	id: "label-new-england",
+	type: "symbol",
+	source: {
+	  type: "geojson",
+	  data: {
+		type: "FeatureCollection",
+		features: [
+		  {
+			type: "Feature",
+			properties: {
+			  title: "New England",
+			  icon: "circle"
+			},
+			geometry: {
+			  type: "Point",
+			  coordinates: [-71.67755127,42.4971076267]
+			},
+		  }
+		],
+	  },
+	},
+	//For some reason, New Netherland label disappears unless minzoom is created
+	"minzoom": 5.2,
+	layout: {
+		"visibility": "visible",
+		"text-font": ["Asap Medium"],
+		"text-field": "{title}",
+		"text-size": 18,
+		//"text-anchor": "center"
+	  },
+	  paint: {
+		"text-color": "#000000",
+		"text-halo-width": 3,
+		"text-halo-blur": 2,
+		"text-halo-color": "#ffffff",
+		
+		'text-opacity': {
+		  default: 1,
+		  stops: [
+			[5.2, 0],
+			[5.6, 1]
+		  ]
+		},
+		
+	  },
 };
 
 
