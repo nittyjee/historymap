@@ -1397,7 +1397,7 @@ function addBeforeLayers(yr, date) {
 				
 				        beforeMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
                             .addTo(beforeMap);
 					
 		});
@@ -1635,7 +1635,7 @@ function addAfterLayers(yr, date) {
 				
 				        afterMapPopUp
 				            .setLngLat(coordinates)
-							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
+							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
                             .addTo(afterMap);
 		});
 
@@ -1663,8 +1663,8 @@ function buildPopUpInfo(props) {
 					///////
 					//TITLE
 					///////
-					"<b><h2>Demo Taxlot: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7' target='_blank'>C7</a></h2></b>" +
-// CAN'T GET THE TAXLOT LINK TO WORK: <a href='https://nahc-mapping.org/mappingNY/encyclopedia/taxlot/c7'>
+					"<b><h2>Demo Taxlot: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7' target='_blank'>C7</a></h2></b>" +
+// CAN'T GET THE TAXLOT LINK TO WORK: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7'>
 					////////////////
 					//PROPERTY TYPE
 					////////////////
@@ -1852,7 +1852,7 @@ function buildPopUpInfo(props) {
 					//LINK TO ALL TAXLOT EVENTS: "SEE ALL TAXLOT EVENTS"
 					"<br>" +
 					"<hr>" +
-					'<b> <h3><a href="https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-events" target="_blank">SEE ALL TAXLOT EVENTS</a></h3></b>'
+					'<b> <h3><a href="https://encyclopedia.nahc-mapping.org/taxlot-events" target="_blank">SEE ALL TAXLOT EVENTS</a></h3></b>'
 
 //NEED TO MAKE THIS OPEN IN SEPARATE TAB!!
 ;
@@ -1869,7 +1869,7 @@ function buildGrantLotsPopUpInfo(props) {
 				    "<h3>Grant Lot Division</h3><hr>" +
 					"<br>" +
 					//"<b>Original Dutch Grant: </b>" + props.Lot +
-				    "<b>Original Dutch Grant:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
+				    "<b>Original Dutch Grant:</b> <a href='https://encyclopedia.nahc-mapping.org/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
 					"<br>" +
 					"<b>Lot Division: </b>" + props.dutchlot +
 				    "<br>" +
@@ -1896,7 +1896,7 @@ function buildDutchGrantPopUpInfo(props) {
 				var popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +
 				    props.name + "<br>" +
-				    "<b>Dutch Grant Lot:</b> <a href='https://nahc-mapping.org/mappingNY/encyclopedia/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
+				    "<b>Dutch Grant Lot:</b> <a href='https://encyclopedia.nahc-mapping.org/grantlot/" + props.Lot + "' target='_blank'>" + props.Lot + "</a><br>" +
 					"<br>" +
 					"<b>Start:</b> <i>" + props.day1 + " " + props.year1 + "</i><br>" +
 					"<b>End:</b> <i>" + props.day2 + " " + props.year2 + "</i><br>" +

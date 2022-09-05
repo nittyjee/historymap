@@ -1270,8 +1270,8 @@ my_tooltip.fadeOut(200);
 // for test local host REST_API/grant-lots-export.json
 // for test remote host https://lifecourse.xyz/upwork/test/ny/grant-lots-export.json
 // REST API https://nahc-mapping.org/mappingNY/dev/grant-lots-export
-// REST API https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export
-// REST API new https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export-properly
+// REST API https://encyclopedia.nahc-mapping.org/grant-lots-export
+// REST API new https://encyclopedia.nahc-mapping.org/grant-lots-export-properly
 
 function getDutchGrantsInfo() {
     
@@ -1279,7 +1279,7 @@ function getDutchGrantsInfo() {
 	dutch_grant_lots_info_length = 0;
 	
 	$.ajax({
-				url: 'https://nahc-mapping.org/mappingNY/encyclopedia/grant-lots-export-properly',
+				url: 'https://encyclopedia.nahc-mapping.org/grant-lots-export-properly',
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -1373,7 +1373,7 @@ function getDutchGrantsInfo() {
 
 
 // for test local host REST_API/places-list-export.json
-// REST API https://nahc-mapping.org/mappingNY/encyclopedia/places-list-export
+// REST API https://encyclopedia.nahc-mapping.org/places-list-export
 
 function getSettlementsInfo() {
     
@@ -1381,7 +1381,7 @@ function getSettlementsInfo() {
 	settlements_info_length = 0;
 	
 	$.ajax({
-				url: 'https://nahc-mapping.org/mappingNY/encyclopedia/places-list-export',
+				url: 'https://encyclopedia.nahc-mapping.org/places-list-export',
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -1407,7 +1407,7 @@ function getSettlementsInfo() {
 				    settlements_info[data_info_index] = { 
 					    //name: data[i].title.length > 0 ? data[i].title[0].value : "", 
 						name: data[i].title.length > 0 ? (  
-						    ( data[i].path.length > 0 ? "<a href='https://nahc-mapping.org/mappingNY/encyclopedia" + data[i].path[0].alias + "' target='_blank'>" : "" ) +
+						    ( data[i].path.length > 0 ? "<a href='https://encyclopedia.nahc-mapping.org" + data[i].path[0].alias + "' target='_blank'>" : "" ) +
 						     data[i].title[0].value  +
 							( data[i].path.length > 0 ? "</a>"  : "" )
 						) : "",
@@ -1448,7 +1448,7 @@ function getSettlementsInfo() {
 
 
 // for test local host REST_API/taxlot-entities-export.json
-// REST API https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-entities-export
+// REST API https://encyclopedia.nahc-mapping.org/taxlot-entities-export
 
 function getTaxlotEventEntitiesDescrInfo() {
     
@@ -1456,7 +1456,7 @@ function getTaxlotEventEntitiesDescrInfo() {
 	taxlot_entities_info_length = 0;
 	
 	$.ajax({
-				url: 'https://nahc-mapping.org/mappingNY/encyclopedia/taxlot-entities-export',
+				url: 'https://encyclopedia.nahc-mapping.org/taxlot-entities-export',
 				headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -1482,7 +1482,7 @@ function getTaxlotEventEntitiesDescrInfo() {
 				    taxlot_event_entities_info[data_info_index] = { 
 					    name: data[i].title.length > 0 ? data[i].title[0].value : "", 
 						name_html: data[i].title.length > 0 ? (  
-						    ( data[i].path.length > 0 ? "<a href='https://nahc-mapping.org/mappingNY/encyclopedia/node/" + data_info_index + "' target='_blank'>" : "" ) +
+						    ( data[i].path.length > 0 ? "<a href='https://encyclopedia.nahc-mapping.org/node/" + data_info_index + "' target='_blank'>" : "" ) +
 						     data[i].title[0].value  +
 							( data[i].path.length > 0 ? "</a>"  : "" )
 						) : "",
@@ -2351,8 +2351,8 @@ i.slash-icon { font-size: 11px; }
 					<a href="explore.html">Explore</a>
 					<a class="active" href="#home">Timeline (BETA)</a>
 					-->
-					<a class="encyclopedia" href="https://newamsterdamhistorycenter.org/full-3d-model/" target="_blank">3D Map <img class="img2" height="18" src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
-					<a class="encyclopedia" href="https://nahc-mapping.org/mappingNY/encyclopedia/" target="_blank">Encyclopedia <img class="img2" height="18" src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
+					<a class="encyclopedia" href="https://newamsterdamhistorycenter.org/full-3d-model/" target="_blank">3D Map <img class="img2" height="18" src="https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
+					<a class="encyclopedia" href="https://encyclopedia.nahc-mapping.org/" target="_blank">Encyclopedia <img class="img2" height="18" src="https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png" width="18" /></a>
 					<!--
 					<a href="about.html">About</a>
 					-->

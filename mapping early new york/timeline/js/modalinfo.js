@@ -34,9 +34,9 @@ modal_header_text["about"] = "ABOUT";
 
 		<br>
 		<br>
-			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/gar-logo.jpg" width="96">
-			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/first_families_logo.png" width="96">
-			<img src="https://nahc-mapping.org/mappingNY/encyclopedia/sites/default/files/dohd_logo.png" width="96">
+			<img src="https://encyclopedia.nahc-mapping.org/sites/default/files/gar-logo.jpg" width="96">
+			<img src="https://encyclopedia.nahc-mapping.org/sites/default/files/first_families_logo.png" width="96">
+			<img src="https://encyclopedia.nahc-mapping.org/sites/default/files/dohd_logo.png" width="96">
 
 			<p>
 		<br>
@@ -211,7 +211,7 @@ modal_content_html["castello-redrawn-plan"] = `
 			The Castello Plan was an illustrated map of New Amsterdam in 1660, created by Jacques Cortelyou. It was rediscovered in the Villa di Castello near Florence, Italy in 1900, and was printed in 1916. See other map overlays of versions of the Castello Plan from Stokes.
 			<p>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/mapcastello-planredrawn-1913" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/mapcastello-planredrawn-1913" target="_blank">See the original map and article</a>.
 			<br>
             `;
 
@@ -225,7 +225,7 @@ modal_content_html["original-castello-plan"] = `
 			Many drafts and illustrations were made of the Castello Plan, including by I.N. Phelps Stokes, who had depictions made and documented heavily in the Iconography of Manhattan Island. See other map overlays of versions of the Castello Plan from Stokes.
 			<p>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/mapcastello-plan1660" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/mapcastello-plan1660" target="_blank">See the original map and article</a>.
 			<br>
             `;
 
@@ -235,7 +235,7 @@ modal_content_html["stokes-key-castello"] = `
 			This map is a key to the lots numbered in the Iconography of Manhattan Island of the Castello Plan (1660). For more information on the Castello Plan, click on the info button for the Original Castello Plan map overlay.
             <br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/mapcastello-plankey-iconography-manhattan-island-vol-ii-stokes-1912" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/mapcastello-plankey-iconography-manhattan-island-vol-ii-stokes-1912" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 			
@@ -244,7 +244,7 @@ modal_content_html["new-amsterdam-legend"] = `
 			This illustration of the Castello Plan by Peter Spier shows the lot numbers in Stokes’ Key to the Castello Plan, along with what look like garden or lot lines. For more information, click the info buttons for Castello Plan map overlays.
             <br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/mapcastello-planlegendofnewamsterdam1979" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/mapcastello-planlegendofnewamsterdam1979" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -253,7 +253,7 @@ modal_content_html["dutch-grants-stokes"] = `
 			This is a map of the Dutch Grants, drawn from property descriptions, meticulously sequenced and documented in Stokes’ Iconography of Manhattan Island. This map was traced to create the Dutch Grants layer, above. Turn on the Dutch Grants layer group to see information from Stokes’, with a link to the original grant documents. Click the info button for the Dutch Grants layer group for more information.
             <br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/map-dutch-grants" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/map-dutch-grants" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -263,7 +263,7 @@ modal_content_html["ratzer-map"] = `
 			<br><br>This is a colored version of the <i>Ratzer Map</i>, which It shows the city and vicinity in the years before the Revolutionary Era, full of the city streets, harbors, farms and fields, and hills, and many well illustrated details. Shown are Brooklyn and Manhattan, and the edges of Queens and New Jersey, right across from Manhattan.
             <br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/ratzer-map" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/ratzer-map" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -280,7 +280,7 @@ Created in 1651 by Joannes Jansson.
 			It was followed by copies and updates by Nicholas Vissher, all the way through the 1680s.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/mapnovi-belgi1651" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/mapnovi-belgi1651" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -292,7 +292,7 @@ modal_content_html["manahatta-map"] = `
 			<p>The Manahatta Map and the Welikia Project were developed by the Wildlife Conservation Society and led by Eric Sanderson.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/manahatta-map" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/manahatta-map" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -314,7 +314,7 @@ modal_content_html["nyc-map-plan"] = `
 A map of New York from an actual survey in 1730, engraved by I. Carwitham and presented to John Montgomerie, the English colonial governor of New York. The map shows buildings that line streets, with a few buildings that are illustrated from a bird's eye view. Comparing with the Castello Plan in 1660, one can see there was already considerable infill along the edges of Manhattan, and the size of the city more than doubled, growing nearly to where the Brooklyn Bridge is today. Though the population increased several times, it was still small, at around 8000 people.
 		<br>
 		<br>
-		This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/plan-city-new-york-actual-survey" target="_blank">See the original map and article</a>.
+		This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/plan-city-new-york-actual-survey" target="_blank">See the original map and article</a>.
 		<br>
 		`;
 			
@@ -326,7 +326,7 @@ modal_content_html["original-grants-map"] = `
 			This map details the grants made in Manhattan through the Dutch period and into the early English period in New York, going all the way up to present day Harlem. It is drawn from property descriptions of original documents, published in Stokes' <i>Iconography of Manhattan Island, Volume 6</i>. It is supplementary to the Dutch Grants map, which you can select in the sidebar.
             <br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/original-grants-farms-stokes" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/original-grants-farms-stokes" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -343,7 +343,7 @@ modal_content_html["ny-bay-and-harbor"] = `
 			<br><br>Because this map is one of the earliest to show the precise locations of settlements that were founded in the 1600s, it is being used to locate places, which are unclear, paved over, or swallowed up by the city in the decades that followed.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/new-york-bay-and-harbor" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/new-york-bay-and-harbor" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -372,7 +372,7 @@ modal_content_html["indian-paths-places"] = `
 			Indian Villages, Paths, Ponds, and Places in Kings County, James A. Kelly, 1946; MAP_1946-01-01; Brooklyn Public Library, Center for Brooklyn History.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/map-indian-villages-paths-ponds-and-villages-kings-county-james-kelly1946" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/map-indian-villages-paths-ponds-and-villages-kings-county-james-kelly1946" target="_blank">See the original map and article</a>.
 			<br>			
 			`;
 
@@ -390,7 +390,7 @@ modal_content_html["indian-paths-places"] = `
 			The notion has persisted for many decades that there were 13 tribes on Long Island. Reviews are needed to verify the accuracy of this, as well as their geographical range. Natives of Long Island did not have borders and land ownership in the same way as the Dutch and English, and tribes were often formed in order to negotiate with and form relationships with colonists. While documents and scholarship over the past centuries have used the term "tribe", many have found it more accurate to use terms like "groups" or "communities" to describe their relationships.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/indian-tribes-long-island" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/indian-tribes-long-island" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -402,7 +402,7 @@ modal_content_html["gravesend-map"] = `
 			This map is of Gravesend, a patent that was granted on December 19th, 1645, and was organized as a town. It is from the <i>Atlas of Long Island, New York</i> in 1873, and the borders shown had not changed since the town was created. However, the coastlines changed quite a bit, with infill over the following decades. Gravesend was the first patent granted to a woman, Deborah Moody. She and others fled religious persecution by the English colonists, and were welcomed by the Dutch. This town and patent was traced, which can be seen in the "Boundaries" layer above.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/gravesend-kings-county-long-island" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/gravesend-kings-county-long-island" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 			
@@ -413,7 +413,7 @@ modal_content_html["beers-long-island-map"] = `
 			This is a large map of Long Island from the <i>Atlas of Long Island, New York</i> in 1873. Most towns and their boundaries did not change much from when they were created in the 1600s. Queens County included what is now Nassau County, and there were towns in King's County that were later merged into Brooklyn. See the corresponding layer above called "Long Island Towns".
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/map-long-island-beers-atlas" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/map-long-island-beers-atlas" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 			
@@ -427,7 +427,7 @@ modal_content_html["long-island-1734"] = `
 			It was created by Cyprian Southack, an English cartographer and colonial naval commander in New England.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/long-island-and-rhode-island" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/long-island-and-rhode-island" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 			
@@ -444,7 +444,7 @@ modal_content_html["new-england-1670"] = `
 			  The map was created by John Scott, a notorious figure in Long Island history, and faded considerably over time.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/new-england-map-1670" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/new-england-map-1670" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
@@ -460,7 +460,7 @@ modal_content_html["new-england-1670"] = `
 			The author is believed by some to be Johannes Vingboons, but historians such as I. N. Stokes and Richard Stephenson consider that unlikely. This colorful copy created around 1670 by an unknown artist.
 			<br>
 			<br>
-			This map is warped to lay over its real location. <a href = "https://nahc-mapping.org/mappingNY/encyclopedia/document/manatus-map-manatvs-gelegen-op-de-noot-sic-riuier" target="_blank">See the original map and article</a>.
+			This map is warped to lay over its real location. <a href = "https://encyclopedia.nahc-mapping.org/document/manatus-map-manatvs-gelegen-op-de-noot-sic-riuier" target="_blank">See the original map and article</a>.
 			<br>
 			`;
 
