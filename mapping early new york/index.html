@@ -93,6 +93,10 @@
     getDutchGrantsInfo();
 	getSettlementsInfo();
 	getTaxlotEventEntitiesDescrInfo();
+	
+	var modal_header_text = [];
+	var modal_content_html = [];
+	getInfoText(modal_header_text, modal_content_html);
 
 		    var layer_view_flag = true;
 			var timeline_pointer_flag = true;
@@ -1246,12 +1250,11 @@ my_tooltip.fadeOut(200);
 				*/
 				
 				$('.trigger-popup').click(function(e) {
-				    //$(this).attr("id")
-				    //alert("view modal  for : " + e.target.id);
-					//console.log(e.target.id);
-					$("div.modal-header h1").text(modal_header_text[e.target.id]);
-					$("div.modal-content").html(modal_content_html[e.target.id]);
-					$("label#open-popup").trigger("click");
+					if (modal_header_text[e.target.id].length > 0) {
+						$("div.modal-header h1").text(modal_header_text[e.target.id]);
+						$("div.modal-content").html(modal_content_html[e.target.id]);
+						$("label#open-popup").trigger("click");
+					}
 				});
 				
 	
