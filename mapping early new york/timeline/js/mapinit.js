@@ -213,9 +213,59 @@ mapboxgl.accessToken =
 			}
 		}
 		
-		function zoomtoNA(){
-			beforeMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
-			afterMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing});
+		function zoomtocenter(centerName){
+			switch(centerName){
+				case 'NA':
+			    beforeMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing, pitch: 0});
+			    afterMap.easeTo({center: na_center, zoom: na_zoom, bearing: na_bearing, pitch: 0});
+				break;
+				case 'Manatus Map':
+			    beforeMap.easeTo({center: [-73.9512,40.4999], zoom: 9, bearing: -89.7, pitch: 0});
+			    afterMap.easeTo({center: [-73.9512,40.4999], zoom: 9, bearing: -89.7, pitch: 0});
+				break;
+				case 'Original Grants':
+			    beforeMap.easeTo({center: [-73.9759,40.7628], zoom: 12, bearing: -51.3, pitch: 0});
+			    afterMap.easeTo({center: [-73.9759,40.7628], zoom: 12, bearing: -51.3, pitch: 0});
+				break;
+				case 'NYC plan':
+			    beforeMap.easeTo({center: [-74.01046,40.70713], zoom: 15, bearing: -51.3, pitch: 0});
+			    afterMap.easeTo({center: [-74.01046,40.70713], zoom: 15, bearing: -51.3, pitch: 0});
+				break;
+				case 'Ratzer Map':
+			    beforeMap.easeTo({center: [-74.00282,40.69929], zoom: 12, bearing: -6.5, pitch: 0});
+			    afterMap.easeTo({center: [-74.00282,40.69929], zoom: 12, bearing: -6.5, pitch: 0});
+				break;
+				case 'Long Island':
+			    beforeMap.easeTo({center: [-73.094,41.1], zoom: 8, bearing: 0, pitch: 0});
+			    afterMap.easeTo({center: [-73.094,41.1], zoom: 8, bearing: 0, pitch: 0});
+				break;
+				case 'NY Bay':
+			    beforeMap.easeTo({center: [-73.9998,40.6662], zoom: 11, bearing: 0, pitch: 0});
+			    afterMap.easeTo({center: [-73.9998,40.6662], zoom: 11, bearing: 0, pitch: 0});
+				break;
+				case 'Gravesend Map':
+			    beforeMap.easeTo({center: [-73.97629,40.60105], zoom: 13, bearing: 0, pitch: 0});
+			    afterMap.easeTo({center: [-73.97629,40.60105], zoom: 13, bearing: 0, pitch: 0});
+				break;
+				case 'Long Island 1873':
+			    beforeMap.easeTo({center: [-73.2739,40.876], zoom: 8.6, bearing: 0, pitch: 0});
+			    afterMap.easeTo({center: [-73.2739,40.876], zoom: 8.6, bearing: 0, pitch: 0});
+				break;
+				case 'Belgii Novi':
+			    beforeMap.easeTo({center: [-74.39,40.911], zoom: 5.7, bearing: -7.2, pitch: 0});
+			    afterMap.easeTo({center: [-74.39,40.911], zoom: 5.7, bearing: -7.2, pitch: 0});
+				break;
+				case 'New England':
+			    beforeMap.easeTo({center: [-72.898,42.015], zoom: 7, bearing: 0, pitch: 0});
+			    afterMap.easeTo({center: [-72.898,42.015], zoom: 7, bearing: 0, pitch: 0});
+				break;
+				/*
+				case '':
+			    beforeMap.easeTo({center: [], zoom: , bearing: , pitch: 0});
+			    afterMap.easeTo({center: [], zoom: , bearing: , pitch: 0});
+				break;
+				*/
+			}
 		}
 
         function zoomLabels(sel_opt) {
@@ -1966,6 +2016,8 @@ addSettlementsLabelsAfterLayers(date);
 addAfterLabelsLayer();
 
 });
+
+
 
 
 
