@@ -29,8 +29,43 @@ $("#infoLayerKarl").slideUp();
 
 // world bounds
 const WorldBounds = [
-    [-180,-90], // [west, south]
-    [180,90]  // [east, north]
+
+	
+	/*
+	//For Sidebar Closed
+	//Less of Greenland shown
+	//Most ideal but Western third of North America cut off when sidebar open
+    [-160,-61], // [west, south]
+    [163,74]  // [east, north]
+	*/
+	
+
+	/*
+	//For Sidebar Open
+	//Western portion beyond lower United States is cut off but Bering Strait seen
+    [-179,-60], // [west, south]
+    [146,75]  // [east, north]
+	*/
+	
+
+	/*
+	//For Sidebar Open
+	//All Eurasia and North America visible
+	//Shows too much of Greenland which is projected too large
+    [-156,-69], // [west, south]
+    [55,82]  // [east, north]
+	*/
+
+	
+	//CURRENT CHOSEN:
+	//For Sidebar Open
+	//Alaska and Eastern most tip of Russia cut off
+	//Shows less but still too much of Greenland which is projected too large
+    [-179,-59], // [west, south]
+    [135,77]  // [east, north]
+	
+	
+
 ];
 
 // area bounds
