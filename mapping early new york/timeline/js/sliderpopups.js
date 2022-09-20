@@ -352,7 +352,12 @@ function buildKarlPopUpInfo(props) {
 				    } else {
 						//popup_html += "<b>" + settlements_info[ref_name].name + "</b>";
 						popup_html += "<b>" + settlements_info[node_id].name + "</b><br>" +
-						              "<b>Date:</b> <i>" + settlements_info[node_id].date + "</i>";
+						              "<b>Date:</b> <i>" + settlements_info[node_id].date + "</i>" +
+									  "<br><br>" +
+					                  "<b>Description:</b>" +
+					                  "<br>" +
+					                  "<i>" + settlements_info[node_id].descr + "</i>";
+									  
 					}
 					
 					
