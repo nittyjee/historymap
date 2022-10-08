@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
  
@@ -163,9 +162,9 @@ my_tooltip.fadeOut(200);
 				
 				$(".manahatta_layer_item").hide();
 				$(".farms_layer_item").hide();
-				$(".dutch_grants_layer_item").hide();
+				//$(".dutch_grants_layer_item").hide();
 				$(".current_lots_layer_item").hide();
-                $("#long-island-section-layers").slideUp();
+                //$("#long-island-section-layers").slideUp();
 				$("#manahatta-maps-section").slideUp();
 				$("#long-island-maps-section").slideUp();
 				$("#long-island-maps-section1").slideUp();
@@ -1498,7 +1497,6 @@ function getTaxlotEventEntitiesDescrInfo() {
 				}
 			}
 		}
-		console.log(taxlot_entities_info);
 
     })
     .fail( function(xhr, textStatus, errorThrown) {
@@ -2397,7 +2395,7 @@ i.slash-icon { font-size: 11px; }
 	  <!-- Dutch Grants  -->
 	  <div class="layer-list-row" >
 	  <input type="checkbox" id="grants_layer_items" name="grants_layer_items">
-	  <i class="fas fa-plus-square compress-expand-icon" id="dutch-grants-layer-caret" onclick="itemsCompressExpand('.dutch_grants_layer_item','#dutch-grants-layer-caret')" ></i>
+	  <i class="fas fa-minus-square compress-expand-icon" id="dutch-grants-layer-caret" onclick="itemsCompressExpand('.dutch_grants_layer_item','#dutch-grants-layer-caret')" ></i>
       <label for="grants_layer_items"> 1640-64 | Dutch Grants  <div class="dummy-label-layer-space"></div></label>
 	    <div class="layer-buttons-block">
 		    <div class="layer-buttons-list">
@@ -2437,6 +2435,46 @@ i.slash-icon { font-size: 11px; }
 	  </div>
     
 
+	  <br>
+	  <center>
+	  <b><i class="fas fa-minus-square compress-expand-icon" id="long-island-section-caret" onclick="sectionCompressExpand('#long-island-section-layers','#long-island-section-caret')" ></i> &nbsp; Long Island</b>
+	  </center>
+
+
+      <div id="long-island-section-layers" >
+      
+	   <!-- Long Island Native Groups Layers -->
+        <div class="layer-list-row" >
+		<input type="checkbox" id="native_groups_layer_items" name="native_groups_layer_items">
+		<i class="fas fa-minus-square compress-expand-icon" id="native-groups-layer-caret" onclick="itemsCompressExpand('.native_groups_layer_item','#native-groups-layer-caret')" ></i>
+		<label for="native_groups_layer_items"> 1600s | Long Island Tribes  <div class="dummy-label-layer-space"></div></label>
+		<div class="layer-buttons-block">
+		    <div class="layer-buttons-list">
+		        <i  class="fa fa-crosshairs zoom-to-layer" onclick="zoomtobounds('LongIsland')" title="Zoom to Layer" ></i>
+		        <i  class="fa fa-info-circle layer-info trigger-popup" id="native-groups-info-layer"  title="Layer Info" ></i>
+		    </div>
+		</div>
+		</div>
+  
+        <!-- Long Island Native Groups Labels -->
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" class="native_groups_layer" id="native_groups_labels" name="native_groups_labels">
+		<label for="native_groups_labels"> <i class="fa fa-comment-dots"  style="color: #0b0ee5;" ></i>  Labels</label>
+		</div>
+  
+		<!-- Long Island Native Groups Area -->
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="native_groups_area" class="native_groups_layer" name="native_groups_area">
+		<label for="native_groups_area"> <i class="fa fa-square" style="color: #FF1493;" ></i> Area</label>
+		</div>
+		
+		<!-- Long Island Native Groups Lines -->
+		<div class="layer-list-row native_groups_layer_item" >
+		&nbsp; &nbsp; &nbsp; <input type="checkbox" id="native_groups_lines" class="native_groups_layer" name="native_groups_lines">
+		<label for="native_groups_lines"> <i class="far fa-square" style="color: #FF0000;" ></i> Borders</label>
+		</div>
+	  
+	  </div>
 
 	  <br>
 
@@ -2676,4 +2714,5 @@ i.slash-icon { font-size: 11px; }
 	</body>
 
 </html>
+
 
