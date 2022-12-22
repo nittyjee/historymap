@@ -1180,6 +1180,7 @@ function LayerManager () {
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
+    
     base = document.createElement('form');
     parentElement.appendChild(base);
 
@@ -2522,12 +2523,9 @@ $("#demoLayerInfo").html(popup_html);
 }
 
 function buildGrantLotsPopUpInfo(props) {
-    console.log(props);
-    const err = new Error('stack');
-    throw err;
 
 				var popup_html =
-				    "<h3></h3><hr>" +
+				    `<h3>${props.title}</h3><hr>` +
 					"<br>" +
 					"<b>Original Dutch Grant: </b>" + props.Lot +
 					"<br>" +

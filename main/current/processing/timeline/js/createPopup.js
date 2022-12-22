@@ -136,6 +136,7 @@ function LayerManager () {
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
+    
     base = document.createElement('form');
     parentElement.appendChild(base);
 

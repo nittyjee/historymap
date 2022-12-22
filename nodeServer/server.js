@@ -1,10 +1,10 @@
 require('dotenv').config();
-/**  
- * This is set up so you can simply drop in a .env file 
- * should you want to publish to the internet. 
+/**
+ * This is set up so you can simply drop in a .env file
+ * should you want to publish to the internet.
  */
 const port = process.env.PORT || 8080;
-const server_ip_address = process.env.IP || '127.0.0.1';
+const serverIpAddress = process.env.IP || '127.0.0.1';
 const express = require('express');
 const app = express();
 
@@ -14,7 +14,7 @@ global.customModules = (moduleName)=>{
   return require(desiredMod);
 };
 
-const mongo = require('MongoConnect');
+const mongo = customModules('MongoConnect');
 const initDb = mongo.initDb;
 
 const initMongo = () => {
@@ -36,12 +36,11 @@ const mountOtherMiddleWare = () => {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'pug');
   app.engine('html', require('pug').renderFile);
-  // API Routes: 
+  // API Routes:
   require('./router')(app);
-}
+};
 
-
-// Start app: 
-app.listen(port, server_ip_address, function () {
-    console.log(`Listening on ${port}, ip address ${server_ip_address}`);
+// Start app:
+app.listen(port, serverIpAddress, function () {
+  console.log(`Listening on ${port}, ip address ${serverIpAddress}`);
 });

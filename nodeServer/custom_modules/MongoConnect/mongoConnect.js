@@ -16,8 +16,7 @@ function initDb(callback) {
   if (_db) {
     console.warn(`Trying to init DB again!`);
     return callback(null, _db);
-  }
-  else{
+  } else {
     client.connect(connected);
   }
 
