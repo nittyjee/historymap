@@ -103,7 +103,7 @@ function addBeforeLayers(yr, date) {
                     );
 					
 					//console.log(e.lngLat.lng);
-                 
+                 /*
                     var PopUpHTML = "";
 					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
@@ -111,7 +111,7 @@ function addBeforeLayers(yr, date) {
 						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
 					}
 					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";		
-					
+					*/
 					
 					coordinates = e.features[0].geometry.coordinates.slice();
                 //var description = e.features[0].properties.description;
@@ -126,10 +126,8 @@ function addBeforeLayers(yr, date) {
 
                 //BEFORE MAP POP UP CONTENTS
                 beforeMapDutchGrantPopUp
-                    .setLngLat(e.lngLat)
-					.setHTML(
-                        PopUpHTML
-                    );
+                  .setLngLat(e.lngLat)
+        					.setDOMContent(createHoverPopup('infoLayerDutchGrantsPopUp', e, 'Dutch grant lot'));
 				
 				}
 				

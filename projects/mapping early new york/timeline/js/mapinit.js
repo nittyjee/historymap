@@ -1204,7 +1204,8 @@ afterMap.on("error", function (e) {
 			        var highPopUpHTML = "";
 					if( typeof dutch_grant_lots_info[event.features[0].properties.Lot] == "undefined" ) {
 						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + event.features[0].properties.name + "<br>";	
-					} else {	
+					} else {
+            // name_txt does exist in the data set
 						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[event.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[event.features[0].properties.Lot].name_txt : event.features[0].properties.name ) + "<br>";
 					}
 					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + event.features[0].properties.Lot + "</div>";

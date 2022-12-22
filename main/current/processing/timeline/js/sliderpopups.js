@@ -203,11 +203,13 @@ $("#demoLayerInfo").html(popup_html);
 
 }
 
-
-
 function buildGrantLotsPopUpInfo(props) {
+    console.log(props);
+    const err = new Error('stack');
+    throw err;
+
 				var popup_html =
-				    "<h3>Grant Lot Division</h3><hr>" +
+				    "<h3></h3><hr>" +
 					"<br>" +
 					"<b>Original Dutch Grant: </b>" + props.Lot +
 					"<br>" +
@@ -236,8 +238,8 @@ function buildGrantLotsPopUpInfo(props) {
 
 function buildDutchGrantPopUpInfo(props) {
 	        var popup_html = "";
-			//console.log(props);
-	        //console.log(dutch_grant_lots_info[props.Lot]);
+			console.log(props);
+	    console.log(dutch_grant_lots_info[props.Lot]);
 			if( typeof dutch_grant_lots_info[props.Lot] == "undefined" ) {
 			    popup_html = 
 				    "<h3>Dutch Grant</h3><hr>" +

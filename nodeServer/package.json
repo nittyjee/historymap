@@ -1,0 +1,45 @@
+{
+  "name": "historymap",
+  "version": "1.0.0",
+  "description": "A prototype of an app to take various user inputs relating to historical context on a map. ",
+  "main": "startApp.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/festinalente/historymap.git"
+  },
+  "keywords": [
+    "history",
+    "layers",
+    "leaflet",
+    "MapBox",
+    "GL"
+  ],
+  "author": "Tomás Swift-Metcalfe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/festinalente/historymap/issues"
+  },
+  "homepage": "https://github.com/festinalente/historymap#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "grunt": "^1.5.3",
+    "mongodb": "^4.12.1",
+    "pug": "^3.0.2",
+    "semistandard": "^16.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^3.1.0",
+    "node-sass": "^8.0.0"
+  }
+}

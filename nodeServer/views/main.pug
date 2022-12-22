@@ -1,0 +1,20 @@
+doctype html
+-{language}
+html(lang="en-EU" xml:lang="en-EU")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(name="theme-color" content="#3366cc")
+    link(rel="stylesheet" href="/static/styles/master.css" async)
+    link(rel='stylesheet' href='https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css')
+  body
+    h1 History map:
+    #mapControls
+      button save
+      button edit
+    #map
+  footer
+    script(src='/static/js/events.js')
+    script(src='/static/js/mapFunctions.js')
+    script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')

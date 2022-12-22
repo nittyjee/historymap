@@ -1,4 +1,5 @@
 
+
 //////////////////
 // Dynamic Layers
 //////////////////
@@ -17,6 +18,7 @@ function addAfterLayers(yr, date) {
 	    //ADD GRANTS POLYGONS
         
 		//*A#
+    
         afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "grants1-5sp9tb-right-highlighted",
@@ -45,87 +47,75 @@ function addAfterLayers(yr, date) {
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
+
+
         afterMap.addLayer({
-			//ID: CHANGE THIS, 1 OF 3
-			id: "grants1-5sp9tb-right",
-			type: "fill",
-			source: {
-				type: "vector",
-				//URL: CHANGE THIS, 2 OF 3
-				url: "mapbox://nittyjee.b5bpfqeb"
-			},
-			layout: {
-                visibility: document.getElementById('grants_layer').checked ? "visible" : "none",
-            },
-			"source-layer": "grants1-5sp9tb",
-			paint: {
-				"fill-color": "#e3ed58",
-				"fill-opacity": [ 
-					    'case',
-                        ['boolean', ['feature-state', 'hover'], false],
-                            0.8,
-                            0.45
-                        ],
-				"fill-outline-color": "#FF0000"
+          //ID: CHANGE THIS, 1 OF 3
+          id: "grants1-5sp9tb-right",
+          type: "fill",
+          source: {
+            type: "vector",
+            //URL: CHANGE THIS, 2 OF 3
+            url: "mapbox://nittyjee.b5bpfqeb"
+          },
+          layout: {
+                    visibility: document.getElementById('grants_layer').checked ? "visible" : "none",
+                },
+          "source-layer": "grants1-5sp9tb",
+          paint: {
+            "fill-color": "#e3ed58",
+            "fill-opacity": [ 
+                  'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                                0.8,
+                                0.45
+                            ],
+            "fill-outline-color": "#FF0000"
 
-			},
+          },
 
-			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
-		});
+          filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+        });
 
-
+    
         //CURSOR ON HOVER
             //ON HOVER
 			afterMap.on('mouseenter', 'grants1-5sp9tb-right', function (e) {
-                afterMap.getCanvas().style.cursor = 'pointer';
+        afterMap.getCanvas().style.cursor = 'pointer';
 				afterMapDutchGrantPopUp.setLngLat(e.lngLat).addTo(afterMap);
 			});
 			
-            afterMap.on('mousemove', 'grants1-5sp9tb-right', function (e) {
+      afterMap.on('mousemove', 'grants1-5sp9tb-right', function (e) {
+        console.log(e.features);
 				if (e.features.length > 0) {
-                    if (hoveredDutchGrantIdRight) {
-                        afterMap.setFeatureState(
-                            { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
-                            { hover: false }
-                        );
-                    }
-					//console.log(e.features[0]);
-                    hoveredDutchGrantIdRight = e.features[0].id;
-                    afterMap.setFeatureState(
-                        { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
-                        { hover: true }
-                    );
+          if (hoveredDutchGrantIdRight) {
+            afterMap.setFeatureState(
+              { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+              { hover: false }
+          );
+        }
 					
-					//console.log(e.lngLat.lng);
-                    var PopUpHTML = "";
-					if( typeof dutch_grant_lots_info[e.features[0].properties.Lot] == "undefined" ) {
-						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + e.features[0].properties.name + "<br>";	
-					} else {	
-						PopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[e.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[e.features[0].properties.Lot].name_txt : e.features[0].properties.name ) + "<br>";
-					}
-					PopUpHTML += "<b>Dutch Grant Lot: </b>" + e.features[0].properties.Lot + "</div>";
-					
-					coordinates = e.features[0].geometry.coordinates.slice();
-                //var description = e.features[0].properties.description;
+        hoveredDutchGrantIdRight = e.features[0].id;
+        afterMap.setFeatureState(
+          { source: 'grants1-5sp9tb-right', sourceLayer: 'grants1-5sp9tb', id: hoveredDutchGrantIdRight},
+          { hover: true }
+        );
+	
+				coordinates = e.features[0].geometry.coordinates.slice();
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
 
-                // Ensure that if the map is zoomed out such that multiple
-                // copies of the feature are visible, the popup appears
-                // over the copy being pointed to.
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }
-
-
-                //AFTER MAP POP UP CONTENTS
-                afterMapDutchGrantPopUp
-                    .setLngLat(e.lngLat)
-					.setHTML(
-                        PopUpHTML
-                    );
+        //AFTER MAP POP UP CONTENTS
+        afterMapDutchGrantPopUp
+          .setLngLat(e.lngLat)
+          .setDOMContent(createHoverPopup('infoLayerDutchGrantsPopUp', e, 'Dutch Grant Lot'));
 				
-				}
-				
-            });
+			}
+		});
 
             //OFF HOVER
 			afterMap.on('mouseleave', 'grants1-5sp9tb-right', function () {
@@ -144,7 +134,7 @@ function addAfterLayers(yr, date) {
 		
 
 		//ADD TAX LOT POINTS
-
+/*
 		afterMap.addLayer({
 			//ID: CHANGE THIS, 1 OF 3
 			id: "c7_dates-ajsksu-right",
@@ -217,8 +207,8 @@ function addAfterLayers(yr, date) {
 			filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
 		});
 
-
-
+  */  
+  
 		//TAX LOT POPUP
 		// CLICK AND OPEN POPUP
 		//*A
@@ -252,10 +242,10 @@ function addAfterLayers(yr, date) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 				
-				        afterMapPopUp
-				            .setLngLat(coordinates)
-							.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
-                            .addTo(afterMap);
+				afterMapPopUp
+				  .setLngLat(coordinates)
+					.setHTML("<div class='demoLayerInfoPopUp'><b><h2>Taxlot: <a href='https://encyclopedia.nahc-mapping.org/taxlot/c7' target='_blank'>C7</a></h2></b></div>")
+          .addTo(afterMap);
 		});
 
 		// CHANGE TO POINTER WHEN NOT HOVERING
@@ -496,6 +486,7 @@ function addLongIslandNativeGroupsAfterLayers() {
                     .setLngLat(e.lngLat)
 					.setHTML(
                         PopUpHTML
+                        //createHoverPopup('infoLayerCastelloPopUp');
                     );
 				
 				}

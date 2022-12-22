@@ -64,7 +64,8 @@
         <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
-		<link href='timeline/index.css' rel='stylesheet' />
+		<!--<link href='timeline/index.css' rel='stylesheet' /> -->
+    <link href='../../../frontend/production/master.css' rel='stylesheet' />
 
         <!-- Load Awesome Icons 4.7.0 -->
 		<!--
@@ -763,7 +764,7 @@ function getDutchGrantsInfo() {
 						end: data[i].end, 
 						notes: data[i].note, 
 						descr: data[i].description,
-						builds: data[i].images.length > 0 ?  data[i].images.split(", ") : []
+						builds: data[i].images.length > 0 ? data[i].images.split(", ") : []
 					};  
           
                     dutch_grant_lots_info_length += 1;
@@ -2053,12 +2054,10 @@ i.slash-icon { font-size: 11px; }
 	
 	
 	
-		<!-- MAP.JS SOURCE -->
-		<script src="timeline/js/mapinit.js"></script>
-		<script src="timeline/js/beforelayers.js"></script>
-		<script src="timeline/js/afterlayers.js"></script>
-		<script src="timeline/js/sliderpopups.js"></script>
-        
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css" type="text/css">
+    <script src="../../../frontend/production/master.js"></script>
 
 	</body>
 

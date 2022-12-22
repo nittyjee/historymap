@@ -87,12 +87,12 @@ mapboxgl.accessToken =
         });
 
         var afterMap = new mapboxgl.Map({
-            container: 'after',
-            style: 'mapbox://styles/nittyjee/cjowjzrig5pje2rmmnjb5b0y2',
-            center: [0, 0],
-            hash: true,
-            zoom: 0,
-			attributionControl: false
+          container: 'after',
+          style: 'mapbox://styles/nittyjee/cjowjzrig5pje2rmmnjb5b0y2',
+          center: [0, 0],
+          hash: true,
+          zoom: 0,
+			    attributionControl: false
         });
 
         var map = new mapboxgl.Compare(beforeMap, afterMap, {
@@ -397,7 +397,7 @@ beforeMap.on("load", function () {
             GrantLotsHandle(e);
 						
 		}).on('click', 'grants1-5sp9tb-left' , function (e) {
-				        
+      console.log(e);
 			DutchGrantsClickHandle(e);
 						
 		}).on('click', 'native-groups-area-left' , function (e) {
@@ -414,7 +414,6 @@ beforeMap.on("load", function () {
 });
 
 afterMap.on("load", function () {
-	console.log("load");
 	//*A var sliderVal = $("#date").val();
 	var sliderVal = moment($("#date").val()).unix();
 	var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
@@ -431,7 +430,7 @@ afterMap.on("load", function () {
             GrantLotsHandle(e);
 						
 		}).on('click', 'grants1-5sp9tb-right' , function (e) {
-					
+      console.log(e);
 		    DutchGrantsClickHandle(e);
 						
 		}).on('click', 'native-groups-area-right' , function (e) {
@@ -480,13 +479,15 @@ afterMap.on("error", function (e) {
 
         function GrantLotsHandle(event) { 
 		            
-					var highPopUpHTML = "<div class='infoLayerGrantLotsPopUp'>" +
+					var highPopUpHTML = createClickedFeaturePopup ('infoLayerGrantLotsPopUp', event, null);
+          
+          /*"<div class='infoLayerGrantLotsPopUp'>" +
 									    event.features[0].properties.name + "<br>" +
 										"<b>Start:</b> " + event.features[0].properties.day1 + ", " + event.features[0].properties.year1 + "<br>" +
 										"<b>End:</b> " + event.features[0].properties.day2 + ", " + event.features[0].properties.year2 + "<br>" +
 										//"<br>" +
 										"<b>Lot Division: </b>" + event.features[0].properties.dutchlot +
-									    "</div>";
+									    "</div>";*/
 		
 						if(layer_view_flag) {
 							if(grant_lots_view_id == event.features[0].id) {
@@ -505,9 +506,9 @@ afterMap.on("error", function (e) {
 							            $("#infoLayerGrantLots").slideDown();
 								    }
 								    grant_lots_view_flag = true;
-									afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									afterHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 									if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
-									beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 									if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
 								}
 							} else {
@@ -520,9 +521,9 @@ afterMap.on("error", function (e) {
 							        $("#infoLayerGrantLots").slideDown();
 								}
 								grant_lots_view_flag = true;
-								afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								afterHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 								if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
-								beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 								if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
 							}
 							grant_lots_view_id = event.features[0].id;
@@ -537,9 +538,9 @@ afterMap.on("error", function (e) {
 							    $('#view-hide-layer-panel').trigger('click');
 							}
 							grant_lots_view_id = null;
-							afterHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							afterHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 							if(!afterHighGrantLotsPopUp.isOpen()) afterHighGrantLotsPopUp.addTo(afterMap);
-							beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+							beforeHighGrantLotsPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 							if(!beforeHighGrantLotsPopUp.isOpen()) beforeHighGrantLotsPopUp.addTo(beforeMap);
 					    } 
 						
@@ -582,15 +583,12 @@ afterMap.on("error", function (e) {
 	
 	
 	function DutchGrantsClickHandle(event) {
-	
-			        var highPopUpHTML = "";
-					if( typeof dutch_grant_lots_info[event.features[0].properties.Lot] == "undefined" ) {
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + event.features[0].properties.name + "<br>";	
-					} else {	
-						highPopUpHTML = "<div class='infoLayerDutchGrantsPopUp'>" + ( dutch_grant_lots_info[event.features[0].properties.Lot].name_txt.length > 0 ? dutch_grant_lots_info[event.features[0].properties.Lot].name_txt : event.features[0].properties.name ) + "<br>";
-					}
-					highPopUpHTML += "<b>Dutch Grant Lot: </b>" + event.features[0].properties.Lot + "</div>";
-						
+    console.log('DUTCH GRANTS');
+    
+    console.log(event);
+	  // var highPopUpHTML = createHoverPopup('infoLayerDutchGrantsPopUp', event, 'Dutch grant lot');
+    var highPopUpHTML = createClickedFeaturePopup ('infoLayerGrantLotsPopUp', event, null);
+    
 						if(layer_view_flag) {
 							if(dgrants_layer_view_id == event.features[0].id) {
 								if(dgrants_layer_view_flag) {
@@ -624,9 +622,9 @@ afterMap.on("error", function (e) {
                                        { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
                                        { hover: true }
                                     );
-									afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 									if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-									beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+									beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 									if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 								}
 							} else {
@@ -654,9 +652,9 @@ afterMap.on("error", function (e) {
                                     { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: event.features[0].id},
                                     { hover: true }
                                 );
-                                afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+                                afterHighMapGrantLotPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 								if(!afterHighMapGrantLotPopUp.isOpen()) afterHighMapGrantLotPopUp.addTo(afterMap);
-								beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setHTML(highPopUpHTML);
+								beforeHighMapGrantLotPopUp.setLngLat(event.lngLat).setDOMContent(highPopUpHTML);
 							    if(!beforeHighMapGrantLotPopUp.isOpen()) beforeHighMapGrantLotPopUp.addTo(beforeMap);
 							}
 							dgrants_layer_view_id = event.features[0].id;
@@ -903,4 +901,3 @@ afterMap.on('style.load', function () {
 	addGrantLotsLinesAfterLayers(date);
 	addLongIslandNativeGroupsAfterLayers();
 });
-

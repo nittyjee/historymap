@@ -1,0 +1,55 @@
+{
+  "_from": "MongoConnect@1.0.1",
+  "_id": "MongoConnect@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-Hxu1aNuwnF0lDON+oebRLAqElW76Qa8G8eOpSC/KRQr7J8QE59XXL2YYw/OkH7CTDrV8mqTp89s0BEDv0VVEYw==",
+  "_location": "/MongoConnect",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "MongoConnect@1.0.1",
+    "name": "MongoConnect",
+    "escapedName": "MongoConnect",
+    "rawSpec": "1.0.1",
+    "saveSpec": null,
+    "fetchSpec": "1.0.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://localhost:4873/MongoConnect/-/MongoConnect-1.0.1.tgz",
+  "_shasum": "f1861bcf61078ad46056582381d8802c43b84466",
+  "_spec": "MongoConnect@1.0.1",
+  "_where": "/home/tomas/tomas/swiftMo2020",
+  "author": {
+    "name": "Tomás Swift-Metcalfe"
+  },
+  "bugs": {
+    "url": "https://github.com/festinalente/MongoConnect/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "mongodb": "^4.1.0"
+  },
+  "deprecated": false,
+  "description": "A little module for handling a DB connection pool",
+  "homepage": "https://github.com/festinalente/MongoConnect#readme",
+  "keywords": [
+    "pool",
+    "connections",
+    "mongodb"
+  ],
+  "license": "GPL-v3",
+  "main": "mongoConnect.js",
+  "name": "MongoConnect",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/festinalente/MongoConnect.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.1"
+}

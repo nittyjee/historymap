@@ -1,0 +1,47 @@
+require('dotenv').config();
+/**  
+ * This is set up so you can simply drop in a .env file 
+ * should you want to publish to the internet. 
+ */
+const port = process.env.PORT || 8080;
+const server_ip_address = process.env.IP || '127.0.0.1';
+const express = require('express');
+const app = express();
+
+global.customModules = (moduleName)=>{
+  const path = require('path');
+  const desiredMod = path.resolve(process.env.PWD + '/custom_modules/' + moduleName);
+  return require(desiredMod);
+};
+
+const mongo = require('MongoConnect');
+const initDb = mongo.initDb;
+
+const initMongo = () => {
+  const promise = new Promise(function (resolve, reject) {
+    initDb(function (err) {
+      if (!err) {
+        console.log('DB init');
+        resolve();
+      } else {
+        reject(err);
+      }
+    });
+  });
+  return promise;
+};
+
+const mountOtherMiddleWare = () => {
+  app.use('/static', express.static(__dirname + '/static'));
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'pug');
+  app.engine('html', require('pug').renderFile);
+  // API Routes: 
+  require('./router')(app);
+}
+
+
+// Start app: 
+app.listen(port, server_ip_address, function () {
+    console.log(`Listening on ${port}, ip address ${server_ip_address}`);
+});
