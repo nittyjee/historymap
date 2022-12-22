@@ -19,8 +19,10 @@ Node also run build tools in development.
 ## MongoDB
 The app is currently configured to use MongoDB. You will have to set up
 a DB for your project, this is very easy using Mongot Atlas. 
+
 Config is as simple as adding a .env file with a user, password, DB name and connection URL. 
-You can use the example given for testing. 
+You can use the example given for testing. Note that .env and config files should not *usually* 
+be commited to a Git repo. 
 
 # Build tools used: 
 ## Grunt -task runner: 
