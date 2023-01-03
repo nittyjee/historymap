@@ -1,0 +1,13 @@
+.layerform {
+  input[type="text"] {
+    display: block;
+
+  }
+  input[type="checkbox"] {
+    display: inline-block; 
+  }
+
+  select {
+    display: block; 
+  }  
+} 

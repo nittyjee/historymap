@@ -1,0 +1,10 @@
+.layerform input[type="text"] {
+  display: block; }
+
+.layerform input[type="checkbox"] {
+  display: inline-block; }
+
+.layerform select {
+  display: block; }
+
+/*# sourceMappingURL=scssDerived.css.map */
