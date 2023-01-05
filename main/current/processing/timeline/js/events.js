@@ -15,5 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   parent.querySelector('#source_layer').value = "c7_dates-ajsksu";
   parent.querySelector('#database').value = "mapbox://nittyjee.8krf945a";
   parent.querySelector('#group').value = "1643-75|Demo Taxlot: C7 TEST";
+  parent.querySelector('#color').value = "blue";
+  parent.querySelector('#opacity').value = "0.7";
 });
 

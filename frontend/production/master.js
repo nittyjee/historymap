@@ -1347,34 +1347,12 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions); 
+    console.log(`map.addLayer(${JSON.stringify(transpilledOptions)});`)
+
   }
 }
 
 
-function addDrawFunctionality (map) {
-  const draw = new MapboxDraw({
-    displayControlsDefault: false,
-    // Select which mapbox-gl-draw control buttons to add to the map.
-    controls: {
-        polygon: true,
-        trash: true
-    },
-    // Set mapbox-gl-draw to draw by default.
-    // The user does not have to click the polygon control button first.
-    defaultMode: 'draw_polygon'
-  });
-  
-  // map.on('draw.create', consoleLogPolygon);
-  // map.on('draw.delete', consoleLogPolygon);
-  map.on('draw.update', consoleLogPolygon);
-   
-  function consoleLogPolygon(e) {
-    const data = draw.getAll();
-    console.log(JSON.stringify(data));
-  }
-  
-  map.addControl(draw);
-}
   /**
     * Onload event
     * @event DOMContentLoaded
@@ -1392,6 +1370,8 @@ document.addEventListener('DOMContentLoaded', () => {
   parent.querySelector('#source_layer').value = "c7_dates-ajsksu";
   parent.querySelector('#database').value = "mapbox://nittyjee.8krf945a";
   parent.querySelector('#group').value = "1643-75|Demo Taxlot: C7 TEST";
+  parent.querySelector('#color').value = "blue";
+  parent.querySelector('#opacity').value = "0.7";
 });
 
 var grant_lots_view_id = null,

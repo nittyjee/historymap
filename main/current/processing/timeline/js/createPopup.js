@@ -303,6 +303,8 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions); 
+    console.log(`map.addLayer(${JSON.stringify(transpilledOptions)});`)
+
   }
 }
 
