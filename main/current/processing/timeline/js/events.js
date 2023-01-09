@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const parent = document.querySelector('#studioMenu');
   const layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
+  layerControls.generateAddMapForm(parent);
 
+  parent.querySelector('#target_map').value = "afterMap";
   parent.querySelector('#name').value = "testing testing";
   parent.querySelector('#id').value = "c7_dates-ajsksu-right-TEST";
   parent.querySelector('#source_layer').value = "c7_dates-ajsksu";
