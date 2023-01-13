@@ -197,7 +197,7 @@ function LayerManager () {
       zoom: 0,
       attributionControl: false
     });`
-    toggleModal (codeForMap);
+    // toggleModal (codeForMap);
   };
 
   this.generateAddLayerForm = (parentElement) => {
@@ -374,7 +374,7 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions); 
-    toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
+    // toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
 }
 
