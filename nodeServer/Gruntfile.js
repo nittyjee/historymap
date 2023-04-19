@@ -5,8 +5,9 @@ module.exports = (grunt) => {
     concat: {
       js: {
         options: { separator: '' },
-        src: ['../main/current/processing/timeline/js/*.js'],
-        dest: '../frontend/production/master.js'
+        //'../main/current/processing/timeline/js/*.js', 
+        src: ['./static/js/*.js'],
+        dest: './static/concatenated/master.js'
       },
       css: {
         options: { separator: '' },
@@ -27,7 +28,7 @@ module.exports = (grunt) => {
     },
     watch: {
       js: {
-        files: ['../main/current/processing/timeline/js/*.js'],
+        files: ['../main/current/processing/timeline/js/*.js', './static/js/*.js'],
         tasks: ['concat:js']
       },
       css: {

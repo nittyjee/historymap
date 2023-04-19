@@ -8,13 +8,13 @@ const serverIpAddress = process.env.IP || '127.0.0.1';
 const express = require('express');
 const app = express();
 
-global.customModules = (moduleName)=>{
+global.customModules = (moduleName) => {
   const path = require('path');
   const desiredMod = path.resolve(process.env.PWD + '/custom_modules/' + moduleName);
   return require(desiredMod);
 };
 
-const mongo = customModules('MongoConnect');
+const mongo = customModules('mongoConnect');
 const initDb = mongo.initDb;
 
 const initMongo = () => {
@@ -41,6 +41,17 @@ const mountOtherMiddleWare = () => {
 };
 
 // Start app:
-app.listen(port, serverIpAddress, function () {
-  console.log(`Listening on ${port}, ip address ${serverIpAddress}`);
-});
+function startApp (port) {
+  initMongo()
+    // .then(initMongoSessionControl)
+    .then(mountOtherMiddleWare)
+    .then(() => {
+      app.listen(port, serverIpAddress, function () {
+        console.log(`Listening on ${port}, ip address ${serverIpAddress}`);
+      });
+    }).catch((err) => {
+      console.warn(err);
+    });
+}
+
+module.exports = { startApp };
