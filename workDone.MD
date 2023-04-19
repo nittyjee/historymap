@@ -10,6 +10,8 @@ Start Make template with Pug.
 
 Rebuilding API in Node.js
 
+Wrote DB access function and improved general security of access using enviromental variables. 
+
 ### 19/4/2023
 
 Begun rewrite of index.html to pug and separate .js files.
@@ -18,4 +20,5 @@ Wrote functions to manipulate data into correct format for subsequent saving in 
 
 Created new database with data already transformed.
 
+Changed passwords
 

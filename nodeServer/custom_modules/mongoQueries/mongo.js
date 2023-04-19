@@ -25,7 +25,7 @@ const db = () => {
  * Makes a connection to the dutchLots connection
  * @returns dutchLots connection
  */
-const dutchLots = db().db(dbname).collection('dutchLots');
+const dutchLots = db().db(dbname).collection('dutchLots++');
 
 /**
   * Get post titles
