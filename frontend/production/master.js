@@ -1175,12 +1175,119 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
 }
 
 function LayerManager () {
+  // eventually a store to manage layers: 
   const layers = [];
   let base;
+  let mapBase;
+
+  this.generateAddMapForm = (parentElement) => {
+    const data = {};
+
+    function textInputGenerator (fieldName, target) {          
+      const nameLabel = document.createElement('label');
+      nameLabel.htmlFor = fieldName;
+      nameLabel.innerHTML = `${fieldName}: `;
+      target.appendChild(nameLabel);
+  
+      const name = document.createElement('input');
+      name.setAttribute('type', 'text');
+      name.id = fieldName.replaceAll(' ', '_');
+      target.appendChild(name);
+  
+      name.addEventListener('input', () => {
+        data[fieldName] = name.value;
+      });
+  
+      const br = document.createElement('br');
+      target.appendChild(br);
+    }
+
+    mapBase = document.createElement('form');
+    parentElement.appendChild(mapBase);
+
+    mapBase.classList.add('layerform');
+    const title = document.createElement('p');
+    title.classList.add('title');
+    title.textContent = 'Add Map';
+    mapBase.appendChild(title);
+
+    const fields = ['title', 'id', 'style'];
+    fields.forEach(fieldName => {
+      textInputGenerator (fieldName, mapBase);
+    });
+
+    const submit = document.createElement('input');
+    submit.setAttribute('type', 'submit');
+    submit.textContent = 'submit';
+    mapBase.appendChild(submit);
+
+    
+    mapBase.addEventListener('submit', (event)=> {
+      event.preventDefault();
+      fields.forEach((id)=> {        
+        data[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+      });
+
+      createMap(data);
+    });
+  };
+
+  function createMap (data) { 
+    const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
+      container: '$',
+      style: ${data.style},
+      center: [0, 0],
+      hash: true,
+      zoom: 0,
+      attributionControl: false
+    });`
+    toggleModal (codeForMap);
+  };
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
-    
+    function textInputGenerator (fieldName, target) {          
+      const nameLabel = document.createElement('label');
+      nameLabel.htmlFor = fieldName;
+      nameLabel.innerHTML = `${fieldName}: `;
+      target.appendChild(nameLabel);
+  
+      const name = document.createElement('input');
+      name.setAttribute('type', 'text');
+      name.id = fieldName.replaceAll(' ', '_');
+      target.appendChild(name);
+  
+      name.addEventListener('input', () => {
+        data[fieldName] = name.value;
+      });
+  
+      const br = document.createElement('br');
+      target.appendChild(br);
+    }
+  
+    function generateCheckbox (checkboxName) {
+      const nameLabel = document.createElement('label');
+      nameLabel.htmlFor = checkboxName;
+      nameLabel.innerHTML = `${checkboxName}: `;
+      base.appendChild(nameLabel);
+      
+      const name = document.createElement('input');
+      name.setAttribute('type', 'checkbox');
+      name.id = checkboxName;
+      base.appendChild(name);
+  
+      name.addEventListener('click', () => {
+        if(name.checked === true) {
+          data[checkboxName] = 1;
+        } else {
+          data[checkboxName] = 0;
+        }
+      });
+  
+      const br = document.createElement('br');
+      base.appendChild(br);
+    }
+  
     base = document.createElement('form');
     parentElement.appendChild(base);
 
@@ -1190,27 +1297,10 @@ function LayerManager () {
     title.textContent = 'Add Layer';
     base.appendChild(title);
 
-    const fields = ['name', 'source layer', 'id', 'database', 'group', 'color', 'opacity'];
-    function textInputGenerator (fieldName) {          
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = fieldName;
-      nameLabel.innerHTML = `${fieldName}: `;
-      base.appendChild(nameLabel);
-  
-      const name = document.createElement('input');
-      name.setAttribute('type', 'text');
-      name.id = fieldName.replaceAll(' ', '_');
-      base.appendChild(name);
-
-      name.addEventListener('input', () => {
-        data[fieldName] = name.value;
-      });
-  
-      const br = document.createElement('br');
-      base.appendChild(br);
-    }
+    const fields = ['target map', 'name', 'source layer', 'id', 'database', 'group', 'color', 'opacity'];
+    
     fields.forEach(fieldName => {
-      textInputGenerator (fieldName);
+      textInputGenerator (fieldName, base);
     });
   
     const types = ['circle', 'line', 'fill'];
@@ -1232,28 +1322,6 @@ function LayerManager () {
     }
 
     const checkboxes =  ['hover', 'click', 'sidebar', 'sliderCheckBox'];
-    function generateCheckbox (checkboxName) {
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = checkboxName;
-      nameLabel.innerHTML = `${checkboxName}: `;
-      base.appendChild(nameLabel);
-      
-      const name = document.createElement('input');
-      name.setAttribute('type', 'checkbox');
-      name.id = checkboxName;
-      base.appendChild(name);
-
-      name.addEventListener('click', () => {
-        if(name.checked === true) {
-          data[checkboxName] = 1;
-        } else {
-          data[checkboxName] = 0;
-        }
-      });
-
-      const br = document.createElement('br');
-      base.appendChild(br);
-    }
 
     checkboxes.forEach(label => {
       generateCheckbox(label);
@@ -1272,11 +1340,14 @@ function LayerManager () {
       });
 
       data.type = base.querySelector(`select`).value;
-      createLayer(afterMap, data);
+      const targetMap = document.querySelector('#target_map').value;
+      createLayer(targetMap, data);
     });
   };
 
-  function createLayer (map, data) {
+  function createLayer (targetMap, data) {
+    // hack, the maps be in an array of objects, not floating about in the global scope: 
+    const map = window[targetMap];
     const transpilledOptions = {
       id: '',
       type: '',
@@ -1347,10 +1418,28 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions); 
+    toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
 }
 
+<<<<<<< HEAD
 
+=======
+function toggleModal (jsCode) {
+  const modal = document.querySelector('.modal');
+  const header = modal.querySelector('.modal-header h1');
+  const content = modal.querySelector('.modal-content');
+  const close = modal.querySelector('#close');
+  header.textContent = 'Code:';
+  content.textContent = jsCode;
+  document.querySelector('.modal').style.display = 'flex';
+  close.addEventListener('click', () => {
+    document.querySelector('.modal').style.display = 'none';
+    header.textContent = '';
+    content.textContent = '';
+  });
+}
+>>>>>>> f63892d6e8595feea022c922128fc1a8156e9f69
   /**
     * Onload event
     * @event DOMContentLoaded
@@ -1362,12 +1451,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const parent = document.querySelector('#studioMenu');
   const layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
+  layerControls.generateAddMapForm(parent);
 
+  parent.querySelector('#target_map').value = "afterMap";
   parent.querySelector('#name').value = "testing testing";
   parent.querySelector('#id').value = "c7_dates-ajsksu-right-TEST";
   parent.querySelector('#source_layer').value = "c7_dates-ajsksu";
   parent.querySelector('#database').value = "mapbox://nittyjee.8krf945a";
   parent.querySelector('#group').value = "1643-75|Demo Taxlot: C7 TEST";
+  parent.querySelector('#color').value = "blue";
+  parent.querySelector('#opacity').value = "0.7";
 });
 
 var grant_lots_view_id = null,
@@ -2716,6 +2809,7 @@ function buildCurrLotsPopUpInfo(props) {
 
 
 
+<<<<<<< HEAD
 /**
  * @param {Object|string} items What you want to send to the server.
  * @param {string} route The route to the server (URL)
@@ -2923,3 +3017,5 @@ function MapConstructor (baseHTMLElement, height) {
   };
 
 };
+=======
+>>>>>>> f63892d6e8595feea022c922128fc1a8156e9f69

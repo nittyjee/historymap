@@ -1,2 +1,2 @@
-/home/tomas/tomas/historymap/nodeServer/.env
-/home/tomas/tomas/historymap/nodeServer/node_modules
+/nodeServer/node_modules
+/nodeServer/.env
