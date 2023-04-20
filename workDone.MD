@@ -22,6 +22,16 @@ Created new database with data already transformed.
 
 Changed passwords after mistake with .gitignore
 
+# 20/4/2023
+
+Made new DB for taxLots with correct information requiring no transforamtions on the front end. 
+
+Keeping track of new vs old code in copyOfIndex.html, new code in data.js
+
+Tidied data.js
+
+# 21/4/2023
+
   ## Data transformation:
 
   ### Dutch Lots
