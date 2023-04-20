@@ -22,23 +22,30 @@ const db = () => {
 };
 
 /**
- * Makes a connection to the dutchLots connection
+ * Makes a connection to the dutchLots++ connection
  * @returns dutchLots connection
  */
 const dutchLots = db().db(dbname).collection('dutchLots++');
 
 /**
-  * Get post titles
-  * @summary Call this with no parameters to get all post titles.
-  * @description Returns all the titles of all the blog posts. Posts aren't
-  * expelicitly linked, rather they are dynamically linked via their title.
-  * @returns {Promise<Array>} Resolves an array with all the blog post titles.
-  * @memberof blog
-  * @see backendEventDelegation
-  */
+ * Makes a connection to the taxLots connection
+ * @returns taxLots connection
+ */
+const taxLots = db().db(dbname).collection('taxLots++');
+
 exports.getDutchLots = () => {
   const promise = new Promise((resolve, reject) => {
     dutchLots.find({}).toArray((err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+  return promise;
+};
+
+exports.getTaxLots = () => {
+  const promise = new Promise((resolve, reject) => {
+    taxLots.find({}).toArray((err, results) => {
       if (err) reject(err);
       resolve(results);
     });

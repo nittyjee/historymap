@@ -13,7 +13,11 @@ module.exports = (app) => {
     mongo.getDutchLots().then((result) => res.send(result));
   });
 
+  app.get('/taxLots', (req, res) => {
+    mongo.getTaxLots().then((result) => res.send(result));
+  });
+
   app.post('/getLayers', (req, res) => {
     
   });
-}
+};

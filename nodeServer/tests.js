@@ -10,7 +10,6 @@ chai.use(chaiHttp);
 before (async () => {
   browser = await puppeteer.launch({ headless: false });
   page = await browser.newPage();
- //  await page.goto('http://localhost:8088/');
 });
 
 describe('Testing Hello World', async () => {
@@ -20,11 +19,12 @@ describe('Testing Hello World', async () => {
         if (err) reject(err);
         res.should.have.status(200);
         res.text.should.be.eql('hi!');
+        resolve();
       });
     });
   });
 });
 
 after (async () => {
-  browser.close();
+  // browser.close();
 });
