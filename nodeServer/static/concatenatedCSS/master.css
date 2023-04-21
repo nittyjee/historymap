@@ -1,0 +1,52 @@
+body {
+  font-family: "Source Sans Pro", sans-serif; }
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+  .flexContainer .topMenu {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 15vh;
+    background-color: blue;
+    height: 3em; }
+  .flexContainer .row {
+    display: flex;
+    flex-direction: row; }
+  .flexContainer .mapControls {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 25vw; }
+    .flexContainer .mapControls h4 {
+      color: #23374d;
+      font-weight: bold;
+      font-size: 17px;
+      padding-bottom: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ce5c00;
+      margin-bottom: 8px;
+      text-transform: 'uppercase'; }
+    .flexContainer .mapControls .feature {
+      padding-left: 1em; }
+    .flexContainer .mapControls .hiddenContent {
+      height: 0;
+      opacity: 0;
+      transition: 0.2s linear all; }
+    .flexContainer .mapControls .displayContent {
+      height: 1em;
+      opacity: 1;
+      margin: 0.3em; }
+    .flexContainer .mapControls .toggleFeatureVisibility {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1; }
+  .flexContainer .map {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 75vw; }
+
+/*# sourceMappingURL=scssDerived.css.map */

@@ -12,11 +12,10 @@
 
 function createHoverPopup (layerClass, event, layerName) {
   const popUpHTML = document.createElement('div');
-  
-  const lot = (event.features[0].properties.Lot) 
+  const lot = (event.features[0].properties.Lot)
     ? event.features[0].properties.Lot
     : event.features[0].properties.TAXLOT;
-  
+
   popUpHTML.classList.add(
     removeSpaces(layerClass),
     removeSpaces(lot)
@@ -25,8 +24,8 @@ function createHoverPopup (layerClass, event, layerName) {
   const paragraph = document.createElement('p');
   popUpHTML.appendChild(paragraph);
   const paragraphText = (event.features[0].properties.name)
-   ? event.features[0].properties.name
-   : 'TAXLOT';
+    ? event.features[0].properties.name
+    : 'TAXLOT';
 
   paragraph.textContent = paragraphText;
   paragraph.classList.add(`${removeSpaces(lot)}-${removeSpaces(paragraphText)}`);
@@ -38,17 +37,15 @@ function createHoverPopup (layerClass, event, layerName) {
 }
 
 /**
- * 
- * @param {string} string 
+ * @param {string} string
  * @returns The same string with spaces replaced by an undescore
- * @description Small utility to declutter code. 
+ * @description Small utility to declutter code.
  */
 function removeSpaces (string) {
   return string.replaceAll(' ', '_');
 }
 
 /**
- * 
  * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
  * @param {Object{}} event      -Event fired by Mapbox GL
  * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot' 
@@ -177,10 +174,9 @@ function LayerManager () {
     submit.textContent = 'submit';
     mapBase.appendChild(submit);
 
-    
-    mapBase.addEventListener('submit', (event)=> {
+    mapBase.addEventListener('submit', (event) => {
       event.preventDefault();
-      fields.forEach((id)=> {        
+      fields.forEach((id) => {
         data[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
       });
 
@@ -197,7 +193,7 @@ function LayerManager () {
       zoom: 0,
       attributionControl: false
     });`
-    toggleModal (codeForMap);
+    toggleModal (codeFor);
   };
 
   this.generateAddLayerForm = (parentElement) => {
@@ -288,10 +284,9 @@ function LayerManager () {
     submit.textContent = 'submit';
     base.appendChild(submit);
 
-    
-    base.addEventListener('submit', (event)=> {
+    base.addEventListener('submit', (event) => {
       event.preventDefault();
-      fields.forEach((id)=> {        
+      fields.forEach((id) => {
         data[id] = base.querySelector(`#${id.replaceAll(' ', '_')}`).value;
       });
 
@@ -302,21 +297,21 @@ function LayerManager () {
   };
 
   function createLayer (targetMap, data) {
-    // hack, the maps be in an array of objects, not floating about in the global scope: 
-    const map = window[targetMap];
+    // hack, the maps be in an array of objects, not floating about in the global scope:
+    const map = maps[targetMap];
     const transpilledOptions = {
       id: '',
       type: '',
       source: {
-        //url is tileset ID in mapbox: 
+        // url is tileset ID in mapbox:
         url: '',
         type: 'vector'
       },
-      layout:  {
-        visibility : 'visible' // || none
+      layout: {
+        visibility: 'visible' // || none
       },
       // called "source name"
-      "source-layer": '',
+      'source-layer': '',
       paint: {
         [`${data.type}-color`]: (data.color) ? data.color : '#AAAAAA',
         [`${data.type}-opacity`]: (data.opacity) ? parseFloat(data.opacity) : 0.5
@@ -326,22 +321,19 @@ function LayerManager () {
     if (data.hover) {
       map.on('mouseenter', data.id, (event) => {
         map.getCanvas().style.cursor = 'pointer';
-      
-        const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 })
-
+        const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
         hoverPopUp
           .setLngLat(event.lngLat)
           .setDOMContent(createHoverPopup (`${data.name}PopUp`, event, data.name))
           .addTo(map);
-      
-			map.on('mouseleave', data.id, () => {
-        map.getCanvas().style.cursor = '';
-        if (hoverPopUp.isOpen()) {
-          hoverPopUp.remove();
-        }
-      });
 
-			});
+        map.on('mouseleave', data.id, () => {
+          map.getCanvas().style.cursor = '';
+          if (hoverPopUp.isOpen()) {
+            hoverPopUp.remove();
+          }
+        });
+      });
     }
 
     if (data.click) {
@@ -373,7 +365,7 @@ function LayerManager () {
       transpilledOptions.paint[`${data.type}-color`] = data.color;
     }
 
-    map.addLayer(transpilledOptions); 
+    map.addLayer(transpilledOptions);
     // toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
 }

@@ -5,8 +5,11 @@ module.exports = (app) => {
     res.send('hi!');
   });
 
-  app.get('/', (req, res) => {
-    res.render('main.pug');
+  app.get('/', async (req, res) => {
+    const dutchLots = await mongo.getDutchLots();
+    const taxLots = await mongo.getTaxLots();
+    const layers = { dutchLots, taxLots };
+    res.render('main.pug', { layers });
   });
 
   app.get('/dutchLots', (req, res) => {

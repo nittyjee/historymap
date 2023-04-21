@@ -1,0 +1,11 @@
+mixin layerToggle(features, areaName)
+  -// toggles visibility only:
+  .areaList #{areaName}
+    -// toggles visibility and has check box to check all in list
+    .featuresInArea
+      input(type='checkbox' name='grants_layer_items').view 
+      i.toggleFeatureVisibility.fa-minus-square.fas.compress-expand-icon
+      lable(for='grants_layer_items') 1640-64|Dutch Grants
+      .feature.hiddenContent
+        input(type='checkbox' name='grants_layer') 
+        lable(for='grants_layer_items') Information

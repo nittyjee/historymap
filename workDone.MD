@@ -32,6 +32,35 @@ Tidied data.js
 
 # 21/4/2023
 
+Rewrote the html structure (in Pug.js) *I hadn't counted on this at first*: But it will carry a number of advantages: Less code, one single file that works for all devices, remove inline styles, name things in a manner less likely to cause issues.
+
+Installed sass, however using node sass for the time being, pointed it at the files in the node.js project.
+
+Make a new layout using CSS Flexbox (no need for multiple layouts for each device type). 
+
+Make a small component to toggle layers meaning all the code in index.html dealing with this can be replaced by one small
+function.
+
+Reintegrated the addlayer dialogue (for testing)
+
+Re wrote some of the calls to the mapbox api in order to store data more consisely. 
+
+**TODO**
+
+- [] Finish writing the flexbox css so that the page works on any device. 
+
+- [] Consider updating build pipeline to dart sass from node-sass **not important at this point**.
+
+  ## CSS build pipeline: 
+
+  Configured as a Grunt task. 
+
+  sassStyles (.scss) -> styles (.css)-> concatenatedCSS (concatenated file)
+
+  **TODO**
+
+  - [] Minify concatenatedCSS css file
+
   ## Data transformation:
 
   ### Dutch Lots
