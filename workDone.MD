@@ -45,6 +45,42 @@ Reintegrated the addlayer dialogue (for testing)
 
 Re wrote some of the calls to the mapbox api in order to store data more consisely. 
 
+# 24/4/2023
+
+Installed: 
+  -"body-parser" to accept POST requests, 
+  -"any_object_validator" to sanitize anything being saved in the database,
+  -"cookie-parser" to *later manage sessions*
+
+**TODO**
+- [] Session management and session database. 
+
+Wrote end point to save layers in the database. 
+
+Added function to post layer data to the database in "addLayerDialog.js"
+
+Saves layer data in database: checks data can't include hacks, **does not check layer data is a valid layer**
+
+**TODO**
+- [] Validate a layer is a layer on the DB. 
+
+Wrote an API end point to save layer data to the DB.
+
+Wrote an API end point to fetch layer data. 
+
+*Data is now returned as needed and not simply all loaded at once. State is managed so that the data is only fetched from the server once, reducing over heads and improving performance. This is tested with data that is hard coded into the orignal project and works as expected.*
+
+Wrote a function to toggle layer visibility. 
+
+*Visibility is toggle as part of the layer loading state manegement, no longer hard coded for each layer.*
+
+
+# 25/4/2023
+
+*National holiday*
+
+# 26/4/2023
+
 **TODO**
 
 - [] Finish writing the flexbox css so that the page works on any device. 

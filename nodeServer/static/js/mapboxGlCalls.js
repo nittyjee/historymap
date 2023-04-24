@@ -19,3 +19,20 @@ const afterMap = new mapboxgl.Map({
 });
 
 const maps = { beforeMap, afterMap };
+
+afterMap.on('load', () => {
+  const result = xhrGetInPromise({}, '/getLayers');
+  maps.afterMap.addLayer(result);
+});
+
+
+/*
+afterMap.setFeatureState(
+  { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+  { hover: false }
+);
+beforeMap.setFeatureState(
+  { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+  { hover: false }
+);*/
+

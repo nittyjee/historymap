@@ -17,9 +17,11 @@
     * @fires Layer#generateAddLayerForm
     */
 
+let layerControls;
+
 document.addEventListener('DOMContentLoaded', () => {
   const parent = document.querySelector('.mapControls');
-  const layerControls = new LayerManager();
+  layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
   layerControls.generateAddMapForm(parent);
   parent.querySelector('#target_map').value = 'afterMap';
@@ -45,5 +47,15 @@ document.addEventListener('click', (e) => {
     hiddenContent.classList.add('displayContent');
     plusMinus.classList.add('fa-plus-square');
     plusMinus.classList.remove('fa-minus-square');
+  }
+  if (e.target.classList.contains('fetchLayer')) {
+    if (layerControls.returnLayers().includes(e.target.name)) {
+      layerControls.toggleVisibility(e.target.name);
+      return;
+    }
+    xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
+      const parsedLayerData = JSON.parse(layerData);
+      layerControls.addLayer(parsedLayerData['target map'], parsedLayerData);
+    });
   }
 });

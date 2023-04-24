@@ -128,10 +128,35 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
 }
 
 function LayerManager () {
-  // eventually a store to manage layers: 
-  const layers = [];
+  // eventually a store to manage layers:
+  const layersMongoId = [];
+  const layersMapboxId = [];
   let base;
   let mapBase;
+
+  this.returnLayers = () => {
+    return layersMongoId;
+  };
+
+  this.toggleVisibility = (mongoLayerId) => {
+    const index = layersMongoId.indexOf(mongoLayerId);
+    const mapboxId = layersMapboxId[index];
+    console.log(mapboxId);
+    const mapNames = Object.keys(maps);
+    for (let i = 0; i < mapNames.length; i++) {
+      const targetMap = maps[mapNames[i]];
+      const exists = targetMap.getLayer(mapboxId);
+      if (!exists) {
+        continue;
+      }
+      const visibility = targetMap.getLayoutProperty(mapboxId, 'visibility');
+      if (visibility === 'none') {
+        targetMap.setLayoutProperty(mapboxId, 'visibility', 'visible');
+      } else {
+        targetMap.setLayoutProperty(mapboxId, 'visibility', 'none');
+      }
+    }
+  };
 
   this.generateAddMapForm = (parentElement) => {
     const data = {};
@@ -184,7 +209,7 @@ function LayerManager () {
     });
   };
 
-  function createMap (data) { 
+  function createMap (data) {
     const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
       container: '$',
       style: ${data.style},
@@ -194,7 +219,7 @@ function LayerManager () {
       attributionControl: false
     });`
     toggleModal (codeFor);
-  };
+  }
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
@@ -222,12 +247,10 @@ function LayerManager () {
       nameLabel.htmlFor = checkboxName;
       nameLabel.innerHTML = `${checkboxName}: `;
       base.appendChild(nameLabel);
-      
       const name = document.createElement('input');
       name.setAttribute('type', 'checkbox');
       name.id = checkboxName;
       base.appendChild(name);
-  
       name.addEventListener('click', () => {
         if(name.checked === true) {
           data[checkboxName] = 1;
@@ -281,7 +304,7 @@ function LayerManager () {
 
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
-    submit.textContent = 'submit';
+    submit.value = 'submit layer';
     base.appendChild(submit);
 
     base.addEventListener('submit', (event) => {
@@ -292,16 +315,23 @@ function LayerManager () {
 
       data.type = base.querySelector(`select`).value;
       const targetMap = document.querySelector('#target_map').value;
+      xhrPostInPromise(data, './saveLayer').then((response) => {
+        alert(response);
+      });
       createLayer(targetMap, data);
     });
   };
 
   function createLayer (targetMap, data) {
-    // hack, the maps be in an array of objects, not floating about in the global scope:
+    if (layersMongoId.includes(data._id)) {
+      return;
+    }
+    console.log(arguments);
     const map = maps[targetMap];
     const transpilledOptions = {
       id: '',
       type: '',
+      metadata: { _id: '' },
       source: {
         // url is tileset ID in mapbox:
         url: '',
@@ -352,6 +382,9 @@ function LayerManager () {
     if (data.id) {
       transpilledOptions.id = data.id;
     }
+    if (data._id) {
+      transpilledOptions.metadata._id = data._id;
+    }
     if (data.type) {
       transpilledOptions.type = data.type;
     }
@@ -366,8 +399,14 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions);
-    // toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
+    layersMapboxId.push(data.id);
+    layersMongoId.push(data._id);
+    toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
+
+  this.addLayer = (targetMap, data) => {
+    return createLayer (targetMap, data);
+  };
 }
 
 function toggleModal (jsCode) {
@@ -398,6 +437,15 @@ let taxLots;
   const result = await xhrGetInPromise({}, '/taxLots');
   dutchLots = JSON.parse(result);
 })();
+/*
+(async () => {
+
+  const result = await xhrGetInPromise({}, '/getLayers');
+  //const parsed = JSON.parse(result);
+  maps.afterMap.addLayer(result);
+  /*resu.forEach(layer => {
+  });
+})();*/
 /**
   * Onload event
   * @event DOMContentLoaded
@@ -417,9 +465,11 @@ let taxLots;
     * @fires Layer#generateAddLayerForm
     */
 
+let layerControls;
+
 document.addEventListener('DOMContentLoaded', () => {
   const parent = document.querySelector('.mapControls');
-  const layerControls = new LayerManager();
+  layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
   layerControls.generateAddMapForm(parent);
   parent.querySelector('#target_map').value = 'afterMap';
@@ -446,6 +496,16 @@ document.addEventListener('click', (e) => {
     plusMinus.classList.add('fa-plus-square');
     plusMinus.classList.remove('fa-minus-square');
   }
+  if (e.target.classList.contains('fetchLayer')) {
+    if (layerControls.returnLayers().includes(e.target.name)) {
+      layerControls.toggleVisibility(e.target.name);
+      return;
+    }
+    xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
+      const parsedLayerData = JSON.parse(layerData);
+      layerControls.addLayer(parsedLayerData['target map'], parsedLayerData);
+    });
+  }
 });
 mapboxgl.accessToken = 'pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoid1RmLXpycyJ9.NFk875-Fe6hoRCkGciG8yQ';
 
@@ -468,6 +528,23 @@ const afterMap = new mapboxgl.Map({
 });
 
 const maps = { beforeMap, afterMap };
+
+afterMap.on('load', () => {
+  const result = xhrGetInPromise({}, '/getLayers');
+  maps.afterMap.addLayer(result);
+});
+
+
+/*
+afterMap.setFeatureState(
+  { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+  { hover: false }
+);
+beforeMap.setFeatureState(
+  { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
+  { hover: false }
+);*/
+
 /**
  * 
  * @param {(Object|string)} baseHTMLElement A HTML element onto which to render 
@@ -681,6 +758,43 @@ function xhrGetInPromise (items, route) {
     };
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
+        resolve(xhr.responseText);
+      }
+      if (xhr.status >= 500 && xhr.status < 600) {
+        const err = new Error('The server returned an error, please wait a bit and try again.');
+        reject(err);
+      }
+      if (xhr.status === 404) {
+        const err = new Error('The server reports 404: No resource at this end point.');
+        reject(err);
+      }
+    };
+  });
+  return promise;
+}
+
+/**
+ * @param {Object|string} items What you want to send to the server.
+ * @param {string} route The route to the server (URL)
+ * @param {string} callback The HTTP response from the server,
+ * @description Function to handle POST requests
+ */
+function xhrPostInPromise (items, route) {
+  const promise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', route);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(items));
+    xhr.ontimeout = (e) => {
+      const err = new Error('The request timed out, either the server is down, or there is an issue with the connection.');
+      reject(err);
+    };
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 1) {
+        document.body.style.pointerEvents = 'none';
+      }
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        document.body.style.pointerEvents = '';
         resolve(xhr.responseText);
       }
       if (xhr.status >= 500 && xhr.status < 600) {

@@ -3,6 +3,10 @@ require('dotenv').config();
  * This is set up so you can simply drop in a .env file
  * should you want to publish to the internet.
  */
+
+const compression = require('compression');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 8080;
 const serverIpAddress = process.env.IP || '127.0.0.1';
 const express = require('express');
@@ -32,6 +36,11 @@ const initMongo = () => {
 };
 
 const mountOtherMiddleWare = () => {
+  app.use(compression());
+  app.use(cookieParser());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.set('trust proxy', 1);
   app.use('/static', express.static(__dirname + '/static'));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'pug');

@@ -12,3 +12,12 @@ let taxLots;
   const result = await xhrGetInPromise({}, '/taxLots');
   dutchLots = JSON.parse(result);
 })();
+/*
+(async () => {
+
+  const result = await xhrGetInPromise({}, '/getLayers');
+  //const parsed = JSON.parse(result);
+  maps.afterMap.addLayer(result);
+  /*resu.forEach(layer => {
+  });
+})();*/

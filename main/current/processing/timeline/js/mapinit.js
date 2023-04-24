@@ -67,6 +67,7 @@ const WorldBounds = [
 //ACCESS TOKEN
 /////////////////////////////
 
+/*
 mapboxgl.accessToken =
 	"pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoid1RmLXpycyJ9.NFk875-Fe6hoRCkGciG8yQ";
 
@@ -76,7 +77,6 @@ mapboxgl.accessToken =
 /////////////////////////////
 //ADD MAP CONTAINER
 /////////////////////////////
-
         var beforeMap = new mapboxgl.Map({
             container: 'before',
             style: 'mapbox://styles/nittyjee/cjooubzup2kx52sqdf9zmmv2j',
@@ -94,7 +94,7 @@ mapboxgl.accessToken =
           zoom: 0,
 			    attributionControl: false
         });
-
+*/
         var map = new mapboxgl.Compare(beforeMap, afterMap, {
             // Set this to enable comparing two maps by mouse movement:
             // mousemove: true

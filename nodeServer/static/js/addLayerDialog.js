@@ -128,10 +128,35 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
 }
 
 function LayerManager () {
-  // eventually a store to manage layers: 
-  const layers = [];
+  // eventually a store to manage layers:
+  const layersMongoId = [];
+  const layersMapboxId = [];
   let base;
   let mapBase;
+
+  this.returnLayers = () => {
+    return layersMongoId;
+  };
+
+  this.toggleVisibility = (mongoLayerId) => {
+    const index = layersMongoId.indexOf(mongoLayerId);
+    const mapboxId = layersMapboxId[index];
+    console.log(mapboxId);
+    const mapNames = Object.keys(maps);
+    for (let i = 0; i < mapNames.length; i++) {
+      const targetMap = maps[mapNames[i]];
+      const exists = targetMap.getLayer(mapboxId);
+      if (!exists) {
+        continue;
+      }
+      const visibility = targetMap.getLayoutProperty(mapboxId, 'visibility');
+      if (visibility === 'none') {
+        targetMap.setLayoutProperty(mapboxId, 'visibility', 'visible');
+      } else {
+        targetMap.setLayoutProperty(mapboxId, 'visibility', 'none');
+      }
+    }
+  };
 
   this.generateAddMapForm = (parentElement) => {
     const data = {};
@@ -184,7 +209,7 @@ function LayerManager () {
     });
   };
 
-  function createMap (data) { 
+  function createMap (data) {
     const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
       container: '$',
       style: ${data.style},
@@ -194,7 +219,7 @@ function LayerManager () {
       attributionControl: false
     });`
     toggleModal (codeFor);
-  };
+  }
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
@@ -222,12 +247,10 @@ function LayerManager () {
       nameLabel.htmlFor = checkboxName;
       nameLabel.innerHTML = `${checkboxName}: `;
       base.appendChild(nameLabel);
-      
       const name = document.createElement('input');
       name.setAttribute('type', 'checkbox');
       name.id = checkboxName;
       base.appendChild(name);
-  
       name.addEventListener('click', () => {
         if(name.checked === true) {
           data[checkboxName] = 1;
@@ -281,7 +304,7 @@ function LayerManager () {
 
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
-    submit.textContent = 'submit';
+    submit.value = 'submit layer';
     base.appendChild(submit);
 
     base.addEventListener('submit', (event) => {
@@ -292,16 +315,23 @@ function LayerManager () {
 
       data.type = base.querySelector(`select`).value;
       const targetMap = document.querySelector('#target_map').value;
+      xhrPostInPromise(data, './saveLayer').then((response) => {
+        alert(response);
+      });
       createLayer(targetMap, data);
     });
   };
 
   function createLayer (targetMap, data) {
-    // hack, the maps be in an array of objects, not floating about in the global scope:
+    if (layersMongoId.includes(data._id)) {
+      return;
+    }
+    console.log(arguments);
     const map = maps[targetMap];
     const transpilledOptions = {
       id: '',
       type: '',
+      metadata: { _id: '' },
       source: {
         // url is tileset ID in mapbox:
         url: '',
@@ -352,6 +382,9 @@ function LayerManager () {
     if (data.id) {
       transpilledOptions.id = data.id;
     }
+    if (data._id) {
+      transpilledOptions.metadata._id = data._id;
+    }
     if (data.type) {
       transpilledOptions.type = data.type;
     }
@@ -366,8 +399,14 @@ function LayerManager () {
     }
 
     map.addLayer(transpilledOptions);
-    // toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
+    layersMapboxId.push(data.id);
+    layersMongoId.push(data._id);
+    toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
+
+  this.addLayer = (targetMap, data) => {
+    return createLayer (targetMap, data);
+  };
 }
 
 function toggleModal (jsCode) {
