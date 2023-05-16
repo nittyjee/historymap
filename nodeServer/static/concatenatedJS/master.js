@@ -1,5 +1,4 @@
 /**
- * 
  * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
  * @param {Object{}} event      -Event fired by Mapbox GL
  * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot' 
@@ -53,8 +52,6 @@ function removeSpaces (string) {
  * @returns A HTMLElemnt to use in the pop up
  */
 function createClickedFeaturePopup (layerClass, event, layerName) {
-  console.log(event.features[0]);
-  
   const changes = {};
   const lot = event.features[0].properties.Lot;
   const popUpHTML = document.createElement('div');
@@ -131,8 +128,21 @@ function LayerManager () {
   // eventually a store to manage layers:
   const layersMongoId = [];
   const layersMapboxId = [];
-  let base;
+  // maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
+  const mapNames = Object.keys(maps);
+  let layerFormParent;
   let mapBase;
+
+  document.querySelectorAll('.deleteLayer').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (window.confirm('Are you sure you want to delete this feature?')) {
+        xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
+          el.parentElement.parentElement.remove(el.parentElement);
+          alert(response);
+        });
+      }
+    });
+  });
 
   this.returnLayers = () => {
     return layersMongoId;
@@ -141,8 +151,6 @@ function LayerManager () {
   this.toggleVisibility = (mongoLayerId) => {
     const index = layersMongoId.indexOf(mongoLayerId);
     const mapboxId = layersMapboxId[index];
-    console.log(mapboxId);
-    const mapNames = Object.keys(maps);
     for (let i = 0; i < mapNames.length; i++) {
       const targetMap = maps[mapNames[i]];
       const exists = targetMap.getLayer(mapboxId);
@@ -161,21 +169,21 @@ function LayerManager () {
   this.generateAddMapForm = (parentElement) => {
     const data = {};
 
-    function textInputGenerator (fieldName, target) {          
+    function textInputGenerator (fieldName, target) {
       const nameLabel = document.createElement('label');
       nameLabel.htmlFor = fieldName;
       nameLabel.innerHTML = `${fieldName}: `;
       target.appendChild(nameLabel);
-  
+
       const name = document.createElement('input');
       name.setAttribute('type', 'text');
       name.id = fieldName.replaceAll(' ', '_');
       target.appendChild(name);
-  
+
       name.addEventListener('input', () => {
         data[fieldName] = name.value;
       });
-  
+
       const br = document.createElement('br');
       target.appendChild(br);
     }
@@ -205,11 +213,11 @@ function LayerManager () {
         data[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
       });
 
-      createMap(data);
+    //  createMap(data);
     });
   };
 
-  function createMap (data) {
+  /*function createMap (data) {
     const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
       container: '$',
       style: ${data.style},
@@ -218,74 +226,114 @@ function LayerManager () {
       zoom: 0,
       attributionControl: false
     });`
-    toggleModal (codeFor);
-  }
+    // toggleModal (codeFor);
+  }*/
 
   this.generateAddLayerForm = (parentElement) => {
     const data = {};
-    function textInputGenerator (fieldName, target) {          
+    data['target map'] = [];
+    data.type = [];
+
+    function textInputGenerator (fieldName, target) {
       const nameLabel = document.createElement('label');
       nameLabel.htmlFor = fieldName;
       nameLabel.innerHTML = `${fieldName}: `;
       target.appendChild(nameLabel);
-  
+
       const name = document.createElement('input');
       name.setAttribute('type', 'text');
       name.id = fieldName.replaceAll(' ', '_');
       target.appendChild(name);
-  
+
       name.addEventListener('input', () => {
         data[fieldName] = name.value;
       });
-  
+
       const br = document.createElement('br');
       target.appendChild(br);
     }
-  
+
     function generateCheckbox (checkboxName) {
       const nameLabel = document.createElement('label');
       nameLabel.htmlFor = checkboxName;
       nameLabel.innerHTML = `${checkboxName}: `;
-      base.appendChild(nameLabel);
+      layerFormParent.appendChild(nameLabel);
       const name = document.createElement('input');
       name.setAttribute('type', 'checkbox');
       name.id = checkboxName;
-      base.appendChild(name);
+      layerFormParent.appendChild(name);
       name.addEventListener('click', () => {
-        if(name.checked === true) {
+        if (name.checked === true) {
           data[checkboxName] = 1;
         } else {
           data[checkboxName] = 0;
         }
       });
-  
+
       const br = document.createElement('br');
-      base.appendChild(br);
+      layerFormParent.appendChild(br);
     }
-  
-    base = document.createElement('form');
-    parentElement.appendChild(base);
 
-    base.classList.add('layerform');
-    const title = document.createElement('p');
-    title.classList.add('title');
-    title.textContent = 'Add Layer';
-    base.appendChild(title);
+    function generateAddToMapCheckbox (checkboxName) {
+      const nameLabel = document.createElement('label');
+      nameLabel.htmlFor = checkboxName;
+      nameLabel.innerHTML = `Add to "${checkboxName}" map: `;
+     layerFormParent.appendChild(nameLabel);
+      const name = document.createElement('input');
+      name.setAttribute('type', 'checkbox');
+      name.classList.add('addToMap');
+      name.id = checkboxName;
+      name.dataset.targetMap = checkboxName;
+     layerFormParent.appendChild(name);
 
-    const fields = ['target map', 'name', 'source layer', 'id', 'database', 'group', 'color', 'opacity'];
-    
-    fields.forEach(fieldName => {
-      textInputGenerator (fieldName, base);
-    });
-  
-    const types = ['circle', 'line', 'fill'];
-    dropDownGenerator(types);
+      const br = document.createElement('br');
+     layerFormParent.appendChild(br);
+    }
+
+    function generateLayersTypeCheckbox (checkboxName) {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('typeBox');
+     layerFormParent.appendChild(wrapper);
+      const nameLabel = document.createElement('label');
+      nameLabel.htmlFor = checkboxName;
+      nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
+      wrapper.appendChild(nameLabel);
+      const name = document.createElement('input');
+      name.setAttribute('type', 'checkbox');
+      name.classList.add('layerType');
+      name.id = checkboxName;
+      name.dataset.layerType = checkboxName;
+      wrapper.appendChild(name);
+      const br = document.createElement('br');
+      wrapper.appendChild(br);
+      const typeBoxText = document.createElement('div');
+      typeBoxText.classList.add('typeBoxText');
+      wrapper.appendChild(typeBoxText);
+
+      const appearance = ['color', 'opacity', 'width'];
+      appearance.forEach((fieldName) => {
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = fieldName;
+        nameLabel.innerHTML = `${fieldName}: `;
+        typeBoxText.appendChild(nameLabel);
+
+        const name = document.createElement('input');
+        name.setAttribute('type', 'text');
+        name.dataset.typeStyle = fieldName.replaceAll(' ', '_');
+        typeBoxText.appendChild(name);
+        /* these options are not added dynamically to the data.object,
+        but onsubmit */
+        const br = document.createElement('br');
+        typeBoxText.appendChild(br);
+      });
+    }
+
     function dropDownGenerator (options) {
       const select = document.createElement('select');
-      base.appendChild(select);
+      layerFormParent.appendChild(select);
 
       select.addEventListener('change', () => {
-        data.type = select.value; 
+        data.type = select.value;
       });
 
       options.forEach(value => {
@@ -296,7 +344,40 @@ function LayerManager () {
       });
     }
 
-    const checkboxes =  ['hover', 'click', 'sidebar', 'sliderCheckBox'];
+    layerFormParent = document.createElement('form');
+    parentElement.appendChild(layerFormParent);
+
+    layerFormParent.classList.add('layerform');
+    const title = document.createElement('p');
+    title.classList.add('title');
+    title.textContent = 'Add Layer';
+    layerFormParent.appendChild(title);
+
+    const textFields = [
+      'name',
+      'source layer',
+      'layer source url',
+      'feature group',
+      // 'borough to which the layer belongs'
+      'borough'
+    ];
+
+    textFields.forEach(fieldName => {
+      textInputGenerator(fieldName,layerFormParent);
+    });
+
+    const types = ['circle', 'line', 'fill'];
+    // dropDownGenerator(types);
+    types.forEach((type) => {
+      generateLayersTypeCheckbox(type);
+    });
+
+    // Maps are defined in the "Layer Manager" constuctor scope.
+    mapNames.forEach((map) => {
+      generateAddToMapCheckbox(map);
+    });
+
+    const checkboxes = ['hover', 'click', 'sidebar', 'sliderCheckBox'];
 
     checkboxes.forEach(label => {
       generateCheckbox(label);
@@ -305,31 +386,98 @@ function LayerManager () {
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
     submit.value = 'submit layer';
-    base.appendChild(submit);
+    layerFormParent.appendChild(submit);
 
-    base.addEventListener('submit', (event) => {
+    layerFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
-      fields.forEach((id) => {
-        data[id] = base.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+      /* n.b. note that only replacing spaces in fields might cause a future bug if
+        other input types are added with a space.
+      */
+      textFields.forEach((id) => {
+        data[id] = layerFormParent.querySelector(`#${id.replaceAll(' ', '_')}`).value;
       });
 
-      data.type = base.querySelector(`select`).value;
-      const targetMap = document.querySelector('#target_map').value;
-      xhrPostInPromise(data, './saveLayer').then((response) => {
-        alert(response);
+      layerFormParent.querySelectorAll('.addToMap').forEach((mapCheckbox, i) => {
+        if (i === 0) {
+          data['target map'].length = 0;
+        }
+        if (mapCheckbox.checked) {
+          data['target map'].push(mapCheckbox.dataset.targetMap);
+        }
       });
-      createLayer(targetMap, data);
+
+      layerFormParent.querySelectorAll('.layerType').forEach((type, i) => {
+        if (i === 0) {
+          data.type.length = 0;
+        }
+        if (type.checked) {
+          const typeFeature = {
+            type: type.dataset.layerType,
+            color: type.parentElement.querySelector('[data-type-style="color"]').value,
+            opacity: type.parentElement.querySelector('[data-type-style="opacity"]').value,
+            width: type.parentElement.querySelector('[data-type-style="width"]').value
+          };
+          data.type.push(typeFeature);
+        }
+      });
+      createLayer(data);
     });
   };
 
-  function createLayer (targetMap, data) {
+  /**
+   * @param {Object} data The data to create a layer.
+   * @param {String} data['borough to which the layer belongs'] A name of a geographical area.
+   * @param {String} data.color The color to render the layer on the map in.
+   * @param {String} data['feature group'] The group of features to which a layer belongs.
+   * @param {String} data['layer id created in mapbox'] A unique id for a layer make in mapbox.
+   * @param {String} data['layer source url'] The link to the layer in mapbox.
+   * @param {String} data.name The name for this particular layer.
+   * @param {String} data.opacity The opacity the layer is rendered with on the map.
+   * @param {String} data['source layer'] Not sure, pertains to mapbox.
+   * @param {Object[]} data.targetMap An array containing the names of the maps for which to render the layer(s).
+   * @param {Object[]} data.type An aray of geometry types to be rendered from a layer, it can be a line, point, fill (area)
+   * @returns null
+   * @fires map.addLayer(data)
+   * @descritption Also pushes the layer id and mongo id to arrays for state management.
+   */
+
+  function createLayer (data) {
+    // If the layer already exists as document in the DB, don't save:
+    if (!data._id) {
+      saveLayer(data);
+    }
+    // If the layer exits in the current session, don't make it again:
     if (layersMongoId.includes(data._id)) {
       return;
     }
-    console.log(arguments);
+    // There can be more than one target map:
+    data['target map'].forEach((target) => {
+      // Multiple geometry types can also be handled through the same function:
+      data.type.forEach((type) => {
+        /* This is moved to its own function to make it easier to read and understand
+        since a layer can have several representation on several maps */
+        tanspileAndAddLayer(target, type, data);
+      });
+    });
+  }
+
+  function saveLayer (data) {
+    xhrPostInPromise(data, './saveLayer').then((response) => {
+      document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
+    });
+  }
+
+  this.addLayer = (data) => {
+    return createLayer(data);
+  };
+
+  function tanspileAndAddLayer (targetMap, type, data) {
     const map = maps[targetMap];
+    const layerId = `${data.borough}-${data['feature group']}-${data.name}-${type.type}-${targetMap}`;
+    data.id = layerId;
+
     const transpilledOptions = {
-      id: '',
+      id: layerId,
       type: '',
       metadata: { _id: '' },
       source: {
@@ -343,8 +491,8 @@ function LayerManager () {
       // called "source name"
       'source-layer': '',
       paint: {
-        [`${data.type}-color`]: (data.color) ? data.color : '#AAAAAA',
-        [`${data.type}-opacity`]: (data.opacity) ? parseFloat(data.opacity) : 0.5
+        [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
+        [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
       }
     };
 
@@ -379,34 +527,38 @@ function LayerManager () {
     if (data.name) {
       transpilledOptions.name = data.name;
     }
-    if (data.id) {
-      transpilledOptions.id = data.id;
-    }
+    // mongoDB id
     if (data._id) {
       transpilledOptions.metadata._id = data._id;
     }
+    // type of map graphic: line, fill, circle
     if (data.type) {
-      transpilledOptions.type = data.type;
+      transpilledOptions.type = type.type;
+      if (type.type === 'circle') {
+        transpilledOptions.paint[`circle-radius`] = parseFloat(type.width);
+      }
+      if (type.type === 'line') {
+        transpilledOptions.paint[`line-width`] = parseFloat(type.width);
+      }
     }
+
     if (data["source layer"]) {
       transpilledOptions['source-layer'] = data["source layer"];
     }
-    if (data.database) {
-      transpilledOptions.source.url = data.database;
-    }
-    if (data.color) {
-      transpilledOptions.paint[`${data.type}-color`] = data.color;
-    }
 
+    if (data.database || data["layer source url"]) {
+      transpilledOptions.source.url = data.database || data["layer source url"];
+    }
+    if (!layersMapboxId.includes(layerId)) {
+      layersMapboxId.push(layerId);
+    }
+    if (!layersMongoId.includes(data._id)) {
+      layersMongoId.push(data._id);
+    }
+    console.log(transpilledOptions);
+    console.log(data);
     map.addLayer(transpilledOptions);
-    layersMapboxId.push(data.id);
-    layersMongoId.push(data._id);
-    toggleModal (`${targetMap}.addLayer(${JSON.stringify(transpilledOptions)});`);
   }
-
-  this.addLayer = (targetMap, data) => {
-    return createLayer (targetMap, data);
-  };
 }
 
 function toggleModal (jsCode) {
@@ -437,20 +589,12 @@ let taxLots;
   const result = await xhrGetInPromise({}, '/taxLots');
   dutchLots = JSON.parse(result);
 })();
-/*
-(async () => {
-
-  const result = await xhrGetInPromise({}, '/getLayers');
-  //const parsed = JSON.parse(result);
-  maps.afterMap.addLayer(result);
-  /*resu.forEach(layer => {
-  });
-})();*/
 /**
   * Onload event
   * @event DOMContentLoaded
   * @fires MapConstructor#generateMap
   */
+
  /*
   window.addEventListener('DOMContentLoaded', (event) => {
     const historyMap = new MapConstructor('#map', '80vh')
@@ -458,12 +602,12 @@ let taxLots;
       .locateOnClick();
   });*/
 
-    /**
-    * Onload event
-    * @event DOMContentLoaded
-    * @summary fires layer dialogue constructor
-    * @fires Layer#generateAddLayerForm
-    */
+/**
+  * Onload event
+  * @event DOMContentLoaded
+  * @summary fires layer dialogue constructor
+  * @fires Layer#generateAddLayerForm
+  */
 
 let layerControls;
 
@@ -472,14 +616,25 @@ document.addEventListener('DOMContentLoaded', () => {
   layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
   layerControls.generateAddMapForm(parent);
-  parent.querySelector('#target_map').value = 'afterMap';
+  parent.querySelector('.addToMap').checked = true;
   parent.querySelector('#name').value = 'testing testing';
-  parent.querySelector('#id').value = 'c7_dates-ajsksu-right-TEST';
+  // parent.querySelector('#layer_id_created_in_mapbox').value = 'c7_dates-ajsksu-right-TEST 2';
   parent.querySelector('#source_layer').value = 'c7_dates-ajsksu';
-  parent.querySelector('#database').value = 'mapbox://nittyjee.8krf945a';
-  parent.querySelector('#group').value = '1643-75|Demo Taxlot: C7 TEST';
-  parent.querySelector('#color').value = 'blue';
-  parent.querySelector('#opacity').value = '0.7';
+  // called "database" before:
+  parent.querySelector('#layer_source_url').value = 'mapbox://nittyjee.8krf945a';
+  // parent.querySelector('#borough_to_which_the_layer_belongs').value = 'Manhattan';
+  parent.querySelector('#borough').value = 'Manhattan';
+  parent.querySelector('#feature_group').value = '1643-75|Demo Taxlot: C7 TEST';
+  //parent.querySelector('#color').value = 'blue';
+  //parent.querySelector('#opacity').value = '0.7';
+/*
+  Object.keys(maps).forEach((map, i) => {
+    console.log(`map ${i}`);
+    maps[map].addControl(draw);
+    maps[map].on('error', (e) => {
+      alert(e);
+    });
+  });*/
 });
 
 document.addEventListener('click', (e) => {
@@ -503,7 +658,7 @@ document.addEventListener('click', (e) => {
     }
     xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
       const parsedLayerData = JSON.parse(layerData);
-      layerControls.addLayer(parsedLayerData['target map'], parsedLayerData);
+      layerControls.addLayer(parsedLayerData);
     });
   }
 });
@@ -529,9 +684,21 @@ const afterMap = new mapboxgl.Map({
 
 const maps = { beforeMap, afterMap };
 
-afterMap.on('load', () => {
+/*afterMap.on('load', () => {
   const result = xhrGetInPromise({}, '/getLayers');
   maps.afterMap.addLayer(result);
+});*/
+
+const draw = new MapboxDraw({
+  displayControlsDefault: false,
+  // Select which mapbox-gl-draw control buttons to add to the map.
+  controls: {
+    polygon: true,
+    trash: true
+  },
+  // Set mapbox-gl-draw to draw by default.
+  // The user does not have to click the polygon control button first.
+  defaultMode: 'draw_polygon'
 });
 
 
@@ -765,7 +932,7 @@ function xhrGetInPromise (items, route) {
         reject(err);
       }
       if (xhr.status === 404) {
-        const err = new Error('The server reports 404: No resource at this end point.');
+        const err = new Error(`No resource at this end point: ${route}`);
         reject(err);
       }
     };

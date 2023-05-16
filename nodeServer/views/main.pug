@@ -1,7 +1,7 @@
 include ./layerToggle.pug
 doctype html
 -{layers}
--console.log(layers)
+-console.log(layers);
 html(lang='en-EU' xml:lang='en-EU')
   head
     meta(charset='utf-8')
@@ -11,6 +11,7 @@ html(lang='en-EU' xml:lang='en-EU')
     link(rel='stylesheet' href='/static/concatenatedCSS/master.css' async)
     link(rel='stylesheet' href='https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.css')
   body
     .flexContainer
       .topMenu.row
@@ -20,8 +21,10 @@ html(lang='en-EU' xml:lang='en-EU')
       .mainBody.row 
         .mapControls
           h4 Layers
-          each layer, name in layers
-            +layerToggle(layer, name)
+          each value, key in layers
+            +boroughToggle(value, key)
+          //each boroughData, boroughName in layers
+            // +boroughToggle(boroughData, boroughName)
         .mapContainer
           #before.map
           #after.map
@@ -42,6 +45,8 @@ html(lang='en-EU' xml:lang='en-EU')
     script(src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js')
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js')
     script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')
+
+    script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js')
     script(src='/static/concatenatedJS/master.js')
     -// script(src='/static/js/events.js')
     -// script(src='/static/js/mapFunctions.js')

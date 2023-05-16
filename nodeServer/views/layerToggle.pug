@@ -1,12 +1,20 @@
-mixin layerToggle(features, areaName)
-  -// toggles visibility only:
-  .areaList #{areaName}
-    -// toggles visibility and has check box to check all in list
-    .featuresInArea
-      input(type='checkbox' name=features._id).view.fetchLayer 
-      i.toggleFeatureVisibility.fa-minus-square.fas.compress-expand-icon
-      lable(for=features._id) #{features.group}
-        // 1640-64|Dutch Grants
-        // .feature.hiddenContent
-            input(type='checkbox' name='grants_layer') 
-            lable(for='grants_layer_items') Information
+mixin boroughToggle(boroughData, boroughName)
+  -console.log(name);
+  -console.log(borough);
+  i.togglelayerVisibility.fa-minus-square.fas.compress-expand-icon
+  .areaList #{boroughName}
+    each featureGroup, featureGroupName in boroughData
+      .layersInArea
+        input(type='checkbox' name=featureGroupName).view.featureGroup 
+        i.togglelayerVisibility.fa-minus-square.fas.compress-expand-icon
+        lable #{featureGroupName}
+        each layer in featureGroup
+          +layerToggle(layer)
+
+mixin layerToggle(layer)
+  .layer.hiddenContent
+    input(type='checkbox' name=layer._id) 
+    i.togglelayerVisibility.fa-minus-square.fas.compress-expand-icon 
+    i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?')
+    i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?')
+    lable(for=layer._id) #{layer.name}

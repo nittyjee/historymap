@@ -57,6 +57,9 @@ body {
         font-variant: normal;
         text-rendering: auto;
         line-height: 1; }
+      .flexContainer .mainBody .mapControls .typeBoxText {
+        margin-left: 2em;
+        font-style: italic; }
     .flexContainer .mainBody .mapContainer {
       flex-grow: 1;
       flex-shrink: 1;

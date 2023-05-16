@@ -3,6 +3,7 @@
   * @event DOMContentLoaded
   * @fires MapConstructor#generateMap
   */
+
  /*
   window.addEventListener('DOMContentLoaded', (event) => {
     const historyMap = new MapConstructor('#map', '80vh')
@@ -10,12 +11,12 @@
       .locateOnClick();
   });*/
 
-    /**
-    * Onload event
-    * @event DOMContentLoaded
-    * @summary fires layer dialogue constructor
-    * @fires Layer#generateAddLayerForm
-    */
+/**
+  * Onload event
+  * @event DOMContentLoaded
+  * @summary fires layer dialogue constructor
+  * @fires Layer#generateAddLayerForm
+  */
 
 let layerControls;
 
@@ -24,14 +25,25 @@ document.addEventListener('DOMContentLoaded', () => {
   layerControls = new LayerManager();
   layerControls.generateAddLayerForm(parent);
   layerControls.generateAddMapForm(parent);
-  parent.querySelector('#target_map').value = 'afterMap';
+  parent.querySelector('.addToMap').checked = true;
   parent.querySelector('#name').value = 'testing testing';
-  parent.querySelector('#id').value = 'c7_dates-ajsksu-right-TEST';
+  // parent.querySelector('#layer_id_created_in_mapbox').value = 'c7_dates-ajsksu-right-TEST 2';
   parent.querySelector('#source_layer').value = 'c7_dates-ajsksu';
-  parent.querySelector('#database').value = 'mapbox://nittyjee.8krf945a';
-  parent.querySelector('#group').value = '1643-75|Demo Taxlot: C7 TEST';
-  parent.querySelector('#color').value = 'blue';
-  parent.querySelector('#opacity').value = '0.7';
+  // called "database" before:
+  parent.querySelector('#layer_source_url').value = 'mapbox://nittyjee.8krf945a';
+  // parent.querySelector('#borough_to_which_the_layer_belongs').value = 'Manhattan';
+  parent.querySelector('#borough').value = 'Manhattan';
+  parent.querySelector('#feature_group').value = '1643-75|Demo Taxlot: C7 TEST';
+  //parent.querySelector('#color').value = 'blue';
+  //parent.querySelector('#opacity').value = '0.7';
+/*
+  Object.keys(maps).forEach((map, i) => {
+    console.log(`map ${i}`);
+    maps[map].addControl(draw);
+    maps[map].on('error', (e) => {
+      alert(e);
+    });
+  });*/
 });
 
 document.addEventListener('click', (e) => {
@@ -55,7 +67,7 @@ document.addEventListener('click', (e) => {
     }
     xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
       const parsedLayerData = JSON.parse(layerData);
-      layerControls.addLayer(parsedLayerData['target map'], parsedLayerData);
+      layerControls.addLayer(parsedLayerData);
     });
   }
 });

@@ -83,7 +83,7 @@ function xhrGetInPromise (items, route) {
         reject(err);
       }
       if (xhr.status === 404) {
-        const err = new Error('The server reports 404: No resource at this end point.');
+        const err = new Error(`No resource at this end point: ${route}`);
         reject(err);
       }
     };

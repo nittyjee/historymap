@@ -7,13 +7,14 @@ require('dotenv').config();
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 const port = process.env.PORT || 8080;
 const serverIpAddress = process.env.IP || '127.0.0.1';
 const express = require('express');
 const app = express();
+const path = require('path');
 
 global.customModules = (moduleName) => {
-  const path = require('path');
   const desiredMod = path.resolve(process.env.PWD + '/custom_modules/' + moduleName);
   return require(desiredMod);
 };
@@ -42,6 +43,7 @@ const mountOtherMiddleWare = () => {
   app.use(bodyParser.json());
   app.set('trust proxy', 1);
   app.use('/static', express.static(__dirname + '/static'));
+  app.use(favicon(path.join(__dirname, 'static', 'icon_32x32.ico')));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'pug');
   app.engine('html', require('pug').renderFile);

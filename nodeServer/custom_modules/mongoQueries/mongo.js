@@ -4,6 +4,8 @@
  * @description Methods for database interaction
  */
 
+const { ObjectID } = require('mongodb');
+
 /**
  * Stock
  * @namespace getDataQueries
@@ -61,11 +63,17 @@ exports.getLayerById = (layerIdInObj) => {
 };
 
 exports.saveLayer = (layer) => {
-  const promise = new Promise( async (resolve, reject) => {
+  return (async () => {
     const cleanData = await validate(layer);
-    await layerDatabase.insertOne(cleanData);
+    const response = await layerDatabase.insertOne(cleanData);
+    return response;
+  })();
+};
+
+exports.deleteLayer = (layerMongoID) => {
+  return layerDatabase.deleteOne({ _id: ObjectId(layerMongoID) }).then((result) => {
+    return result;
   });
-  return promise;
 };
 
 exports.getDutchLots = () => {

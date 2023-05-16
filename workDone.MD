@@ -81,6 +81,49 @@ Wrote a function to toggle layer visibility.
 
 # 26/4/2023
 
+Reviewed the code. 
+
+*message in upword details how objects should be reshaped*
+```json
+
+```
+
+# 11/5/2023
+Wrote a save/delete function that updates the map, the DOM and the database.
+
+# 12/5/2023
+Reviewed more code, some issues
+
+# 15/5/2023
+Make it so only a single object in the DB and front end control a layer, rather than adding layers for each
+map etc. 
+
+```json
+
+```
+# 16/5/2023
+Wrote new templates and logic that allow appearance be rendered much like the first version of the site:
+
+```json
+  {
+    Manhattan: {
+      '1609|Manhattan': [
+        {
+          _id: new ObjectId("646367741b02ca0c10eb8d73"),
+          'target map': [Array],
+          type: [Array],
+          name: 'Lenape trails',
+          'source layer': 'lenape_trails-9n6muf',
+          'layer source url': 'mapbox://nittyjee.4kio957z',
+          'feature group': '1609|Manhattan',
+          borough: 'Manhattan'
+        }
+      ]
+    }
+  }
+```
+
+
 **TODO**
 
 - [] Finish writing the flexbox css so that the page works on any device. 
@@ -388,4 +431,5 @@ Wrote a function to toggle layer visibility.
     });
   ```
 
-
+# Globals: 
+- maps
