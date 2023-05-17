@@ -104,6 +104,16 @@ map etc.
 # 16/5/2023
 Wrote new templates and logic that allow appearance be rendered much like the first version of the site:
 
+# 17/5/2023
+Tested the "add layer" feature.
+
+Eliminated potential edge cases where layer data is wrong or incomplete:
+
+**TODO**
+  - [] Write a database template that will reject malformed layer data and sanitize layer data.
+  - [] Write test for weird cases like null data, empty sets etc.
+  - [] Write a function to clean the data base
+
 ```json
   {
     Manhattan: {

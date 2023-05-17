@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('toggleFeatureVisibility')) {
+  if (e.target.classList.contains('toggleVisibility')) {
+    console.log('evt');
     const hiddenContent = e.target.parentElement.querySelector('.hiddenContent');
     const plusMinus = e.target.parentElement.querySelector('i');
     if (hiddenContent.classList.contains('displayContent')) {

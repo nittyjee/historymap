@@ -151,7 +151,12 @@ function LayerManager () {
   this.toggleVisibility = (mongoLayerId) => {
     const index = layersMongoId.indexOf(mongoLayerId);
     const mapboxId = layersMapboxId[index];
-    for (let i = 0; i < mapNames.length; i++) {
+    const layerId = Object.keyes(mapboxId)[0];
+
+    const layer = mapboxId[layerId];
+    // split the name and since the map is in the map, remove with that: 
+
+    for (let i = 0; i < layer.length; i++) {
       const targetMap = maps[mapNames[i]];
       const exists = targetMap.getLayer(mapboxId);
       if (!exists) {
@@ -549,14 +554,37 @@ function LayerManager () {
     if (data.database || data["layer source url"]) {
       transpilledOptions.source.url = data.database || data["layer source url"];
     }
-    if (!layersMapboxId.includes(layerId)) {
-      layersMapboxId.push(layerId);
-    }
+
     if (!layersMongoId.includes(data._id)) {
       layersMongoId.push(data._id);
+      if (layersMapboxId[layersMongoId.length - 1]) {
+        layersMapboxId[layersMongoId.length - 1].push(layerId);
+      } else {
+        layersMapboxId.push([layerId]);
+      }
     }
+
+    // DOCUMENT THIS SPAGHETTI
+    /*
+    if (!layersMongoId.includes(data._id)) {
+      layersMongoId.push(data._id);
+      if (!layersMapboxId.includes(layerId)) {
+        layersMapboxId.push({ [data._id]: [layerId] });
+      }
+    } else {
+      layersMapboxId.forEach((layerGroup, i) => {
+        const key = Object.keys(layerGroup)[0];
+        if (key === data._id) {
+          layersMapboxId[i][data._id].push(layerId);
+        }
+      });
+    }
+    */
+
     console.log(transpilledOptions);
     console.log(data);
+    console.log(layersMapboxId);
+    console.log(layersMongoId);
     map.addLayer(transpilledOptions);
   }
 }
@@ -638,7 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('toggleFeatureVisibility')) {
+  if (e.target.classList.contains('toggleVisibility')) {
+    console.log('evt');
     const hiddenContent = e.target.parentElement.querySelector('.hiddenContent');
     const plusMinus = e.target.parentElement.querySelector('i');
     if (hiddenContent.classList.contains('displayContent')) {

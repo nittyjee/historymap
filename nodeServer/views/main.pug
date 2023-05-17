@@ -20,9 +20,11 @@ html(lang='en-EU' xml:lang='en-EU')
         div#header_text.headerText | Mapping Early New York
       .mainBody.row 
         .mapControls
-          h4 Layers
-          each value, key in layers
-            +boroughToggle(value, key)
+          if layers
+            h4 Layers
+            each value, key in layers
+              +boroughToggle(value, key)
+                
           //each boroughData, boroughName in layers
             // +boroughToggle(boroughData, boroughName)
         .mapContainer

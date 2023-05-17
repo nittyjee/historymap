@@ -8,13 +8,32 @@ module.exports = (app) => {
   app.get('/', async (req, res) => {
     const layers = await mongo.getLayers();
     const boroughs = await sortIntoCategory('borough', layers);
-    for (let i = 0; i < Object.keys(boroughs).length; i++) {
-      const borough = Object.keys(boroughs)[i];
-      const featureGroup = await sortIntoCategory('feature group', boroughs[borough]);
-      boroughs[borough] = featureGroup;
-      const util = require('util');
-      console.log(util.inspect(boroughs, { showHidden: false, depth: 3, colors: true }));
-      res.render('main.pug', {layers: boroughs});
+    const boroughsNames = Object.keys(boroughs);
+
+    if (boroughs) {
+      // loop through boroughs:
+      for (let i = 0; i < boroughsNames.length; i++) {
+        // loop through borough object keys:
+        console.log(`boroughs keys ${Object.keys(boroughs)}`);
+        const borough = boroughsNames[i];
+        console.log(borough);
+        const layersInBorough = boroughs[borough];
+
+        for (let j = 0; j < layersInBorough.length; j++) {
+          const layerKeys = Object.keys(layersInBorough[j]);
+          if (layerKeys.includes('feature group')) {
+            console.log('feature group')
+            const featureGroup = await sortIntoCategory('feature group', boroughs[borough]);
+            boroughs[borough] = featureGroup;
+            const util = require('util');
+            console.log(util.inspect(boroughs, { showHidden: false, depth: 4, colors: true }));
+            res.render('main.pug', { layers: boroughs });
+          }
+        }
+      }
+    } else {
+      // no layers to render:
+      res.render('main.pug', { layers: null });
     }
   });
 
@@ -23,15 +42,15 @@ module.exports = (app) => {
     const promise = new Promise((resolve, reject) => {
       for (let i = 0; i < array.length; i++) {
         const layer = array[i];
-        if (!layer[category]) {
-          continue;
-        }
+        // if the category exists in sorted
         if (Object.keys(sorted).includes(layer[category])) {
           sorted[layer[category]].push(layer);
         }
-        sorted[layer[category]] = [layer];
+        // if the layer actually has the property "category"
+        if (layer[category]) {
+          sorted[layer[category]] = [layer];
+        }
         if (i === array.length - 1) {
-          // console.log(sorted);
           resolve(sorted);
         }
       }

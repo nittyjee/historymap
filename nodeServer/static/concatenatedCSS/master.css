@@ -48,9 +48,9 @@ body {
         opacity: 0;
         transition: 0.2s linear all; }
       .flexContainer .mainBody .mapControls .displayContent {
-        height: 1em;
+        height: 1.5em;
         opacity: 1;
-        margin: 0.3em; }
+        margin-left: 1em; }
       .flexContainer .mainBody .mapControls .toggleFeatureVisibility {
         display: inline-block;
         font-style: normal;
