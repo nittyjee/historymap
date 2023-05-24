@@ -1,0 +1,105 @@
+// for text and things that don't change size depending on viewport:
+$standard-height: 12px;
+$standard-border: 2px;
+// 12px === standard-height
+$mapHeight: calc(100vh - (2 * 8 * 12px + 2px)); 
+$breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+.highlight  {
+  animation: bounce .3s linear;
+  border: #0f0 solid 2px;
+  accent-color: #0f0;
+  font-style: italic; 
+  line-break: anywhere;
+}
+
+.mapControls {
+  
+  .layerControls {
+    display: inline-block;
+    width: 100%; 
+
+    .toggleVisibility {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+      cursor: pointer;
+      // keep it above any hidden content that might capture clicks
+      z-index: 2;
+      position: relative;
+    }
+
+    input[type='checkbox'] {
+      cursor: pointer;
+    }
+  }
+}
+
+.topMenu {
+  flex-grow: 0; 
+  flex-shrink: 0;
+  flex-basis: 8 * $standard-height;
+  width: 100%;
+  border-bottom: $standard-border solid #b0691d;
+
+  .headerText {
+    display: inline-block;
+    margin-top: 2 * $standard-height;
+    text-shadow: #717c9b 0px 1px 3px;
+    font-size: 2 * $standard-height;
+    font-family: 'Consolas';
+  }
+}
+
+h4 {
+  color: #23374d;
+  font-weight: bold;
+  font-size: 17px;
+  padding-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ce5c00;
+  margin-bottom: 8px;
+  text-transform: 'uppercase';
+}
+
+.feature {
+  padding-left: 1em;
+}
+
+.hiddenContent {
+  height: 0;
+  opacity: 0;
+  transition: 0.2s linear all;
+}
+
+.displayContent {
+  height: 1.5em;
+  opacity: 1;
+  margin-left: 1em;
+}
+
+.typeBoxText {
+  margin-left: 2em;
+  font-style: italic; 
+}
+
+.datePanel {
+  position: absolute;
+  background-color: #3887be;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  font-size: 34px;
+  color: white;
+  float: right;
+  bottom: 3em;
+  right: 1em;
+  padding: 0.3em;
+}
+

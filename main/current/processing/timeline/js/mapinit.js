@@ -821,6 +821,10 @@ function changeDate(unixDate) {
 	var year = parseInt(moment.unix(unixDate).format("YYYY"));
 	var date = parseInt(moment.unix(unixDate).format("YYYYMMDD"));
 
+  console.log(unixDate);
+  console.log(date);
+
+
 	var yrFilter = ["all", ["<=", "YearStart", year], [">=", "YearEnd", year]];
 	var dateFilter = ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]];
 

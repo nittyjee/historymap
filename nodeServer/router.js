@@ -8,6 +8,7 @@ module.exports = (app) => {
   app.get('/', async (req, res) => {
     const layers = await mongo.getLayers();
     const boroughs = await sortIntoCategory('borough', layers);
+    console.log(boroughs);
     const boroughsNames = Object.keys(boroughs);
 
     if (boroughs) {
@@ -18,6 +19,7 @@ module.exports = (app) => {
         const borough = boroughsNames[i];
         console.log(borough);
         const layersInBorough = boroughs[borough];
+        console.log(layersInBorough);
 
         for (let j = 0; j < layersInBorough.length; j++) {
           const layerKeys = Object.keys(layersInBorough[j]);
@@ -46,8 +48,14 @@ module.exports = (app) => {
         if (Object.keys(sorted).includes(layer[category])) {
           sorted[layer[category]].push(layer);
         }
-        // if the layer actually has the property "category"
-        if (layer[category]) {
+        /* If the layer actually has the property "category"
+        and the category has been added */
+        if (layer[category] && sorted[layer[category]]) {
+          sorted[layer[category]].push([layer]);
+        }
+        /* If we need to add a new category, i.e. first item
+        in a category */
+        if (layer[category] && !sorted[layer[category]]) {
           sorted[layer[category]] = [layer];
         }
         if (i === array.length - 1) {

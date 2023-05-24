@@ -25,6 +25,13 @@ const maps = { beforeMap, afterMap };
   maps.afterMap.addLayer(result);
 });*/
 
+// A selector or reference to HTML element
+const container = '.mapContainer';
+const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
+// Set this to enable comparing two maps by mouse movement:
+// mousemove: true
+});
+
 const draw = new MapboxDraw({
   displayControlsDefault: false,
   // Select which mapbox-gl-draw control buttons to add to the map.

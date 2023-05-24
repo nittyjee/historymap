@@ -9,33 +9,31 @@ html(lang='en-EU' xml:lang='en-EU')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     meta(name='theme-color' content='#3366cc')
     link(rel='stylesheet' href='/static/concatenatedCSS/master.css' async)
-    link(rel='stylesheet' href='https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css')
+    -// link(rel='stylesheet' href='https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css')
+    link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css')  
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
     link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.css')
-  body
-    .flexContainer
-      .topMenu.row
-        a(href='http://newamsterdamhistorycenter.org' class='logo')
-          img(id='logo-img-wide' src='http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png' align='middle')
-        div#header_text.headerText | Mapping Early New York
-      .mainBody.row 
-        .mapControls
+    link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css')
+  body    
+    .topMenu
+      a(href='http://newamsterdamhistorycenter.org' class='logo')
+        img(id='logo-img-wide' src='http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png' align='middle')
+      div#header_text.headerText | Mapping Early New York
+    .mainBody.flexContainer
+      .mapControls
+        .layerControls
           if layers
             h4 Layers
             each value, key in layers
+              -console.log(value);
               +boroughToggle(value, key)
-                
-          //each boroughData, boroughName in layers
-            // +boroughToggle(boroughData, boroughName)
-        .mapContainer
-          #before.map
-          #after.map
-      //
-        h1 History map:
-        #mapControls
-          button save
-          button edit
-
+      .mapContainer
+        #before.map
+        #after.map
+        .datePanel 
+    .timelineSlider
+      .timeline
+      .sliderHandle
   .modal
     .modal-body
     .modal-header
@@ -45,9 +43,9 @@ html(lang='en-EU' xml:lang='en-EU')
   footer
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script(src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js')
+    -//  swipper 
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js')
-    script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')
-
+    -// script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js')
     script(src='/static/concatenatedJS/master.js')
     -// script(src='/static/js/events.js')

@@ -114,6 +114,8 @@ Eliminated potential edge cases where layer data is wrong or incomplete:
   - [] Write test for weird cases like null data, empty sets etc.
   - [] Write a function to clean the data base
 
+## Final data consumed by the view engine to render the front end:   
+
 ```json
   {
     Manhattan: {
@@ -133,6 +135,77 @@ Eliminated potential edge cases where layer data is wrong or incomplete:
   }
 ```
 
+## Final data stored in DB:
+```json
+  {
+    "_id": {
+      "$oid": "646e1f93d11a5eadf34dd2a7"
+    },
+    "target map": [
+      "beforeMap",
+      "afterMap"
+    ],
+    "type": [
+      {
+        "type": "line",
+        "color": "red",
+        "opacity": "1",
+        "width": "3"
+      },
+      {
+        "type": "fill",
+        "color": "#e3ed58",
+        "opacity": "0.8",
+        "width": ""
+      }
+    ],
+    "name": "Dutch Grants",
+    "source layer": "grants1-5sp9tb",
+    "layer source url": "mapbox://nittyjee.b5bpfqeb",
+    "feature group": "1640-64|Dutch Grants",
+    "borough": "Manhattan",
+    "actions": {
+      "hover": 1
+      }
+  }
+```
+
+# 18/5/2023
+Integrated mapboxGL-compare
+
+Wrote media queries to make the site presentable on phones and desktops (basic structure only).
+
+# 19/5/2023
+Wrote timeline slider in Vanilla.js and SCSS (no libraries, only a few dozen lines of code).
+
+# 22/5/2023
+Implemented new timeline slider.
+
+# 23/5/2023
+Implemented layer date filter with new slider.
+ 
+*Consider using unix time for date filter and integrating a datepicker, right now it's prone to human input error*
+
+*Granularity greater than 1 year is impossible with a slider, hence to select days a datepicker is required. (there's only 1280 px across a HD screen)*
+
+# 24/5/2023
+Adjusted desktop CSS. 
+
+Added "edit and update" layer capability, *note this has to be behind a login.*
+
+Added clear layer form functionality. 
+
+Reintegrated display popup option. 
+
+# 25/5/2023
+**TODO tomorrow** Correct popup toggle, place actions (e.g. hover, click) in an object in the DB, right now
+they exist as first order properties: "hover": 1; change to: 
+
+```json
+  "actions": {
+    "hover": 1
+  }
+```
 
 **TODO**
 

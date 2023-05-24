@@ -65,7 +65,13 @@ exports.getLayerById = (layerIdInObj) => {
 exports.saveLayer = (layer) => {
   return (async () => {
     const cleanData = await validate(layer);
-    const response = await layerDatabase.insertOne(cleanData);
+    console.log(cleanData);
+    delete cleanData.id;
+    const query = { _id: ObjectId(cleanData._id) };
+    delete cleanData._id;
+    const update = { $set: cleanData };
+    const options = { upsert: true };
+    const response = await layerDatabase.updateOne(query, update, options);
     return response;
   })();
 };

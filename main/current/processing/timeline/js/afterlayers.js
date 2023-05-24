@@ -5,6 +5,7 @@
 //////////////////
 
 function addAfterLayers(yr, date) {
+  console.log(`after layers ${date}`);
 
     //afterMap.on('load', function () {
         

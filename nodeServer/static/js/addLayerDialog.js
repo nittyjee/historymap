@@ -63,7 +63,7 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
   const year2 = event.features[0].properties.year2; 
 
   popUpHTML.classList.add(layerClass.replaceAll(' ', '_'));
-  
+
   const registrarNameParagraph = document.createElement('p');
   registrarNameParagraph.textContent = registrarName;
   registrarNameParagraph.setAttribute('contenteditable', 'true');
@@ -125,39 +125,140 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
 }
 
 function LayerManager () {
-  // eventually a store to manage layers:
+  // Eventually a store to manage layers:
   const layersMongoId = [];
   const layersMapboxId = [];
-  // maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
+  // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
+  const layerControls = document.querySelector('.layerControls');
   let layerFormParent;
   let mapBase;
+  // For app owners to edit things, must be instantiated:
+  this.layerControlEvents = () => {
+    layerControls.addEventListener('click', (e) => {
+      if (e.target.classList.contains('toggleVisibility')) {
+        const hiddenContent = e.target.parentElement.querySelector('.hiddenContent');
+        const plusMinus = e.target.parentElement.querySelector('i');
+        if (hiddenContent.classList.contains('displayContent')) {
+          plusMinus.classList.remove('fa-plus-square');
+          plusMinus.classList.add('fa-minus-square');
+          hiddenContent.classList.remove('displayContent');
+          return;
+        }
+        hiddenContent.classList.add('displayContent');
+        plusMinus.classList.add('fa-plus-square');
+        plusMinus.classList.remove('fa-minus-square');
+      }
 
-  document.querySelectorAll('.deleteLayer').forEach(el => {
-    el.addEventListener('click', (e) => {
-      if (window.confirm('Are you sure you want to delete this feature?')) {
-        xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
-          el.parentElement.parentElement.remove(el.parentElement);
-          alert(response);
+      if (e.target.classList.contains('fetchLayer')) {
+        if (this.returnLayers().includes(e.target.name)) {
+          this.toggleVisibility(e.target.name);
+          return;
+        }
+        xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
+          const parsedLayerData = JSON.parse(layerData);
+          this.addLayer(parsedLayerData);
         });
       }
+
+      if (e.target.classList.contains('editLayer')) {
+        xhrPostInPromise({ _id: e.target.dataset._id }, './getLayerById').then((layerData) => {
+          const parsedLayerData = JSON.parse(layerData);
+          this.populateLayerEditor(parsedLayerData);
+        });
+      }
+
+      if (e.target.classList.contains('deleteLayer')) {
+        if (window.confirm('Are you sure you want to delete this layer?')) {
+          xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
+            el.parentElement.parentElement.remove(el.parentElement);
+            alert(response);
+          });
+        }
+      }
     });
-  });
+  };
+
+  this.resetLayerEditor = () => {
+    return resetLayerEditorFn();
+  };
+
+  // This in the function isn't the outer constructor, so we have to point to that:
+  const layerManager = this;
+  function resetLayerEditorFn () {
+    layerFormParent.innerHTML = '';
+    layerManager.generateAddLayerForm(layerFormParent);
+    layerManager.generateAddMapForm(layerFormParent);
+    layerManager.layerControlEvents();
+  }
+
+  this.populateLayerEditor = (data) => {
+    layerFormParent.querySelector('.title').textContent = `Editing Layer with id ${data._id}`;
+    layerFormParent.querySelector('.title').classList.add('highlight');
+    layerFormParent.dataset._id = data._id;
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i].replaceAll(' ', '_');
+      if (key === '_id') {
+        continue;
+      }
+      const correspondingInput = layerFormParent.querySelector(`#${key}`);
+      if (correspondingInput) {
+        correspondingInput.value = values[i];
+        correspondingInput.classList.add('highlight');
+      } else {
+        /* unabstracted code, not ideal */
+        if (key === 'target_map') {
+          values[i].forEach((mapName) => {
+            layerFormParent.querySelector(`#${mapName}`).checked = true;
+            layerFormParent.querySelector(`#${mapName}`).classList.add('highlight');
+          });
+        }
+
+        if (key === 'type') {
+          values[i].forEach((type) => {
+            const checkbox = layerFormParent.querySelector(`[data-layer-type="${type.type}"]`);
+            const parent = checkbox.parentElement;
+            if (checkbox) {
+              checkbox.checked = true;
+              checkbox.classList.add('highlight');
+            }
+
+            const textInputs = parent.querySelectorAll('input[type="text"]');
+            textInputs.forEach((input) => {
+              if (type[input.dataset.typeStyle]) {
+                input.value = type[input.dataset.typeStyle];
+                input.classList.add('highlight');
+              }
+            });
+          });
+        }
+      }
+    }
+  };
 
   this.returnLayers = () => {
     return layersMongoId;
   };
 
+  /**
+   * @param {String} mongoLayerId String with the DB id.
+   * @description the IDs passed to mapbox contain information including the
+   * name of the map to which they are added:
+   *
+   * Manhattan-1609|Manhattan-Lenape trails-line-beforeMap
+   * Split by "-" the different parts are: borough, feature group, layer type, map
+   */
+
   this.toggleVisibility = (mongoLayerId) => {
     const index = layersMongoId.indexOf(mongoLayerId);
-    const mapboxId = layersMapboxId[index];
-    const layerId = Object.keyes(mapboxId)[0];
+    const mapboxMapIds = layersMapboxId[index];
 
-    const layer = mapboxId[layerId];
-    // split the name and since the map is in the map, remove with that: 
-
-    for (let i = 0; i < layer.length; i++) {
-      const targetMap = maps[mapNames[i]];
+    for (let i = 0; i < mapboxMapIds.length; i++) {
+      const mapboxId = mapboxMapIds[i];
+      const targetMapText = mapboxId.split('-')[mapboxId.split('-').length - 1];
+      const targetMap = maps[targetMapText];
       const exists = targetMap.getLayer(mapboxId);
       if (!exists) {
         continue;
@@ -197,7 +298,7 @@ function LayerManager () {
     parentElement.appendChild(mapBase);
 
     mapBase.classList.add('layerform');
-    const title = document.createElement('p');
+    const title = document.createElement('h2');
     title.classList.add('title');
     title.textContent = 'Add Map';
     mapBase.appendChild(title);
@@ -222,19 +323,24 @@ function LayerManager () {
     });
   };
 
-  /*function createMap (data) {
-    const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
-      container: '$',
-      style: ${data.style},
-      center: [0, 0],
-      hash: true,
-      zoom: 0,
-      attributionControl: false
-    });`
-    // toggleModal (codeFor);
-  }*/
+  /*
+    function createMap (data) {
+      const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
+        container: '$',
+        style: ${data.style},
+        center: [0, 0],
+        hash: true,
+        zoom: 0,
+        attributionControl: false
+      });`
+      // toggleModal (codeFor);
+    }
+  */
 
   this.generateAddLayerForm = (parentElement) => {
+    layerFormParent = document.createElement('form');
+    parentElement.appendChild(layerFormParent);
+
     const data = {};
     data['target map'] = [];
     data.type = [];
@@ -283,22 +389,22 @@ function LayerManager () {
       const nameLabel = document.createElement('label');
       nameLabel.htmlFor = checkboxName;
       nameLabel.innerHTML = `Add to "${checkboxName}" map: `;
-     layerFormParent.appendChild(nameLabel);
+      layerFormParent.appendChild(nameLabel);
       const name = document.createElement('input');
       name.setAttribute('type', 'checkbox');
       name.classList.add('addToMap');
       name.id = checkboxName;
       name.dataset.targetMap = checkboxName;
-     layerFormParent.appendChild(name);
+      layerFormParent.appendChild(name);
 
       const br = document.createElement('br');
-     layerFormParent.appendChild(br);
+      layerFormParent.appendChild(br);
     }
 
     function generateLayersTypeCheckbox (checkboxName) {
       const wrapper = document.createElement('div');
       wrapper.classList.add('typeBox');
-     layerFormParent.appendChild(wrapper);
+      layerFormParent.appendChild(wrapper);
       const nameLabel = document.createElement('label');
       nameLabel.htmlFor = checkboxName;
       nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
@@ -325,6 +431,7 @@ function LayerManager () {
         const name = document.createElement('input');
         name.setAttribute('type', 'text');
         name.dataset.typeStyle = fieldName.replaceAll(' ', '_');
+        name.classList.add(fieldName.replaceAll(' ', '_'));
         typeBoxText.appendChild(name);
         /* these options are not added dynamically to the data.object,
         but onsubmit */
@@ -349,11 +456,8 @@ function LayerManager () {
       });
     }
 
-    layerFormParent = document.createElement('form');
-    parentElement.appendChild(layerFormParent);
-
     layerFormParent.classList.add('layerform');
-    const title = document.createElement('p');
+    const title = document.createElement('h2');
     title.classList.add('title');
     title.textContent = 'Add Layer';
     layerFormParent.appendChild(title);
@@ -368,7 +472,7 @@ function LayerManager () {
     ];
 
     textFields.forEach(fieldName => {
-      textInputGenerator(fieldName,layerFormParent);
+      textInputGenerator(fieldName, layerFormParent);
     });
 
     const types = ['circle', 'line', 'fill'];
@@ -392,6 +496,15 @@ function LayerManager () {
     submit.setAttribute('type', 'submit');
     submit.value = 'submit layer';
     layerFormParent.appendChild(submit);
+
+    const reset = document.createElement('button');
+    reset.textContent = 'reset form';
+    reset.classList.add('reset');
+    layerFormParent.appendChild(reset);
+    reset.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetLayerEditorFn();
+    });
 
     layerFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -425,7 +538,14 @@ function LayerManager () {
           data.type.push(typeFeature);
         }
       });
-      createLayer(data);
+
+      if (layerFormParent.dataset._id) {
+        data._id = layerFormParent.dataset._id;
+      }
+
+      saveLayer(data).then(() => {
+        createLayer(data);
+      });
     });
   };
 
@@ -448,13 +568,17 @@ function LayerManager () {
 
   function createLayer (data) {
     // If the layer already exists as document in the DB, don't save:
-    if (!data._id) {
-      saveLayer(data);
-    }
-    // If the layer exits in the current session, don't make it again:
-    if (layersMongoId.includes(data._id)) {
-      return;
-    }
+    /*
+      if (!data._id) {
+          saveLayer(data);
+        }
+
+      // If the layer exits in the current session, don't make it again:
+      if (layersMongoId.includes(data._id)) {
+        return;
+      }
+    */
+
     // There can be more than one target map:
     data['target map'].forEach((target) => {
       // Multiple geometry types can also be handled through the same function:
@@ -466,14 +590,39 @@ function LayerManager () {
     });
   }
 
+  /**
+   * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
+   * @returns The same date saved in the DB after rendering a layer toggle widget. 
+   */
   function saveLayer (data) {
-    xhrPostInPromise(data, './saveLayer').then((response) => {
-      document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
+    const promise = new Promise((resolve, reject) => {
+      xhrPostInPromise(data, './saveLayer').then((response) => {
+        document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
+        resolve(data);
+      });
     });
+    return promise;
   }
 
   this.addLayer = (data) => {
     return createLayer(data);
+  };
+
+  this.addDateFilter = (minDate, maxDate) => {
+    const filter = ['all', ['<=', 'DayStart', minDate], ['>=', 'DayEnd', minDate]];
+    for (let j = 0; j < layersMapboxId.length; j++) {
+      for (let i = 0; i < layersMapboxId[j].length; i++) {
+        const mapboxId = layersMapboxId[j][i];
+        const targetMapText = mapboxId.split('-')[mapboxId.split('-').length - 1];
+        const targetMap = maps[targetMapText];
+        const exists = targetMap.getLayer(mapboxId);
+        if (!exists) {
+          console.warn(`${targetMapText} doesn't have ${mapboxId}`);
+          continue;
+        }
+        targetMap.setFilter(mapboxId, filter);
+      }
+    }
   };
 
   function tanspileAndAddLayer (targetMap, type, data) {
@@ -493,12 +642,13 @@ function LayerManager () {
       layout: {
         visibility: 'visible' // || none
       },
-      // called "source name"
+      // called 'source name'
       'source-layer': '',
       paint: {
         [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
         [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
       }
+      // filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
     };
 
     if (data.hover) {
@@ -507,7 +657,7 @@ function LayerManager () {
         const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
         hoverPopUp
           .setLngLat(event.lngLat)
-          .setDOMContent(createHoverPopup (`${data.name}PopUp`, event, data.name))
+          .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
           .addTo(map);
 
         map.on('mouseleave', data.id, () => {
@@ -557,34 +707,12 @@ function LayerManager () {
 
     if (!layersMongoId.includes(data._id)) {
       layersMongoId.push(data._id);
-      if (layersMapboxId[layersMongoId.length - 1]) {
-        layersMapboxId[layersMongoId.length - 1].push(layerId);
-      } else {
-        layersMapboxId.push([layerId]);
-      }
     }
-
-    // DOCUMENT THIS SPAGHETTI
-    /*
-    if (!layersMongoId.includes(data._id)) {
-      layersMongoId.push(data._id);
-      if (!layersMapboxId.includes(layerId)) {
-        layersMapboxId.push({ [data._id]: [layerId] });
-      }
+    if (layersMapboxId[layersMongoId.length - 1]) {
+      layersMapboxId[layersMongoId.length - 1].push(layerId);
     } else {
-      layersMapboxId.forEach((layerGroup, i) => {
-        const key = Object.keys(layerGroup)[0];
-        if (key === data._id) {
-          layersMapboxId[i][data._id].push(layerId);
-        }
-      });
+      layersMapboxId.push([layerId]);
     }
-    */
-
-    console.log(transpilledOptions);
-    console.log(data);
-    console.log(layersMapboxId);
-    console.log(layersMongoId);
     map.addLayer(transpilledOptions);
   }
 }

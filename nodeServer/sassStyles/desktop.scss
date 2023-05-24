@@ -1,0 +1,67 @@
+@import "include-media.scss";
+@import "general.scss";
+@import "slider.scss";
+@include media(">=desktop") {
+  .flexContainer {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    width: 100%; 
+  }
+
+  .mapControls  {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 25vw;
+  }
+
+  .mapContainer {
+    display: flex; 
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 75vw;
+    flex-direction: column;
+
+    .map {
+      height: $mapHeight;
+      position: absolute;
+      top: 8 * $standard-height + $standard-border;
+      bottom: 0;
+      width: 75vw;
+    }
+
+    .mapboxgl-canvas {
+      width: 100% !important; 
+    }
+  }
+}
+
+@include media("<=tablet") {
+  .flexContainer {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    width: 100%; 
+  }
+
+  .mapControls  {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 25vw;
+    flex-direction: column;
+  }
+
+  .mapContainer {
+    display: flex; 
+    flex-grow: 1;
+    position: relative; 
+
+    .map {
+      height: $mapHeight;
+      position: absolute;
+      top: 8 * $standard-height + $standard-border;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+}

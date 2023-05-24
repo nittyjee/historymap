@@ -5,7 +5,6 @@ module.exports = (grunt) => {
     concat: {
       js: {
         options: { separator: '' },
-        //'../main/current/processing/timeline/js/*.js', 
         src: ['./static/js/*.js'],
         dest: './static/concatenatedJS/master.js'
       },
@@ -20,30 +19,6 @@ module.exports = (grunt) => {
         dest: './static/concatenatedCSS/master.css'
       }
     },
-
-    /*sass: {
-      orginal: {
-        options: {
-          implementation: sass,
-          sourceMap: true
-        },
-        dist: {
-          files: {
-            '../main/current/processing/timeline/css/scssDerived.css': '../main/current/processing/timeline/css/*.scss'
-          }
-        }
-      },
-      newNodeServerSass: {
-        options: {
-          implementation: sass,
-          sourceMap: true
-        },
-        dist: {
-          files: {
-            './static/styles/scssDerived.css': './sassStyles/*.scss'
-          }
-        }
-    },*/
 
     sass: {
       options: {
@@ -66,10 +41,6 @@ module.exports = (grunt) => {
         files: ['../main/current/processing/timeline/css/*.css'],
         tasks: ['concat:css']
       },
-      /*scss: {
-        files: ['../main/current/processing/timeline/css/*.scss'],
-        tasks: ['sass:original']
-      },*/
       newNodeServerSass: {
         files: ['./sassStyles/*.scss'],
         tasks: ['sass']

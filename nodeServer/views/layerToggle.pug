@@ -13,6 +13,6 @@ mixin boroughToggle(boroughData, boroughName)
 mixin layerToggle(layer)
   .layer.hiddenContent
     input(type='checkbox' name=layer._id).fetchLayer 
-    i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?')
-    i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?')
+    i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)
+    i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layer._id)
     lable(for=layer._id) #{layer.name}
