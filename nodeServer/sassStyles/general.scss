@@ -39,6 +39,10 @@ body {
     input[type='checkbox'] {
       cursor: pointer;
     }
+
+    h4 {
+      text-transform: uppercase;
+    }
   }
 }
 
@@ -66,7 +70,12 @@ h4 {
   text-align: center;
   border-bottom: 1px solid #ce5c00;
   margin-bottom: 8px;
-  text-transform: 'uppercase';
+  padding-bottom: 1em;
+}
+
+a {
+  font-weight: 700;
+  color: #ce5c00;
 }
 
 .feature {
@@ -80,7 +89,7 @@ h4 {
 }
 
 .displayContent {
-  height: 1.5em;
+  height: auto;
   opacity: 1;
   margin-left: 1em;
 }

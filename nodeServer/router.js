@@ -1,3 +1,5 @@
+const { log } = require('console');
+
 const mongo = customModules('mongoQueries');
 
 module.exports = (app) => {
@@ -8,35 +10,23 @@ module.exports = (app) => {
   app.get('/', async (req, res) => {
     const layers = await mongo.getLayers();
     const boroughs = await sortIntoCategory('borough', layers);
-    console.log(boroughs);
-    const boroughsNames = Object.keys(boroughs);
+    const names = Object.keys(boroughs);
+    const copyOfBoroughs = JSON.parse(JSON.stringify(boroughs));
 
-    if (boroughs) {
-      // loop through boroughs:
-      for (let i = 0; i < boroughsNames.length; i++) {
-        // loop through borough object keys:
-        console.log(`boroughs keys ${Object.keys(boroughs)}`);
-        const borough = boroughsNames[i];
-        console.log(borough);
-        const layersInBorough = boroughs[borough];
-        console.log(layersInBorough);
-
-        for (let j = 0; j < layersInBorough.length; j++) {
-          const layerKeys = Object.keys(layersInBorough[j]);
-          if (layerKeys.includes('feature group')) {
-            console.log('feature group')
-            const featureGroup = await sortIntoCategory('feature group', boroughs[borough]);
-            boroughs[borough] = featureGroup;
-            const util = require('util');
-            console.log(util.inspect(boroughs, { showHidden: false, depth: 4, colors: true }));
-            res.render('main.pug', { layers: boroughs });
-          }
-        }
-      }
-    } else {
-      // no layers to render:
-      res.render('main.pug', { layers: null });
+    for (let i = 0; i < names.length; i++) {
+      copyOfBoroughs[names[i]] = await sortIntoCategory('feature group', boroughs[names[i]]);
     }
+
+    const styles = await mongo.getStyles();
+    const styleBoroughs = await sortIntoCategory('borough', styles);
+    const styleNames = Object.keys(styleBoroughs);
+    const copyOfStyles = JSON.parse(JSON.stringify(boroughs));
+
+    for (let i = 0; i < styleNames.length; i++) {
+      copyOfStyles[styleNames[i]] = await sortIntoCategory('feature group', styleBoroughs[styleNames[i]]);
+    }
+
+    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles });
   });
 
   function sortIntoCategory (category, array) {
@@ -48,13 +38,6 @@ module.exports = (app) => {
         if (Object.keys(sorted).includes(layer[category])) {
           sorted[layer[category]].push(layer);
         }
-        /* If the layer actually has the property "category"
-        and the category has been added */
-        if (layer[category] && sorted[layer[category]]) {
-          sorted[layer[category]].push([layer]);
-        }
-        /* If we need to add a new category, i.e. first item
-        in a category */
         if (layer[category] && !sorted[layer[category]]) {
           sorted[layer[category]] = [layer];
         }
@@ -80,6 +63,12 @@ module.exports = (app) => {
     });
   });
 
+  app.post('/getStyles', (req, res) => {
+    mongo.getLayers(req.body).then((result) => {
+      res.send(result);
+    });
+  });
+
   /**
    * @param req.body {Object} Query in the shape {_id: idString}
    */
@@ -95,11 +84,28 @@ module.exports = (app) => {
       if (result.acknowledged && result.insertedId) {
         mongo.getLayerById(result.insertedId).then((layer) => {
           console.log(`layer ${JSON.stringify(layer)}`);
-          res.render('layerWidgetOnly.pug', {layer}, (err, html) => {
+          res.render('layerWidgetOnly.pug', { layer }, (err, html) => {
             if (err) throw err;
             res.send(html);
           });
         });
+        // res.send(`Layer saved with local id ${result.insertedId}`);
+      }
+    });
+  });
+
+  app.post('/saveStyle', (req, res) => {
+    mongo.saveStyle(req.body).then((result) => {
+      if (result.acknowledged && result.insertedId) {
+        /*
+        mongo.getLayerById(result.insertedId).then((layer) => {
+          console.log(`layer ${JSON.stringify(layer)}`);
+          res.render('layerWidgetOnly.pug', { layer }, (err, html) => {
+            if (err) throw err;
+            res.send(html);
+          });
+        });
+        */
         // res.send(`Layer saved with local id ${result.insertedId}`);
       }
     });

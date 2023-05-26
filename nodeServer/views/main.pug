@@ -1,7 +1,10 @@
 include ./layerToggle.pug
+include ./styleToggle.pug
 doctype html
 -{layers}
--console.log(layers);
+-console.log(layers)
+-{styles}
+-console.log(styles)
 html(lang='en-EU' xml:lang='en-EU')
   head
     meta(charset='utf-8')
@@ -25,12 +28,19 @@ html(lang='en-EU' xml:lang='en-EU')
           if layers
             h4 Layers
             each value, key in layers
-              -console.log(value);
               +boroughToggle(value, key)
+          if styles    
+            h4 Maps
+            each value, key in styles
+              +boroughToggleStyles(value, key)
       .mapContainer
+        .sideInfoDisplay
+          h4 hello world 
+          p Dutch Grant Lot:
+          a(href='https://encyclopedia.nahc-mapping.org/grantlot/B9' target='_blank') B9
         #before.map
         #after.map
-        .datePanel 
+        .datePanel
     .timelineSlider
       .timeline
       .sliderHandle

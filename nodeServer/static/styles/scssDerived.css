@@ -23,6 +23,8 @@ body {
     position: relative; }
   .mapControls .layerControls input[type='checkbox'] {
     cursor: pointer; }
+  .mapControls .layerControls h4 {
+    text-transform: uppercase; }
 
 .topMenu {
   flex-grow: 0;
@@ -45,7 +47,11 @@ h4 {
   text-align: center;
   border-bottom: 1px solid #ce5c00;
   margin-bottom: 8px;
-  text-transform: 'uppercase'; }
+  padding-bottom: 1em; }
+
+a {
+  font-weight: 700;
+  color: #ce5c00; }
 
 .feature {
   padding-left: 1em; }
@@ -56,7 +62,7 @@ h4 {
   transition: 0.2s linear all; }
 
 .displayContent {
-  height: 1.5em;
+  height: auto;
   opacity: 1;
   margin-left: 1em; }
 
@@ -175,6 +181,27 @@ h4 {
     flex-shrink: 1;
     flex-basis: 75vw;
     flex-direction: column; }
+    .mapContainer .sideInfoDisplay {
+      z-index: 2;
+      position: absolute;
+      right: 1em;
+      background-color: rgba(255, 255, 0, 0.5);
+      border: solid #FFFFFF 3px;
+      padding: 0.5em;
+      width: auto;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -ms-word-break: break-all;
+      word-break: break-all;
+      word-break: break-word;
+      -ms-hyphens: auto;
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      margin-top: 1em; }
+      .mapContainer .sideInfoDisplay p {
+        line-height: 2em;
+        display: inline-block; }
     .mapContainer .map {
       height: calc(100vh - (2 * 8 * 12px + 2px));
       position: absolute;
@@ -190,6 +217,8 @@ h4 {
     flex-direction: column;
     justify-content: center;
     width: 100%; }
+  .timelineSlider {
+    margin-top: 60vh; }
   .mapControls {
     flex-grow: 1;
     flex-shrink: 1;
@@ -199,6 +228,11 @@ h4 {
     display: flex;
     flex-grow: 1;
     position: relative; }
+    .mapContainer .datePanel {
+      margin-top: 3em;
+      right: auto;
+      bottom: auto;
+      float: left; }
     .mapContainer .map {
       height: calc(100vh - (2 * 8 * 12px + 2px));
       position: absolute;

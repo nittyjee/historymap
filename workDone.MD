@@ -198,7 +198,32 @@ Added clear layer form functionality.
 Reintegrated display popup option. 
 
 # 25/5/2023
-**TODO tomorrow** Correct popup toggle, place actions (e.g. hover, click) in an object in the DB, right now
+Corrected popup toggle.
+
+Started building sideInfoDisplay.
+
+Side info from mapbox looks like this: 
+```json
+{
+  "Aligned": "UNSURE",
+  "DayEnd": 17000102,
+  "DayEnd1": 16520430,
+  "DayStart": 16490418,
+  "Lot": "H5",
+  "day1": "Apr. 18",
+  "day2": "Apr. 30",
+  "descriptio": "Gr-br. to Francis Doughty. Not found of record. Apl. 18 Recited in conf. set forth below",
+  "lot2": "",
+  "name": "Francis Doughty",
+  "notes": "",
+  "styling1": "knownfull",
+  "year1": "1649",
+  "year2": "1652"
+}
+```
+n.b. features is not readble in console, some weird bug Mapbox induced. This data is not editable. 
+
+**TODO**place actions (e.g. hover, click) in an object in the DB, right now
 they exist as first order properties: "hover": 1; change to: 
 
 ```json
@@ -206,6 +231,13 @@ they exist as first order properties: "hover": 1; change to:
     "hover": 1
   }
 ```
+# 26/5/2023
+Added "add map" (style feature) and data base. Map data was inlined in data objects because it is very small. 
+
+Rewrote algorythm to sort layers
+
+Styled mobile layout
+
 
 **TODO**
 
@@ -514,5 +546,24 @@ they exist as first order properties: "hover": 1; change to:
     });
   ```
 
-# Globals: 
-- maps
+# Global variables: 
+- maps // an object storing maps
+- compare
+- container
+- draw
+- layerControls // a LayerManager instance
+- sliderConstructor // a SliderConstructor instance
+
+# Global functions, constructors:
+- LayerManager
+- SliderConstructor
+- xhr
+- xhrGet
+- xhrGetInPromise
+- xhrPostInPromise
+
+# Nomenclature
+
+- Maps *mapbox styles*
+- Feature Group *a sub category of borough usually relating to a specific time* e.g. 1609|Manahatta. This category
+is also used in styles although in this case only one style is contained. 

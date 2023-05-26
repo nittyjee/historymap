@@ -42,6 +42,11 @@ const taxLots = db().db(dbname).collection('taxLots++');
  */
 const layerDatabase = db().db(dbname).collection('layerData');
 
+/**
+ * @returns styleDatabase connection
+ */
+const styleDatabase = db().db(dbname).collection('styleData');
+
 exports.getLayers = () => {
   const promise = new Promise((resolve, reject) => {
     layerDatabase.find({}).toArray((err, results) => {
@@ -65,7 +70,6 @@ exports.getLayerById = (layerIdInObj) => {
 exports.saveLayer = (layer) => {
   return (async () => {
     const cleanData = await validate(layer);
-    console.log(cleanData);
     delete cleanData.id;
     const query = { _id: ObjectId(cleanData._id) };
     delete cleanData._id;
@@ -80,6 +84,29 @@ exports.deleteLayer = (layerMongoID) => {
   return layerDatabase.deleteOne({ _id: ObjectId(layerMongoID) }).then((result) => {
     return result;
   });
+};
+
+exports.getStyles = () => {
+  const promise = new Promise((resolve, reject) => {
+    styleDatabase.find({}).toArray((err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+  return promise;
+};
+
+exports.saveStyle = (style) => {
+  return (async () => {
+    const cleanData = await validate(style);
+    delete cleanData.id;
+    const query = { _id: ObjectId(cleanData._id) };
+    delete cleanData._id;
+    const update = { $set: cleanData };
+    const options = { upsert: true };
+    const response = await styleDatabase.updateOne(query, update, options);
+    return response;
+  })();
 };
 
 exports.getDutchLots = () => {

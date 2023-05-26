@@ -22,6 +22,31 @@
     flex-basis: 75vw;
     flex-direction: column;
 
+    .sideInfoDisplay {
+      z-index: 2;
+      position: absolute;
+      right: 1em;
+      background-color: rgba(255, 255, 0, 0.5);
+      border: solid #FFFFFF 3px;
+      padding: 0.5em;
+      width: auto;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -ms-word-break: break-all;
+      word-break: break-all;
+      word-break: break-word;
+      -ms-hyphens: auto;
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      margin-top: 1em;
+
+      p {
+        line-height: 2em;
+        display: inline-block;
+      }
+    }
+
     .map {
       height: $mapHeight;
       position: absolute;
@@ -44,6 +69,10 @@
     width: 100%; 
   }
 
+  .timelineSlider {
+    margin-top: 60vh;
+  }
+
   .mapControls  {
     flex-grow: 1;
     flex-shrink: 1;
@@ -55,6 +84,13 @@
     display: flex; 
     flex-grow: 1;
     position: relative; 
+
+    .datePanel {
+      margin-top: 3em;
+      right: auto; 
+      bottom: auto;
+      float: left;
+    }
 
     .map {
       height: $mapHeight;

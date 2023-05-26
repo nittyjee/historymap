@@ -1,16 +1,19 @@
 mixin boroughToggle(boroughData, boroughName)
-  i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-  .areaList #{boroughName}
-    .hiddenContent
-      each featureGroup, featureGroupName in boroughData
-        .layersInArea
-          input(type='checkbox' name=featureGroupName).view.featureGroup 
-          i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-          lable #{featureGroupName}
-          each layer in featureGroup
-            +layerToggle(layer)
+  -console.log(boroughData);
+  .featureGroup
+    i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+    .areaList #{boroughName}
+      .hiddenContent
+        each featureGroup, featureGroupName in boroughData
+          .layersInArea.featureGroup
+            input(type='checkbox' name=featureGroupName).view.featureGroup 
+            i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+            lable #{featureGroupName}
+            each layer in featureGroup
+              +layerToggle(layer)
 
 mixin layerToggle(layer)
+  -console.log(layer);
   .layer.hiddenContent
     input(type='checkbox' name=layer._id).fetchLayer 
     i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)

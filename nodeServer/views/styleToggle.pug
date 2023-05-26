@@ -1,0 +1,22 @@
+mixin boroughToggleStyles(boroughData, boroughName)
+  -console.log(boroughData)
+  .featureGroup 
+    i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+    .areaList #{boroughName}
+      .hiddenContent
+        each featureGroup, featureGroupName in boroughData
+          .layersInArea.featureGroup
+            -// input(type='checkbox' name=featureGroupName).view.featureGroup 
+            i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+            lable #{featureGroupName}
+            each style in featureGroup
+              +styleToggle(style)
+
+
+mixin styleToggle(style)
+  .layer.hiddenContent
+    input(type='checkbox' data-_id=style._id data-url=style['style source url'] data-target='beforeMap' title='Render this style on the left?').fetchStyle
+    input(type='checkbox' data-_id=style._id data-url=style['style source url'] data-target='afterMap' title='Render this style on the right?').fetchStyle
+    i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
+    i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
+    lable(for=style._id) #{style['feature group']}

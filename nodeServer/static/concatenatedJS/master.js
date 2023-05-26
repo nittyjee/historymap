@@ -10,6 +10,14 @@
  */
 
 function createHoverPopup (layerClass, event, layerName) {
+/**
+ * @param {string} string
+ * @returns The same string with spaces replaced by an undescore
+ * @description Small utility to declutter code.
+ */
+  function removeSpaces (string) {
+    return string.replaceAll(' ', '_');
+  }
   const popUpHTML = document.createElement('div');
   const lot = (event.features[0].properties.Lot)
     ? event.features[0].properties.Lot
@@ -35,13 +43,12 @@ function createHoverPopup (layerClass, event, layerName) {
   return popUpHTML;
 }
 
-/**
- * @param {string} string
- * @returns The same string with spaces replaced by an undescore
- * @description Small utility to declutter code.
- */
-function removeSpaces (string) {
-  return string.replaceAll(' ', '_');
+function populateSideInfoDisplay (event) {
+  const target = document.querySelector('.sideInfoDisplay');
+  console.log(event);
+  console.log(JSON.stringify(event.features[0].properties));
+
+
 }
 
 /**
@@ -77,7 +84,7 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
   popUpHTML.appendChild(startBold);
 
   const startPara = document.createElement('p');
-  startPara.textContent = day1 && year1 
+  startPara.textContent = day1 && year1
     ? `${day1}, ${year1}`
     : `${day1 || year1}`;
   startPara.setAttribute('contenteditable', 'true');
@@ -91,7 +98,7 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
   popUpHTML.appendChild(endBold);
 
   const endPara = document.createElement('p');
-  endPara.textContent = day2 && year2 
+  endPara.textContent = day2 && year2
     ? `${day2}, ${year2}`
     : `${day2 || year2}`;
   endPara.setAttribute('contenteditable', 'true');
@@ -107,17 +114,15 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
   });
   popUpHTML.appendChild(saveBtn);
 
-  if(dutchLot){
+  if (dutchLot) {
     const lotBold = document.createElement('b');
     lotBold.textContent = 'Lot Division:';
     popUpHTML.appendChild(lotBold);
-  
+
     const lotPara = document.createElement('p');
     lotPara.textContent = dutchLot;
     startPara.setAttribute('contenteditable', 'true');
     popUpHTML.appendChild(lotPara);
-
-
     startPara.setAttribute('contenteditable', 'true');
   }
 
@@ -131,6 +136,7 @@ function LayerManager () {
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
+
   let layerFormParent;
   let mapBase;
   // For app owners to edit things, must be instantiated:
@@ -159,6 +165,12 @@ function LayerManager () {
           const parsedLayerData = JSON.parse(layerData);
           this.addLayer(parsedLayerData);
         });
+      }
+
+      if (e.target.classList.contains('fetchStyle')) {
+        const targetMap = e.target.dataset.target;
+        const url = e.target.dataset.url;
+        maps[targetMap].setStyle(url);
       }
 
       if (e.target.classList.contains('editLayer')) {
@@ -273,7 +285,8 @@ function LayerManager () {
   };
 
   this.generateAddMapForm = (parentElement) => {
-    const data = {};
+    /* A map is a style */
+    const mapData = {};
 
     function textInputGenerator (fieldName, target) {
       const nameLabel = document.createElement('label');
@@ -316,11 +329,28 @@ function LayerManager () {
     mapBase.addEventListener('submit', (event) => {
       event.preventDefault();
       fields.forEach((id) => {
-        data[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+        mapData[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+        // then save
+        
       });
+
+      
 
     //  createMap(data);
     });
+    /**
+     * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
+     * @returns The same date saved in the DB after rendering a layer toggle widget. 
+     */
+    function saveMap (data) {
+      const promise = new Promise((resolve, reject) => {
+        xhrPostInPromise(data, './saveLayer').then((response) => {
+          document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
+          resolve(data);
+        });
+      });
+      return promise;
+    }
   };
 
   /*
@@ -652,26 +682,35 @@ function LayerManager () {
     };
 
     if (data.hover) {
+      console.log(map);
+      const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
       map.on('mouseenter', data.id, (event) => {
         map.getCanvas().style.cursor = 'pointer';
-        const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
         hoverPopUp
           .setLngLat(event.lngLat)
           .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
           .addTo(map);
+      });
 
-        map.on('mouseleave', data.id, () => {
-          map.getCanvas().style.cursor = '';
-          if (hoverPopUp.isOpen()) {
-            hoverPopUp.remove();
-          }
-        });
+      map.on('mousemove', data.id, (event) => {
+        map.getCanvas().style.cursor = 'pointer';
+        hoverPopUp
+          .setLngLat(event.lngLat)
+          .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name));
+      });
+
+      map.on('mouseleave', data.id, () => {
+        map.getCanvas().style.cursor = '';
+        if (hoverPopUp.isOpen()) {
+          hoverPopUp.remove();
+        }
       });
     }
 
     if (data.click) {
       const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
       map.on('click', data.id, (event) => {
+        populateSideInfoDisplay(event);
         clickPopUp
           .setLngLat(event.lngLat)
           .setDOMContent(createClickedFeaturePopup (`${data.name}PopUp`, event, null))
