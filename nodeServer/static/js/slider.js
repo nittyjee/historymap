@@ -1,16 +1,20 @@
 function SliderConstructor (minDate, maxDate) {
   this.getDate = () => {
     const selection = getSelection();
-    return getDate (selection);
+    return getDate(selection);
+  };
+
+  this.dateTransform = (date) => {
+    return getDate(date);
   };
 
   this.returnMinDate = () => {
     // whatever position the selector is at:
-    return getDate ();
+    return getDate();
   };
 
   this.returnMaxDate = () => {
-    return getDate (maxDate);
+    return getDate(maxDate);
   };
   // check rounding
   const step = (maxDate - minDate) / 10;
@@ -77,7 +81,7 @@ function SliderConstructor (minDate, maxDate) {
 
     let format;
     if (selection.length > 4) {
-      let format = selection.split('');
+      format = selection.split('');
       format.splice(4, 0, '/');
       format.splice(7, 0, '/');
       format = format.join('');

@@ -4,8 +4,6 @@
  * @description Methods for database interaction
  */
 
-const { ObjectID } = require('mongodb');
-
 /**
  * Stock
  * @namespace getDataQueries
@@ -14,12 +12,16 @@ const { ObjectID } = require('mongodb');
 
 const dbname = process.env.dbname;
 const validate = require('any_object_validator').recursiveSanitation;
-const ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId;
+
+const encrypt = customModules('login').encrypt;
+const decrypt = customModules('login').decrypt;
 
 /**
  * Makes a connetion to the DB pool
  * @returns A DB connection from the pool
  */
+
 const db = () => {
   const mongoConnect = customModules('mongoConnect');
   return mongoConnect.getDb();
@@ -47,84 +49,86 @@ const layerDatabase = db().db(dbname).collection('layerData');
  */
 const styleDatabase = db().db(dbname).collection('styleData');
 
-exports.getLayers = () => {
-  const promise = new Promise((resolve, reject) => {
-    layerDatabase.find({}).toArray((err, results) => {
-      if (err) reject(err);
-      resolve(results);
-    });
-  });
-  return promise;
+/**
+ * @returns providers connection
+ */
+const providers = db().db(dbname).collection('providers');
+
+exports.getLayers = async () => {
+  const find = layerDatabase.find();
+  const results = await find.toArray();
+  return(results);
 };
 
-exports.getLayerById = (layerIdInObj) => {
-  const promise = new Promise((resolve, reject) => {
-    layerDatabase.find({ _id: ObjectId(layerIdInObj) }).toArray((err, results) => {
-      if (err) reject(err);
-      resolve(results[0]);
-    });
-  });
-  return promise;
+exports.getLayerById = async (layerIdInObj) => {
+  const obId = new ObjectId(layerIdInObj);
+  const find = layerDatabase.find({ _id: obId});
+  const results = await find.toArray();
+  return(results[0]);
 };
 
-exports.saveLayer = (layer) => {
-  return (async () => {
-    const cleanData = await validate(layer);
-    delete cleanData.id;
-    const query = { _id: ObjectId(cleanData._id) };
-    delete cleanData._id;
-    const update = { $set: cleanData };
-    const options = { upsert: true };
-    const response = await layerDatabase.updateOne(query, update, options);
-    return response;
-  })();
+exports.saveLayer = async (layer) => {
+  const cleanData = await validate(layer);
+  const obId = new ObjectId(cleanData._id);
+  delete cleanData.id;
+  const query = { _id: obId };
+  delete cleanData._id;
+  const update = { $set: cleanData };
+  const options = { upsert: true };
+  const response = await layerDatabase.updateOne(query, update, options);
+  return response;
 };
 
 exports.deleteLayer = (layerMongoID) => {
-  return layerDatabase.deleteOne({ _id: ObjectId(layerMongoID) }).then((result) => {
+  const obId = new ObjectId(layerIdInObj);
+  return layerDatabase.deleteOne({ _id: obId }).then((result) => {
     return result;
   });
 };
 
-exports.getStyles = () => {
-  const promise = new Promise((resolve, reject) => {
-    styleDatabase.find({}).toArray((err, results) => {
-      if (err) reject(err);
-      resolve(results);
-    });
-  });
-  return promise;
+exports.getStyles = async () => {
+  const find = styleDatabase.find();
+  const results = await find.toArray();
+  return(results);
 };
 
-exports.saveStyle = (style) => {
-  return (async () => {
-    const cleanData = await validate(style);
-    delete cleanData.id;
-    const query = { _id: ObjectId(cleanData._id) };
-    delete cleanData._id;
-    const update = { $set: cleanData };
-    const options = { upsert: true };
-    const response = await styleDatabase.updateOne(query, update, options);
-    return response;
-  })();
+exports.saveStyle = async (style) => {
+  const cleanData = await validate(style);
+  const obId = new ObjectId(cleanData._id);
+  delete cleanData.id;
+  const query = { _id: obId };
+  delete cleanData._id;
+  const update = { $set: cleanData };
+  const options = { upsert: true };
+  const response = await styleDatabase.updateOne(query, update, options);
+  return response;
 };
 
-exports.getDutchLots = () => {
-  const promise = new Promise((resolve, reject) => {
-    dutchLots.find({}).toArray((err, results) => {
-      if (err) reject(err);
-      resolve(results);
-    });
-  });
-  return promise;
+exports.getDutchLots = async () => {
+  const find = dutchLots.find();
+  const results = await find.toArray();
+  return(results);
 };
 
-exports.getTaxLots = () => {
-  const promise = new Promise((resolve, reject) => {
-    taxLots.find({}).toArray((err, results) => {
-      if (err) reject(err);
-      resolve(results);
-    });
-  });
-  return promise;
+exports.getTaxLots = async () => {
+  const find = taxLots.find();
+  const results = await find.toArray();
+  return(results);
+};
+
+exports.providerLogin = async (loginData) => {
+  const submittedPassword = decrypt(loginData.password);
+  const find = providers.find({ username: loginData.username });
+  const provider = await find.toArray();
+  let match;
+  for (let i = 0; i < provider.length; i++) {
+    if (decrypt(provider[i].password) === submittedPassword) {
+      match = provider[i];
+      break;
+    }
+    if (i === provider.length - 1) {
+      match = false;
+    }
+  }
+  return(match);
 };

@@ -185,7 +185,7 @@ a {
       z-index: 2;
       position: absolute;
       right: 1em;
-      background-color: rgba(255, 255, 0, 0.5);
+      background-color: #ffff7f;
       border: solid #FFFFFF 3px;
       padding: 0.5em;
       width: auto;
@@ -201,7 +201,10 @@ a {
       margin-top: 1em; }
       .mapContainer .sideInfoDisplay p {
         line-height: 2em;
-        display: inline-block; }
+        display: block; }
+      .mapContainer .sideInfoDisplay .bold {
+        font-weight: 700;
+        font-style: italic; }
     .mapContainer .map {
       height: calc(100vh - (2 * 8 * 12px + 2px));
       position: absolute;

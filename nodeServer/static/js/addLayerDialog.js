@@ -1,3 +1,5 @@
+const baseURL = 'https://encyclopedia.nahc-mapping-org/'
+
 /**
  * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
  * @param {Object{}} event      -Event fired by Mapbox GL
@@ -43,12 +45,71 @@ function createHoverPopup (layerClass, event, layerName) {
   return popUpHTML;
 }
 
+/*
+{
+  "Aligned": "added",
+  "DayEnd": 17000102,
+  "DayStart": 16450110,
+  "Lot": "A18",
+  "day1": "Jan. 10",
+  "day2": "",
+  "descriptio": "Gr-br, to Cornells Groesens, Not found of record, Jan. 10 but recited in deed set forth below:",
+  "lot2": "",
+  "name": "Cornells Groesens",
+  "notes": "Mentions land owned by Jan Damen to the north.",
+  "styling1": "knownfull",
+  "year1": "1645",
+  "year2": "N/A"
+}
+ */
 function populateSideInfoDisplay (event) {
+  const group = maps.beforeMap.queryRenderedFeatures(event.point)[0].source.split('/')[2];
+  /* Missuse of the id nomenclature to obtain other data on a feature:
+  data need to be stored in DB, *not in Mapbox features */
+  console.log(maps.beforeMap.queryRenderedFeatures(event.point));
   const target = document.querySelector('.sideInfoDisplay');
-  console.log(event);
-  console.log(JSON.stringify(event.features[0].properties));
+  target.innerHTML = '';
+  const data = event.features[0].properties;
 
+  console.log(data);
 
+  if (data.Lot) {
+    makeLink(`grantlot/${data.Lot}`, data.Lot, `${group} Lot`);
+  }
+  if (data.name) {
+    makeParagraph('From Party', data.name);
+  }
+  // from party DWIC
+  if (data.DayStart) {
+    console.log(data.DayStart);
+    const date = sliderConstructor.dateTransform(data.DayStart);
+    console.log(date);
+    makeParagraph('Start', date);
+  }
+  if (data.descriptio) {
+    makeParagraph('Description', data.descriptio);
+  }
+
+  //console.log(event);
+  function makeLink (link, textContent, descriptor) {
+    const p = document.createElement('p');
+    p.textContent = `${descriptor}: `;
+    const a = document.createElement('a');
+    a.setAttribute('href', `${baseURL}${link}`);
+    a.textContent = textContent;
+    p.appendChild(a);
+    target.appendChild(p);
+  }
+
+  function makeParagraph (descriptor, data) {
+    const p = document.createElement('p');
+    p.textContent = `${descriptor}: `;
+    const span = document.createElement('span');
+    span.classList.add('boldItalic');
+    p.appendChild(span);
+    span.textContent = data;
+    target.appendChild(p);
+  }
 }
 
 /**
@@ -657,7 +718,7 @@ function LayerManager () {
 
   function tanspileAndAddLayer (targetMap, type, data) {
     const map = maps[targetMap];
-    const layerId = `${data.borough}-${data['feature group']}-${data.name}-${type.type}-${targetMap}`;
+    const layerId = `${data.borough}/${data['feature group']}/${data.name}/${type.type}/${targetMap}`;
     data.id = layerId;
 
     const transpilledOptions = {

@@ -1,7 +1,6 @@
 const mongopass = process.env.mongopass;
 const dbname = process.env.dbname;
 const dbusername = process.env.dbusername;
-//const url = eval(process.env.mongoDBUrl);
 const urlSt = process.env.mongoDBUrl;
 let url;
 
@@ -11,8 +10,6 @@ let url;
   url = url.replaceAll('${dbusername}', dbusername);
   url = url.replaceAll('${dbname}', dbname);
 })();
-
-console.log(url);
 
 const assert = require('assert');
 const MongoClient = require('mongodb').MongoClient;
@@ -24,24 +21,18 @@ module.exports = {
   initDb
 };
 
-function initDb(callback) {
-  if (_db) {
-    console.warn(`Trying to init DB again!`);
-    return callback(null, _db);
-  } else {
-    client.connect(connected);
-  }
-
-  function connected(err, db) {
-    if (err) {
-      console.log(`The following err occured: ${err}`);
-      return callback(err);
-    }
-    console.log(`DB initialized, connected to ${dbname}`);
-    _db = db;
-    return callback(null, _db);
-  }
+async function initDb() {
+  _db = await client.connect();
+  console.log(`Connected to ${dbname} database`);
 }
+
+/*
+const eventName = "connectionPoolCreated";
+client.on(eventName, (event) =>
+  console.log("\nreceived event:\n", event)
+);
+
+}*/
 
 function getDb() {
   assert.ok(_db, `Db has not been initialized. Please call init first.`);

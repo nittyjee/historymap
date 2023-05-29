@@ -238,6 +238,17 @@ Rewrote algorythm to sort layers
 
 Styled mobile layout
 
+# 29/5/2023
+Adding "side slider", however, the data is derived from mapbox and *not* updatable, 
+so introduces a number of issues. 
+
+Testing maplibre GL  https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js
+
+**TODO**
+Finish style add API
+
+
+
 
 **TODO**
 
@@ -553,6 +564,7 @@ Styled mobile layout
 - draw
 - layerControls // a LayerManager instance
 - sliderConstructor // a SliderConstructor instance
+- baseURL 'https:/encyclopedia.nahc-mapping.org
 
 # Global functions, constructors:
 - LayerManager
@@ -565,5 +577,10 @@ Styled mobile layout
 # Nomenclature
 
 - Maps *mapbox styles*
+- Layers *mapbox feature collection*
 - Feature Group *a sub category of borough usually relating to a specific time* e.g. 1609|Manahatta. This category
 is also used in styles although in this case only one style is contained. 
+
+# Future developmet:
+- Make "add feature" using draw, store these somewhere different to mapbox. 
+- Migrate to "open source"

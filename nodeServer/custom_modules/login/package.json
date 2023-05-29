@@ -1,0 +1,9 @@
+{
+  "name": "Login",
+  "version": "1.0.0",
+  "description": "Project specific passport login implementation",
+  "main": "authenticationModule.js",
+  "private": "true",
+  "license": "no license",
+  "author": "Tomás Swift-Metcalfe"
+}

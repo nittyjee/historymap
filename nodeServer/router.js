@@ -1,6 +1,5 @@
-const { log } = require('console');
-
 const mongo = customModules('mongoQueries');
+const authentication = customModules('login');
 
 module.exports = (app) => {
   app.get('/hello_world', (req, res) => {
@@ -55,6 +54,14 @@ module.exports = (app) => {
 
   app.get('/taxLots', (req, res) => {
     mongo.getTaxLots().then((result) => res.send(result));
+  });
+
+  app.get('/login', (req, res) => {
+    res.render('./login.pug');
+  });
+
+  app.post('/authenticate', authentication.providerStrategy, (req, res) => {
+
   });
 
   app.post('/getLayers', (req, res) => {

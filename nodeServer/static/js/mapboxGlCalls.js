@@ -20,11 +20,6 @@ const afterMap = new mapboxgl.Map({
 
 const maps = { beforeMap, afterMap };
 
-/*afterMap.on('load', () => {
-  const result = xhrGetInPromise({}, '/getLayers');
-  maps.afterMap.addLayer(result);
-});*/
-
 // A selector or reference to HTML element
 const container = '.mapContainer';
 const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
@@ -32,26 +27,25 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 // mousemove: true
 });
 
-const draw = new MapboxDraw({
-  displayControlsDefault: false,
-  // Select which mapbox-gl-draw control buttons to add to the map.
-  controls: {
-    polygon: true,
-    trash: true
-  },
-  // Set mapbox-gl-draw to draw by default.
-  // The user does not have to click the polygon control button first.
-  defaultMode: 'draw_polygon'
-});
+function addDraw (map) {
+  const draw = new MapboxDraw({
+    displayControlsDefault: false,
+    // Select which mapbox-gl-draw control buttons to add to the map.
+    controls: {
+      polygon: true,
+      trash: true
+    },
+    // Set mapbox-gl-draw to draw by default.
+    // The user does not have to click the polygon control button first.
+    defaultMode: 'draw_polygon'
+  });
+  map.addControl(draw);
+  map.on('draw.create', log);
 
+  function log (e) {
+    console.log(draw.getAll());
+  }
+}
 
-/*
-afterMap.setFeatureState(
-  { source: 'grants1-5sp9tb-right-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-  { hover: false }
-);
-beforeMap.setFeatureState(
-  { source: 'grants1-5sp9tb-left-highlighted', sourceLayer: 'grants1-5sp9tb', id: dgrants_layer_view_id},
-  { hover: false }
-);*/
-
+addDraw(afterMap);
+addDraw(beforeMap);

@@ -14,24 +14,88 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+// Authentication
+const MongoStore = require('connect-mongo');
+const crypto = require('crypto');
+const session = require('express-session');
+
 global.customModules = (moduleName) => {
   const desiredMod = path.resolve(process.env.PWD + '/custom_modules/' + moduleName);
   return require(desiredMod);
 };
 
 const mongo = customModules('mongoConnect');
-const initDb = mongo.initDb;
-
-const initMongo = () => {
-  const promise = new Promise(function (resolve, reject) {
-    initDb(function (err) {
-      if (!err) {
-        console.log('DB init');
-        resolve();
-      } else {
-        reject(err);
+function generateRandomID (length) {
+  function nodeCryptoRandomBytes (length) {
+    const promise = new Promise((resolve, reject) => {
+      length = length || 8;
+      if (length > 80) {
+        const err = new Error('randomBytes length can be more than 800 digits');
+        throw err;
       }
+      crypto.randomBytes(100, (err, buf) => {
+        if (err) reject(err);
+        const initialNumber = buf.toString('hex')
+        const trimmed = initialNumber.slice(initialNumber.length - (length || 10));
+        resolve(trimmed);
+      });
     });
+    return promise;
+  }
+
+  async function checkCollision () {
+    const itemref = await nodeCryptoRandomBytes(length);
+    /*
+    const collision = await mongo.checkCollision({ itemref: itemref });
+    if (collision === true) {
+      return checkCollision();
+    }
+    */
+    console.log(itemref);
+    return itemref;
+  }
+  return checkCollision();
+}
+
+
+const initMongoSessionControl = () => {
+  console.log('Establishing session control');
+  const promise = new Promise(function (resolve, reject) {
+    //  get connection
+    const db = function () {
+      const m = mongo.getDb();
+      return m;
+    };
+
+    const mongoStoreOptions = {
+      client: db(),
+      ttl: 14 * 24 * 60 * 60 * 1000,
+      collectionName: 'sessions'
+    };
+
+    const sessionOptions = {
+      /*
+        genid: () => {
+          return generateRandomID (12); // use UUIDs for session IDs
+        },
+      */
+      secret: process.env.sessionSecret,
+      saveUninitialized: true, // don't create session until something stored,
+      resave: true,
+      store: MongoStore.create(mongoStoreOptions),
+      cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 }
+    };
+
+    if (app.get('env') === 'production') {
+      app.set('trust proxy', 1); // trust first proxy
+      sessionOptions.cookie.secure = true; // serve secure cookies
+    }
+
+    const intiatedSessions = session(sessionOptions);
+
+    // app.use(intiatedSessions);
+
+    resolve(intiatedSessions);
   });
   return promise;
 };
@@ -53,8 +117,8 @@ const mountOtherMiddleWare = () => {
 
 // Start app:
 function startApp (port) {
-  initMongo()
-    // .then(initMongoSessionControl)
+  mongo.initDb()
+    .then(initMongoSessionControl)
     .then(mountOtherMiddleWare)
     .then(() => {
       app.listen(port, serverIpAddress, function () {
