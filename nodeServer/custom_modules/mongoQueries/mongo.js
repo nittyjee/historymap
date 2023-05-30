@@ -57,14 +57,14 @@ const providers = db().db(dbname).collection('providers');
 exports.getLayers = async () => {
   const find = layerDatabase.find();
   const results = await find.toArray();
-  return(results);
+  return (results);
 };
 
 exports.getLayerById = async (layerIdInObj) => {
   const obId = new ObjectId(layerIdInObj);
   const find = layerDatabase.find({ _id: obId});
   const results = await find.toArray();
-  return(results[0]);
+  return (results[0]);
 };
 
 exports.saveLayer = async (layer) => {
@@ -80,7 +80,7 @@ exports.saveLayer = async (layer) => {
 };
 
 exports.deleteLayer = (layerMongoID) => {
-  const obId = new ObjectId(layerIdInObj);
+  const obId = new ObjectId(layerMongoID);
   return layerDatabase.deleteOne({ _id: obId }).then((result) => {
     return result;
   });
@@ -89,7 +89,7 @@ exports.deleteLayer = (layerMongoID) => {
 exports.getStyles = async () => {
   const find = styleDatabase.find();
   const results = await find.toArray();
-  return(results);
+  return (results);
 };
 
 exports.saveStyle = async (style) => {
@@ -107,13 +107,13 @@ exports.saveStyle = async (style) => {
 exports.getDutchLots = async () => {
   const find = dutchLots.find();
   const results = await find.toArray();
-  return(results);
+  return (results);
 };
 
 exports.getTaxLots = async () => {
   const find = taxLots.find();
   const results = await find.toArray();
-  return(results);
+  return (results);
 };
 
 exports.providerLogin = async (loginData) => {
@@ -130,5 +130,5 @@ exports.providerLogin = async (loginData) => {
       match = false;
     }
   }
-  return(match);
+  return (match);
 };

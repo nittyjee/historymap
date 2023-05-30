@@ -10,6 +10,10 @@ body {
   margin: 0;
 }
 
+.editLayer, .deleteLayer {
+  cursor: pointer;
+}
+
 .highlight  {
   animation: bounce .3s linear;
   border: #0f0 solid 2px;
@@ -23,6 +27,10 @@ body {
   .layerControls {
     display: inline-block;
     width: 100%; 
+
+    .featureGroup.layersInArea {
+      overflow: hidden;
+    }
 
     .toggleVisibility {
       display: inline-block;

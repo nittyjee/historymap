@@ -1,20 +1,26 @@
 mixin boroughToggle(boroughData, boroughName)
-  -console.log(boroughData);
-  .featureGroup
+  -// parent
+  .borough
+    -// toggle 
     i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-    .areaList #{boroughName}
-      .hiddenContent
-        each featureGroup, featureGroupName in boroughData
-          .layersInArea.featureGroup
-            input(type='checkbox' name=featureGroupName).view.featureGroup 
-            i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-            lable #{featureGroupName}
+    -// .areaList
+    lable #{boroughName}
+    -// child
+    .hiddenContent(name=`${boroughName}-layers`)
+      each featureGroup, featureGroupName in boroughData
+        -// the parent
+        .featureGroup.layersInArea
+          input(type='checkbox' name=featureGroupName).view.featureGroup 
+          -// the toggle
+          i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+          lable #{featureGroupName}
+          -// children
+          .hiddenContent
             each layer in featureGroup
               +layerToggle(layer)
 
 mixin layerToggle(layer)
-  -console.log(layer);
-  .layer.hiddenContent
+  .layer
     input(type='checkbox' name=layer._id).fetchLayer 
     i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)
     i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layer._id)

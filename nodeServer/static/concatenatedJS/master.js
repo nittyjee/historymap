@@ -228,6 +228,14 @@ function LayerManager () {
         });
       }
 
+      if (e.target.classList.contains('featureGroup')) {
+        const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
+        layers.forEach((layer) => {
+          // simulates a click to then fire the method above:
+          layer.click();
+        });
+      }
+
       if (e.target.classList.contains('fetchStyle')) {
         const targetMap = e.target.dataset.target;
         const url = e.target.dataset.url;
@@ -244,7 +252,9 @@ function LayerManager () {
       if (e.target.classList.contains('deleteLayer')) {
         if (window.confirm('Are you sure you want to delete this layer?')) {
           xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
-            el.parentElement.parentElement.remove(el.parentElement);
+            const layer = e.target.closest('.layer');
+            console.log(layer);
+            layer.parentElement.remove(layer);
             alert(response);
           });
         }
@@ -330,7 +340,7 @@ function LayerManager () {
 
     for (let i = 0; i < mapboxMapIds.length; i++) {
       const mapboxId = mapboxMapIds[i];
-      const targetMapText = mapboxId.split('-')[mapboxId.split('-').length - 1];
+      const targetMapText = mapboxId.split('/')[mapboxId.split('/').length - 1];
       const targetMap = maps[targetMapText];
       const exists = targetMap.getLayer(mapboxId);
       if (!exists) {
@@ -413,20 +423,6 @@ function LayerManager () {
       return promise;
     }
   };
-
-  /*
-    function createMap (data) {
-      const codeForMap = `var ${data.title}Map = new mapboxgl.Map({
-        container: '$',
-        style: ${data.style},
-        center: [0, 0],
-        hash: true,
-        zoom: 0,
-        attributionControl: false
-      });`
-      // toggleModal (codeFor);
-    }
-  */
 
   this.generateAddLayerForm = (parentElement) => {
     layerFormParent = document.createElement('form');
@@ -606,14 +602,26 @@ function LayerManager () {
         data[id] = layerFormParent.querySelector(`#${id.replaceAll(' ', '_')}`).value;
       });
 
-      layerFormParent.querySelectorAll('.addToMap').forEach((mapCheckbox, i) => {
-        if (i === 0) {
-          data['target map'].length = 0;
+      const addToMapCheckboxes = layerFormParent.querySelectorAll('.addToMap');
+      let checkedBoxes = 0;
+      if (addToMapCheckboxes) {
+        data['target map'].length = 0;
+      }
+      for (let i = 0; i < addToMapCheckboxes.length; i++) {
+        const element = addToMapCheckboxes[i];
+        if (element.checked) {
+          data['target map'].push(element.dataset.targetMap);
+          checkedBoxes++;
         }
-        if (mapCheckbox.checked) {
-          data['target map'].push(mapCheckbox.dataset.targetMap);
+        if (i === addToMapCheckboxes.length - 1) {
+          if (checkedBoxes === 0) {
+            const confirm = window.confirm('You have selected no maps to display this layer, is that correct?');
+            if (!confirm) {
+              return;
+            }
+          }
         }
-      });
+      }
 
       layerFormParent.querySelectorAll('.layerType').forEach((type, i) => {
         if (i === 0) {
@@ -635,6 +643,7 @@ function LayerManager () {
       }
 
       saveLayer(data).then(() => {
+        console.log('should create layer');
         createLayer(data);
       });
     });
@@ -704,7 +713,7 @@ function LayerManager () {
     for (let j = 0; j < layersMapboxId.length; j++) {
       for (let i = 0; i < layersMapboxId[j].length; i++) {
         const mapboxId = layersMapboxId[j][i];
-        const targetMapText = mapboxId.split('-')[mapboxId.split('-').length - 1];
+        const targetMapText = mapboxId.split('/')[mapboxId.split('/').length - 1];
         const targetMap = maps[targetMapText];
         const exists = targetMap.getLayer(mapboxId);
         if (!exists) {

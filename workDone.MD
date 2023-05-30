@@ -202,6 +202,8 @@ Corrected popup toggle.
 
 Started building sideInfoDisplay.
 
+
+
 Side info from mapbox looks like this: 
 ```json
 {

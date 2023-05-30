@@ -81,16 +81,14 @@ module.exports = (app) => {
    */
   app.post('/getLayerById', (req, res) => {
     mongo.getLayerById(req.body._id).then((result) => {
-      console.log(result);
       res.send(result);
     });
   });
 
   app.post('/saveLayer', (req, res) => {
     mongo.saveLayer(req.body).then((result) => {
-      if (result.acknowledged && result.insertedId) {
-        mongo.getLayerById(result.insertedId).then((layer) => {
-          console.log(`layer ${JSON.stringify(layer)}`);
+      if (result.acknowledged && result.upsertedId) {
+        mongo.getLayerById(result.upsertedId).then((layer) => {
           res.render('layerWidgetOnly.pug', { layer }, (err, html) => {
             if (err) throw err;
             res.send(html);
