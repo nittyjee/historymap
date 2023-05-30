@@ -371,7 +371,7 @@ function LayerManager () {
       target.appendChild(name);
 
       name.addEventListener('input', () => {
-        data[fieldName] = name.value;
+        mapData[fieldName] = name.value;
       });
 
       const br = document.createElement('br');
@@ -387,7 +387,7 @@ function LayerManager () {
     title.textContent = 'Add Map';
     mapBase.appendChild(title);
 
-    const fields = ['title', 'id', 'style'];
+    const fields = ['title', 'borough', 'style'];
     fields.forEach(fieldName => {
       textInputGenerator (fieldName, mapBase);
     });
@@ -399,23 +399,32 @@ function LayerManager () {
 
     mapBase.addEventListener('submit', (event) => {
       event.preventDefault();
-      fields.forEach((id) => {
+      fields.forEach((id, i) => {
         mapData[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+        if (id === 'title') {
+          mapData['feature group'] = mapData.title;
+          delete mapData.title;
+        }
+        if (id === 'style') {
+          mapData['style source url'] = mapData.style;
+          delete mapData.style;
+        }
         // then save
-        
+        if (i === fields.length - 1) {
+          saveStyle(mapData).then((response) => {
+            alert(response);
+          });
+        }
       });
-
-      
-
     //  createMap(data);
     });
     /**
      * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
      * @returns The same date saved in the DB after rendering a layer toggle widget. 
      */
-    function saveMap (data) {
+    function saveStyle (data) {
       const promise = new Promise((resolve, reject) => {
-        xhrPostInPromise(data, './saveLayer').then((response) => {
+        xhrPostInPromise(data, './saveStyle').then((response) => {
           document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
           resolve(data);
         });
