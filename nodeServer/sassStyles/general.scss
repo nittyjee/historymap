@@ -10,6 +10,21 @@ body {
   margin: 0;
 }
 
+dialog {
+  max-width: 700px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-style: none;
+  border-radius: 0.4em;
+  font-weight: 300;
+  padding: 1em;
+
+  .close {
+    float: right; 
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+}
+
 .editLayer, .deleteLayer {
   cursor: pointer;
 }
@@ -23,10 +38,21 @@ body {
 }
 
 .mapControls {
-  
+
   .layerControls {
     display: inline-block;
     width: 100%; 
+
+
+    .layer {
+      width: calc(100% - 1em);
+    }
+    
+    .toggleInfo {
+      float: right;
+      color: rgb(119, 119, 119);
+      cursor: pointer;
+    }
 
     .featureGroup.layersInArea {
       overflow: hidden;

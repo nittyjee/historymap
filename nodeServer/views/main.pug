@@ -2,9 +2,7 @@ include ./layerToggle.pug
 include ./styleToggle.pug
 doctype html
 -{layers}
--console.log(layers)
 -{styles}
--console.log(styles)
 html(lang='en-EU' xml:lang='en-EU')
   head
     meta(charset='utf-8')
@@ -44,10 +42,9 @@ html(lang='en-EU' xml:lang='en-EU')
     .timelineSlider
       .timeline
       .sliderHandle
-  .modal
-    .modal-body
-    .modal-header
-      h1
+  dialog.modal
+    i.fa.fa-window-close(aria-hidden='true' title='close').close
+    .modal-title
     .modal-content
 
   footer

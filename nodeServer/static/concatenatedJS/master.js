@@ -1,9 +1,9 @@
-const baseURL = 'https://encyclopedia.nahc-mapping-org/'
+const baseURL = 'https://encyclopedia.nahc-mapping-org/';
 
 /**
  * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
  * @param {Object{}} event      -Event fired by Mapbox GL
- * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot' 
+ * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot'
  * @description Function to create popup content. From a security perspective
  * when taking uset input it is preferable to set text view textContent:
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent#differences_from_innertext
@@ -355,6 +355,12 @@ function LayerManager () {
     }
   };
 
+  /**
+   * @param {HTMLElement} parentElement
+   * @description Generates a small form to add maps. Currently the form fields
+   * are set in the function rather than passed to the function. These are:
+   * 'Title', 'Borough', 'Style link', 'Drupal node id'
+   */
   this.generateAddMapForm = (parentElement) => {
     /* A map is a style */
     const mapData = {};
@@ -387,9 +393,9 @@ function LayerManager () {
     title.textContent = 'Add Map';
     mapBase.appendChild(title);
 
-    const fields = ['title', 'borough', 'style'];
+    const fields = ['title', 'borough', 'style link', 'drupal node id'];
     fields.forEach(fieldName => {
-      textInputGenerator (fieldName, mapBase);
+      textInputGenerator(fieldName, mapBase);
     });
 
     const submit = document.createElement('input');
@@ -405,9 +411,9 @@ function LayerManager () {
           mapData['feature group'] = mapData.title;
           delete mapData.title;
         }
-        if (id === 'style') {
-          mapData['style source url'] = mapData.style;
-          delete mapData.style;
+        if (id === 'style link') {
+          mapData['style source url'] = mapData['style link'];
+          delete mapData['style link'];
         }
         // then save
         if (i === fields.length - 1) {
@@ -904,6 +910,40 @@ document.addEventListener('DOMContentLoaded', () => {
       checkbox.checked = false;
     });
   }
+});
+
+// Global click event handler, others are defined in the "add layer" constructor:
+document.querySelector('body').addEventListener('click', (e) => {
+  // Hack to display content in modal from the encyclopedia
+  if (e.target.classList.contains('toggleInfo')) {
+    // refers to a node in Drupal:
+    const modal = document.querySelector('.modal');
+    const modalContent = document.querySelector('.modal-content');
+    while (modalContent.firstChild) {
+      modalContent.removeChild(modalContent.lastChild);
+    }
+    const nodeId = e.target.dataset.nodeid;
+    const url = `https://encyclopedia.nahc-mapping.org/node/${nodeId}`;
+    // create a div, but don't attach it to the modal:
+    let obj = document.createElement('div');
+    xhrGetInPromise(null, url).then((content) => {
+      // load the entire content into the not displayed div:
+      obj.innerHTML = content;
+      // get the article content:
+      const article = obj.querySelector('#content');
+      // attach it to the modal:
+      document.querySelector('.modal-content').appendChild(article);
+      // dereference the not displayed div:
+      obj = null;
+      // display the modal:
+      modal.showModal();
+    });
+  }
+  if (e.target.classList.contains('close')) {
+    const modal = document.querySelector('.modal');
+    modal.close();
+  }
+
 });
 mapboxgl.accessToken = 'pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoid1RmLXpycyJ9.NFk875-Fe6hoRCkGciG8yQ';
 

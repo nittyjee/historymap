@@ -2,6 +2,18 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   margin: 0; }
 
+dialog {
+  max-width: 700px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-style: none;
+  border-radius: 0.4em;
+  font-weight: 300;
+  padding: 1em; }
+  dialog .close {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer; }
+
 .editLayer, .deleteLayer {
   cursor: pointer; }
 
@@ -15,6 +27,12 @@ body {
 .mapControls .layerControls {
   display: inline-block;
   width: 100%; }
+  .mapControls .layerControls .layer {
+    width: calc(100% - 1em); }
+  .mapControls .layerControls .toggleInfo {
+    float: right;
+    color: #777777;
+    cursor: pointer; }
   .mapControls .layerControls .featureGroup.layersInArea {
     overflow: hidden; }
   .mapControls .layerControls .toggleVisibility {

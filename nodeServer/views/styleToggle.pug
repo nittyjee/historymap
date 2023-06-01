@@ -1,15 +1,35 @@
 mixin boroughToggleStyles(boroughData, boroughName)  
-  each featureGroup, featureGroupName in boroughData
-    -// the parent
-    .featureGroup.layersInArea
-      -// the toggle
+  -// parent
+  .borough
+    if !boroughName
+      each featureGroup, featureGroupName in boroughData
+        -// the parent
+        .featureGroup.layersInArea
+          -// the toggle
+          -//i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+          -//lable #{featureGroupName}
+          -// children
+          -//.hiddenContent
+          each style in featureGroup
+            +styleToggle(style)
+    if boroughName 
+      -// toggle
       i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-      lable #{featureGroupName}
-      -// children
-      .hiddenContent
-        each style in featureGroup
-          +styleToggle(style)
-
+      -// .areaList
+      -// lable #{boroughName}
+      b #{boroughName}
+      -// child
+      .hiddenContent(name=`${boroughName}-layers`)
+        each featureGroup, featureGroupName in boroughData
+          -// the parent
+          .featureGroup.layersInArea
+            -// the toggle
+            -// i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+            -// lable #{featureGroupName}
+            -// children
+            -//.hiddenContent
+            each style in featureGroup
+              +styleToggle(style)
 
 mixin styleToggle(style)
   .layer
@@ -18,3 +38,4 @@ mixin styleToggle(style)
     i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
     i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
     lable(for=style._id) #{style['feature group']}
+    i.fa.fa-info-circle.toggleInfo(data-nodeId=style['drupal node id'])
