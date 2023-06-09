@@ -24,30 +24,67 @@ dialog {
   font-style: italic;
   line-break: anywhere; }
 
-.mapControls .layerControls {
-  display: inline-block;
-  width: 100%; }
-  .mapControls .layerControls .layer {
-    width: calc(100% - 1em); }
-  .mapControls .layerControls .toggleInfo {
-    float: right;
-    color: #777777;
-    cursor: pointer; }
-  .mapControls .layerControls .featureGroup.layersInArea {
+.mapControls {
+  max-width: 25vw; }
+  .mapControls .layerform, .mapControls .styleform {
+    overflow: scroll;
+    margin: 0.5em;
+    background: #eee;
+    padding: 0.5em;
+    border: solid 2px;
+    border-radius: 0.5em; }
+  .mapControls .hiddenContent {
+    height: 0;
+    opacity: 0;
+    transition: 0.2s linear all;
     overflow: hidden; }
-  .mapControls .layerControls .toggleVisibility {
+  .mapControls .hiddenZoom {
+    pointer-events: none;
+    height: 0;
+    opacity: 0;
+    transition: 0.2s linear all; }
+  .mapControls .displayContent {
+    height: auto;
+    opacity: 1;
+    margin-left: 1em;
+    overflow: visible; }
+  .mapControls .layerControls {
     display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 2;
-    position: relative; }
-  .mapControls .layerControls input[type='checkbox'] {
-    cursor: pointer; }
-  .mapControls .layerControls h4 {
-    text-transform: uppercase; }
+    padding: 1em; }
+    .mapControls .layerControls .zoomToFeatureGroup, .mapControls .layerControls .zoomToLayer, .mapControls .layerControls .easeToPoint {
+      cursor: pointer;
+      color: #1d43de;
+      padding-left: 1em;
+      float: right; }
+    .mapControls .layerControls .layer, .mapControls .layerControls .borough {
+      width: calc(100% - 1em);
+      height: auto;
+      width: 100%; }
+    .mapControls .layerControls .toggleInfo {
+      float: right;
+      color: #777777;
+      cursor: pointer; }
+    .mapControls .layerControls .featureGroup.layersInArea {
+      overflow: hidden; }
+    .mapControls .layerControls .toggleVisibility {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      color: #555; }
+    .mapControls .layerControls i {
+      transition: transform .2s; }
+    .mapControls .layerControls i:hover {
+      opacity: 0.7;
+      transform: scale(1.2); }
+    .mapControls .layerControls input[type='checkbox'] {
+      cursor: pointer; }
+    .mapControls .layerControls h4 {
+      text-transform: uppercase; }
 
 .topMenu {
   flex-grow: 0;
@@ -79,16 +116,6 @@ a {
 .feature {
   padding-left: 1em; }
 
-.hiddenContent {
-  height: 0;
-  opacity: 0;
-  transition: 0.2s linear all; }
-
-.displayContent {
-  height: auto;
-  opacity: 1;
-  margin-left: 1em; }
-
 .typeBoxText {
   margin-left: 2em;
   font-style: italic; }
@@ -116,7 +143,8 @@ a {
   margin-top: 10px;
   position: absolute;
   width: calc(100% - 2em);
-  margin: 1em; }
+  margin: 1em;
+  bottom: 0; }
   .timelineSlider .timeline {
     display: flex;
     position: relative;
@@ -194,24 +222,38 @@ a {
     flex-direction: row;
     justify-content: center;
     width: 100%; }
-  .mapControls {
+  /*
+  .mapControls  {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 25vw; }
+    flex-basis: 25vw;
+    
+    .layerControls {
+      width: 23vw;
+    }
+  }*/
   .mapContainer {
     display: flex;
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 75vw;
     flex-direction: column; }
+    .mapContainer .hiddenContent {
+      height: 0;
+      opacity: 0;
+      overflow: hidden; }
+    .mapContainer .displayContent {
+      max-height: 76vh;
+      opacity: 1;
+      overflow: scroll; }
     .mapContainer .sideInfoDisplay {
-      z-index: 2;
+      z-index: 3;
+      width: 33vw;
+      transition: 0.2s linear all;
       position: absolute;
       right: 1em;
       background-color: #ffff7f;
       border: solid #FFFFFF 3px;
       padding: 0.5em;
-      width: auto;
       overflow-wrap: break-word;
       word-wrap: break-word;
       -ms-word-break: break-all;
@@ -222,18 +264,20 @@ a {
       -webkit-hyphens: auto;
       hyphens: auto;
       margin-top: 1em; }
+      .mapContainer .sideInfoDisplay img {
+        max-width: 100%; }
       .mapContainer .sideInfoDisplay p {
         line-height: 2em;
         display: block; }
-      .mapContainer .sideInfoDisplay .bold {
-        font-weight: 700;
+      .mapContainer .sideInfoDisplay .boldItalic {
+        font-weight: bold;
         font-style: italic; }
     .mapContainer .map {
       height: calc(100vh - (2 * 8 * 12px + 2px));
       position: absolute;
       top: 98px;
       bottom: 0;
-      width: 75vw; }
+      width: 100%; }
     .mapContainer .mapboxgl-canvas {
       width: 100% !important; } }
 

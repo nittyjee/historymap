@@ -38,4 +38,6 @@ mixin styleToggle(style)
     i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
     i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
     lable(for=style._id) #{style['feature group']}
-    i.fa.fa-info-circle.toggleInfo(data-nodeId=style['drupal node id'])
+    i.fa.fa-info-circle.toggleInfo(data-nodeId=style['drupal node id']).hidden
+    if style['ease to point']
+      i.fa.fa-crosshairs.easeToPoint(data-easeToPoint=style['ease to point'])

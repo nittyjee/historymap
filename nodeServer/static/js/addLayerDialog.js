@@ -1,4 +1,4 @@
-const baseURL = 'https://encyclopedia.nahc-mapping-org/';
+const baseURL = 'https://encyclopedia.nahc-mapping.org';
 
 /**
  * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
@@ -43,73 +43,6 @@ function createHoverPopup (layerClass, event, layerName) {
   popUpHTML.appendChild(name);
   name.textContent = `${layerName}: ${lot}`;
   return popUpHTML;
-}
-
-/*
-{
-  "Aligned": "added",
-  "DayEnd": 17000102,
-  "DayStart": 16450110,
-  "Lot": "A18",
-  "day1": "Jan. 10",
-  "day2": "",
-  "descriptio": "Gr-br, to Cornells Groesens, Not found of record, Jan. 10 but recited in deed set forth below:",
-  "lot2": "",
-  "name": "Cornells Groesens",
-  "notes": "Mentions land owned by Jan Damen to the north.",
-  "styling1": "knownfull",
-  "year1": "1645",
-  "year2": "N/A"
-}
- */
-function populateSideInfoDisplay (event) {
-  const group = maps.beforeMap.queryRenderedFeatures(event.point)[0].source.split('/')[2];
-  /* Missuse of the id nomenclature to obtain other data on a feature:
-  data need to be stored in DB, *not in Mapbox features */
-  console.log(maps.beforeMap.queryRenderedFeatures(event.point));
-  const target = document.querySelector('.sideInfoDisplay');
-  target.innerHTML = '';
-  const data = event.features[0].properties;
-
-  console.log(data);
-
-  if (data.Lot) {
-    makeLink(`grantlot/${data.Lot}`, data.Lot, `${group} Lot`);
-  }
-  if (data.name) {
-    makeParagraph('From Party', data.name);
-  }
-  // from party DWIC
-  if (data.DayStart) {
-    console.log(data.DayStart);
-    const date = sliderConstructor.dateTransform(data.DayStart);
-    console.log(date);
-    makeParagraph('Start', date);
-  }
-  if (data.descriptio) {
-    makeParagraph('Description', data.descriptio);
-  }
-
-  //console.log(event);
-  function makeLink (link, textContent, descriptor) {
-    const p = document.createElement('p');
-    p.textContent = `${descriptor}: `;
-    const a = document.createElement('a');
-    a.setAttribute('href', `${baseURL}${link}`);
-    a.textContent = textContent;
-    p.appendChild(a);
-    target.appendChild(p);
-  }
-
-  function makeParagraph (descriptor, data) {
-    const p = document.createElement('p');
-    p.textContent = `${descriptor}: `;
-    const span = document.createElement('span');
-    span.classList.add('boldItalic');
-    p.appendChild(span);
-    span.textContent = data;
-    target.appendChild(p);
-  }
 }
 
 /**
@@ -199,7 +132,72 @@ function LayerManager () {
   const layerControls = document.querySelector('.layerControls');
 
   let layerFormParent;
-  let mapBase;
+  let mapFormParent;
+
+  function fetchLayer (layerId) {
+    //const checkbox = document.querySelector(`[name="${layerId}"]`);
+    const promise = new Promise((resolve, reject) => {
+      if (layerManager.returnLayers().includes(layerId)) {
+        layerManager.toggleVisibility();
+        console.group(`has layer ${layerId}`);
+        resolve();
+      } else {
+        xhrPostInPromise({ _id: layerId }, './getLayerById').then((layerData) => {
+          const parsedLayerData = JSON.parse(layerData);
+          //checkbox.checked = true;
+          createLayer(parsedLayerData).then(() => {
+            // layer added
+            resolve();
+          });
+        });
+      }
+    });
+    return promise;
+  }
+
+  function zoomToLayer (zoom) {
+    zoom.classList.remove('hiddenZoom');
+    window.setTimeout(() => {
+      const mapboxId = zoom.dataset.id;
+      const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+      maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: 0, padding: 15 });
+    }, 500);
+  }
+
+  function zoomToFeatureGroup (layers) {
+    const group = [];
+    layers.forEach((layer, i) => {
+      const mapboxId = layer.parentElement.querySelector('.zoomToLayer').dataset.id;
+      console.log(mapboxId);
+      const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+      const bounds = maps[map].getSource(mapboxId).bounds;
+      if (bounds) {
+        group.push(bounds.slice(0, 2));
+        group.push(bounds.slice(2));
+      }
+      if (i === layers.length - 1) {
+        const groupBounds = determineBounds(group);
+        maps[map].fitBounds(groupBounds, { bearing: 0, padding: 15 });
+      }
+    });
+
+    function determineBounds (coords) {
+      const bounds = {};
+      let latitude;
+      let longitude;
+      for (let i = 0; i < coords.length; i++) {
+        longitude = coords[i][0];
+        latitude = coords[i][1];
+        bounds.xMin = bounds.xMin < longitude ? bounds.xMin : longitude;
+        bounds.xMax = bounds.xMax > longitude ? bounds.xMax : longitude;
+        bounds.yMin = bounds.yMin < latitude ? bounds.yMin : latitude;
+        bounds.yMax = bounds.yMax > latitude ? bounds.yMax : latitude;
+        if (i === coords.length - 1) {
+          return [bounds.xMin, bounds.yMin, bounds.xMax, bounds.yMax];
+        }
+      }
+    }
+  }
   // For app owners to edit things, must be instantiated:
   this.layerControlEvents = () => {
     layerControls.addEventListener('click', (e) => {
@@ -218,28 +216,67 @@ function LayerManager () {
       }
 
       if (e.target.classList.contains('fetchLayer')) {
-        if (this.returnLayers().includes(e.target.name)) {
-          this.toggleVisibility(e.target.name);
-          return;
-        }
-        xhrPostInPromise({ _id: e.target.name }, './getLayerById').then((layerData) => {
-          const parsedLayerData = JSON.parse(layerData);
-          this.addLayer(parsedLayerData);
+        fetchLayer(e.target.name).then(() => {
+          const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
+          zoomToLayer(zoomIcon);
         });
       }
 
       if (e.target.classList.contains('featureGroup')) {
+        const featureGroupChecked = e.target.parentElement.querySelector('.featureGroup');
         const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
-        layers.forEach((layer) => {
-          // simulates a click to then fire the method above:
-          layer.click();
+        e.target.parentElement.querySelector('.zoomToFeatureGroup').classList.remove('hiddenZoom');
+        const promises = [];
+        layers.forEach((layer, i) => {
+          promises.push(fetchLayer(layer.name));
+          if (i === layers.length - 1) {
+            Promise.all(promises).then(() => {
+              console.log(featureGroupChecked.checked);
+              if (featureGroupChecked.checked) {
+                layers.forEach((checkbox) => {
+                  checkbox.checked = true;
+                });
+              } else {
+                layers.forEach((checkbox) => {
+                  checkbox.checked = false;
+                });
+              }
+              layerManager.toggleVisibility();
+              zoomToFeatureGroup(layers);
+            });
+          }
         });
+      }
+
+      if (e.target.classList.contains('zoomToLayer')) {
+        const mapboxId = e.target.parentElement.querySelector('.zoomToLayer').dataset.id;
+        const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+        /* Both maps are the same size, so it makes no difference which map the function is
+        called on */
+        maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: 0, padding: 15 });
+      }
+
+      if (e.target.classList.contains('easeToPoint')) {
+        const point = JSON.parse(e.target.dataset.easetopoint);
+        /* Both maps are the same size, so it makes no difference which map the function is
+        called on */
+        maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
+      }
+
+      if (e.target.classList.contains('zoomToFeatureGroup')) {
+        const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
+        zoomToFeatureGroup(layers);
       }
 
       if (e.target.classList.contains('fetchStyle')) {
         const targetMap = e.target.dataset.target;
         const url = e.target.dataset.url;
+        const name = e.target.parentElement.querySelector('lable').textContent;
         maps[targetMap].setStyle(url);
+        const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
+        /* Both maps are the same size, so it makes no difference which map the function is
+        called on */
+        maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
       }
 
       if (e.target.classList.contains('editLayer')) {
@@ -249,11 +286,17 @@ function LayerManager () {
         });
       }
 
+      if (e.target.classList.contains('editStyle')) {
+        xhrPostInPromise({ _id: e.target.dataset._id }, './getStyleById').then((styleData) => {
+          const parsedStyleData = JSON.parse(styleData);
+          this.populateStyleEditor(parsedStyleData);
+        });
+      }
+
       if (e.target.classList.contains('deleteLayer')) {
         if (window.confirm('Are you sure you want to delete this layer?')) {
           xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
             const layer = e.target.closest('.layer');
-            console.log(layer);
             layer.parentElement.remove(layer);
             alert(response);
           });
@@ -266,12 +309,11 @@ function LayerManager () {
     return resetLayerEditorFn();
   };
 
-  // This in the function isn't the outer constructor, so we have to point to that:
+  // "this" in the function isn't the outer constructor, so we have to point to that:
   const layerManager = this;
   function resetLayerEditorFn () {
     layerFormParent.innerHTML = '';
     layerManager.generateAddLayerForm(layerFormParent);
-    layerManager.generateAddMapForm(layerFormParent);
     layerManager.layerControlEvents();
   }
 
@@ -279,6 +321,8 @@ function LayerManager () {
     layerFormParent.querySelector('.title').textContent = `Editing Layer with id ${data._id}`;
     layerFormParent.querySelector('.title').classList.add('highlight');
     layerFormParent.dataset._id = data._id;
+    layerFormParent.scrollIntoView(false);
+    layerFormParent.classList.remove('hiddenContent');
     const keys = Object.keys(data);
     const values = Object.values(data);
     for (let i = 0; i < keys.length; i++) {
@@ -325,6 +369,50 @@ function LayerManager () {
     return layersMongoId;
   };
 
+  this.resetStyleEditor = () => {
+    return resetStyleEditorFn();
+  };
+
+  function resetStyleEditorFn () {
+    mapFormParent.innerHTML = '';
+    mapFormParent.generateAddMapForm(mapFormParent);
+    layerManager.layerControlEvents();
+  }
+
+  this.populateStyleEditor = (data) => {
+    // resetStyleEditorFn();
+    mapFormParent.querySelector('.title').textContent = `Editing style with id ${data._id}`;
+    mapFormParent.querySelector('.title').classList.add('highlight');
+    mapFormParent.dataset._id = data._id;
+    mapFormParent.classList.remove('hiddenContent');
+    mapFormParent.scrollIntoView(false);
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i].replaceAll(' ', '_');
+      if (key === '_id') {
+        continue;
+      }
+      console.warn('classes should be used rather than ids for multiple mutable content');
+      const correspondingInput = mapFormParent.querySelector(`#${key}`);
+      if (correspondingInput) {
+        correspondingInput.value = values[i];
+        correspondingInput.classList.add('highlight');
+      } else {
+        if (key === 'style_source_url') {
+          mapFormParent.querySelector('#style_link').value = values[i];
+          mapFormParent.querySelector('#style_link').classList.add('highlight');
+        }
+        if (key === 'feature_group') {
+          mapFormParent.querySelector('#title').value = values[i];
+          mapFormParent.querySelector('#title').classList.add('highlight');
+        }
+      }
+    }
+
+    // -74.01255,40.704882
+  };
+
   /**
    * @param {String} mongoLayerId String with the DB id.
    * @description the IDs passed to mapbox contain information including the
@@ -333,26 +421,22 @@ function LayerManager () {
    * Manhattan-1609|Manhattan-Lenape trails-line-beforeMap
    * Split by "-" the different parts are: borough, feature group, layer type, map
    */
-
   this.toggleVisibility = (mongoLayerId) => {
-    const index = layersMongoId.indexOf(mongoLayerId);
-    const mapboxMapIds = layersMapboxId[index];
-
-    for (let i = 0; i < mapboxMapIds.length; i++) {
-      const mapboxId = mapboxMapIds[i];
-      const targetMapText = mapboxId.split('/')[mapboxId.split('/').length - 1];
-      const targetMap = maps[targetMapText];
-      const exists = targetMap.getLayer(mapboxId);
-      if (!exists) {
-        continue;
+    document.querySelectorAll('.fetchLayer').forEach((checkbox) => {
+      const index = layersMongoId.indexOf(checkbox.name);
+      const mapboxId = layersMapboxId[index];
+      if (mapboxId) {
+        mapboxId.forEach((map) => {
+          const targetMapText = map.split('/')[map.split('/').length - 1];
+          const targetMap = maps[targetMapText];
+          if (checkbox.checked) {
+            targetMap.setLayoutProperty(map, 'visibility', 'visible');
+          } else {
+            targetMap.setLayoutProperty(map, 'visibility', 'none');
+          }
+        });
       }
-      const visibility = targetMap.getLayoutProperty(mapboxId, 'visibility');
-      if (visibility === 'none') {
-        targetMap.setLayoutProperty(mapboxId, 'visibility', 'visible');
-      } else {
-        targetMap.setLayoutProperty(mapboxId, 'visibility', 'none');
-      }
-    }
+    });
   };
 
   /**
@@ -384,29 +468,39 @@ function LayerManager () {
       target.appendChild(br);
     }
 
-    mapBase = document.createElement('form');
-    parentElement.appendChild(mapBase);
+    mapFormParent = document.createElement('form');
+    mapFormParent.classList.add('hiddenContent');
+    parentElement.appendChild(mapFormParent);
 
-    mapBase.classList.add('layerform');
+    mapFormParent.classList.add('styleform');
     const title = document.createElement('h2');
     title.classList.add('title');
     title.textContent = 'Add Map';
-    mapBase.appendChild(title);
+    mapFormParent.appendChild(title);
 
-    const fields = ['title', 'borough', 'style link', 'drupal node id'];
+    const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point'];
     fields.forEach(fieldName => {
-      textInputGenerator(fieldName, mapBase);
+      textInputGenerator(fieldName, mapFormParent);
     });
 
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
     submit.textContent = 'submit';
-    mapBase.appendChild(submit);
 
-    mapBase.addEventListener('submit', (event) => {
+    const hideButton = document.createElement('button');
+    hideButton.textContent = 'hide form';
+    hideButton.addEventListener('click', () => {
+      mapFormParent.classList.add('hiddenContent');
+      mapFormParent.classList.remove('displayContent');
+    });
+    mapFormParent.appendChild(hideButton);
+
+    mapFormParent.appendChild(submit);
+
+    mapFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
       fields.forEach((id, i) => {
-        mapData[id] = mapBase.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+        mapData[id] = mapFormParent.querySelector(`#${id.replaceAll(' ', '_')}`).value;
         if (id === 'title') {
           mapData['feature group'] = mapData.title;
           delete mapData.title;
@@ -414,6 +508,12 @@ function LayerManager () {
         if (id === 'style link') {
           mapData['style source url'] = mapData['style link'];
           delete mapData['style link'];
+        }
+        if (id === 'ease to point') {
+          mapData['ease to point'] = mapData['ease to point'].split(',');
+        }
+        if (mapFormParent.dataset._id) {
+          mapData._id = mapFormParent.dataset._id;
         }
         // then save
         if (i === fields.length - 1) {
@@ -441,6 +541,7 @@ function LayerManager () {
 
   this.generateAddLayerForm = (parentElement) => {
     layerFormParent = document.createElement('form');
+    layerFormParent.classList.add('hiddenContent');
     parentElement.appendChild(layerFormParent);
 
     const data = {};
@@ -569,6 +670,7 @@ function LayerManager () {
       'source layer',
       'layer source url',
       'feature group',
+      'drupal node id',
       // 'borough to which the layer belongs'
       'borough'
     ];
@@ -598,6 +700,13 @@ function LayerManager () {
     submit.setAttribute('type', 'submit');
     submit.value = 'submit layer';
     layerFormParent.appendChild(submit);
+
+    const hideButton = document.createElement('button');
+    hideButton.textContent = 'hide form';
+    hideButton.addEventListener('click', () => {
+      mapFormParent.classList.add('hiddenContent');
+      mapFormParent.classList.remove('displayContent');
+    });
 
     const reset = document.createElement('button');
     reset.textContent = 'reset form';
@@ -658,7 +767,6 @@ function LayerManager () {
       }
 
       saveLayer(data).then(() => {
-        console.log('should create layer');
         createLayer(data);
       });
     });
@@ -682,27 +790,21 @@ function LayerManager () {
    */
 
   function createLayer (data) {
-    // If the layer already exists as document in the DB, don't save:
-    /*
-      if (!data._id) {
-          saveLayer(data);
-        }
-
-      // If the layer exits in the current session, don't make it again:
-      if (layersMongoId.includes(data._id)) {
-        return;
-      }
-    */
-
-    // There can be more than one target map:
-    data['target map'].forEach((target) => {
-      // Multiple geometry types can also be handled through the same function:
-      data.type.forEach((type) => {
-        /* This is moved to its own function to make it easier to read and understand
-        since a layer can have several representation on several maps */
-        tanspileAndAddLayer(target, type, data);
+    const promises = [];
+    const promise = new Promise((resolve, reject) => {
+      data['target map'].forEach((target) => {
+        // Multiple geometry types can also be handled through the same function:
+        data.type.forEach((type, i) => {
+          /* This is moved to its own function to make it easier to read and understand
+          since a layer can have several representation on several maps */
+          promises.push(tanspileAndAddLayer(target, type, data));
+          Promise.all(promises).then(() => {
+            resolve();
+          });
+        });
       });
     });
+    return promise;
   }
 
   /**
@@ -741,117 +843,126 @@ function LayerManager () {
   };
 
   function tanspileAndAddLayer (targetMap, type, data) {
-    const map = maps[targetMap];
-    const layerId = `${data.borough}/${data['feature group']}/${data.name}/${type.type}/${targetMap}`;
-    data.id = layerId;
+    const promise = new Promise((resolve, reject) => {
+      const map = maps[targetMap];
+      const layerId = `${data.borough}/${data['feature group']}/${data.name}/${type.type}/${targetMap}`;
+      data.id = layerId;
 
-    const transpilledOptions = {
-      id: layerId,
-      type: '',
-      metadata: { _id: '' },
-      source: {
-        // url is tileset ID in mapbox:
-        url: '',
-        type: 'vector'
-      },
-      layout: {
-        visibility: 'visible' // || none
-      },
-      // called 'source name'
-      'source-layer': '',
-      paint: {
-        [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
-        [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
-      }
-      // filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
-    };
-
-    if (data.hover) {
-      console.log(map);
-      const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
-      map.on('mouseenter', data.id, (event) => {
-        map.getCanvas().style.cursor = 'pointer';
-        hoverPopUp
-          .setLngLat(event.lngLat)
-          .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
-          .addTo(map);
-      });
-
-      map.on('mousemove', data.id, (event) => {
-        map.getCanvas().style.cursor = 'pointer';
-        hoverPopUp
-          .setLngLat(event.lngLat)
-          .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name));
-      });
-
-      map.on('mouseleave', data.id, () => {
-        map.getCanvas().style.cursor = '';
-        if (hoverPopUp.isOpen()) {
-          hoverPopUp.remove();
+      const transpilledOptions = {
+        id: layerId,
+        type: '',
+        metadata: { _id: '' },
+        source: {
+          // url is tileset ID in mapbox:
+          url: '',
+          type: 'vector'
+        },
+        layout: {
+          visibility: 'visible' // || none
+        },
+        // called 'source name'
+        'source-layer': '',
+        paint: {
+          [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
+          [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
         }
-      });
-    }
+        // filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
+      };
 
-    if (data.click) {
-      const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
-      map.on('click', data.id, (event) => {
-        populateSideInfoDisplay(event);
-        clickPopUp
-          .setLngLat(event.lngLat)
-          .setDOMContent(createClickedFeaturePopup (`${data.name}PopUp`, event, null))
-          .addTo(map);
-      });
-    }
+      if (data.hover) {
+        const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+        map.on('mouseenter', data.id, (event) => {
+          map.getCanvas().style.cursor = 'pointer';
+          hoverPopUp
+            .setLngLat(event.lngLat)
+            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
+            .addTo(map);
+        });
 
-    if (data.name) {
-      transpilledOptions.name = data.name;
-    }
-    // mongoDB id
-    if (data._id) {
-      transpilledOptions.metadata._id = data._id;
-    }
-    // type of map graphic: line, fill, circle
-    if (data.type) {
-      transpilledOptions.type = type.type;
-      if (type.type === 'circle') {
-        transpilledOptions.paint[`circle-radius`] = parseFloat(type.width);
+        map.on('mousemove', data.id, (event) => {
+          map.getCanvas().style.cursor = 'pointer';
+          hoverPopUp
+            .setLngLat(event.lngLat)
+            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name));
+        });
+
+        map.on('mouseleave', data.id, () => {
+          map.getCanvas().style.cursor = '';
+          if (hoverPopUp.isOpen()) {
+            hoverPopUp.remove();
+          }
+        });
       }
-      if (type.type === 'line') {
-        transpilledOptions.paint[`line-width`] = parseFloat(type.width);
+
+      if (data.click) {
+        const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
+        map.on('click', data.id, (event) => {
+          console.log(data);
+          //.split('/')[1].replace(/[^a-z -]/gi, '');
+          populateSideInfoDisplay(event, data);
+          clickPopUp
+            .setLngLat(event.lngLat)
+            .setDOMContent(createClickedFeaturePopup (`${data.name}PopUp`, event, null))
+            .addTo(map);
+        });
       }
-    }
 
-    if (data["source layer"]) {
-      transpilledOptions['source-layer'] = data["source layer"];
-    }
+      if (data.name) {
+        transpilledOptions.name = data.name;
+      }
+      // mongoDB id
+      if (data._id) {
+        transpilledOptions.metadata._id = data._id;
+      }
+      // type of map graphic: line, fill, circle
+      if (data.type) {
+        transpilledOptions.type = type.type;
+        if (type.type === 'circle') {
+          transpilledOptions.paint[`circle-radius`] = parseFloat(type.width);
+        }
+        if (type.type === 'line') {
+          transpilledOptions.paint[`line-width`] = parseFloat(type.width);
+        }
+      }
 
-    if (data.database || data["layer source url"]) {
-      transpilledOptions.source.url = data.database || data["layer source url"];
-    }
+      if (data["source layer"]) {
+        transpilledOptions['source-layer'] = data["source layer"];
+      }
 
-    if (!layersMongoId.includes(data._id)) {
-      layersMongoId.push(data._id);
-    }
-    if (layersMapboxId[layersMongoId.length - 1]) {
-      layersMapboxId[layersMongoId.length - 1].push(layerId);
-    } else {
-      layersMapboxId.push([layerId]);
-    }
-    map.addLayer(transpilledOptions);
+      if (data.database || data["layer source url"]) {
+        transpilledOptions.source.url = data.database || data["layer source url"];
+      }
+
+      if (!layersMongoId.includes(data._id)) {
+        layersMongoId.push(data._id);
+      }
+      if (layersMapboxId[layersMongoId.length - 1]) {
+        layersMapboxId[layersMongoId.length - 1].push(layerId);
+      } else {
+        layersMapboxId.push([layerId]);
+      }
+
+      map.addLayer(transpilledOptions);
+      map.on('sourcedata', () => {
+        resolve();
+      });
+    });
+    return promise;
   }
-}
 
-function toggleModal (jsCode) {
-  const modal = document.querySelector('.modal');
-  const header = modal.querySelector('.modal-header h1');
-  const content = modal.querySelector('.modal-content');
-  const close = modal.querySelector('#close');
-  header.textContent = 'Code:';
-  content.textContent = jsCode;
-  document.querySelector('.modal').style.display = 'flex';
-  close.addEventListener('click', () => {
-    document.querySelector('.modal').style.display = 'none';
-    header.textContent = '';
-    content.textContent = '';
+  const displayStyle = document.createElement('button');
+  displayStyle.textContent = 'display style form';
+  displayStyle.addEventListener('click', () => {
+    mapFormParent.classList.remove('hiddenContent');
+    mapFormParent.classList.add('displayContent');
   });
+  layerControls.appendChild(displayStyle);
+
+  const displayLayer = document.createElement('button');
+  displayLayer.textContent = 'display style form';
+  displayLayer.addEventListener('click', () => {
+    layerFormParent.classList.remove('hiddenContent');
+    layerFormParent.classList.add('displayContent');
+  });
+  layerControls.appendChild(displayLayer);
 }

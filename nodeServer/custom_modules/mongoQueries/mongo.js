@@ -62,7 +62,14 @@ exports.getLayers = async () => {
 
 exports.getLayerById = async (layerIdInObj) => {
   const obId = new ObjectId(layerIdInObj);
-  const find = layerDatabase.find({ _id: obId});
+  const find = layerDatabase.find({ _id: obId });
+  const results = await find.toArray();
+  return (results[0]);
+};
+
+exports.getStyleById = async (layerIdInObj) => {
+  const obId = new ObjectId(layerIdInObj);
+  const find = styleDatabase.find({ _id: obId });
   const results = await find.toArray();
   return (results[0]);
 };
@@ -93,6 +100,7 @@ exports.getStyles = async () => {
 };
 
 exports.saveStyle = async (style) => {
+  console.log(style);
   const cleanData = await validate(style);
   const obId = new ObjectId(cleanData._id);
   delete cleanData.id;

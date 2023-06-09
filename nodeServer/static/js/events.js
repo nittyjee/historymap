@@ -52,19 +52,12 @@ document.querySelector('body').addEventListener('click', (e) => {
       modalContent.removeChild(modalContent.lastChild);
     }
     const nodeId = e.target.dataset.nodeid;
-    const url = `https://encyclopedia.nahc-mapping.org/node/${nodeId}`;
-    // create a div, but don't attach it to the modal:
-    let obj = document.createElement('div');
+    const url = `https://encyclopedia.nahc-mapping.org/rendered-export-single?nid=${nodeId}`;
     xhrGetInPromise(null, url).then((content) => {
-      // load the entire content into the not displayed div:
-      obj.innerHTML = content;
-      // get the article content:
-      const article = obj.querySelector('#content');
-      // attach it to the modal:
-      document.querySelector('.modal-content').appendChild(article);
-      // dereference the not displayed div:
-      obj = null;
-      // display the modal:
+      let rmNewlines = JSON.parse(content)[0].rendered_entity.replace(/\n/g, '');
+      rmNewlines = rmNewlines.replace(/<a (.*?)>/g, '');
+      console.log(rmNewlines);
+      document.querySelector('.modal-content').insertAdjacentHTML('afterbegin', rmNewlines);
       modal.showModal();
     });
   }
@@ -72,5 +65,4 @@ document.querySelector('body').addEventListener('click', (e) => {
     const modal = document.querySelector('.modal');
     modal.close();
   }
-
 });

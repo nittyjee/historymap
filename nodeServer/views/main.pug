@@ -32,10 +32,7 @@ html(lang='en-EU' xml:lang='en-EU')
             each value, key in styles
               +boroughToggleStyles(value, key)
       .mapContainer
-        .sideInfoDisplay
-          h4 hello world 
-          p Dutch Grant Lot:
-          // a(href='https://encyclopedia.nahc-mapping.org/grantlot/B9' target='_blank') B9
+        .sideInfoDisplay.hiddenContent
         #before.map
         #after.map
         .datePanel
@@ -54,6 +51,7 @@ html(lang='en-EU' xml:lang='en-EU')
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js')
     -// script(src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js')
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js')
+    script(src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js')
     script(src='/static/concatenatedJS/master.js')
     -// script(src='/static/js/events.js')
     -// script(src='/static/js/mapFunctions.js')

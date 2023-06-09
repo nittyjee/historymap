@@ -20,7 +20,6 @@ module.exports = (app) => {
     const styleBoroughs = await sortIntoCategory('borough', styles);
     const styleNames = Object.keys(styleBoroughs);
     const copyOfStyles = JSON.parse(JSON.stringify(styleBoroughs));
-    console.log(copyOfStyles);
 
     for (let i = 0; i < styleNames.length; i++) {
       copyOfStyles[styleNames[i]] = await sortIntoCategory('feature group', styleBoroughs[styleNames[i]]);
@@ -34,18 +33,12 @@ module.exports = (app) => {
     const promise = new Promise((resolve, reject) => {
       for (let i = 0; i < array.length; i++) {
         const layer = array[i];
-        console.log(layer[category]);
         // if the category exists in sorted
         if (Object.keys(sorted).includes(layer[category])) {
-          console.log('first case');
           sorted[layer[category]].push(layer);
         }
-        if (layer[category] === '') {
-          console.log('is falsy');
-        }
-        //if (layer[category] && !sorted[layer[category]]) {
+        // if (layer[category] && !sorted[layer[category]]) {
         if (!sorted[layer[category]]) {
-          console.log('second case');
           sorted[layer[category]] = [layer];
         }
         if (i === array.length - 1) {
@@ -89,6 +82,15 @@ module.exports = (app) => {
    */
   app.post('/getLayerById', (req, res) => {
     mongo.getLayerById(req.body._id).then((result) => {
+      res.send(result);
+    });
+  });
+
+  /**
+   * @param req.body {Object} Query in the shape {_id: idString}
+   */
+  app.post('/getStyleById', (req, res) => {
+    mongo.getStyleById(req.body._id).then((result) => {
       res.send(result);
     });
   });

@@ -14,14 +14,25 @@ mixin boroughToggle(boroughData, boroughName)
           -// the toggle
           i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
           lable #{featureGroupName}
+          -// Drupal node id should be joined to boroughName... 
+          if featureGroup[0]['drupal node id']
+            i.fa.fa-info-circle.toggleInfo(data-nodeId=featureGroup[0]['drupal node id'] title='Toggle more information')
           -// children
+          i.fa.fa-crosshairs.zoomToFeatureGroup.hiddenZoom(data-featureGroup=featureGroupName title='Zoom to feature group')
           .hiddenContent
             each layer in featureGroup
               +layerToggle(layer)
 
 mixin layerToggle(layer)
+  -const mapboxId = `${layer.borough}/${layer['feature group']}/${layer.name}/${layer.type[0].type}/${layer['target map'][0]}`;
   .layer
     input(type='checkbox' name=layer._id).fetchLayer 
     i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)
     i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layer._id)
+    -// layer types are in an array due to the same geometries being reused, 
+    -// this isn't really necessary and could be a plain object.
+    if layer.type[0].type === 'line'
+      -const color = `color:${layer.type[0].color}`;
+      i.fas.fa-slash.slash-icon(style=color)
     lable(for=layer._id) #{layer.name}
+    i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')

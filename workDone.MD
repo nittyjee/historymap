@@ -114,6 +114,16 @@ Eliminated potential edge cases where layer data is wrong or incomplete:
   - [] Write test for weird cases like null data, empty sets etc.
   - [] Write a function to clean the data base
 
+# Till 8th June (rushing)
+Finished interactive "add, delete, edit layer",
+Finished interactive "add, delete, edit style",
+Finished modal content fetch with only the article data,
+Finished load data into side slider *n.b. this load **all** the data, as in the original it might be better to load data on each request via the title attribute in a node*
+
+**Bad data structure design and parsing**
+"Lot" in Mapbox equates to "title" in Drupal data (absolute mess here).
+
+
 ## Final data consumed by the view engine to render the front end:   
 
 ```json

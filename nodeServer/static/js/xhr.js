@@ -68,7 +68,7 @@ function xhrGetInPromise (items, route) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', route);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.timeout = 1000;
+    xhr.timeout = 5000;
     xhr.send(encodeURI(items));
     xhr.ontimeout = (e) => {
       const err = new Error('The request timed out, either the server is down, or there is an issue with the connection.');
