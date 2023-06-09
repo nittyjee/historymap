@@ -47,5 +47,5 @@ function addDraw (map) {
   }
 }
 
-addDraw(afterMap);
-addDraw(beforeMap);
+// addDraw(afterMap);
+// addDraw(beforeMap);

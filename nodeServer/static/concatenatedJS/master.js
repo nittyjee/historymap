@@ -1083,8 +1083,8 @@ function addDraw (map) {
   }
 }
 
-addDraw(afterMap);
-addDraw(beforeMap);
+// addDraw(afterMap);
+// addDraw(beforeMap);
 /**
  * 
  * @param {(Object|string)} baseHTMLElement A HTML element onto which to render 
