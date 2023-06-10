@@ -27,8 +27,8 @@ const drupalData = (drupalDataName, mapboxLot) => {
       if (drupalDataName === 'Dutch_Grants') {
         lotTitle = lot.title;
       }
-      /* More fucking mess, title in Taxlot, so not compatible in anyway with dutchLots:
-      Why the fuck would you put a title in an object in an array???
+      /* Title in Taxlot, so not compatible in anyway with dutchLots:
+      Why fuck would you put a title in an object in an array???
       title = [{ value: "Director General DWIC" }]. This is the alternative to separete functions... */
       if (drupalDataName === 'Castello_Taxlots') {
         lotTitle = lot.title[0].value;

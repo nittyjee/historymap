@@ -951,6 +951,7 @@ function LayerManager () {
   }
 
   const displayStyle = document.createElement('button');
+  displayStyle.classList.add('admin');
   displayStyle.textContent = 'display style form';
   displayStyle.addEventListener('click', () => {
     mapFormParent.classList.remove('hiddenContent');
@@ -959,7 +960,8 @@ function LayerManager () {
   layerControls.appendChild(displayStyle);
 
   const displayLayer = document.createElement('button');
-  displayLayer.textContent = 'display style form';
+  displayLayer.classList.add('admin');
+  displayLayer.textContent = 'display layer form';
   displayLayer.addEventListener('click', () => {
     layerFormParent.classList.remove('hiddenContent');
     layerFormParent.classList.add('displayContent');
@@ -1249,8 +1251,8 @@ const drupalData = (drupalDataName, mapboxLot) => {
       if (drupalDataName === 'Dutch_Grants') {
         lotTitle = lot.title;
       }
-      /* More fucking mess, title in Taxlot, so not compatible in anyway with dutchLots:
-      Why the fuck would you put a title in an object in an array???
+      /* Title in Taxlot, so not compatible in anyway with dutchLots:
+      Why fuck would you put a title in an object in an array???
       title = [{ value: "Director General DWIC" }]. This is the alternative to separete functions... */
       if (drupalDataName === 'Castello_Taxlots') {
         lotTitle = lot.title[0].value;

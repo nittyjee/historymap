@@ -41,12 +41,13 @@ dialog {
   max-width: 25vw;
   
   .layerform, .styleform {
-    overflow: scroll;
+    overflow: scroll !important;
     margin: 0.5em;
     background: #eee;
     padding: 0.5em;
     border: solid 2px;
     border-radius: 0.5em;
+    max-height: 25vh;
   }
 
   .hiddenContent {
@@ -106,7 +107,7 @@ dialog {
       line-height: 1;
       cursor: pointer;
       // keep it above any hidden content that might capture clicks
-      z-index: 2;
+      z-index: 1000;
       position: relative;
       color: #555;
     }

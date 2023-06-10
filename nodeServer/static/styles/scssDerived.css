@@ -27,12 +27,13 @@ dialog {
 .mapControls {
   max-width: 25vw; }
   .mapControls .layerform, .mapControls .styleform {
-    overflow: scroll;
+    overflow: scroll !important;
     margin: 0.5em;
     background: #eee;
     padding: 0.5em;
     border: solid 2px;
-    border-radius: 0.5em; }
+    border-radius: 0.5em;
+    max-height: 25vh; }
   .mapControls .hiddenContent {
     height: 0;
     opacity: 0;
@@ -73,7 +74,7 @@ dialog {
       text-rendering: auto;
       line-height: 1;
       cursor: pointer;
-      z-index: 2;
+      z-index: 1000;
       position: relative;
       color: #555; }
     .mapControls .layerControls i {
