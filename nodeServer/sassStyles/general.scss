@@ -2,7 +2,8 @@
 $standard-height: 12px;
 $standard-border: 2px;
 // 12px === standard-height
-$mapHeight: calc(100vh - (2 * 8 * 12px + 2px)); 
+$mapHeight: calc(100vh - 164px); 
+//calc(100vh - (2 * 8 * 12px + 2px)); 
 $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 
 body {
@@ -25,6 +26,11 @@ dialog {
   }
 }
 
+.mainBody {
+  height: $mapHeight;
+  border-bottom: 2px solid #b0691d;
+}
+
 .editLayer, .deleteLayer {
   cursor: pointer;
 }
@@ -39,6 +45,23 @@ dialog {
 
 .mapControls {
   max-width: 25vw;
+  max-height: $mapHeight;
+  overflow-y: scroll;
+
+  .mapControlsLink {
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-weight: 700;
+    text-align: center;
+    margin: auto;
+    display: block;
+  }
+
+  .mapControlsLink::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f0ac";
+    color: #555;
+    margin-right: 1em; 
+  }
   
   .layerform, .styleform {
     overflow: scroll !important;
@@ -67,8 +90,11 @@ dialog {
   .displayContent {
     height: auto;
     opacity: 1;
-    margin-left: 1em;
     overflow: visible;
+  }
+
+  .featureGroupName .displayContent {
+    margin-left: 1em;
   }
 
   .layerControls {
@@ -87,6 +113,14 @@ dialog {
       width: calc(100% - 1em);
       height: auto;
       width: 100%; 
+    }
+
+    .boroughName {
+      text-align: center;
+    }
+
+    .featureGroupName {
+      text-align: left;
     }
     
     .toggleInfo {
@@ -132,18 +166,85 @@ dialog {
 }
 
 .topMenu {
-  flex-grow: 0; 
-  flex-shrink: 0;
-  flex-basis: 8 * $standard-height;
+  // flex-grow: 0; 
+  // flex-shrink: 0;
+  // flex-basis: 8 * $standard-height;
+  flex-direction: row;
+  align-items: baseline;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 84px;
   width: 100%;
   border-bottom: $standard-border solid #b0691d;
+  align-items: center;
+
+  * > {
+    vertical-align: middle;
+  }
+
+  .buttonContainer {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding-right: 0.5em;
+  }
+
+  .about  {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 25px;
+    border-radius: 4px;
+    border: solid black;
+    font-weight: bold;
+    margin-top: 3px;
+    margin: 3px;
+    font-family: "Arial";
+    cursor: pointer; 
+  }
+
+  a.encyclopedia {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 25px;
+    border-radius: 4px;
+    border: solid black;
+    font-weight: bold;
+    margin-top: 3px;
+    margin: 3px;
+    font-family: "Arial";
+    background-color: #e8e1da;
+    cursor: pointer; 
+
+    img {
+      vertical-align: text-top;
+      padding-left: 2px;
+      height: 18px;
+      width: 18px; 
+    }
+  }
+
+  #logo-img-wide {
+    max-height: 70px;
+    padding: 0.25em;
+  }
 
   .headerText {
     display: inline-block;
-    margin-top: 2 * $standard-height;
+    //margin-top: 2 * $standard-height;
     text-shadow: #717c9b 0px 1px 3px;
-    font-size: 2 * $standard-height;
+    font-size: 1.7em;
+    //2 * $standard-height;
     font-family: 'Consolas';
+    flex-basis: 100%;
   }
 }
 

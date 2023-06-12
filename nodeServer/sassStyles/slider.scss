@@ -4,6 +4,7 @@
   border-radius: 0.5em;
   border: 1px solid #666;
   font-family: Segoe UI,Arial,sans-serif;
+  font-weight: 700;
   font-size: 1.1em;
   text-align: left;
   margin-top: 10px;
@@ -84,7 +85,7 @@
     border-radius: 0.5em;
     cursor: pointer;
     overflow: scroll;
-    left: 50%; 
+    left: calc(50% - 12px); 
   }
   
   .sliderHandle:hover {
@@ -98,5 +99,19 @@
   
   .redSlider {
     background-color: #f00;  
-  }  
+  }
+  
+  .timeLineText {
+    font-weight: 800;
+    position: absolute;
+    top: 0;
+  }
+
+  .left {
+    left: 43%; 
+  }
+
+  .right {
+    right: 43%; 
+  }
 }

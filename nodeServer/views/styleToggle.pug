@@ -1,35 +1,39 @@
 mixin boroughToggleStyles(boroughData, boroughName)  
   -// parent
   .borough
-    if !boroughName
-      each featureGroup, featureGroupName in boroughData
-        -// the parent
-        .featureGroup.layersInArea
-          -// the toggle
-          -//i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-          -//lable #{featureGroupName}
-          -// children
-          -//.hiddenContent
-          each style in featureGroup
-            +styleToggle(style)
-    if boroughName 
-      -// toggle
-      i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-      -// .areaList
-      -// lable #{boroughName}
-      b #{boroughName}
-      -// child
-      .hiddenContent(name=`${boroughName}-layers`)
+    -//new div to center content 
+    .boroughName
+      if !boroughName
         each featureGroup, featureGroupName in boroughData
           -// the parent
           .featureGroup.layersInArea
             -// the toggle
-            -// i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-            -// lable #{featureGroupName}
+            -//i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+            -//lable #{featureGroupName}
             -// children
             -//.hiddenContent
             each style in featureGroup
-              +styleToggle(style)
+              +styleToggle(style)   
+      if boroughName 
+        -// toggle
+        i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+        -// .areaList
+        -// lable #{boroughName}
+        b #{boroughName}
+        -// child
+        .hiddenContent(name=`${boroughName}-layers`)
+          each featureGroup, featureGroupName in boroughData
+            -// the parent
+            -// new div to keep toggle action
+            .featureGroupName
+              .featureGroup.layersInArea
+                -// the toggle
+                -// i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+                -// lable #{featureGroupName}
+                -// children
+                -//.hiddenContent
+                each style in featureGroup
+                  +styleToggle(style)
 
 mixin styleToggle(style)
   .layer

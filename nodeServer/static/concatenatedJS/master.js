@@ -202,7 +202,8 @@ function LayerManager () {
   this.layerControlEvents = () => {
     layerControls.addEventListener('click', (e) => {
       if (e.target.classList.contains('toggleVisibility')) {
-        const hiddenContent = e.target.parentElement.querySelector('.hiddenContent');
+        // extra element added to center first item...
+        const hiddenContent = e.target.parentElement.parentElement.querySelector('.hiddenContent');
         const plusMinus = e.target.parentElement.querySelector('i');
         if (hiddenContent.classList.contains('displayContent')) {
           plusMinus.classList.remove('fa-plus-square');
@@ -1487,20 +1488,77 @@ function SliderConstructor (minDate, maxDate) {
     }
   }
 
+  const MS_PER_SEC = 1000;
+  const SEC_PER_HR = 60 * 60;
+  const HR_PER_DAY = 24;
+  const MS_PER_DAY = MS_PER_SEC * SEC_PER_HR * HR_PER_DAY;
+
+  function dateDiffInDays (date1, date2) {
+    const date1Time = getUTCTime(date1);
+    const date2Time = getUTCTime(date2);
+    if (!date1Time || !date2Time) return 0;
+    return Math.round((date2Time - date1Time) / MS_PER_DAY);
+  }
+
+  function getUTCTime (dateStr) {
+    const date = new Date(dateStr.toString());
+    // If use 'Date.getTime()' it doesn't compute the right amount of days
+    // if there is a 'day saving time' change between dates
+    return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  function addDays (date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
   function getSelection () {
     const width = document.querySelector('.timelineSlider').clientWidth;
     const position = parseFloat(slider.offsetLeft);
+
     const dateRange = maxDate - minDate;
-    const yearWidth = width / dateRange;
-    const selection = Math.round(minDate + (position / yearWidth));
+    const dateRangeDisplay = dateDiffInDays(minDate, maxDate);
+
+    const dayWidth = width / dateRange;
+    const dayWidthDisplay = width / dateRangeDisplay;
+
+    const selectionDisplay = Math.round(minDate + (position / dayWidthDisplay));
+    const prettyPrint = addDays(minDate.toString(), selectionDisplay);
+
+    // internal
+    const selection = Math.round(minDate + (position / dayWidth));
+
+    const day = prettyPrint.getDate();
+    const month = prettyPrint.getMonth();
+    const year = prettyPrint.getFullYear();
     // this should be placed outside this constructor:
-    document.querySelector('.datePanel').textContent = selection;
+    document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+    //getDate(selection, 'string');
     // ditto
     layerControls.addDateFilter(getDate(selection), getDate(maxDate));
     return selection;
   }
 
-  function getDate (selection) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const stNdRdTh = (number) => {
+    const postFix = ['st', 'nd', 'rd', 'th'];
+    const exceptions = [11, 12, 13, 0];
+    const length = number.toString().length;
+    if (length > 1) {
+      const lastDigit = parseInt(number.toString()[1]);
+      if (exceptions.includes(lastDigit) || lastDigit > 3) {
+        return postFix[3];
+      }
+      return postFix[parseInt(number.toString()[1]) - 1];
+    }
+    if (parseInt(number.toString()[0]) > 4) {
+      return postFix[3];
+    }
+    return postFix[parseInt(number.toString()[0]) - 1];
+  };
+
+  function getDate (selection, returnIntOrSt) {
     selection = (typeof selection === 'number')
       ? selection.toString()
       : selection;
@@ -1530,6 +1588,9 @@ function SliderConstructor (minDate, maxDate) {
     const day = ((rawDay).toString().length === 1)
       ? `0${rawDay}`
       : `${rawDay}`;
+    if (returnIntOrSt === 'string') {
+      return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+    }
     return parseInt(`${date.getFullYear()}${month}${day}`);
   }
 

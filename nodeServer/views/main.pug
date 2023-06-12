@@ -20,6 +20,13 @@ html(lang='en-EU' xml:lang='en-EU')
       a(href='http://newamsterdamhistorycenter.org' class='logo')
         img(id='logo-img-wide' src='http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png' align='middle')
       div#header_text.headerText | Mapping Early New York
+      .buttonContainer 
+        a.encyclopedia(href='https://newamsterdamhistorycenter.org/full-3d-model/' target='_blank') 3D Map 
+          img(src='https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png')
+        a.encyclopedia(href='https://newamsterdamhistorycenter.org/' target='_blank') Encyclopedia 
+          img(src='https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png')
+        .about(title='Open') ABOUT
+
     .mainBody.flexContainer
       .mapControls
         .layerControls
@@ -31,6 +38,10 @@ html(lang='en-EU' xml:lang='en-EU')
             h4 Maps
             each value, key in styles
               +boroughToggleStyles(value, key)
+              
+            -// a.encyclopedia(href='https://sandcastle.cesium.com/standalone.html#c=lVRhc9o4EP0rGj50zAyRMYFmyJHMUZLLmANyIW6vZPxF2AILZMmVBNS+yX+/lW1ocm1u2k+ypPd29+0+2XXRnSLCoBHVbJeOHxGJIqo1MhLlcqcQkwIRranRoagw2JcCx3RFdtwMS3Agt1SgKxQ2aD5OlncRu2dj/2PhezPma1/Me9HIf+9vs8+fRuM+BtCX+G4LID9/CpJ0UXxIZqO2Ny1uzyfBnM02C7PYLIpp7iWzYnu4D9a9RXHbm6YLNhmNsycINg38zrQYdu1+8fmB3W9uO7MiKmabj4dZMevjD8Oszf4snooH/rDYHPRm2f/D3/+9nY+97H2+HSeJN5xMzm56h4ew8VsoQhFJoQ3aM3qgCsQIeqibgj+VZ07YiMr9SApDmKAqbLTQP6FAyFCl4OQvJfcspuryJblagtcIp6QhtFP8En1r65xq6HlE8UrJdGi77seO12xZ8LNdnptQalUi1hEVFK+5XFIYR2aSgGozXEMWbep0IMOoHX0hzzBOISxcvIqSKZYyw/ZUYxLHjs33nYTzm6Ai/1LxvYu+1+8cJYSiWRbjEJ2LCDlNdHVdt1DlqI5LDoSdKsWKkjiHvqVMWyHfALWAQso0kE4Nr8JbkOuiYZbxHJmEotquSJucU8RWCPj0K9PW1RZcNYd+NYpo27Q6d2l8XB3XuYHrVF/oqB2Cgxtip8I10bt3/wvA8KR+CnR8ZI+26GYFbx6bhE5FVpqu3hpYyX4zaq3quRwPioiJEuSAeaQ6ZbK9kZxiLtf1TUkqKfUMIpJSRfCK5zCJkhaDF5kgBhKePDIiysAXEeelRW7oWlGqnbOLLm57nbbXbaFuG1+0L2DXQh2v3a5sE+9UHahb7qViFF5gdVQXmYBLmFifck2JSbCRczglQjt1JIQyBgrfQp31TzglOX87WK2/fI3PTccujVZjUE7i2l7+ztJMKmOfiIOxa2iacQLi3eUu2sLMIq0taeAeKYOY7RGLr37wj0ERBx/CzWrH+SMraNi4HriAf0XjsmzA/Z4qTnKA2DIGiXc9qS4wxgMXtjbpf7lGSr4k6kVcUJMYk+lL19VExBHRBhxQlYYjmbprwjlVufsv' target='_blank') 
+            button.mapControlsLink 3D New Amsterdam
+              -//img(src='https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png')      
       .mapContainer
         .sideInfoDisplay.hiddenContent
         #before.map
@@ -39,6 +50,8 @@ html(lang='en-EU' xml:lang='en-EU')
     .timelineSlider
       .timeline
       .sliderHandle
+      span.timeLineText.left ⇦ TIME
+      span.timeLineText.right  SLIDE ⇨
   dialog.modal
     i.fa.fa-window-close(aria-hidden='true' title='close').close
     .modal-title

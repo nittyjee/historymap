@@ -202,7 +202,8 @@ function LayerManager () {
   this.layerControlEvents = () => {
     layerControls.addEventListener('click', (e) => {
       if (e.target.classList.contains('toggleVisibility')) {
-        const hiddenContent = e.target.parentElement.querySelector('.hiddenContent');
+        // extra element added to center first item...
+        const hiddenContent = e.target.parentElement.parentElement.querySelector('.hiddenContent');
         const plusMinus = e.target.parentElement.querySelector('i');
         if (hiddenContent.classList.contains('displayContent')) {
           plusMinus.classList.remove('fa-plus-square');
