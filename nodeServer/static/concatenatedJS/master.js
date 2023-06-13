@@ -303,7 +303,7 @@ function LayerManager () {
           });
         }
       }
-
+/*
       if (e.target.classList.contains('displayStyleEditor')) {
         mapFormParent.classList.remove('hiddenContent');
         mapFormParent.classList.add('displayContent');
@@ -312,7 +312,7 @@ function LayerManager () {
       if (e.target.classList.contains('displayLayerEditor')) {
         layerFormParent.classList.remove('hiddenContent');
         layerFormParent.classList.add('displayContent');
-      }
+      }*/
     });
   };
 

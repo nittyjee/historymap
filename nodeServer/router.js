@@ -3,6 +3,7 @@ const authentication = customModules('login');
 
 function isLoggedIn (req, res, next) {
   if (req.session && req.session.passport && req.session.passport.user) {
+    req.user = req.session.passport.user;
     next();
   } else {
     console.log('Attempted data insertion');
@@ -16,6 +17,7 @@ module.exports = (app) => {
   });
 
   app.get('/', async (req, res) => {
+    console.log(req.session.passport.user);
     const layers = await mongo.getLayers();
     const boroughs = await sortIntoCategory('borough', layers);
     const names = Object.keys(boroughs);
@@ -34,7 +36,7 @@ module.exports = (app) => {
       copyOfStyles[styleNames[i]] = await sortIntoCategory('feature group', styleBoroughs[styleNames[i]]);
     }
 
-    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user: req.user });
+    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user: req.session.passport.user });
   });
 
   function sortIntoCategory (category, array) {
