@@ -25,7 +25,8 @@
   .year {
     flex: 0 1 20vw;
     text-align: center;
-    position: relative; 
+    position: relative;
+    padding-right: 5px; 
   }
   
   .year::after {
@@ -86,6 +87,7 @@
     cursor: pointer;
     overflow: scroll;
     left: calc(50% - 12px); 
+    overflow: visible;
   }
   
   .sliderHandle:hover {
@@ -108,10 +110,10 @@
   }
 
   .left {
-    left: 43%; 
+    left: 40%; 
   }
 
   .right {
-    right: 43%; 
+    right: 40%; 
   }
 }

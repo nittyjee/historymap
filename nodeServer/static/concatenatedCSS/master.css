@@ -14,6 +14,19 @@ dialog {
     font-size: 1.5em;
     cursor: pointer; }
 
+h4 {
+  color: #23374d;
+  font-weight: bold;
+  font-size: 17px;
+  padding-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ce5c00;
+  padding-bottom: 1em; }
+
+a {
+  font-weight: 700;
+  color: #ce5c00; }
+
 .mainBody {
   height: calc(100vh - 164px);
   border-bottom: 2px solid #b0691d; }
@@ -27,6 +40,12 @@ dialog {
   accent-color: #0f0;
   font-style: italic;
   line-break: anywhere; }
+
+.mapControls::-webkit-scrollbar-thumb {
+  background: steelblue; }
+
+.mapControls::-webkit-scrollbar {
+  width: 7px; }
 
 .mapControls {
   max-width: 25vw;
@@ -71,7 +90,7 @@ dialog {
     margin-left: 1em; }
   .mapControls .layerControls {
     display: inline-block;
-    padding: 1em; }
+    padding: 0 1em; }
     .mapControls .layerControls .zoomToFeatureGroup, .mapControls .layerControls .zoomToLayer, .mapControls .layerControls .easeToPoint {
       cursor: pointer;
       color: #1d43de;
@@ -109,6 +128,8 @@ dialog {
     .mapControls .layerControls input[type='checkbox'] {
       cursor: pointer; }
     .mapControls .layerControls h4 {
+      margin-bottom: 2em;
+      padding-bottom: 1em;
       text-transform: uppercase; }
 
 .topMenu {
@@ -166,27 +187,13 @@ dialog {
       width: 18px; }
   .topMenu #logo-img-wide {
     max-height: 70px;
-    padding: 0.25em; }
+    padding: 0.25em 0.25em 0.25em 21px; }
   .topMenu .headerText {
     display: inline-block;
     text-shadow: #717c9b 0px 1px 3px;
     font-size: 1.7em;
     font-family: 'Consolas';
     flex-basis: 100%; }
-
-h4 {
-  color: #23374d;
-  font-weight: bold;
-  font-size: 17px;
-  padding-bottom: 8px;
-  text-align: center;
-  border-bottom: 1px solid #ce5c00;
-  margin-bottom: 8px;
-  padding-bottom: 1em; }
-
-a {
-  font-weight: 700;
-  color: #ce5c00; }
 
 .feature {
   padding-left: 1em; }
@@ -231,7 +238,8 @@ a {
   .timelineSlider .year {
     flex: 0 1 20vw;
     text-align: center;
-    position: relative; }
+    position: relative;
+    padding-right: 5px; }
   .timelineSlider .year::after {
     content: '';
     display: block;
@@ -283,7 +291,8 @@ a {
     border-radius: 0.5em;
     cursor: pointer;
     overflow: scroll;
-    left: calc(50% - 12px); }
+    left: calc(50% - 12px);
+    overflow: visible; }
   .timelineSlider .sliderHandle:hover {
     border: 1px solid #59b4d4;
     background-color: #0078a3; }
@@ -296,9 +305,9 @@ a {
     position: absolute;
     top: 0; }
   .timelineSlider .left {
-    left: 43%; }
+    left: 40%; }
   .timelineSlider .right {
-    right: 43%; }
+    right: 40%; }
 
 @media (min-width: 1024px) {
   .flexContainer {
@@ -362,7 +371,7 @@ a {
       position: absolute;
       top: 80px;
       bottom: 0;
-      width: 100%; }
+      width: 75vw; }
     .mapContainer .mapboxgl-canvas {
       width: 100% !important; } }
 

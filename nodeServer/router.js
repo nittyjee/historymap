@@ -1,6 +1,15 @@
 const mongo = customModules('mongoQueries');
 const authentication = customModules('login');
 
+function isLoggedIn (req, res, next) {
+  if (req.session && req.session.passport && req.session.passport.user) {
+    next();
+  } else {
+    console.log('Attempted data insertion');
+    return res.sendStatus(503);
+  }
+}
+
 module.exports = (app) => {
   app.get('/hello_world', (req, res) => {
     res.send('hi!');
@@ -25,7 +34,7 @@ module.exports = (app) => {
       copyOfStyles[styleNames[i]] = await sortIntoCategory('feature group', styleBoroughs[styleNames[i]]);
     }
 
-    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles });
+    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user: req.user });
   });
 
   function sortIntoCategory (category, array) {
@@ -61,8 +70,9 @@ module.exports = (app) => {
     res.render('./login.pug');
   });
 
-  app.post('/authenticate', authentication.providerStrategy, (req, res) => {
-
+  app.post('/authenticate', authentication.providerStrategy.authenticate('provider',
+    { successRedirect: '/', failureRedirect: '/login' }), (req, res) => {
+    req.user = req.session.user;
   });
 
   app.post('/getLayers', (req, res) => {
@@ -95,7 +105,7 @@ module.exports = (app) => {
     });
   });
 
-  app.post('/saveLayer', (req, res) => {
+  app.post('/saveLayer', isLoggedIn, (req, res) => {
     mongo.saveLayer(req.body).then((result) => {
       if (result.acknowledged && result.upsertedId) {
         mongo.getLayerById(result.upsertedId).then((layer) => {
@@ -104,12 +114,11 @@ module.exports = (app) => {
             res.send(html);
           });
         });
-        // res.send(`Layer saved with local id ${result.insertedId}`);
       }
     });
   });
 
-  app.post('/saveStyle', (req, res) => {
+  app.post('/saveStyle', isLoggedIn, (req, res) => {
     mongo.saveStyle(req.body).then((result) => {
       if (result.acknowledged && result.insertedId) {
         /*
@@ -126,7 +135,7 @@ module.exports = (app) => {
     });
   });
 
-  app.post('/deleteLayer', (req, res) => {
+  app.post('/deleteLayer', isLoggedIn, (req, res) => {
     mongo.deleteLayer(req.body.id).then((result) => {
       console.log(result);
       if (result.acknowledged) {

@@ -1,4 +1,4 @@
-mixin boroughToggleStyles(boroughData, boroughName)  
+mixin boroughToggleStyles(boroughData, boroughName, user)  
   -// parent
   .borough
     -//new div to center content 
@@ -35,12 +35,13 @@ mixin boroughToggleStyles(boroughData, boroughName)
                 each style in featureGroup
                   +styleToggle(style)
 
-mixin styleToggle(style)
+mixin styleToggle(style, user)
   .layer
     input(type='radio' data-_id=style._id name='beforeMapRadio' data-url=style['style source url'] data-target='beforeMap' title='Render this style on the left?').fetchStyle
     input(type='radio' data-_id=style._id name='afterMapRadio' data-url=style['style source url'] data-target='afterMap' title='Render this style on the right?').fetchStyle
-    i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
-    i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
+    if user
+      i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
+      i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
     lable(for=style._id) #{style['feature group']}
     i.fa.fa-info-circle.toggleInfo(data-nodeId=style['drupal node id']).hidden
     if style['ease to point']

@@ -303,6 +303,16 @@ function LayerManager () {
           });
         }
       }
+
+      if (e.target.classList.contains('displayStyleEditor')) {
+        mapFormParent.classList.remove('hiddenContent');
+        mapFormParent.classList.add('displayContent');
+      }
+
+      if (e.target.classList.contains('displayLayerEditor')) {
+        layerFormParent.classList.remove('hiddenContent');
+        layerFormParent.classList.add('displayContent');
+      }
     });
   };
 
@@ -950,22 +960,4 @@ function LayerManager () {
     });
     return promise;
   }
-
-  const displayStyle = document.createElement('button');
-  displayStyle.classList.add('admin');
-  displayStyle.textContent = 'display style form';
-  displayStyle.addEventListener('click', () => {
-    mapFormParent.classList.remove('hiddenContent');
-    mapFormParent.classList.add('displayContent');
-  });
-  layerControls.appendChild(displayStyle);
-
-  const displayLayer = document.createElement('button');
-  displayLayer.classList.add('admin');
-  displayLayer.textContent = 'display layer form';
-  displayLayer.addEventListener('click', () => {
-    layerFormParent.classList.remove('hiddenContent');
-    layerFormParent.classList.add('displayContent');
-  });
-  layerControls.appendChild(displayLayer);
 }

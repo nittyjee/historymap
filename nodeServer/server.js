@@ -57,7 +57,6 @@ function generateRandomID (length) {
   return checkCollision();
 }
 
-
 const initMongoSessionControl = () => {
   console.log('Establishing session control');
   const promise = new Promise(function (resolve, reject) {
@@ -100,11 +99,12 @@ const initMongoSessionControl = () => {
   return promise;
 };
 
-const mountOtherMiddleWare = () => {
+const mountOtherMiddleWare = (expressSessions) => {
   app.use(compression());
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+  app.use(expressSessions);
   app.set('trust proxy', 1);
   app.use('/static', express.static(__dirname + '/static'));
   app.use(favicon(path.join(__dirname, 'static', 'icon_32x32.ico')));

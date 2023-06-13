@@ -1,4 +1,4 @@
-mixin boroughToggle(boroughData, boroughName)
+mixin boroughToggle(boroughData, boroughName, user)
   -// parent
   .borough
     -// toggle
@@ -25,18 +25,20 @@ mixin boroughToggle(boroughData, boroughName)
               i.fa.fa-crosshairs.zoomToFeatureGroup.hiddenZoom(data-featureGroup=featureGroupName title='Zoom to feature group')
               .hiddenContent
                 each layer in featureGroup
-                  +layerToggle(layer)
+                  +layerToggle(layer, user)
 
-mixin layerToggle(layer)
-  -const mapboxId = `${layer.borough}/${layer['feature group']}/${layer.name}/${layer.type[0].type}/${layer['target map'][0]}`;
-  .layer
-    input(type='checkbox' name=layer._id).fetchLayer 
-    i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)
-    i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layer._id)
-    -// layer types are in an array due to the same geometries being reused, 
-    -// this isn't really necessary and could be a plain object.
-    if layer.type[0].type === 'line'
-      -const color = `color:${layer.type[0].color}`;
-      i.fas.fa-slash.slash-icon(style=color)
-    lable(for=layer._id) #{layer.name}
-    i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')
+mixin layerToggle(layer, user)
+  if layer && layer.borough && layer.name && layer.type[0]
+    -const mapboxId = `${layer.borough}/${layer['feature group']}/${layer.name}/${layer.type[0].type}/${layer['target map'][0]}`;
+    .layer
+      input(type='checkbox' name=layer._id).fetchLayer
+      if user  
+        i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layer._id)
+        i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layer._id)
+      -// layer types are in an array due to the same geometries being reused, 
+      -// this isn't really necessary and could be a plain object.
+      if layer.type[0].type === 'line'
+        -const color = `color:${layer.type[0].color}`;
+        i.fas.fa-slash.slash-icon(style=color)
+      lable(for=layer._id) #{layer.name}
+      i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')

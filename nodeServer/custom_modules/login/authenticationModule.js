@@ -40,13 +40,13 @@ passport.deserializeUser((user, callback) => {
 });
 
 passport.use('provider', new LocalStrategy(
-  (username, password, callback) => {
+  (username, password, done) => {
     mongo.providerLogin({ username, password: this.encrypt(password) }).then((user) => {
       if (user) {
-        console.log('authenticated');
-        return callback(null, user);
+        console.log(`User ${user.username} authenticated`);
+        return done(null, user.username);
       } else {
-        return callback(null, false);
+        return done(null, false);
       }
     });
   }));
@@ -56,4 +56,5 @@ exports.passportInit = (app, session) => {
   app.use(session);
 };
 
-exports.providerStrategy = passport.authenticate('provider');
+// exports.providerStrategy = passport.authenticate('provider');
+exports.providerStrategy = passport;

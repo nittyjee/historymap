@@ -24,7 +24,7 @@
     display: flex; 
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 75vw;
+    flex-basis: $mapWidth;
     flex-direction: column;
     
     .hiddenContent {
@@ -83,7 +83,7 @@
       top: 80px; 
       // 6.5 * $standard-height + $standard-border;
       bottom: 0;
-      width: 100%;
+      width: $mapWidth;
     }
 
     .mapboxgl-canvas {

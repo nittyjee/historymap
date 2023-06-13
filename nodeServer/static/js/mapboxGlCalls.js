@@ -19,33 +19,8 @@ const afterMap = new mapboxgl.Map({
 });
 
 const maps = { beforeMap, afterMap };
-
-// A selector or reference to HTML element
 const container = '.mapContainer';
 const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
-// Set this to enable comparing two maps by mouse movement:
-// mousemove: true
+  // Set this to enable comparing two maps by mouse movement:
+  // mousemove: true
 });
-
-function addDraw (map) {
-  const draw = new MapboxDraw({
-    displayControlsDefault: false,
-    // Select which mapbox-gl-draw control buttons to add to the map.
-    controls: {
-      polygon: true,
-      trash: true
-    },
-    // Set mapbox-gl-draw to draw by default.
-    // The user does not have to click the polygon control button first.
-    defaultMode: 'draw_polygon'
-  });
-  map.addControl(draw);
-  map.on('draw.create', log);
-
-  function log (e) {
-    console.log(draw.getAll());
-  }
-}
-
-// addDraw(afterMap);
-// addDraw(beforeMap);

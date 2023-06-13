@@ -2,7 +2,8 @@
 $standard-height: 12px;
 $standard-border: 2px;
 // 12px === standard-height
-$mapHeight: calc(100vh - 164px); 
+$mapHeight: calc(100vh - 164px);
+$mapWidth: 75vw; 
 //calc(100vh - (2 * 8 * 12px + 2px)); 
 $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 
@@ -26,6 +27,21 @@ dialog {
   }
 }
 
+h4 {
+  color: #23374d;
+  font-weight: bold;
+  font-size: 17px;
+  padding-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ce5c00;
+  padding-bottom: 1em;
+}
+
+a {
+  font-weight: 700;
+  color: #ce5c00;
+}
+
 .mainBody {
   height: $mapHeight;
   border-bottom: 2px solid #b0691d;
@@ -41,6 +57,15 @@ dialog {
   accent-color: #0f0;
   font-style: italic; 
   line-break: anywhere;
+}
+
+
+.mapControls::-webkit-scrollbar-thumb {
+  background: steelblue;
+}
+
+.mapControls::-webkit-scrollbar {
+  width: 7px;
 }
 
 .mapControls {
@@ -99,7 +124,7 @@ dialog {
 
   .layerControls {
     display: inline-block;
-    padding: 1em;
+    padding: 0 1em;
 
 
     .zoomToFeatureGroup, .zoomToLayer, .easeToPoint {
@@ -160,6 +185,8 @@ dialog {
     }
 
     h4 {
+      margin-bottom: 2em;
+      padding-bottom: 1em;
       text-transform: uppercase;
     }
   }
@@ -234,7 +261,7 @@ dialog {
 
   #logo-img-wide {
     max-height: 70px;
-    padding: 0.25em;
+    padding: 0.25em 0.25em 0.25em 21px;
   }
 
   .headerText {
@@ -246,22 +273,6 @@ dialog {
     font-family: 'Consolas';
     flex-basis: 100%;
   }
-}
-
-h4 {
-  color: #23374d;
-  font-weight: bold;
-  font-size: 17px;
-  padding-bottom: 8px;
-  text-align: center;
-  border-bottom: 1px solid #ce5c00;
-  margin-bottom: 8px;
-  padding-bottom: 1em;
-}
-
-a {
-  font-weight: 700;
-  color: #ce5c00;
 }
 
 .feature {
