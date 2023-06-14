@@ -20,7 +20,14 @@ const afterMap = new mapboxgl.Map({
 
 const maps = { beforeMap, afterMap };
 const container = '.mapContainer';
+
 const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
   // Set this to enable comparing two maps by mouse movement:
   // mousemove: true
 });
+
+window.setTimeout(() => {
+  Object.values(maps).forEach((map) => {
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+  });
+}, 1000);

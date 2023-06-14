@@ -10,10 +10,10 @@ html(lang='en-EU' xml:lang='en-EU')
       a(href='http://newamsterdamhistorycenter.org' class='logo')
         img(id='logo-img-wide' src='http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png' align='middle')
       div#header_text.headerText | Mapping Early New York
-    .mainBody.flexContainer
-      h1 Backend login
+    .login.flexColumn
+      h2 Backend login
       br
-      form(id='loginform' action='/authenticate', method='post')
+      form(id='loginform' action='/authenticate', method='post').flexColumn
         label(for="username") Username:
         input(id="username", name='username', type='text', placeholder="username").tabindex.inlineBlock.fieldEditable
         label(for="password") Password:

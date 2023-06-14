@@ -35,7 +35,11 @@ module.exports = (app) => {
       copyOfStyles[styleNames[i]] = await sortIntoCategory('feature group', styleBoroughs[styleNames[i]]);
     }
 
-    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user: req.session.passport.user });
+    const user = (req.session && req.session.passport && req.session.passport.user)
+      ? req.session.passport.user
+      : null;
+
+    res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user });
   });
 
   function sortIntoCategory (category, array) {

@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkboxes.forEach((checkbox, i) => {
       checkbox.checked = false;
     });
+    document.querySelector('.layerToggle').querySelector('.toggleVisibility').click();
   }
 });
 
@@ -61,6 +62,35 @@ document.querySelector('body').addEventListener('click', (e) => {
       modal.showModal();
     });
   }
+
+  if (e.target.classList.contains('hideMenuTab')) {
+    // bad code trying to deal with hard code values
+    const controlsDiv = document.querySelector('.mapControls');
+    const mapContainer = document.querySelector('.mapContainer');
+    const mapsInContainter = mapContainer.querySelectorAll('.map');
+    if (e.target.textContent === '«') {
+      controlsDiv.classList.add('hiddenControls');
+      e.target.textContent = '»';
+      e.target.style.left = '0px';
+
+      /*
+      mapContainer.style.width = '100vw';
+      mapsInContainter.forEach((map, i) => {
+        map.style.width = '100vw';
+        if (i === mapsInContainter.length - 1) {
+          //Object.values(maps).forEach(map => map.resize());
+        }
+      });
+      //Object.values(maps).forEach(map => map.resize());
+      */
+    } else {
+      controlsDiv.classList.remove('hiddenControls');
+      e.target.textContent = '«';
+      //e.target.style.left = controlsDiv.offsetWidth;
+      e.target.style.left = '325px';
+    }
+  }
+
   if (e.target.classList.contains('close')) {
     const modal = document.querySelector('.modal');
     modal.close();

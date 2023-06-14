@@ -17,6 +17,19 @@ module.exports = (grunt) => {
         options: { separator: '' },
         src: ['./static/styles/*.css'],
         dest: './static/concatenatedCSS/master.css'
+      },
+      scss: {
+        options: { separator: '' },
+        src: [
+          './sassStyles/variables.scss',
+          './sassStyles/general.scss',
+          './sassStyles/include-media.scss',
+          './sassStyles/desktop.scss',
+          './sassStyles/mobile.scss',
+          './sassStyles/slider.scss',
+          './sassStyles/admin.scss'
+        ],
+        dest: './sassStyles/concatenated.scss'
       }
     },
 
@@ -27,7 +40,7 @@ module.exports = (grunt) => {
       },
       dist: {
         files: {
-          './static/styles/scssDerived.css': './sassStyles/*.scss'
+          './static/styles/scssDerived.css': './sassStyles/concatenated.scss'
         }
       }
     },
@@ -43,7 +56,7 @@ module.exports = (grunt) => {
       },
       newNodeServerSass: {
         files: ['./sassStyles/*.scss'],
-        tasks: ['sass']
+        tasks: ['concat:scss', 'sass']
       },
       newNodeStyles: {
         files: ['./static/styles/*.css'],

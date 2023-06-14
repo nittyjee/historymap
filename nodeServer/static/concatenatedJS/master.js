@@ -218,8 +218,9 @@ function LayerManager () {
 
       if (e.target.classList.contains('fetchLayer')) {
         fetchLayer(e.target.name).then(() => {
-          const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
-          zoomToLayer(zoomIcon);
+          // Uncommenting the following lines allows "zoom to layer" on add functionality:
+          // const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
+          // zoomToLayer(zoomIcon);
         });
       }
 
@@ -243,7 +244,8 @@ function LayerManager () {
                 });
               }
               layerManager.toggleVisibility();
-              zoomToFeatureGroup(layers);
+              // allows zoom to layers on add:
+              // zoomToFeatureGroup(layers);
             });
           }
         });
@@ -272,7 +274,7 @@ function LayerManager () {
       if (e.target.classList.contains('fetchStyle')) {
         const targetMap = e.target.dataset.target;
         const url = e.target.dataset.url;
-        const name = e.target.parentElement.querySelector('lable').textContent;
+        const name = e.target.parentElement.querySelector('label').textContent;
         maps[targetMap].setStyle(url);
         const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
         /* Both maps are the same size, so it makes no difference which map the function is
@@ -1001,6 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkboxes.forEach((checkbox, i) => {
       checkbox.checked = false;
     });
+    document.querySelector('.layerToggle').querySelector('.toggleVisibility').click();
   }
 });
 
@@ -1024,6 +1027,35 @@ document.querySelector('body').addEventListener('click', (e) => {
       modal.showModal();
     });
   }
+
+  if (e.target.classList.contains('hideMenuTab')) {
+    // bad code trying to deal with hard code values
+    const controlsDiv = document.querySelector('.mapControls');
+    const mapContainer = document.querySelector('.mapContainer');
+    const mapsInContainter = mapContainer.querySelectorAll('.map');
+    if (e.target.textContent === '«') {
+      controlsDiv.classList.add('hiddenControls');
+      e.target.textContent = '»';
+      e.target.style.left = '0px';
+
+      /*
+      mapContainer.style.width = '100vw';
+      mapsInContainter.forEach((map, i) => {
+        map.style.width = '100vw';
+        if (i === mapsInContainter.length - 1) {
+          //Object.values(maps).forEach(map => map.resize());
+        }
+      });
+      //Object.values(maps).forEach(map => map.resize());
+      */
+    } else {
+      controlsDiv.classList.remove('hiddenControls');
+      e.target.textContent = '«';
+      //e.target.style.left = controlsDiv.offsetWidth;
+      e.target.style.left = '325px';
+    }
+  }
+
   if (e.target.classList.contains('close')) {
     const modal = document.querySelector('.modal');
     modal.close();
@@ -1051,10 +1083,17 @@ const afterMap = new mapboxgl.Map({
 
 const maps = { beforeMap, afterMap };
 const container = '.mapContainer';
+
 const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
   // Set this to enable comparing two maps by mouse movement:
   // mousemove: true
 });
+
+window.setTimeout(() => {
+  Object.values(maps).forEach((map) => {
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+  });
+}, 1000);
 // Called dutch_grant_lots_info in the original project:
 let Dutch_Grants;
 // Self instantiating on start up:

@@ -9,7 +9,7 @@ mixin boroughToggleStyles(boroughData, boroughName, user)
           .featureGroup.layersInArea
             -// the toggle
             -//i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-            -//lable #{featureGroupName}
+            -//label #{featureGroupName}
             -// children
             -//.hiddenContent
             each style in featureGroup
@@ -18,7 +18,7 @@ mixin boroughToggleStyles(boroughData, boroughName, user)
         -// toggle
         i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
         -// .areaList
-        -// lable #{boroughName}
+        -// label #{boroughName}
         b #{boroughName}
         -// child
         .hiddenContent(name=`${boroughName}-layers`)
@@ -29,7 +29,7 @@ mixin boroughToggleStyles(boroughData, boroughName, user)
               .featureGroup.layersInArea
                 -// the toggle
                 -// i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
-                -// lable #{featureGroupName}
+                -// label #{featureGroupName}
                 -// children
                 -//.hiddenContent
                 each style in featureGroup
@@ -42,7 +42,7 @@ mixin styleToggle(style, user)
     if user
       i.editStyle.fa-pencil-alt.fas.compress-expand-icon(title='Edit this map?' data-_id=style._id)
       i.mapMaster.deleteStyle.fa-trash.fas.compress-expand-icon(title='Delete this map?' data-_id=style._id)
-    lable(for=style._id) #{style['feature group']}
+    label(for=style._id) #{style['feature group']}
     i.fa.fa-info-circle.toggleInfo(data-nodeId=style['drupal node id']).hidden
     if style['ease to point']
       i.fa.fa-crosshairs.easeToPoint(data-easeToPoint=style['ease to point'])

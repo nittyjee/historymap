@@ -218,8 +218,9 @@ function LayerManager () {
 
       if (e.target.classList.contains('fetchLayer')) {
         fetchLayer(e.target.name).then(() => {
-          const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
-          zoomToLayer(zoomIcon);
+          // Uncommenting the following lines allows "zoom to layer" on add functionality:
+          // const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
+          // zoomToLayer(zoomIcon);
         });
       }
 
@@ -243,7 +244,8 @@ function LayerManager () {
                 });
               }
               layerManager.toggleVisibility();
-              zoomToFeatureGroup(layers);
+              // allows zoom to layers on add:
+              // zoomToFeatureGroup(layers);
             });
           }
         });
@@ -272,7 +274,7 @@ function LayerManager () {
       if (e.target.classList.contains('fetchStyle')) {
         const targetMap = e.target.dataset.target;
         const url = e.target.dataset.url;
-        const name = e.target.parentElement.querySelector('lable').textContent;
+        const name = e.target.parentElement.querySelector('label').textContent;
         maps[targetMap].setStyle(url);
         const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
         /* Both maps are the same size, so it makes no difference which map the function is
