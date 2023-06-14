@@ -17,7 +17,6 @@ module.exports = (app) => {
   });
 
   app.get('/', async (req, res) => {
-    console.log(req.session.passport.user);
     const layers = await mongo.getLayers();
     const boroughs = await sortIntoCategory('borough', layers);
     const names = Object.keys(boroughs);
