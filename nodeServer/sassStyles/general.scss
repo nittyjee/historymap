@@ -163,8 +163,8 @@ a {
     }
 
     h4 {
-      margin-bottom: 2em;
-      padding-bottom: 1em;
+      margin: 1em 0 0.5em;
+      padding-bottom: 0.5em;
       text-transform: uppercase;
     }
 
@@ -210,10 +210,12 @@ a {
       z-index: 1000;
       position: relative;
       color: #555;
+      padding-right: 0.5em;
     }
 
     .layerToggle {
-      border-bottom: 1px solid #ce5c00;      
+      border-bottom: 1px solid #ce5c00;
+      padding-bottom: 2.5em;
     }
   }
 }

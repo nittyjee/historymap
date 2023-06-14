@@ -63,6 +63,20 @@ document.querySelector('body').addEventListener('click', (e) => {
     });
   }
 
+  if (e.target.classList.contains('zoomToWorld')) {
+    Object.values(maps).forEach((map) => {
+      map.fitBounds([[-179, -59], [135, 77]]);
+    });
+  }
+
+  if (e.target.classList.contains('displayStyleEditor')) {
+    document.querySelector('.styleform').classList.remove('hiddenContent');
+  }
+
+  if (e.target.classList.contains('displayLayerEditor')) {
+    document.querySelector('.layerform').classList.remove('hiddenContent');
+  }
+
   if (e.target.classList.contains('hideMenuTab')) {
     // bad code trying to deal with hard code values
     const controlsDiv = document.querySelector('.mapControls');

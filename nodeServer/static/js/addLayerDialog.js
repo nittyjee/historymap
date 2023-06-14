@@ -498,17 +498,25 @@ function LayerManager () {
 
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
-    submit.textContent = 'submit';
+    submit.value = 'submit map style';
+    mapFormParent.appendChild(submit);
 
     const hideButton = document.createElement('button');
     hideButton.textContent = 'hide form';
+    mapFormParent.appendChild(hideButton);
     hideButton.addEventListener('click', () => {
       mapFormParent.classList.add('hiddenContent');
       mapFormParent.classList.remove('displayContent');
     });
-    mapFormParent.appendChild(hideButton);
 
-    mapFormParent.appendChild(submit);
+    const reset = document.createElement('button');
+    reset.textContent = 'reset form';
+    reset.classList.add('reset');
+    mapFormParent.appendChild(reset);
+    reset.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetStyleEditorFn();
+    });
 
     mapFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -716,6 +724,7 @@ function LayerManager () {
 
     const hideButton = document.createElement('button');
     hideButton.textContent = 'hide form';
+    layerFormParent.appendChild(hideButton);
     hideButton.addEventListener('click', () => {
       mapFormParent.classList.add('hiddenContent');
       mapFormParent.classList.remove('displayContent');

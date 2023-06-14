@@ -124,8 +124,8 @@ a {
     .mapControls .layerControls input[type='checkbox'] {
       cursor: pointer; }
     .mapControls .layerControls h4 {
-      margin-bottom: 2em;
-      padding-bottom: 1em;
+      margin: 1em 0 0.5em;
+      padding-bottom: 0.5em;
       text-transform: uppercase; }
     .mapControls .layerControls .zoomToFeatureGroup, .mapControls .layerControls .zoomToLayer, .mapControls .layerControls .easeToPoint {
       cursor: pointer;
@@ -155,9 +155,11 @@ a {
       cursor: pointer;
       z-index: 1000;
       position: relative;
-      color: #555; }
+      color: #555;
+      padding-right: 0.5em; }
     .mapControls .layerControls .layerToggle {
-      border-bottom: 1px solid #ce5c00; }
+      border-bottom: 1px solid #ce5c00;
+      padding-bottom: 2.5em; }
 
 .topMenu {
   flex-direction: row;
@@ -301,6 +303,35 @@ a {
       width: 100vw; }
     .mapContainer .mapboxgl-canvas {
       width: 100% !important; } }
+
+@media (max-width: 768px) {
+  .flexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%; }
+  .timelineSlider {
+    margin-top: 60vh; }
+  .mapControls {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 25vw;
+    flex-direction: column; }
+  .mapContainer {
+    display: flex;
+    flex-grow: 1;
+    position: relative; }
+    .mapContainer .datePanel {
+      margin-top: 3em;
+      right: auto;
+      bottom: auto;
+      float: left; }
+    .mapContainer .map {
+      height: calc(100vh - 164px);
+      position: absolute;
+      top: 98px;
+      bottom: 0;
+      width: 100%; } }
 
 .timelineSlider {
   height: 2.7em;

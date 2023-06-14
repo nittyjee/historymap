@@ -498,17 +498,25 @@ function LayerManager () {
 
     const submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
-    submit.textContent = 'submit';
+    submit.value = 'submit map style';
+    mapFormParent.appendChild(submit);
 
     const hideButton = document.createElement('button');
     hideButton.textContent = 'hide form';
+    mapFormParent.appendChild(hideButton);
     hideButton.addEventListener('click', () => {
       mapFormParent.classList.add('hiddenContent');
       mapFormParent.classList.remove('displayContent');
     });
-    mapFormParent.appendChild(hideButton);
 
-    mapFormParent.appendChild(submit);
+    const reset = document.createElement('button');
+    reset.textContent = 'reset form';
+    reset.classList.add('reset');
+    mapFormParent.appendChild(reset);
+    reset.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetStyleEditorFn();
+    });
 
     mapFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -716,6 +724,7 @@ function LayerManager () {
 
     const hideButton = document.createElement('button');
     hideButton.textContent = 'hide form';
+    layerFormParent.appendChild(hideButton);
     hideButton.addEventListener('click', () => {
       mapFormParent.classList.add('hiddenContent');
       mapFormParent.classList.remove('displayContent');
@@ -1026,6 +1035,20 @@ document.querySelector('body').addEventListener('click', (e) => {
       document.querySelector('.modal-content').insertAdjacentHTML('afterbegin', rmNewlines);
       modal.showModal();
     });
+  }
+
+  if (e.target.classList.contains('zoomToWorld')) {
+    Object.values(maps).forEach((map) => {
+      map.fitBounds([[-179, -59], [135, 77]]);
+    });
+  }
+
+  if (e.target.classList.contains('displayStyleEditor')) {
+    document.querySelector('.styleform').classList.remove('hiddenContent');
+  }
+
+  if (e.target.classList.contains('displayLayerEditor')) {
+    document.querySelector('.layerform').classList.remove('hiddenContent');
   }
 
   if (e.target.classList.contains('hideMenuTab')) {
