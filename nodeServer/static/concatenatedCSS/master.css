@@ -127,10 +127,11 @@ a {
       margin: 1em 0 0.5em;
       padding-bottom: 0.5em;
       text-transform: uppercase; }
+    .mapControls .layerControls .informationSquareIcon {
+      color: #e3ed58; }
     .mapControls .layerControls .zoomToFeatureGroup, .mapControls .layerControls .zoomToLayer, .mapControls .layerControls .easeToPoint {
       cursor: pointer;
       color: #1d43de;
-      padding-left: 1em;
       float: right; }
     .mapControls .layerControls .layer, .mapControls .layerControls .borough {
       width: calc(100% - 1em);

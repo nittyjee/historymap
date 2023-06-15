@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   sliderConstructor = new SliderConstructor(1625, 1701);
   sliderConstructor.getDate();
+  document.querySelectorAll('[data-featuregroup="Current Satellite"').forEach((radio) => {
+    radio.click();
+  });
   // For Firefox where checkboxes remain checked after reload:
   const layerControlsDiv = parent.querySelector('.layerControls');
   if (layerControlsDiv) {

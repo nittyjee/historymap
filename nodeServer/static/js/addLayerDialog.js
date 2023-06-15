@@ -168,7 +168,6 @@ function LayerManager () {
     const group = [];
     layers.forEach((layer, i) => {
       const mapboxId = layer.parentElement.querySelector('.zoomToLayer').dataset.id;
-      console.log(mapboxId);
       const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
       const bounds = maps[map].getSource(mapboxId).bounds;
       if (bounds) {
@@ -219,8 +218,9 @@ function LayerManager () {
       if (e.target.classList.contains('fetchLayer')) {
         fetchLayer(e.target.name).then(() => {
           // Uncommenting the following lines allows "zoom to layer" on add functionality:
-          // const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
           // zoomToLayer(zoomIcon);
+          const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
+          zoomIcon.classList.remove('hiddenZoom');
         });
       }
 
@@ -230,10 +230,12 @@ function LayerManager () {
         e.target.parentElement.querySelector('.zoomToFeatureGroup').classList.remove('hiddenZoom');
         const promises = [];
         layers.forEach((layer, i) => {
+          const zoomIcon = layer.parentElement.querySelector('.zoomToLayer');
+          zoomIcon.classList.remove('hiddenZoom');
+
           promises.push(fetchLayer(layer.name));
           if (i === layers.length - 1) {
             Promise.all(promises).then(() => {
-              console.log(featureGroupChecked.checked);
               if (featureGroupChecked.checked) {
                 layers.forEach((checkbox) => {
                   checkbox.checked = true;
@@ -741,6 +743,20 @@ function LayerManager () {
 
     layerFormParent.addEventListener('submit', (event) => {
       event.preventDefault();
+      let checkedTypes = 0;
+      const types = layerFormParent.querySelectorAll('.layerType');
+
+      for (let i = 0; i < types.length; i++) {
+        const checkbox = types[i];
+        if (checkbox.checked === true) {
+          checkedTypes++;
+        }
+        if (checkedTypes > 1) {
+          alert(`At this time only one data type can be added for each source. To add
+          another data type a new layer has to be added.`);
+          return;
+        }
+      }
       /* n.b. note that only replacing spaces in fields might cause a future bug if
         other input types are added with a space.
       */

@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongo = customModules('mongoQueries');
 const crypto = require('crypto');
-const encryptionKey = process.env.encryptionKey; // Must be 256 bytes (32 characters)
+const encryptionKey = process.env.encryptionKey; // Must be 256 bits (32 characters)
 const ivLength = 16; // For AES, this is always 16
 
 exports.encrypt = (text) => {

@@ -168,10 +168,14 @@ a {
       text-transform: uppercase;
     }
 
+    .informationSquareIcon {
+      color: #e3ed58;
+    }
+
     .zoomToFeatureGroup, .zoomToLayer, .easeToPoint {
       cursor: pointer;
       color: #1d43de;
-      padding-left: 1em;
+      // padding-left: 1em;
       float: right;
     }
 
