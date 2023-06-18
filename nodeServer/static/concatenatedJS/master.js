@@ -132,6 +132,7 @@ function LayerManager (parentElement) {
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
+  let eventsAdded = false;
 
   let layerForm;
   let mapForm;
@@ -141,7 +142,6 @@ function LayerManager (parentElement) {
     const promise = new Promise((resolve, reject) => {
       if (layerManager.returnLayers().includes(layerId)) {
         layerManager.toggleVisibility();
-        console.group(`has layer ${layerId}`);
         resolve();
       } else {
         xhrPostInPromise({ _id: layerId }, './getLayerById').then((layerData) => {
@@ -202,7 +202,9 @@ function LayerManager (parentElement) {
   // For app owners to edit things, must be instantiated:
   this.layerControlEvents = () => {
     const promise = new Promise((resolve, reject) => {
+      if (eventsAdded) { layerControls.removeEventListener('click'); }
       layerControls.addEventListener('click', (e) => {
+        eventsAdded = true;
         if (e.target.classList.contains('toggleVisibility')) {
           // extra element added to center first item...
           const hiddenContent = e.target.parentElement.parentElement.querySelector('.hiddenContent');
@@ -967,8 +969,6 @@ function LayerManager (parentElement) {
       if (data.click) {
         const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
         map.on('click', data.id, (event) => {
-          console.log(data);
-          //.split('/')[1].replace(/[^a-z -]/gi, '');
           populateSideInfoDisplay(event, data);
           clickPopUp
             .setLngLat(event.lngLat)
