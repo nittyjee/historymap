@@ -39,6 +39,7 @@ module.exports = (app) => {
       ? req.session.passport.user
       : null;
 
+    console.log(copyOfBoroughs);
     res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user });
   });
 

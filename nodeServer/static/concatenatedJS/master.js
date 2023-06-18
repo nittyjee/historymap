@@ -127,8 +127,8 @@ function LayerManager (parentElement) {
   // "this" in the function isn't the outer constructor, so we have to point to that:
   const layerManager = this;
   // Arrays to store and manage layers:
-  const layersMongoId = [];
-  const layersMapboxId = [];
+  layersMongoId = [];
+  layersMapboxId = [];
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
@@ -469,6 +469,7 @@ function LayerManager (parentElement) {
           const targetMapText = map.split('/')[map.split('/').length - 1];
           const targetMap = maps[targetMapText];
           if (checkbox.checked) {
+            console.log(map);
             targetMap.setLayoutProperty(map, 'visibility', 'visible');
           } else {
             targetMap.setLayoutProperty(map, 'visibility', 'none');
