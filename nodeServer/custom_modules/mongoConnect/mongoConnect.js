@@ -26,14 +26,6 @@ async function initDb() {
   console.log(`Connected to ${dbname} database`);
 }
 
-/*
-const eventName = "connectionPoolCreated";
-client.on(eventName, (event) =>
-  console.log("\nreceived event:\n", event)
-);
-
-}*/
-
 function getDb() {
   assert.ok(_db, `Db has not been initialized. Please call init first.`);
   return _db;

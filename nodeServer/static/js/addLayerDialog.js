@@ -123,16 +123,18 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
   return popUpHTML;
 }
 
-function LayerManager () {
-  // Eventually a store to manage layers:
+function LayerManager (parentElement) {
+  // "this" in the function isn't the outer constructor, so we have to point to that:
+  const layerManager = this;
+  // Arrays to store and manage layers:
   const layersMongoId = [];
   const layersMapboxId = [];
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
 
-  let layerFormParent;
-  let mapFormParent;
+  let layerForm;
+  let mapForm;
 
   function fetchLayer (layerId) {
     //const checkbox = document.querySelector(`[name="${layerId}"]`);
@@ -199,185 +201,203 @@ function LayerManager () {
   }
   // For app owners to edit things, must be instantiated:
   this.layerControlEvents = () => {
-    layerControls.addEventListener('click', (e) => {
-      if (e.target.classList.contains('toggleVisibility')) {
-        // extra element added to center first item...
-        const hiddenContent = e.target.parentElement.parentElement.querySelector('.hiddenContent');
-        const plusMinus = e.target.parentElement.querySelector('i');
-        if (hiddenContent.classList.contains('displayContent')) {
-          plusMinus.classList.remove('fa-plus-square');
-          plusMinus.classList.add('fa-minus-square');
-          hiddenContent.classList.remove('displayContent');
-          return;
-        }
-        hiddenContent.classList.add('displayContent');
-        plusMinus.classList.add('fa-plus-square');
-        plusMinus.classList.remove('fa-minus-square');
-      }
-
-      if (e.target.classList.contains('fetchLayer')) {
-        fetchLayer(e.target.name).then(() => {
-          // Uncommenting the following lines allows "zoom to layer" on add functionality:
-          // zoomToLayer(zoomIcon);
-          const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
-          zoomIcon.classList.remove('hiddenZoom');
-        });
-      }
-
-      if (e.target.classList.contains('featureGroup')) {
-        const featureGroupChecked = e.target.parentElement.querySelector('.featureGroup');
-        const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
-        e.target.parentElement.querySelector('.zoomToFeatureGroup').classList.remove('hiddenZoom');
-        const promises = [];
-        layers.forEach((layer, i) => {
-          const zoomIcon = layer.parentElement.querySelector('.zoomToLayer');
-          zoomIcon.classList.remove('hiddenZoom');
-
-          promises.push(fetchLayer(layer.name));
-          if (i === layers.length - 1) {
-            Promise.all(promises).then(() => {
-              if (featureGroupChecked.checked) {
-                layers.forEach((checkbox) => {
-                  checkbox.checked = true;
-                });
-              } else {
-                layers.forEach((checkbox) => {
-                  checkbox.checked = false;
-                });
-              }
-              layerManager.toggleVisibility();
-              // allows zoom to layers on add:
-              // zoomToFeatureGroup(layers);
-            });
+    const promise = new Promise((resolve, reject) => {
+      layerControls.addEventListener('click', (e) => {
+        if (e.target.classList.contains('toggleVisibility')) {
+          // extra element added to center first item...
+          const hiddenContent = e.target.parentElement.parentElement.querySelector('.hiddenContent');
+          const plusMinus = e.target.parentElement.querySelector('i');
+          if (hiddenContent.classList.contains('displayContent')) {
+            plusMinus.classList.remove('fa-plus-square');
+            plusMinus.classList.add('fa-minus-square');
+            hiddenContent.classList.remove('displayContent');
+            return;
           }
-        });
-      }
+          hiddenContent.classList.add('displayContent');
+          plusMinus.classList.add('fa-plus-square');
+          plusMinus.classList.remove('fa-minus-square');
+        }
 
-      if (e.target.classList.contains('zoomToLayer')) {
-        const mapboxId = e.target.parentElement.querySelector('.zoomToLayer').dataset.id;
-        const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
-        /* Both maps are the same size, so it makes no difference which map the function is
-        called on */
-        maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: 0, padding: 15 });
-      }
-
-      if (e.target.classList.contains('easeToPoint')) {
-        const point = JSON.parse(e.target.dataset.easetopoint);
-        /* Both maps are the same size, so it makes no difference which map the function is
-        called on */
-        maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
-      }
-
-      if (e.target.classList.contains('zoomToFeatureGroup')) {
-        const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
-        zoomToFeatureGroup(layers);
-      }
-
-      if (e.target.classList.contains('fetchStyle')) {
-        const targetMap = e.target.dataset.target;
-        const url = e.target.dataset.url;
-        const name = e.target.parentElement.querySelector('label').textContent;
-        maps[targetMap].setStyle(url);
-        const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
-        /* Both maps are the same size, so it makes no difference which map the function is
-        called on */
-        maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
-      }
-
-      if (e.target.classList.contains('editLayer')) {
-        xhrPostInPromise({ _id: e.target.dataset._id }, './getLayerById').then((layerData) => {
-          const parsedLayerData = JSON.parse(layerData);
-          this.populateLayerEditor(parsedLayerData);
-        });
-      }
-
-      if (e.target.classList.contains('editStyle')) {
-        xhrPostInPromise({ _id: e.target.dataset._id }, './getStyleById').then((styleData) => {
-          const parsedStyleData = JSON.parse(styleData);
-          this.populateStyleEditor(parsedStyleData);
-        });
-      }
-
-      if (e.target.classList.contains('deleteLayer')) {
-        if (window.confirm('Are you sure you want to delete this layer?')) {
-          xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
-            const layer = e.target.closest('.layer');
-            layer.parentElement.remove(layer);
-            alert(response);
+        if (e.target.classList.contains('fetchLayer')) {
+          fetchLayer(e.target.name).then(() => {
+            // Uncommenting the following lines allows "zoom to layer" on add functionality:
+            // zoomToLayer(zoomIcon);
+            const zoomIcon = e.target.parentElement.querySelector('.zoomToLayer');
+            zoomIcon.classList.remove('hiddenZoom');
           });
         }
-      }
-/*
-      if (e.target.classList.contains('displayStyleEditor')) {
-        mapFormParent.classList.remove('hiddenContent');
-        mapFormParent.classList.add('displayContent');
-      }
 
-      if (e.target.classList.contains('displayLayerEditor')) {
-        layerFormParent.classList.remove('hiddenContent');
-        layerFormParent.classList.add('displayContent');
-      }*/
+        if (e.target.classList.contains('featureGroup')) {
+          const featureGroupChecked = e.target.parentElement.querySelector('.featureGroup');
+          const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
+          e.target.parentElement.querySelector('.zoomToFeatureGroup').classList.remove('hiddenZoom');
+          const promises = [];
+          layers.forEach((layer, i) => {
+            const zoomIcon = layer.parentElement.querySelector('.zoomToLayer');
+            zoomIcon.classList.remove('hiddenZoom');
+
+            promises.push(fetchLayer(layer.name));
+            if (i === layers.length - 1) {
+              Promise.all(promises).then(() => {
+                if (featureGroupChecked.checked) {
+                  layers.forEach((checkbox) => {
+                    checkbox.checked = true;
+                  });
+                } else {
+                  layers.forEach((checkbox) => {
+                    checkbox.checked = false;
+                  });
+                }
+                layerManager.toggleVisibility();
+                // allows zoom to layers on add:
+                // zoomToFeatureGroup(layers);
+              });
+            }
+          });
+        }
+
+        if (e.target.classList.contains('zoomToLayer')) {
+          const mapboxId = e.target.parentElement.querySelector('.zoomToLayer').dataset.id;
+          const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+          /* Both maps are the same size, so it makes no difference which map the function is
+          called on */
+          maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: 0, padding: 15 });
+        }
+
+        if (e.target.classList.contains('easeToPoint')) {
+          const point = JSON.parse(e.target.dataset.easetopoint);
+          /* Both maps are the same size, so it makes no difference which map the function is
+          called on */
+          maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
+        }
+
+        if (e.target.classList.contains('zoomToFeatureGroup')) {
+          const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
+          zoomToFeatureGroup(layers);
+        }
+
+        if (e.target.classList.contains('fetchStyle')) {
+          const targetMap = e.target.dataset.target;
+          const url = e.target.dataset.url;
+          const name = e.target.parentElement.querySelector('label').textContent;
+          if (e.target.dataset.featuregroup === 'Current Satellite') {
+            return;
+          }
+          maps[targetMap].setStyle(url);
+          const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
+          /* Both maps are the same size, so it makes no difference which map the function is
+          called on */
+          maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
+        }
+
+        if (e.target.classList.contains('editLayer')) {
+          xhrPostInPromise({ _id: e.target.dataset._id }, './getLayerById').then((layerData) => {
+            const parsedLayerData = JSON.parse(layerData);
+            this.populateLayerEditor(parsedLayerData);
+          });
+        }
+
+        if (e.target.classList.contains('editStyle')) {
+          xhrPostInPromise({ _id: e.target.dataset._id }, './getStyleById').then((styleData) => {
+            const parsedStyleData = JSON.parse(styleData);
+            this.populateStyleEditor(parsedStyleData);
+          });
+        }
+
+        if (e.target.classList.contains('deleteLayer')) {
+          if (window.confirm('Are you sure you want to delete this layer?')) {
+            xhrPostInPromise({ id: e.target.dataset._id }, './deleteLayer').then((response) => {
+              const layer = e.target.closest('.layer');
+              layer.parentElement.remove(layer);
+              alert(response);
+            });
+          }
+        }
+      });
+      resolve('layer control events attached');
     });
+    return promise;
   };
 
   this.resetLayerEditor = () => {
     return resetLayerEditorFn();
   };
 
-  // "this" in the function isn't the outer constructor, so we have to point to that:
-  const layerManager = this;
   function resetLayerEditorFn () {
-    layerFormParent.innerHTML = '';
-    layerManager.generateAddLayerForm(layerFormParent);
-    layerManager.layerControlEvents();
+    const promise = new Promise((resolve, reject) => {
+      layerForm.remove();
+      layerManager.generateAddLayerForm().then(() => {
+        layerManager.layerControlEvents();
+        layerForm.classList.remove('hiddenContent');
+        resolve('layer form reset');
+      });
+    });
+    return promise;
   }
 
   this.populateLayerEditor = (data) => {
-    layerFormParent.querySelector('.title').textContent = `Editing Layer with id ${data._id}`;
-    layerFormParent.querySelector('.title').classList.add('highlight');
-    layerFormParent.dataset._id = data._id;
-    layerFormParent.scrollIntoView(false);
-    layerFormParent.classList.remove('hiddenContent');
-    const keys = Object.keys(data);
-    const values = Object.values(data);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i].replaceAll(' ', '_');
-      if (key === '_id') {
-        continue;
-      }
-      const correspondingInput = layerFormParent.querySelector(`#${key}`);
-      if (correspondingInput) {
-        correspondingInput.value = values[i];
-        correspondingInput.classList.add('highlight');
-      } else {
-        /* unabstracted code, not ideal */
-        if (key === 'target_map') {
-          values[i].forEach((mapName) => {
-            layerFormParent.querySelector(`#${mapName}`).checked = true;
-            layerFormParent.querySelector(`#${mapName}`).classList.add('highlight');
-          });
-        }
-
-        if (key === 'type') {
-          values[i].forEach((type) => {
-            const checkbox = layerFormParent.querySelector(`[data-layer-type="${type.type}"]`);
-            const parent = checkbox.parentElement;
-            if (checkbox) {
-              checkbox.checked = true;
-              checkbox.classList.add('highlight');
-            }
-
-            const textInputs = parent.querySelectorAll('input[type="text"]');
-            textInputs.forEach((input) => {
-              if (type[input.dataset.typeStyle]) {
-                input.value = type[input.dataset.typeStyle];
-                input.classList.add('highlight');
-              }
+    const promise = new Promise((resolve, reject) => {
+      resetLayerEditorFn().then(() => {
+        layerForm.querySelector('.title').textContent = `Editing Layer with id ${data._id}`;
+        layerForm.querySelector('.title').classList.add('highlight');
+        layerForm.dataset._id = data._id;
+        layerForm.scrollIntoView(false);
+        layerForm.classList.remove('hiddenContent');
+        const keys = Object.keys(data);
+        const values = Object.values(data);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i].replaceAll(' ', '_');
+          if (key === '_id') {
+            continue;
+          }
+          if (key === 'target_map') {
+            values[i].forEach((mapName) => {
+              layerForm.querySelector(`#${mapName}`).checked = true;
+              layerForm.querySelector(`#${mapName}`).classList.add('highlight');
             });
-          });
+          }
+          if (key === 'type') {
+            values[i].forEach((type) => {
+              const checkbox = layerForm.querySelector(`[data-layer-type="${type.type}"]`);
+              const parent = checkbox.parentElement;
+              if (checkbox) {
+                checkbox.checked = true;
+                checkbox.classList.add('highlight');
+              }
+    
+              const textInputs = parent.querySelectorAll('input[type="text"]');
+              textInputs.forEach((input) => {
+                if (type[input.dataset.typeStyle]) {
+                  input.value = type[input.dataset.typeStyle];
+                  input.classList.add('highlight');
+                }
+              });
+            });
+          }
+
+          const correspondingInput = layerForm.querySelector(`input[type="text"]#${key}`);
+          if (correspondingInput) {
+            correspondingInput.value = values[i];
+            correspondingInput.classList.add('highlight');
+          }
+
+          const checkbox = layerForm.querySelector(`input[type="checkbox"]#${key}`);
+          if (checkbox) {
+            const actions = ['click', 'hover', 'sidebar', 'sliderCheckBox'];
+            if (actions.includes(key)) {
+              if (values[i] === 1) {
+                checkbox.checked = true;
+                checkbox.classList.add('highlight');
+              }
+            }
+          }
+          if (i === keys.length - 1) {
+            resolve();
+          }
         }
-      }
-    }
+      });
+    });
+    return promise;
   };
 
   this.returnLayers = () => {
@@ -389,18 +409,20 @@ function LayerManager () {
   };
 
   function resetStyleEditorFn () {
-    mapFormParent.innerHTML = '';
-    mapFormParent.generateAddMapForm(mapFormParent);
-    layerManager.layerControlEvents();
+    mapForm.remove();
+    layerManager.generateAddMapForm().then(() => {
+      layerManager.layerControlEvents();
+      mapForm.classList.remove('hiddenContent');
+    });
   }
 
   this.populateStyleEditor = (data) => {
-    // resetStyleEditorFn();
-    mapFormParent.querySelector('.title').textContent = `Editing style with id ${data._id}`;
-    mapFormParent.querySelector('.title').classList.add('highlight');
-    mapFormParent.dataset._id = data._id;
-    mapFormParent.classList.remove('hiddenContent');
-    mapFormParent.scrollIntoView(false);
+    // Reseting this editor isn't necessary because all the field are the same for each Object. 
+    mapForm.querySelector('.title').textContent = `Editing style with id ${data._id}`;
+    mapForm.querySelector('.title').classList.add('highlight');
+    mapForm.dataset._id = data._id;
+    mapForm.classList.remove('hiddenContent');
+    mapForm.scrollIntoView(false);
     const keys = Object.keys(data);
     const values = Object.values(data);
     for (let i = 0; i < keys.length; i++) {
@@ -409,18 +431,18 @@ function LayerManager () {
         continue;
       }
       console.warn('classes should be used rather than ids for multiple mutable content');
-      const correspondingInput = mapFormParent.querySelector(`#${key}`);
+      const correspondingInput = mapForm.querySelector(`#${key}`);
       if (correspondingInput) {
         correspondingInput.value = values[i];
         correspondingInput.classList.add('highlight');
       } else {
         if (key === 'style_source_url') {
-          mapFormParent.querySelector('#style_link').value = values[i];
-          mapFormParent.querySelector('#style_link').classList.add('highlight');
+          mapForm.querySelector('#style_link').value = values[i];
+          mapForm.querySelector('#style_link').classList.add('highlight');
         }
         if (key === 'feature_group') {
-          mapFormParent.querySelector('#title').value = values[i];
-          mapFormParent.querySelector('#title').classList.add('highlight');
+          mapForm.querySelector('#title').value = values[i];
+          mapForm.querySelector('#title').classList.add('highlight');
         }
       }
     }
@@ -460,354 +482,364 @@ function LayerManager () {
    * are set in the function rather than passed to the function. These are:
    * 'Title', 'Borough', 'Style link', 'Drupal node id'
    */
-  this.generateAddMapForm = (parentElement) => {
-    /* A map is a style */
-    const mapData = {};
+  this.generateAddMapForm = () => {
+    const promise = new Promise((resolve, reject) => {
+      /* A map is a style */
+      const mapData = {};
 
-    function textInputGenerator (fieldName, target) {
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = fieldName;
-      nameLabel.innerHTML = `${fieldName}: `;
-      target.appendChild(nameLabel);
-
-      const name = document.createElement('input');
-      name.setAttribute('type', 'text');
-      name.id = fieldName.replaceAll(' ', '_');
-      target.appendChild(name);
-
-      name.addEventListener('input', () => {
-        mapData[fieldName] = name.value;
-      });
-
-      const br = document.createElement('br');
-      target.appendChild(br);
-    }
-
-    mapFormParent = document.createElement('form');
-    mapFormParent.classList.add('hiddenContent');
-    parentElement.appendChild(mapFormParent);
-
-    mapFormParent.classList.add('styleform');
-    const title = document.createElement('h2');
-    title.classList.add('title');
-    title.textContent = 'Add Map';
-    mapFormParent.appendChild(title);
-
-    const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point'];
-    fields.forEach(fieldName => {
-      textInputGenerator(fieldName, mapFormParent);
-    });
-
-    const submit = document.createElement('input');
-    submit.setAttribute('type', 'submit');
-    submit.value = 'submit map style';
-    mapFormParent.appendChild(submit);
-
-    const hideButton = document.createElement('button');
-    hideButton.textContent = 'hide form';
-    mapFormParent.appendChild(hideButton);
-    hideButton.addEventListener('click', () => {
-      mapFormParent.classList.add('hiddenContent');
-      mapFormParent.classList.remove('displayContent');
-    });
-
-    const reset = document.createElement('button');
-    reset.textContent = 'reset form';
-    reset.classList.add('reset');
-    mapFormParent.appendChild(reset);
-    reset.addEventListener('click', (e) => {
-      e.preventDefault();
-      resetStyleEditorFn();
-    });
-
-    mapFormParent.addEventListener('submit', (event) => {
-      event.preventDefault();
-      fields.forEach((id, i) => {
-        mapData[id] = mapFormParent.querySelector(`#${id.replaceAll(' ', '_')}`).value;
-        if (id === 'title') {
-          mapData['feature group'] = mapData.title;
-          delete mapData.title;
-        }
-        if (id === 'style link') {
-          mapData['style source url'] = mapData['style link'];
-          delete mapData['style link'];
-        }
-        if (id === 'ease to point') {
-          mapData['ease to point'] = mapData['ease to point'].split(',');
-        }
-        if (mapFormParent.dataset._id) {
-          mapData._id = mapFormParent.dataset._id;
-        }
-        // then save
-        if (i === fields.length - 1) {
-          saveStyle(mapData).then((response) => {
-            alert(response);
-          });
-        }
-      });
-    //  createMap(data);
-    });
-    /**
-     * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
-     * @returns The same date saved in the DB after rendering a layer toggle widget. 
-     */
-    function saveStyle (data) {
-      const promise = new Promise((resolve, reject) => {
-        xhrPostInPromise(data, './saveStyle').then((response) => {
-          document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
-          resolve(data);
-        });
-      });
-      return promise;
-    }
-  };
-
-  this.generateAddLayerForm = (parentElement) => {
-    layerFormParent = document.createElement('form');
-    layerFormParent.classList.add('hiddenContent');
-    parentElement.appendChild(layerFormParent);
-
-    const data = {};
-    data['target map'] = [];
-    data.type = [];
-
-    function textInputGenerator (fieldName, target) {
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = fieldName;
-      nameLabel.innerHTML = `${fieldName}: `;
-      target.appendChild(nameLabel);
-
-      const name = document.createElement('input');
-      name.setAttribute('type', 'text');
-      name.id = fieldName.replaceAll(' ', '_');
-      target.appendChild(name);
-
-      name.addEventListener('input', () => {
-        data[fieldName] = name.value;
-      });
-
-      const br = document.createElement('br');
-      target.appendChild(br);
-    }
-
-    function generateCheckbox (checkboxName) {
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = checkboxName;
-      nameLabel.innerHTML = `${checkboxName}: `;
-      layerFormParent.appendChild(nameLabel);
-      const name = document.createElement('input');
-      name.setAttribute('type', 'checkbox');
-      name.id = checkboxName;
-      layerFormParent.appendChild(name);
-      name.addEventListener('click', () => {
-        if (name.checked === true) {
-          data[checkboxName] = 1;
-        } else {
-          data[checkboxName] = 0;
-        }
-      });
-
-      const br = document.createElement('br');
-      layerFormParent.appendChild(br);
-    }
-
-    function generateAddToMapCheckbox (checkboxName) {
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = checkboxName;
-      nameLabel.innerHTML = `Add to "${checkboxName}" map: `;
-      layerFormParent.appendChild(nameLabel);
-      const name = document.createElement('input');
-      name.setAttribute('type', 'checkbox');
-      name.classList.add('addToMap');
-      name.id = checkboxName;
-      name.dataset.targetMap = checkboxName;
-      layerFormParent.appendChild(name);
-
-      const br = document.createElement('br');
-      layerFormParent.appendChild(br);
-    }
-
-    function generateLayersTypeCheckbox (checkboxName) {
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('typeBox');
-      layerFormParent.appendChild(wrapper);
-      const nameLabel = document.createElement('label');
-      nameLabel.htmlFor = checkboxName;
-      nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
-      wrapper.appendChild(nameLabel);
-      const name = document.createElement('input');
-      name.setAttribute('type', 'checkbox');
-      name.classList.add('layerType');
-      name.id = checkboxName;
-      name.dataset.layerType = checkboxName;
-      wrapper.appendChild(name);
-      const br = document.createElement('br');
-      wrapper.appendChild(br);
-      const typeBoxText = document.createElement('div');
-      typeBoxText.classList.add('typeBoxText');
-      wrapper.appendChild(typeBoxText);
-
-      const appearance = ['color', 'opacity', 'width'];
-      appearance.forEach((fieldName) => {
+      function textInputGenerator (fieldName, target) {
         const nameLabel = document.createElement('label');
         nameLabel.htmlFor = fieldName;
         nameLabel.innerHTML = `${fieldName}: `;
-        typeBoxText.appendChild(nameLabel);
+        target.appendChild(nameLabel);
 
         const name = document.createElement('input');
         name.setAttribute('type', 'text');
-        name.dataset.typeStyle = fieldName.replaceAll(' ', '_');
-        name.classList.add(fieldName.replaceAll(' ', '_'));
-        typeBoxText.appendChild(name);
-        /* these options are not added dynamically to the data.object,
-        but onsubmit */
+        name.id = fieldName.replaceAll(' ', '_');
+        target.appendChild(name);
+
+        name.addEventListener('input', () => {
+          mapData[fieldName] = name.value;
+        });
+
         const br = document.createElement('br');
-        typeBoxText.appendChild(br);
-      });
-    }
-
-    function dropDownGenerator (options) {
-      const select = document.createElement('select');
-      layerFormParent.appendChild(select);
-
-      select.addEventListener('change', () => {
-        data.type = select.value;
-      });
-
-      options.forEach(value => {
-        const option = document.createElement('option');
-        option.setAttribute('value', value);
-        option.textContent = value;
-        select.appendChild(option);
-      });
-    }
-
-    layerFormParent.classList.add('layerform');
-    const title = document.createElement('h2');
-    title.classList.add('title');
-    title.textContent = 'Add Layer';
-    layerFormParent.appendChild(title);
-
-    const textFields = [
-      'name',
-      'source layer',
-      'layer source url',
-      'feature group',
-      'drupal node id',
-      // 'borough to which the layer belongs'
-      'borough'
-    ];
-
-    textFields.forEach(fieldName => {
-      textInputGenerator(fieldName, layerFormParent);
-    });
-
-    const types = ['circle', 'line', 'fill'];
-    // dropDownGenerator(types);
-    types.forEach((type) => {
-      generateLayersTypeCheckbox(type);
-    });
-
-    // Maps are defined in the "Layer Manager" constuctor scope.
-    mapNames.forEach((map) => {
-      generateAddToMapCheckbox(map);
-    });
-
-    const checkboxes = ['hover', 'click', 'sidebar', 'sliderCheckBox'];
-
-    checkboxes.forEach(label => {
-      generateCheckbox(label);
-    });
-
-    const submit = document.createElement('input');
-    submit.setAttribute('type', 'submit');
-    submit.value = 'submit layer';
-    layerFormParent.appendChild(submit);
-
-    const hideButton = document.createElement('button');
-    hideButton.textContent = 'hide form';
-    layerFormParent.appendChild(hideButton);
-    hideButton.addEventListener('click', () => {
-      mapFormParent.classList.add('hiddenContent');
-      mapFormParent.classList.remove('displayContent');
-    });
-
-    const reset = document.createElement('button');
-    reset.textContent = 'reset form';
-    reset.classList.add('reset');
-    layerFormParent.appendChild(reset);
-    reset.addEventListener('click', (e) => {
-      e.preventDefault();
-      resetLayerEditorFn();
-    });
-
-    layerFormParent.addEventListener('submit', (event) => {
-      event.preventDefault();
-      let checkedTypes = 0;
-      const types = layerFormParent.querySelectorAll('.layerType');
-
-      for (let i = 0; i < types.length; i++) {
-        const checkbox = types[i];
-        if (checkbox.checked === true) {
-          checkedTypes++;
-        }
-        if (checkedTypes > 1) {
-          alert(`At this time only one data type can be added for each source. To add
-          another data type a new layer has to be added.`);
-          return;
-        }
+        target.appendChild(br);
       }
-      /* n.b. note that only replacing spaces in fields might cause a future bug if
-        other input types are added with a space.
-      */
-      textFields.forEach((id) => {
-        data[id] = layerFormParent.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+
+      mapForm = document.createElement('form');
+      mapForm.classList.add('hiddenContent');
+      parentElement.appendChild(mapForm);
+
+      mapForm.classList.add('styleform');
+      const title = document.createElement('h2');
+      title.classList.add('title');
+      title.textContent = 'Add Map';
+      mapForm.appendChild(title);
+
+      const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point'];
+      fields.forEach(fieldName => {
+        textInputGenerator(fieldName, mapForm);
       });
 
-      const addToMapCheckboxes = layerFormParent.querySelectorAll('.addToMap');
-      let checkedBoxes = 0;
-      if (addToMapCheckboxes) {
-        data['target map'].length = 0;
+      const submit = document.createElement('input');
+      submit.setAttribute('type', 'submit');
+      submit.value = 'submit map style';
+      mapForm.appendChild(submit);
+
+      const hideButton = document.createElement('button');
+      hideButton.textContent = 'hide form';
+      mapForm.appendChild(hideButton);
+      hideButton.addEventListener('click', () => {
+        mapForm.classList.add('hiddenContent');
+        mapForm.classList.remove('displayContent');
+      });
+
+      const reset = document.createElement('button');
+      reset.textContent = 'reset form';
+      reset.classList.add('reset');
+      mapForm.appendChild(reset);
+      reset.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetStyleEditorFn();
+      });
+
+      mapForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        fields.forEach((id, i) => {
+          mapData[id] = mapForm.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+          if (id === 'title') {
+            mapData['feature group'] = mapData.title;
+            delete mapData.title;
+          }
+          if (id === 'style link') {
+            mapData['style source url'] = mapData['style link'];
+            delete mapData['style link'];
+          }
+          if (id === 'ease to point') {
+            mapData['ease to point'] = mapData['ease to point'].split(',');
+          }
+          if (mapForm.dataset._id) {
+            mapData._id = mapForm.dataset._id;
+          }
+          // then save
+          if (i === fields.length - 1) {
+            saveStyle(mapData).then((response) => {
+              alert(response);
+            });
+          }
+        });
+      //  createMap(data);
+      });
+      /**
+        * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
+        * @returns The same date saved in the DB after rendering a layer toggle widget. 
+        */
+      function saveStyle (data) {
+        const promise = new Promise((resolve, reject) => {
+          xhrPostInPromise(data, './saveStyle').then((response) => {
+            document.querySelector('.areaList').insertAdjacentHTML('beforeend', response);
+            resolve(data);
+          });
+        });
+        return promise;
       }
-      for (let i = 0; i < addToMapCheckboxes.length; i++) {
-        const element = addToMapCheckboxes[i];
-        if (element.checked) {
-          data['target map'].push(element.dataset.targetMap);
-          checkedBoxes++;
+
+      resolve('map form added');
+    });
+    return promise;
+  };
+
+  this.generateAddLayerForm = () => {
+    const promise = new Promise((resolve, reject) => {
+      function textInputGenerator (fieldName, target) {
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = fieldName;
+        nameLabel.innerHTML = `${fieldName}: `;
+        target.appendChild(nameLabel);
+
+        const name = document.createElement('input');
+        name.setAttribute('type', 'text');
+        name.id = fieldName.replaceAll(' ', '_');
+        target.appendChild(name);
+
+        name.addEventListener('input', () => {
+          data[fieldName] = name.value;
+        });
+
+        const br = document.createElement('br');
+        target.appendChild(br);
+      }
+
+      function generateCheckbox (checkboxName) {
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = checkboxName;
+        nameLabel.innerHTML = `${checkboxName}: `;
+        layerForm.appendChild(nameLabel);
+        const name = document.createElement('input');
+        name.setAttribute('type', 'checkbox');
+        name.id = checkboxName;
+        layerForm.appendChild(name);
+        name.addEventListener('click', () => {
+          if (name.checked === true) {
+            data[checkboxName] = 1;
+          } else {
+            data[checkboxName] = 0;
+          }
+        });
+
+        const br = document.createElement('br');
+        layerForm.appendChild(br);
+      }
+
+      function generateAddToMapCheckbox (checkboxName) {
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = checkboxName;
+        nameLabel.innerHTML = `Add to "${checkboxName}" map: `;
+        layerForm.appendChild(nameLabel);
+        const name = document.createElement('input');
+        name.setAttribute('type', 'checkbox');
+        name.classList.add('addToMap');
+        name.id = checkboxName;
+        name.dataset.targetMap = checkboxName;
+        layerForm.appendChild(name);
+
+        const br = document.createElement('br');
+        layerForm.appendChild(br);
+      }
+
+      function generateLayersTypeCheckbox (checkboxName) {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('typeBox');
+        layerForm.appendChild(wrapper);
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = checkboxName;
+        nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
+        wrapper.appendChild(nameLabel);
+        const name = document.createElement('input');
+        name.setAttribute('type', 'checkbox');
+        name.classList.add('layerType');
+        name.id = checkboxName;
+        name.dataset.layerType = checkboxName;
+        wrapper.appendChild(name);
+        const br = document.createElement('br');
+        wrapper.appendChild(br);
+        const typeBoxText = document.createElement('div');
+        typeBoxText.classList.add('typeBoxText');
+        wrapper.appendChild(typeBoxText);
+
+        const appearance = ['color', 'opacity', 'width'];
+        appearance.forEach((fieldName) => {
+          const nameLabel = document.createElement('label');
+          nameLabel.htmlFor = fieldName;
+          nameLabel.innerHTML = `${fieldName}: `;
+          typeBoxText.appendChild(nameLabel);
+
+          const name = document.createElement('input');
+          name.setAttribute('type', 'text');
+          name.dataset.typeStyle = fieldName.replaceAll(' ', '_');
+          name.classList.add(fieldName.replaceAll(' ', '_'));
+          typeBoxText.appendChild(name);
+          /* these options are not added dynamically to the data.object,
+          but onsubmit */
+          const br = document.createElement('br');
+          typeBoxText.appendChild(br);
+        });
+      }
+
+      function dropDownGenerator (options) {
+        const select = document.createElement('select');
+        layerForm.appendChild(select);
+
+        select.addEventListener('change', () => {
+          data.type = select.value;
+        });
+
+        options.forEach(value => {
+          const option = document.createElement('option');
+          option.setAttribute('value', value);
+          option.textContent = value;
+          select.appendChild(option);
+        });
+      }
+
+      layerForm = document.createElement('form');
+      layerForm.classList.add('hiddenContent');
+      parentElement.appendChild(layerForm);
+
+      const data = {};
+      data['target map'] = [];
+      data.type = [];
+
+      layerForm.classList.add('layerform');
+      const title = document.createElement('h2');
+      title.classList.add('title');
+      title.textContent = 'Add Layer';
+      layerForm.appendChild(title);
+
+      const textFields = [
+        'name',
+        'source layer',
+        'layer source url',
+        'feature group',
+        'drupal node id',
+        // 'borough to which the layer belongs'
+        'borough'
+      ];
+
+      textFields.forEach(fieldName => {
+        textInputGenerator(fieldName, layerForm);
+      });
+
+      const types = ['circle', 'line', 'fill'];
+      types.forEach((type) => {
+        generateLayersTypeCheckbox(type);
+      });
+
+      // Maps are defined in the "Layer Manager" constuctor scope.
+      mapNames.forEach((map) => {
+        generateAddToMapCheckbox(map);
+      });
+
+      const checkboxes = ['hover', 'click', 'sidebar', 'sliderCheckBox'];
+
+      checkboxes.forEach(label => {
+        generateCheckbox(label);
+      });
+
+      const submit = document.createElement('input');
+      submit.setAttribute('type', 'submit');
+      submit.value = 'submit layer';
+      layerForm.appendChild(submit);
+
+      const hideButton = document.createElement('button');
+      hideButton.textContent = 'hide form';
+      layerForm.appendChild(hideButton);
+      hideButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        layerForm.classList.add('hiddenContent');
+        layerForm.classList.remove('displayContent');
+      });
+
+      const reset = document.createElement('button');
+      reset.textContent = 'reset form';
+      reset.classList.add('reset');
+      layerForm.appendChild(reset);
+      reset.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetLayerEditorFn();
+      });
+
+      layerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let checkedTypes = 0;
+        const types = layerForm.querySelectorAll('.layerType');
+
+        for (let i = 0; i < types.length; i++) {
+          const checkbox = types[i];
+          if (checkbox.checked === true) {
+            checkedTypes++;
+          }
+          if (checkedTypes > 1) {
+            alert(`At this time only one data type can be added for each source. To add
+            another data type a new layer has to be added.`);
+            return;
+          }
         }
-        if (i === addToMapCheckboxes.length - 1) {
-          if (checkedBoxes === 0) {
-            const confirm = window.confirm('You have selected no maps to display this layer, is that correct?');
-            if (!confirm) {
-              return;
+        /* n.b. note that only replacing spaces in fields might cause a future bug if
+          other input types are added with a space.
+        */
+        textFields.forEach((id) => {
+          data[id] = layerForm.querySelector(`#${id.replaceAll(' ', '_')}`).value;
+        });
+
+        const addToMapCheckboxes = layerForm.querySelectorAll('.addToMap');
+        let checkedBoxes = 0;
+        if (addToMapCheckboxes) {
+          data['target map'].length = 0;
+        }
+        for (let i = 0; i < addToMapCheckboxes.length; i++) {
+          const element = addToMapCheckboxes[i];
+          if (element.checked) {
+            data['target map'].push(element.dataset.targetMap);
+            checkedBoxes++;
+          }
+          if (i === addToMapCheckboxes.length - 1) {
+            if (checkedBoxes === 0) {
+              const confirm = window.confirm('You have selected no maps to display this layer, is that correct?');
+              if (!confirm) {
+                return;
+              }
             }
           }
         }
-      }
 
-      layerFormParent.querySelectorAll('.layerType').forEach((type, i) => {
-        if (i === 0) {
-          data.type.length = 0;
+        layerForm.querySelectorAll('.layerType').forEach((type, i) => {
+          if (i === 0) {
+            data.type.length = 0;
+          }
+          if (type.checked) {
+            const typeFeature = {
+              type: type.dataset.layerType,
+              color: type.parentElement.querySelector('[data-type-style="color"]').value,
+              opacity: type.parentElement.querySelector('[data-type-style="opacity"]').value,
+              width: type.parentElement.querySelector('[data-type-style="width"]').value
+            };
+            data.type.push(typeFeature);
+          }
+        });
+
+        if (layerForm.dataset._id) {
+          data._id = layerForm.dataset._id;
         }
-        if (type.checked) {
-          const typeFeature = {
-            type: type.dataset.layerType,
-            color: type.parentElement.querySelector('[data-type-style="color"]').value,
-            opacity: type.parentElement.querySelector('[data-type-style="opacity"]').value,
-            width: type.parentElement.querySelector('[data-type-style="width"]').value
-          };
-          data.type.push(typeFeature);
-        }
+
+        saveLayer(data).then(() => {
+          createLayer(data);
+        });
       });
 
-      if (layerFormParent.dataset._id) {
-        data._id = layerFormParent.dataset._id;
-      }
-
-      saveLayer(data).then(() => {
-        createLayer(data);
-      });
+      resolve('form generated');
     });
+    return promise;
   };
 
   /**

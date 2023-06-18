@@ -24,9 +24,9 @@ let sliderConstructor;
 document.addEventListener('DOMContentLoaded', () => {
   const parent = document.querySelector('.mapControls');
 
-  layerControls = new LayerManager();
-  layerControls.generateAddLayerForm(parent);
-  layerControls.generateAddMapForm(parent);
+  layerControls = new LayerManager(parent);
+  layerControls.generateAddLayerForm();
+  layerControls.generateAddMapForm();
   layerControls.layerControlEvents();
 
   sliderConstructor = new SliderConstructor(1625, 1701);
