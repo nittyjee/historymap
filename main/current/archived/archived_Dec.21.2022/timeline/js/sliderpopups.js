@@ -234,6 +234,18 @@ function buildGrantLotsPopUpInfo(props) {
 
 
 
+dutch_grant_lots_info === drupal database dump
+
+props = feature.nid; 
+
+feature.click((e)=> {
+  e.feature.properties[0].nid
+
+})
+
+
+
+
 function buildDutchGrantPopUpInfo(props) {
 	        var popup_html = "";
 			//console.log(props);

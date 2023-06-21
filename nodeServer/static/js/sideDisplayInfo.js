@@ -22,7 +22,7 @@ const drupalData = (drupalDataName, mapboxLot) => {
   const promise = new Promise((resolve, reject) => {
     for (let i = 0; i < data.length; i++) {
       const lot = data[i];
-      console.log(lot);
+      //console.log(lot);
       let lotTitle;
       if (drupalDataName === 'Dutch_Grants') {
         lotTitle = lot.title;
@@ -118,7 +118,7 @@ function populateSideInfoDisplay (event, data) {
     // To party has several shapes...
     // raw HTML with a relative url and text content... or a plain string!!🤦
     const toParty = lotInDrupal.to_party || lotInDrupal.to_party_unlinked || mapboxData.name || null;
-    console.log(toParty);
+    //console.log(toParty);
     if (toParty) {
       if (containsHTML(toParty)) {
         linkFromRawHTML('To party: ', toParty);
@@ -155,7 +155,7 @@ function populateSideInfoDisplay (event, data) {
       images.forEach((image) => {
         // if empty string
         if (image) {
-          console.log(`${baseURL}${image.trim()}`);
+          //console.log(`${baseURL}${image.trim()}`);
           makeImage(`${baseURL}${image.trim()}`);
         }
       });

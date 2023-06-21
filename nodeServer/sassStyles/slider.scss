@@ -21,6 +21,10 @@
     width: 100%;
     bottom: 5px;
   }
+
+  .timeline > * {
+    pointer-events: none;
+  }
   
   .year {
     flex: 0 1 20vw;

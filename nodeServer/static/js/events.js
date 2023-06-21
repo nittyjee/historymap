@@ -60,7 +60,6 @@ document.querySelector('body').addEventListener('click', (e) => {
     xhrGetInPromise(null, url).then((content) => {
       let rmNewlines = JSON.parse(content)[0].rendered_entity.replace(/\n/g, '');
       rmNewlines = rmNewlines.replace(/<a (.*?)>/g, '');
-      console.log(rmNewlines);
       document.querySelector('.modal-content').insertAdjacentHTML('afterbegin', rmNewlines);
       modal.showModal();
     });

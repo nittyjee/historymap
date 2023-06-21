@@ -1053,6 +1053,10 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
     width: 100%;
     bottom: 5px;
   }
+
+  .timeline > * {
+    pointer-events: none;
+  }
   
   .year {
     flex: 0 1 20vw;
@@ -1159,3 +1163,6 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
   vertical-align: middle;
 }
 
+.editFeaturePopup {
+ overflow: scroll; 
+}

@@ -177,6 +177,7 @@ function SliderConstructor (minDate, maxDate) {
   const move = (e) => {
     if (!isDown) return;
     e.preventDefault();
+    e.stopPropagation();
     const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
     const dist = (x - startX);
     slider.style.left = `${scrollLeft + dist}px`;
@@ -188,13 +189,21 @@ function SliderConstructor (minDate, maxDate) {
     slider.classList.remove('active');
   };
 
+  timeline.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    slider.classList.add('active');
+    startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+    slider.style.left = `${startX - 30}px`;
+    getSelection();
+  });
+
   slider.addEventListener('mousedown', start);
   slider.addEventListener('touchstart', start);
 
   slider.addEventListener('mousemove', move);
   slider.addEventListener('touchmove', move);
 
-  slider.addEventListener('mouseleave', end);
   slider.addEventListener('mouseup', end);
   slider.addEventListener('touchend', end);
 }
