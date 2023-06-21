@@ -1,0 +1,192 @@
+[{
+  "_id": {
+    "$oid": "6464fb640a5006b85bf97888"
+  },
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "line",
+      "color": "#ff0000",
+      "opacity": "1",
+      "width": "5"
+    }
+  ],
+  "name": "Lenape trails",
+  "source layer": "lenape_trails-9n6muf",
+  "layer source url": "mapbox://nittyjee.4kio957z",
+  "feature group": "1609|Manahatta",
+  "borough": "Manhattan",
+  "drupal node id": "10062"
+},{
+  "_id": {
+    "$oid": "646e1f93d11a5eadf34dd2a7"
+  },
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "fill",
+      "color": "#e3ed58",
+      "opacity": "0.8",
+      "width": ""
+    }
+  ],
+  "name": "Information",
+  "source layer": "grants1-5sp9tb",
+  "layer source url": "mapbox://nittyjee.b5bpfqeb",
+  "feature group": "1640-64|Dutch Grants",
+  "borough": "Manhattan",
+  "hover": 1,
+  "click": 1,
+  "sidebar": 1,
+  "sliderCheckBox": 1,
+  "drupal node id": ""
+},{
+  "_id": {
+    "$oid": "6475c68490296f8690d1c9bd"
+  },
+  "borough": "Manhattan",
+  "feature group": "1609|Manahatta",
+  "layer source url": "mapbox://nittyjee.0q74r4c7",
+  "name": "Manahatta Shoreline",
+  "source layer": "manahatta_shoreline-b3tcj6",
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "line",
+      "color": "#ffd700",
+      "opacity": "1",
+      "width": "3"
+    }
+  ],
+  "drupal node id": "10062"
+},{
+  "_id": {
+    "$oid": "6476108d593bb73d5821fe75"
+  },
+  "borough": "Manhattan",
+  "feature group": "1660|Castello Taxlots",
+  "layer source url": "mapbox://nittyjee.ap08s4n9",
+  "name": "Castello Taxlots",
+  "source layer": "castello_points_new-3qkr6t",
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "circle",
+      "color": "#ff0000",
+      "opacity": "0.7",
+      "width": "5"
+    }
+  ],
+  "click": 1,
+  "hover": 1,
+  "sidebar": 1,
+  "drupal node id": "",
+  "sliderCheckBox": 1
+},{
+  "_id": {
+    "$oid": "647629c80e2f74fc9077109a"
+  },
+  "borough": "Manhattan",
+  "feature group": "1609|Manahatta",
+  "layer source url": "mapbox://nittyjee.9t5q3gv8",
+  "name": "Streams",
+  "source layer": "streams-bek8e1",
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "line",
+      "color": "#0000ff",
+      "opacity": "1",
+      "width": "3"
+    }
+  ],
+  "drupal node id": "10062"
+},{
+  "_id": {
+    "$oid": "6479f9fa70ad041fa2f2939f"
+  },
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "line",
+      "color": "red",
+      "opacity": "1",
+      "width": "3"
+    }
+  ],
+  "name": "Lines",
+  "source layer": "grants1-5sp9tb",
+  "layer source url": "mapbox://nittyjee.b5bpfqeb",
+  "feature group": "1640-64|Dutch Grants",
+  "borough": "Manhattan",
+  "hover": 1,
+  "click": 1,
+  "sidebar": 1,
+  "sliderCheckBox": 1
+},{
+  "_id": {
+    "$oid": "648490ef1cb07b0d07260d51"
+  },
+  "borough": "Manhattan",
+  "click": 1,
+  "drupal node id": "10546",
+  "feature group": "1638-83|Original Grants & Farms",
+  "hover": 1,
+  "layer source url": "mapbox://nittyjee.220x7bg9",
+  "name": "Information",
+  "sidebar": 1,
+  "sliderCheckBox": 1,
+  "source layer": "stokes_farms_complete_5_reduc-6k9tbl",
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "fill",
+      "color": "#e3ed58",
+      "opacity": "0.8",
+      "width": ""
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "648b234a3b316005c0eed6df"
+  },
+  "borough": "Manhattan",
+  "drupal node id": "",
+  "feature group": "1638-83|Original Grants & Farms",
+  "layer source url": "mapbox://nittyjee.220x7bg9",
+  "name": "lines",
+  "source layer": "stokes_farms_complete_5_reduc-6k9tbl",
+  "target map": [
+    "beforeMap",
+    "afterMap"
+  ],
+  "type": [
+    {
+      "type": "line",
+      "color": "red",
+      "opacity": "1",
+      "width": "3"
+    }
+  ]
+}]
