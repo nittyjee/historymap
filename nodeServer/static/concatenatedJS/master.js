@@ -4,8 +4,8 @@ function LayerManager (parentElement) {
   // "this" in the function isn't the outer constructor, so we have to point to that:
   const layerManager = this;
   // Arrays to store and manage layers:
-  layersMongoId = [];
-  layersMapboxId = [];
+  const layersMongoId = [];
+  const layersMapboxId = [];
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
@@ -15,7 +15,7 @@ function LayerManager (parentElement) {
   let mapForm;
 
   function fetchLayer (layerId) {
-    //const checkbox = document.querySelector(`[name="${layerId}"]`);
+    // const checkbox = document.querySelector(`[name="${layerId}"]`);
     const promise = new Promise((resolve, reject) => {
       if (layerManager.returnLayers().includes(layerId)) {
         layerManager.toggleVisibility();
@@ -23,7 +23,6 @@ function LayerManager (parentElement) {
       } else {
         xhrPostInPromise({ _id: layerId }, './getLayerById').then((layerData) => {
           const parsedLayerData = JSON.parse(layerData);
-          //checkbox.checked = true;
           createLayer(parsedLayerData).then(() => {
             // layer added
             resolve();
@@ -243,7 +242,7 @@ function LayerManager (parentElement) {
                 checkbox.checked = true;
                 checkbox.classList.add('highlight');
               }
-    
+
               const textInputs = parent.querySelectorAll('input[type="text"]');
               textInputs.forEach((input) => {
                 if (type[input.dataset.typeStyle]) {
@@ -325,8 +324,6 @@ function LayerManager (parentElement) {
         }
       }
     }
-
-    // -74.01255,40.704882
   };
 
   /**
@@ -825,7 +822,7 @@ function LayerManager (parentElement) {
           map.getCanvas().style.cursor = 'pointer';
           hoverPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
+            .setDOMContent(createHoverPopup(data, event))
             .addTo(map);
         });
 
@@ -833,7 +830,7 @@ function LayerManager (parentElement) {
           map.getCanvas().style.cursor = 'pointer';
           hoverPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name));
+            .setDOMContent(createHoverPopup(data, event));
         });
 
         map.on('mouseleave', data.id, () => {
@@ -850,7 +847,7 @@ function LayerManager (parentElement) {
           populateSideInfoDisplay(event, data);
           clickPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createClickedFeaturePopup (`${data.name}PopUp`, event, null))
+            .setDOMContent(createHoverPopup(data, event))
             .addTo(map);
         });
       }
@@ -899,26 +896,16 @@ function LayerManager (parentElement) {
   }
 }
 /**
- * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
- * @param {Object{}} event      -Event fired by Mapbox GL
- * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot'
- * @description Function to create popup content when a feature is clicked and shows date information.
- * @returns A HTMLElemnt to use in the pop up
+ * Future clicked popup function that renders mapbox feature properties that can be altered:
+ * This will require a Mapbox api key with the correct permissions and for the edits to be
+ * "PUT" on mapbox
  */
 
-/**
- * 
- *   height: 1em;
-  width: 100%;
-  display: inline-block;
-  color: black;
-}
-*/
-function createClickedFeaturePopup (layerClass, event, layerName) {
+function createClickedFeaturePopupAdmin (layerClass, event, layerName) {
   const popUpContent = document.createElement('form');
   popUpContent.classList.add('clickPopupAdmin');
+
   const featureProperties = event.features[0].properties;
-  console.log(event.features);
   const properties = Object.keys(featureProperties);
   const values = Object.values(featureProperties);
 
@@ -951,11 +938,72 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
     return propertyContainer;
   }
 
+  // https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}
+
   function saveBtn () {
     const saveBtn = document.createElement('button');
     saveBtn.textContent = 'save changes';
     saveBtn.addEventListener('click', () => {
       alert(JSON.stringify(featureProperties));
+      saveFeatureAlterations(userName, dataSetId, featureId);
+    });
+    return saveBtn;
+  }
+}
+/**
+ * @param {string} layerClass   -The layer being added e.g. 'infoLayerDutchGrantsPopUp'
+ * @param {Object{}} event      -Event fired by Mapbox GL
+ * @param {string} layerName    -The human readable layer name being added e.g. 'Dutch Grant Lot'
+ * @description Function to create popup content when a feature is clicked and shows date information.
+ * @returns A HTMLElemnt to use in the pop up
+ */
+
+function createClickedFeaturePopup (layerClass, event, layerName) {
+  const popUpContent = document.createElement('form');
+  popUpContent.classList.add('clickPopupAdmin');
+
+  const featureProperties = event.features[0].properties;
+  const properties = Object.keys(featureProperties);
+  const values = Object.values(featureProperties);
+
+  for (let i = 0; i < properties.length; i++) {
+    const propertyContainer = createEditPropertyInput(properties[i], values[i]);
+    popUpContent.append(propertyContainer);
+    if (i === properties.length - 1) {
+      const saveButton = saveBtn();
+      popUpContent.appendChild(saveButton);
+      return popUpContent;
+    }
+  }
+
+  function createEditPropertyInput (property, value) {
+    const propertyContainer = document.createElement('div');
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.value = value;
+    input.name = property;
+
+    input.addEventListener('input', () => {
+      featureProperties[property] = input.value;
+    });
+
+    const label = document.createElement('label');
+    label.setAttribute('for', property);
+    label.textContent = `${property}: `;
+    propertyContainer.appendChild(label);
+    propertyContainer.appendChild(input);
+    return propertyContainer;
+  }
+
+  // https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}
+
+  function saveBtn () {
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'save changes';
+    saveBtn.addEventListener('click', () => {
+      alert(JSON.stringify(featureProperties));
+      saveFeatureAlterations(userName, dataSetId, featureId);
+
     });
     return saveBtn;
   }
@@ -1121,17 +1169,6 @@ document.querySelector('body').addEventListener('click', (e) => {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';
       e.target.style.left = '0px';
-
-      /*
-      mapContainer.style.width = '100vw';
-      mapsInContainter.forEach((map, i) => {
-        map.style.width = '100vw';
-        if (i === mapsInContainter.length - 1) {
-          //Object.values(maps).forEach(map => map.resize());
-        }
-      });
-      //Object.values(maps).forEach(map => map.resize());
-      */
     } else {
       controlsDiv.classList.remove('hiddenControls');
       e.target.textContent = '«';
@@ -1156,40 +1193,41 @@ document.querySelector('body').addEventListener('click', (e) => {
  * @returns A HTMLElemnt to use in the pop up
  */
 
-function createHoverPopup (layerClass, event, layerName) {
-console.log([...arguments]);
-
-  /**
-   * @param {string} string
-   * @returns The same string with spaces replaced by an undescore
-   * @description Small utility to declutter code.
-   */
-  function removeSpaces (string) {
-    return string.replaceAll(' ', '_');
-  }
+function createHoverPopup (data, event) {
+  const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
+  const layerClass = `${layerName}PopUp`;
   const popUpHTML = document.createElement('div');
-  const lot = (event.features[0].properties.Lot)
-    ? event.features[0].properties.Lot
-    : event.features[0].properties.TAXLOT;
+  const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
+  const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
+  // Maybe a semantic feature group name will be required:
+  const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
+  console.log(mapboxFeatureProperties);
+
+  console.log(lot);
+  console.log(personNameSt);
 
   popUpHTML.classList.add(
-    removeSpaces(layerClass),
-    removeSpaces(lot)
+    'hoverPopUp'
   );
 
-  const paragraph = document.createElement('p');
-  popUpHTML.appendChild(paragraph);
-  const paragraphText = (event.features[0].properties.name)
-    ? event.features[0].properties.name
-    : 'TAXLOT';
+  const personName = document.createElement('p');
+  popUpHTML.appendChild(personName);
+  personName.textContent = personNameSt;
 
-  paragraph.textContent = paragraphText;
-  paragraph.classList.add(`${removeSpaces(lot)}-${removeSpaces(paragraphText)}`);
+  const lotName = document.createElement('b');
+  popUpHTML.appendChild(lotName);
+  lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
 
-  const name = document.createElement('b');
-  popUpHTML.appendChild(name);
-  name.textContent = `${layerName}: ${lot}`;
   return popUpHTML;
+}
+
+/**
+ * @param {string} string
+ * @returns The same string with spaces replaced by an undescore
+ * @description Small utility to declutter code.
+ */
+function removeSpaces (string) {
+  return string.replaceAll(' ', '_');
 }
 mapboxgl.accessToken = 'pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoid1RmLXpycyJ9.NFk875-Fe6hoRCkGciG8yQ';
 
@@ -1224,6 +1262,65 @@ window.setTimeout(() => {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
   });
 }, 1000);
+function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
+  console.log([...arguments]);
+  const mapboxData = mapFeatureClickEvent.features[0].properties;
+  console.log(mapboxData);
+  // corresponding content on Drupal:
+  // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
+
+  /* HACKS START */
+  // All fields should have the same nid name:
+  const drupalNid = mapboxData.drupalNid || mapboxData.nid || mapboxData.node_id || mapboxData.node || mapboxData.NID_num || null;
+  // Lot name hack:
+  const mapboxLot = mapboxData.Lot || null;
+  if (!drupalNid && mapboxLot) {
+    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData);
+  }
+
+  const cleanNid = drupalNid.replace(/[/a-z]/gi, '');
+  /* HACKS END */
+
+  if (!cleanNid) { return; }
+
+  const target = document.querySelector('.sideInfoDisplay');
+  target.classList.add('displayContent');
+  target.classList.remove('hiddenContent');
+  target.innerHTML = '';
+
+  while (target.firstChild) {
+    target.removeChild(target.lastChild);
+  }
+
+  const url = `https://encyclopedia.nahc-mapping.org/rendered-export-single?nid=${cleanNid}`;
+
+  xhrGetInPromise(null, url).then((content) => {
+    let rmNewlines = JSON.parse(content)[0].rendered_entity.replace(/\n/g, '');
+    rmNewlines = rmNewlines.replace(/<a (.*?)>/g, '');
+    target.insertAdjacentHTML('beforeEnd', JSON.parse(content)[0].rendered_entity);
+  });
+
+  makeCloseButton(target);
+}
+
+function makeCloseButton (target) {
+  const close = document.createElement('i');
+  close.classList.add('fa', 'fa-window-close', 'close');
+  close.style.float = 'right';
+  close.style.cursor = 'pointer';
+  close.title = 'Close';
+  close.setAttribute('aria-hidden', 'true');
+  close.addEventListener('click', () => {
+    target.classList.remove('displayContent');
+    target.classList.add('hiddenContent');
+  });
+  target.appendChild(close);
+}
+/**
+ * This file contains attempts to deal with messy source data, and is used while those sources are
+ * updated so that content gets fetched directly from Drupal, via a nid.
+ */
+
 // Called dutch_grant_lots_info in the original project:
 let Dutch_Grants;
 // Self instantiating on start up:
@@ -1271,7 +1368,7 @@ const drupalData = (drupalDataName, mapboxLot) => {
   return promise;
 };
 
-function populateSideInfoDisplay (event, data) {
+function populateSideInfoDisplayHack (event, data) {
   const target = document.querySelector('.sideInfoDisplay');
   target.classList.add('displayContent');
   target.classList.remove('hiddenContent');
@@ -1291,6 +1388,7 @@ function populateSideInfoDisplay (event, data) {
 
   // mapbox feature data
   const mapboxData = event.features[0].properties;
+
   const mapboxLot = mapboxData.Lot;
   // REGEXING labels shouldn't be necesssary
   const drupalDataName = data['feature group'].replace(/[^a-z ]/gi, '').replace(' ', '_');
@@ -1339,7 +1437,7 @@ function populateSideInfoDisplay (event, data) {
     h4.textContent = data['feature group'];
     // Lot link from mapbox... 🤦
     if (mapboxData.Lot) {
-      makeLink(`grantlot/${mapboxData.Lot}`, mapboxData.Lot, 'Dutch Grant Lot: ');
+      makeLink(`/grantlot/${mapboxData.Lot}`, mapboxData.Lot, 'Dutch Grant Lot: ');
     }
     // To party has several shapes...
     // raw HTML with a relative url and text content... or a plain string!!🤦
@@ -1391,6 +1489,7 @@ function populateSideInfoDisplay (event, data) {
   function makeLink (link, textContent, descriptor) {
     const p = document.createElement('p');
     p.textContent = `${descriptor}`;
+    p.classList.add('boldItalic');
     const a = document.createElement('a');
     a.setAttribute('href', `${baseURL}${link}`);
     a.setAttribute('target', '_blank');
@@ -1401,6 +1500,7 @@ function populateSideInfoDisplay (event, data) {
 
   function linkFromRawHTML (textContent, html) {
     const p = document.createElement('p');
+    p.classList.add('boldItalic');
     p.textContent = textContent;
     p.insertAdjacentHTML('beforeend', html);
     const link = p.querySelector('a');
@@ -1419,8 +1519,8 @@ function populateSideInfoDisplay (event, data) {
   function makeParagraph (descriptor, data) {
     const p = document.createElement('p');
     p.textContent = `${descriptor}`;
+    p.classList.add('boldItalic');
     const span = document.createElement('span');
-    span.classList.add('boldItalic');
     p.appendChild(span);
     span.textContent = data;
     target.appendChild(p);
@@ -1595,24 +1695,36 @@ function SliderConstructor (minDate, maxDate) {
     return parseInt(`${date.getFullYear()}${month}${day}`);
   }
 
+  let moveEvent;
+  function toggleMove () {
+    if (moveEvent) {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      moveEvent = true;
+    }
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move);
+    moveEvent = false;
+  }
+
   const start = (e) => {
     isDown = true;
     slider.classList.add('active');
     startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
     scrollLeft = slider.offsetLeft;
+    toggleMove();
   };
 
   const move = (e) => {
     if (!isDown) return;
-    e.preventDefault();
-    e.stopPropagation();
     const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
     const dist = (x - startX);
     slider.style.left = `${scrollLeft + dist}px`;
     getSelection();
   };
 
-  const end = () => {
+  const end = (e) => {
+    toggleMove();
     isDown = false;
     slider.classList.remove('active');
   };
@@ -1628,9 +1740,6 @@ function SliderConstructor (minDate, maxDate) {
 
   slider.addEventListener('mousedown', start);
   slider.addEventListener('touchstart', start);
-
-  slider.addEventListener('mousemove', move);
-  slider.addEventListener('touchmove', move);
 
   slider.addEventListener('mouseup', end);
   slider.addEventListener('touchend', end);

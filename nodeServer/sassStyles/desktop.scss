@@ -33,6 +33,14 @@
       overflow: scroll;
     }
 
+    .sideInfoDisplay::-webkit-scrollbar-thumb {
+      background: steelblue;
+    }
+    
+    .sideInfoDisplay::-webkit-scrollbar {
+      width: 7px;
+    }
+
     .sideInfoDisplay {
       z-index: 3;
       // overflow: scroll;
@@ -54,6 +62,7 @@
       -webkit-hyphens: auto;
       hyphens: auto;
       margin-top: 1em;
+      overflow-x: hidden;
 
       img {
         max-width: 100%;
@@ -66,7 +75,10 @@
 
       .boldItalic {
         font-weight: bold;
-        font-style: italic; 
+        font-style: italic;
+        span a {
+          font-weight: normal;
+        }
       }
 
     }

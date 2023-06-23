@@ -167,24 +167,36 @@ function SliderConstructor (minDate, maxDate) {
     return parseInt(`${date.getFullYear()}${month}${day}`);
   }
 
+  let moveEvent;
+  function toggleMove () {
+    if (moveEvent) {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      moveEvent = true;
+    }
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move);
+    moveEvent = false;
+  }
+
   const start = (e) => {
     isDown = true;
     slider.classList.add('active');
     startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
     scrollLeft = slider.offsetLeft;
+    toggleMove();
   };
 
   const move = (e) => {
     if (!isDown) return;
-    e.preventDefault();
-    e.stopPropagation();
     const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
     const dist = (x - startX);
     slider.style.left = `${scrollLeft + dist}px`;
     getSelection();
   };
 
-  const end = () => {
+  const end = (e) => {
+    toggleMove();
     isDown = false;
     slider.classList.remove('active');
   };
@@ -200,9 +212,6 @@ function SliderConstructor (minDate, maxDate) {
 
   slider.addEventListener('mousedown', start);
   slider.addEventListener('touchstart', start);
-
-  slider.addEventListener('mousemove', move);
-  slider.addEventListener('touchmove', move);
 
   slider.addEventListener('mouseup', end);
   slider.addEventListener('touchend', end);

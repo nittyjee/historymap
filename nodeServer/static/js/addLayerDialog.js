@@ -4,8 +4,8 @@ function LayerManager (parentElement) {
   // "this" in the function isn't the outer constructor, so we have to point to that:
   const layerManager = this;
   // Arrays to store and manage layers:
-  layersMongoId = [];
-  layersMapboxId = [];
+  const layersMongoId = [];
+  const layersMapboxId = [];
   // Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
@@ -15,7 +15,7 @@ function LayerManager (parentElement) {
   let mapForm;
 
   function fetchLayer (layerId) {
-    //const checkbox = document.querySelector(`[name="${layerId}"]`);
+    // const checkbox = document.querySelector(`[name="${layerId}"]`);
     const promise = new Promise((resolve, reject) => {
       if (layerManager.returnLayers().includes(layerId)) {
         layerManager.toggleVisibility();
@@ -23,7 +23,6 @@ function LayerManager (parentElement) {
       } else {
         xhrPostInPromise({ _id: layerId }, './getLayerById').then((layerData) => {
           const parsedLayerData = JSON.parse(layerData);
-          //checkbox.checked = true;
           createLayer(parsedLayerData).then(() => {
             // layer added
             resolve();
@@ -243,7 +242,7 @@ function LayerManager (parentElement) {
                 checkbox.checked = true;
                 checkbox.classList.add('highlight');
               }
-    
+
               const textInputs = parent.querySelectorAll('input[type="text"]');
               textInputs.forEach((input) => {
                 if (type[input.dataset.typeStyle]) {
@@ -325,8 +324,6 @@ function LayerManager (parentElement) {
         }
       }
     }
-
-    // -74.01255,40.704882
   };
 
   /**
@@ -825,7 +822,7 @@ function LayerManager (parentElement) {
           map.getCanvas().style.cursor = 'pointer';
           hoverPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name))
+            .setDOMContent(createHoverPopup(data, event))
             .addTo(map);
         });
 
@@ -833,7 +830,7 @@ function LayerManager (parentElement) {
           map.getCanvas().style.cursor = 'pointer';
           hoverPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createHoverPopup(`${data.name}PopUp`, event, data.name));
+            .setDOMContent(createHoverPopup(data, event));
         });
 
         map.on('mouseleave', data.id, () => {
@@ -850,7 +847,7 @@ function LayerManager (parentElement) {
           populateSideInfoDisplay(event, data);
           clickPopUp
             .setLngLat(event.lngLat)
-            .setDOMContent(createClickedFeaturePopup (`${data.name}PopUp`, event, null))
+            .setDOMContent(createHoverPopup(data, event))
             .addTo(map);
         });
       }

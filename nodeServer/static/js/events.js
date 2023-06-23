@@ -88,17 +88,6 @@ document.querySelector('body').addEventListener('click', (e) => {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';
       e.target.style.left = '0px';
-
-      /*
-      mapContainer.style.width = '100vw';
-      mapsInContainter.forEach((map, i) => {
-        map.style.width = '100vw';
-        if (i === mapsInContainter.length - 1) {
-          //Object.values(maps).forEach(map => map.resize());
-        }
-      });
-      //Object.values(maps).forEach(map => map.resize());
-      */
     } else {
       controlsDiv.classList.remove('hiddenControls');
       e.target.textContent = '«';

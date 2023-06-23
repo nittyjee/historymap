@@ -9,38 +9,39 @@
  * @returns A HTMLElemnt to use in the pop up
  */
 
-function createHoverPopup (layerClass, event, layerName) {
-console.log([...arguments]);
-
-  /**
-   * @param {string} string
-   * @returns The same string with spaces replaced by an undescore
-   * @description Small utility to declutter code.
-   */
-  function removeSpaces (string) {
-    return string.replaceAll(' ', '_');
-  }
+function createHoverPopup (data, event) {
+  const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
+  const layerClass = `${layerName}PopUp`;
   const popUpHTML = document.createElement('div');
-  const lot = (event.features[0].properties.Lot)
-    ? event.features[0].properties.Lot
-    : event.features[0].properties.TAXLOT;
+  const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
+  const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
+  // Maybe a semantic feature group name will be required:
+  const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
+  console.log(mapboxFeatureProperties);
+
+  console.log(lot);
+  console.log(personNameSt);
 
   popUpHTML.classList.add(
-    removeSpaces(layerClass),
-    removeSpaces(lot)
+    'hoverPopUp'
   );
 
-  const paragraph = document.createElement('p');
-  popUpHTML.appendChild(paragraph);
-  const paragraphText = (event.features[0].properties.name)
-    ? event.features[0].properties.name
-    : 'TAXLOT';
+  const personName = document.createElement('p');
+  popUpHTML.appendChild(personName);
+  personName.textContent = personNameSt;
 
-  paragraph.textContent = paragraphText;
-  paragraph.classList.add(`${removeSpaces(lot)}-${removeSpaces(paragraphText)}`);
+  const lotName = document.createElement('b');
+  popUpHTML.appendChild(lotName);
+  lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
 
-  const name = document.createElement('b');
-  popUpHTML.appendChild(name);
-  name.textContent = `${layerName}: ${lot}`;
   return popUpHTML;
+}
+
+/**
+ * @param {string} string
+ * @returns The same string with spaces replaced by an undescore
+ * @description Small utility to declutter code.
+ */
+function removeSpaces (string) {
+  return string.replaceAll(' ', '_');
 }

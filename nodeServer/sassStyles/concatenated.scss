@@ -62,6 +62,16 @@ a {
   line-break: anywhere;
 }
 
+.hoverPopUp {
+  background-color: rgba(255, 255, 0, 0.5);
+  border: solid #FFFF00 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.mapboxgl-popup-content {
+  padding: 0px !important;
+}
 
 .mapControls::-webkit-scrollbar-thumb {
   background: steelblue;
@@ -940,6 +950,14 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
       overflow: scroll;
     }
 
+    .sideInfoDisplay::-webkit-scrollbar-thumb {
+      background: steelblue;
+    }
+    
+    .sideInfoDisplay::-webkit-scrollbar {
+      width: 7px;
+    }
+
     .sideInfoDisplay {
       z-index: 3;
       // overflow: scroll;
@@ -961,6 +979,7 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
       -webkit-hyphens: auto;
       hyphens: auto;
       margin-top: 1em;
+      overflow-x: hidden;
 
       img {
         max-width: 100%;
@@ -973,7 +992,10 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 
       .boldItalic {
         font-weight: bold;
-        font-style: italic; 
+        font-style: italic;
+        span a {
+          font-weight: normal;
+        }
       }
 
     }
@@ -1163,6 +1185,6 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
   vertical-align: middle;
 }
 
-.editFeaturePopup {
+.clickPopupAdmin {
  overflow: scroll; 
 }

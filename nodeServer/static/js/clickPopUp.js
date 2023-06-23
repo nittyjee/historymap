@@ -6,19 +6,11 @@
  * @returns A HTMLElemnt to use in the pop up
  */
 
-/**
- * 
- *   height: 1em;
-  width: 100%;
-  display: inline-block;
-  color: black;
-}
-*/
 function createClickedFeaturePopup (layerClass, event, layerName) {
   const popUpContent = document.createElement('form');
   popUpContent.classList.add('clickPopupAdmin');
+
   const featureProperties = event.features[0].properties;
-  console.log(event.features);
   const properties = Object.keys(featureProperties);
   const values = Object.values(featureProperties);
 
@@ -51,11 +43,15 @@ function createClickedFeaturePopup (layerClass, event, layerName) {
     return propertyContainer;
   }
 
+  // https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}
+
   function saveBtn () {
     const saveBtn = document.createElement('button');
     saveBtn.textContent = 'save changes';
     saveBtn.addEventListener('click', () => {
       alert(JSON.stringify(featureProperties));
+      saveFeatureAlterations(userName, dataSetId, featureId);
+
     });
     return saveBtn;
   }
