@@ -992,8 +992,10 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 
       .boldItalic {
         font-weight: bold;
-        font-style: italic;
-        span a {
+        span, a {
+          font-style: italic;
+        }
+        span {
           font-weight: normal;
         }
       }

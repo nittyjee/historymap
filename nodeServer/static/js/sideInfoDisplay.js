@@ -1,5 +1,4 @@
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
-  console.log([...arguments]);
   const mapboxData = mapFeatureClickEvent.features[0].properties;
   console.log(mapboxData);
   // corresponding content on Drupal:

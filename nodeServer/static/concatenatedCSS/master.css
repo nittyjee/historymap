@@ -308,9 +308,10 @@ a {
         line-height: 2em;
         display: block; }
       .mapContainer .sideInfoDisplay .boldItalic {
-        font-weight: bold;
-        font-style: italic; }
-        .mapContainer .sideInfoDisplay .boldItalic span a {
+        font-weight: bold; }
+        .mapContainer .sideInfoDisplay .boldItalic span, .mapContainer .sideInfoDisplay .boldItalic a {
+          font-style: italic; }
+        .mapContainer .sideInfoDisplay .boldItalic span {
           font-weight: normal; }
     .mapContainer .map {
       height: calc(100vh - 164px);
