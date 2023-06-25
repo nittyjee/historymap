@@ -115,7 +115,7 @@ a {
 		cursor: pointer;
 		font-weight: 700;
 		text-align: center;
-		margin: auto;
+		margin: auto auto 10px;
 		display: block;
 	}
 
@@ -164,18 +164,38 @@ a {
 
 	.layerControls {
 		padding: 0 0 10px 10px;
-
+		.layerToggle {
+			&:first-child {
+				.borough {
+					margin: 0;
+				}
+				h4 {
+					margin: 1em 0 1.5em;
+				}
+			}
+		}
+		.borough {
+			&:first-child {
+				margin: 0;
+			}
+			margin: 0 0 10px;
+			* > h4 {
+				font-weight: bold;
+				font-size: 16px;
+			}
+		}
 		a {
 			text-decoration: none;
 		}
 
 		i {
 			transition: transform 0.2s;
-			font-size: 14px;
+			font-size: 16px;
+			margin: 2px 0 0;
 		}
 
 		label {
-			font-size: 14px;
+			font-size: 16px;
 		}
 
 		i:hover {
@@ -190,9 +210,6 @@ a {
 			margin: 1em 0 0.5em;
 			padding-bottom: 0.5em;
 			text-transform: uppercase;
-			&:first-child {
-				margin: 1em 0 1.5em;
-			}
 		}
 
 		.informationSquareIcon {
@@ -217,7 +234,7 @@ a {
 
 		.boroughName {
 			text-align: center;
-			padding: 0 5px 0;
+			padding: 0 5px 0 0;
 		}
 
 		.featureGroupName {
@@ -348,14 +365,16 @@ a {
 }
 
 .datePanel {
+	font-weight: bold;
 	position: absolute;
 	background-color: #3887be;
-	border: black solid 0.1em;
-	border-radius: 0.5em;
+	border: black solid 0.11764705882em;
+	border-radius: 0.2em;
 	font-size: 34px;
 	color: white;
 	float: right;
 	bottom: 3em;
+	text-align: right;
 	right: 1em;
 	padding: 0.3em;
 }
