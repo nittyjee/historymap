@@ -10,346 +10,374 @@ $mapWidth: 100vw;
 //calc(100vh - (2 * 8 * 12px + 2px)); 
 $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 body {
-  font-family: "Source Sans Pro", sans-serif;
-  margin: 0;
-  overflow-x: hidden;
+	font-family: "Source Sans Pro", sans-serif;
+	margin: 0;
+	overflow-x: hidden;
 }
 
 dialog {
-  max-width: 700px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-style: none;
-  border-radius: 0.4em;
-  font-weight: 300;
-  padding: 1em;
+	max-width: 700px;
+	background-color: rgba(255, 255, 255, 0.9);
+	border-style: none;
+	border-radius: 0.4em;
+	font-weight: 300;
+	padding: 1em;
 
-  .close {
-    float: right; 
-    font-size: 1.5em;
-    cursor: pointer;
-  }
+	.close {
+		float: right;
+		font-size: 1.5em;
+		cursor: pointer;
+	}
 }
 
 h4 {
-  color: #23374d;
-  font-weight: bold;
-  font-size: 17px;
-  padding-bottom: 8px;
-  text-align: center;
-  border-bottom: 1px solid #ce5c00;
-  padding-bottom: 1em;
+	color: #23374d;
+	font-weight: bold;
+	font-size: 17px;
+	text-align: center;
+	border-bottom: 1px solid #ce5c00;
+	padding-bottom: 1em;
 }
 
 a {
-  font-weight: 700;
-  color: #ce5c00;
+	font-weight: 700;
+	color: #ce5c00;
 }
 
 .mainBody {
-  height: $mapHeight;
-  border-bottom: 2px solid #b0691d;
+	height: $mapHeight;
+	border-bottom: 2px solid #b0691d;
 }
 
-.editLayer, .deleteLayer {
-  cursor: pointer;
+.editLayer,
+.deleteLayer {
+	cursor: pointer;
 }
 
-.highlight  {
-  animation: bounce .3s linear;
-  border: #0f0 solid 2px;
-  accent-color: #0f0;
-  font-style: italic; 
-  line-break: anywhere;
+.highlight {
+	animation: bounce 0.3s linear;
+	border: #0f0 solid 2px;
+	accent-color: #0f0;
+	font-style: italic;
+	line-break: anywhere;
 }
 
 .hoverPopUp {
-  background-color: rgba(255, 255, 0, 0.5);
-  border: solid #FFFF00 2px;
-  padding-left: 5px;
-  padding-right: 5px;
+	background-color: rgba(255, 255, 0, 0.5);
+	border: solid #ffff00 2px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .mapboxgl-popup-content {
-  padding: 0px !important;
+	padding: 0px !important;
 }
 
 .mapControls::-webkit-scrollbar-thumb {
-  background: steelblue;
+	background: steelblue;
 }
 
 .mapControls::-webkit-scrollbar {
-  width: 7px;
+	width: 7px;
 }
-
+.mapControls::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
 .mapboxgl-ctrl-zoom-in {
-  background-image: "url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z'/%3E%3C/svg%3E);"
+	background-image: "url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z'/%3E%3C/svg%3E);";
 }
 
 .hiddenControls {
-  min-width: 0px !important;
-  width: 0px !important;
-  opacity: 0;
-  transition: 0.3s linear all;
+	min-width: 0px !important;
+	width: 0px !important;
+	opacity: 0;
+	transition: 0.3s linear all;
 }
 
 .hideMenuTab {
-  position: absolute;
-  top: 88px;
-  left: $mapControlsWidth;
-  z-index: 500;
-  cursor: pointer;
-  height: 51px;
+	position: absolute;
+	top: 88px;
+	left: $mapControlsWidth;
+	z-index: 500;
+	cursor: pointer;
+	height: 51px;
 }
 
 .mapControls {
-  min-width: $mapControlsWidth;
-  max-height: $mapHeight;
-  opacity: 1; 
-  overflow-y: scroll;
-  transition: 0.3s linear all;
+	min-width: $mapControlsWidth;
+	max-height: $mapHeight;
+	opacity: 1;
+	overflow-y: scroll;
+	transition: 0.3s linear all;
 
-  .mapControlsLink {
-    padding: 0.5em 1em;
-    cursor: pointer;
-    font-weight: 700;
-    text-align: center;
-    margin: auto;
-    display: block;
-  }
+	.mapControlsLink {
+		padding: 0.5em 1em;
+		cursor: pointer;
+		font-weight: 700;
+		text-align: center;
+		margin: auto auto 10px;
+		display: block;
+	}
 
-  .mapControlsLink::before {
-    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f0ac";
-    color: #555;
-    margin-right: 1em; 
-  }
-  
-  .layerform, .styleform {
-    overflow: scroll !important;
-    margin: 0.5em;
-    background: #eee;
-    padding: 0.5em;
-    border: solid 2px;
-    border-radius: 0.5em;
-    max-height: 25vh;
-  }
+	.mapControlsLink::before {
+		font-family: "Font Awesome 5 Free";
+		font-weight: 900;
+		content: "\f0ac";
+		color: #555;
+		margin-right: 1em;
+	}
 
-  .hiddenContent {
-    height: 0;
-    opacity: 0;
-    transition: 0.2s linear all;
-    overflow: hidden;
-  }
-  
-  .hiddenZoom {
-    pointer-events: none;
-    height: 0;
-    opacity: 0;
-    transition: 0.2s linear all;
-  }
-  
-  .displayContent {
-    height: auto;
-    opacity: 1;
-    overflow: visible;
-  }
+	.layerform,
+	.styleform {
+		overflow: scroll !important;
+		margin: 0.5em;
+		background: #eee;
+		padding: 0.5em;
+		border: solid 2px;
+		border-radius: 0.5em;
+		max-height: 25vh;
+	}
 
-  .featureGroupName .displayContent {
-    margin-left: 1em;
-  }
+	.hiddenContent {
+		height: 0;
+		opacity: 0;
+		transition: 0.2s linear all;
+		overflow: hidden;
+	}
 
-  .layerControls {
-    display: inline-block;
-    padding: 0 1em;
+	.hiddenZoom {
+		pointer-events: none;
+		height: 0;
+		opacity: 0;
+		transition: 0.2s linear all;
+	}
 
-    a {
-      text-decoration: none;
-    }
+	.displayContent {
+		height: auto;
+		opacity: 1;
+		overflow: visible;
+	}
 
-    i {
-      transition: transform .2s;
-      font-size: 14px;
-    }
+	.featureGroupName .displayContent {
+		margin-left: 1em;
+	}
 
-    label {
-      font-size: 14px;
-    }
+	.layerControls {
+		padding: 0 0 10px 10px;
+		.layerToggle {
+			&:first-child {
+				.borough {
+					margin: 0;
+				}
+				h4 {
+					margin: 1em 0 1.5em;
+				}
+			}
+		}
+		.borough {
+			&:first-child {
+				margin: 0;
+			}
+			margin: 0 0 10px;
+			* > h4 {
+				font-weight: bold;
+				font-size: 16px;
+			}
+		}
+		a {
+			text-decoration: none;
+		}
 
-    i:hover {
-      opacity: 0.7;
-      transform: scale(1.2);
-    }
+		i {
+			transition: transform 0.2s;
+			font-size: 16px;
+			margin: 2px 0 0;
+		}
 
-    input[type='checkbox'] {
-      cursor: pointer;
-    }
+		label {
+			font-size: 16px;
+		}
 
-    h4 {
-      margin: 1em 0 0.5em;
-      padding-bottom: 0.5em;
-      text-transform: uppercase;
-    }
+		i:hover {
+			opacity: 0.7;
+		}
 
-    .informationSquareIcon {
-      color: #e3ed58;
-    }
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
 
-    .zoomToFeatureGroup, .zoomToLayer, .easeToPoint {
-      cursor: pointer;
-      color: #1d43de;
-      // padding-left: 1em;
-      float: right;
-    }
+		h4 {
+			margin: 1em 0 0.5em;
+			padding-bottom: 0.5em;
+			text-transform: uppercase;
+		}
 
-    .layer, .borough {
-      width: calc(100% - 1em);
-      height: auto;
-      width: 100%; 
-    }
+		.informationSquareIcon {
+			color: #e3ed58;
+		}
 
-    .boroughName {
-      text-align: center;
-    }
+		.zoomToFeatureGroup,
+		.zoomToLayer,
+		.easeToPoint {
+			cursor: pointer;
+			color: #1d43de;
+			// padding-left: 1em;
+			float: right;
+		}
 
-    .featureGroupName {
-      text-align: left;
-    }
-    
-    .toggleInfo {
-      float: right;
-      color: rgb(119, 119, 119);
-      cursor: pointer;
-    }
+		.layer,
+		.borough {
+			width: calc(100% - 1em);
+			height: auto;
+			width: 100%;
+		}
 
-    .featureGroup.layersInArea {
-      overflow: hidden;
-    }
+		.boroughName {
+			text-align: center;
+			padding: 0 5px 0 0;
+		}
 
-    .toggleVisibility {
-      display: inline-block;
-      font-style: normal;
-      font-variant: normal;
-      text-rendering: auto;
-      line-height: 1;
-      cursor: pointer;
-      // keep it above any hidden content that might capture clicks
-      z-index: 1000;
-      position: relative;
-      color: #555;
-      padding-right: 0.5em;
-    }
+		.featureGroupName {
+			text-align: left;
+		}
 
-    .layerToggle {
-      border-bottom: 1px solid #ce5c00;
-      padding-bottom: 2.5em;
-    }
-  }
+		.toggleInfo {
+			float: right;
+			color: rgb(119, 119, 119);
+			cursor: pointer;
+		}
+
+		.featureGroup.layersInArea {
+			overflow: hidden;
+		}
+
+		.toggleVisibility {
+			display: inline-block;
+			font-style: normal;
+			font-variant: normal;
+			text-rendering: auto;
+			line-height: 1;
+			cursor: pointer;
+			// keep it above any hidden content that might capture clicks
+			z-index: 1000;
+			position: relative;
+			color: #555;
+			padding-right: 0.5em;
+		}
+
+		.layerToggle {
+			border-bottom: 1px solid #ce5c00;
+			padding-bottom: 2.5em;
+		}
+	}
 }
 
 .topMenu {
-  // flex-grow: 0; 
-  // flex-shrink: 0;
-  // flex-basis: 8 * $standard-height;
-  flex-direction: row;
-  align-items: baseline;
-  display: flex;
-  flex-direction: row;
-  flex-basis: 84px;
-  width: 100%;
-  border-bottom: $standard-border solid #b0691d;
-  align-items: center;
+	// flex-grow: 0;
+	// flex-shrink: 0;
+	// flex-basis: 8 * $standard-height;
+	flex-direction: row;
+	align-items: baseline;
+	display: flex;
+	flex-direction: row;
+	flex-basis: 84px;
+	width: 100%;
+	border-bottom: $standard-border solid #b0691d;
+	align-items: center;
 
-  * > {
-    vertical-align: middle;
-  }
+	* > {
+		vertical-align: middle;
+	}
 
-  .buttonContainer {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    padding-right: 0.5em;
-  }
+	.buttonContainer {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		padding-right: 0.5em;
+	}
 
-  .about  {
-    float: left;
-    color: black;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 15px;
-    line-height: 25px;
-    border-radius: 4px;
-    border: solid black;
-    font-weight: bold;
-    margin-top: 3px;
-    margin: 3px;
-    font-family: "Arial";
-    cursor: pointer; 
-  }
+	.about {
+		float: left;
+		color: black;
+		text-align: center;
+		padding: 10px;
+		text-decoration: none;
+		font-size: 15px;
+		line-height: 25px;
+		border-radius: 4px;
+		border: solid black;
+		font-weight: bold;
+		margin-top: 3px;
+		margin: 3px;
+		font-family: "Arial";
+		cursor: pointer;
+	}
 
-  a.encyclopedia {
-    float: left;
-    color: black;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 15px;
-    line-height: 25px;
-    border-radius: 4px;
-    border: solid black;
-    font-weight: bold;
-    margin-top: 3px;
-    margin: 3px;
-    font-family: "Arial";
-    background-color: #e8e1da;
-    cursor: pointer; 
+	a.encyclopedia {
+		float: left;
+		color: black;
+		text-align: center;
+		padding: 10px;
+		text-decoration: none;
+		font-size: 15px;
+		line-height: 25px;
+		border-radius: 4px;
+		border: solid black;
+		font-weight: bold;
+		margin-top: 3px;
+		margin: 3px;
+		font-family: "Arial";
+		background-color: #e8e1da;
+		cursor: pointer;
 
-    img {
-      vertical-align: text-top;
-      padding-left: 2px;
-      height: 18px;
-      width: 18px; 
-    }
-  }
+		img {
+			vertical-align: text-top;
+			padding-left: 2px;
+			height: 18px;
+			width: 18px;
+		}
+	}
 
-  #logo-img-wide {
-    max-height: 70px;
-    padding: 0.25em 0.25em 0.25em 21px;
-  }
+	#logo-img-wide {
+		max-height: 70px;
+		padding: 0.25em 0.25em 0.25em 21px;
+	}
 
-  .headerText {
-    display: inline-block;
-    //margin-top: 2 * $standard-height;
-    text-shadow: #717c9b 0px 1px 3px;
-    font-size: 1.7em;
-    //2 * $standard-height;
-    font-family: 'Consolas';
-    flex-basis: 100%;
-  }
+	.headerText {
+		display: inline-block;
+		//margin-top: 2 * $standard-height;
+		text-shadow: #717c9b 0px 1px 3px;
+		font-size: 1.7em;
+		//2 * $standard-height;
+		font-family: "Consolas";
+		flex-basis: 100%;
+	}
 }
 
 .feature {
-  padding-left: 1em;
+	padding-left: 1em;
 }
 
 .typeBoxText {
-  margin-left: 2em;
-  font-style: italic; 
+	margin-left: 2em;
+	font-style: italic;
 }
 
 .datePanel {
-  position: absolute;
-  background-color: #3887be;
-  border: black solid 0.1em;
-  border-radius: 0.5em;
-  font-size: 34px;
-  color: white;
-  float: right;
-  bottom: 3em;
-  right: 1em;
-  padding: 0.3em;
+	font-weight: bold;
+	position: absolute;
+	background-color: #3887be;
+	border: black solid 0.11764705882em;
+	border-radius: 0.2em;
+	font-size: 34px;
+	color: white;
+	float: right;
+	bottom: 3em;
+	text-align: right;
+	right: 1em;
+	padding: 0.3em;
 }
-
 @charset "UTF-8";
 
 //     _            _           _                           _ _
@@ -916,106 +944,107 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
   }
 }
 @include media(">=desktop") {
-  .flexContainer {
-    display: inline-flex; 
-    flex-direction: row;
-    justify-content: center;
-    width: 100%; 
-  }
-  
-  .mapControls  {
-    // n.b. relative units might be better on more devices
-    min-width: $mapControlsWidth;
-    max-width: $mapControlsWidth;
-    transition: 0.3s linear all;
-  }
+	.flexContainer {
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 100%;
+	}
 
-  .mapContainer {
-    display: flex; 
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: $mapWidth;
-    flex-direction: column;
-    overflow-x: hidden;
-    
-    .hiddenContent {
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-    
-    .displayContent {
-      max-height: 76vh;
-      opacity: 1;
-      overflow: scroll;
-    }
+	.mapControls {
+		// n.b. relative units might be better on more devices
+		min-width: $mapControlsWidth;
+		width: $mapControlsWidth;
+		transition: 0.3s linear all;
+	}
 
-    .sideInfoDisplay::-webkit-scrollbar-thumb {
-      background: steelblue;
-    }
-    
-    .sideInfoDisplay::-webkit-scrollbar {
-      width: 7px;
-    }
+	.mapContainer {
+		display: flex;
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: $mapWidth;
+		flex-direction: column;
+		overflow-x: hidden;
 
-    .sideInfoDisplay {
-      z-index: 3;
-      // overflow: scroll;
-      width: 33vw;
-      transition: 0.2s linear all;
-      // height: 75vh;
-      position: absolute;
-      right: 1em;
-      background-color:#ffff7f;
-      border: solid #FFFFFF 3px;
-      padding: 0.5em;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      -ms-word-break: break-all;
-      word-break: break-all;
-      word-break: break-word;
-      -ms-hyphens: auto;
-      -moz-hyphens: auto;
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      margin-top: 1em;
-      overflow-x: hidden;
+		.hiddenContent {
+			height: 0;
+			opacity: 0;
+			overflow: hidden;
+		}
 
-      img {
-        max-width: 100%;
-      }
+		.displayContent {
+			max-height: 76vh;
+			opacity: 1;
+			overflow: scroll;
+		}
 
-      p {
-        line-height: 2em;
-        display: block;
-      }
+		.sideInfoDisplay::-webkit-scrollbar-thumb {
+			background: steelblue;
+		}
 
-      .boldItalic {
-        font-weight: bold;
-        span, a {
-          font-style: italic;
-        }
-        span {
-          font-weight: normal;
-        }
-      }
+		.sideInfoDisplay::-webkit-scrollbar {
+			width: 7px;
+		}
 
-    }
+		.sideInfoDisplay {
+			z-index: 3;
+			// overflow: scroll;
+			width: 33vw;
+			transition: 0.2s linear all;
+			// height: 75vh;
+			position: absolute;
+			right: 1em;
+			background-color: #ffff7f;
+			border: solid #ffffff 3px;
+			padding: 0.5em;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			-ms-word-break: break-all;
+			word-break: break-all;
+			word-break: break-word;
+			-ms-hyphens: auto;
+			-moz-hyphens: auto;
+			-webkit-hyphens: auto;
+			hyphens: auto;
+			margin-top: 1em;
+			overflow-x: hidden;
 
-    .map {
-      height: $mapHeight;
-      position: absolute;
-      top: 80px; 
-      // 6.5 * $standard-height + $standard-border;
-      bottom: 0;
-      width: $mapWidth;
-    }
+			img {
+				max-width: 100%;
+			}
 
-    .mapboxgl-canvas {
-      width: 100% !important; 
-    }
-  }
-}@include media("<=tablet") {
+			p {
+				line-height: 2em;
+				display: block;
+			}
+
+			.boldItalic {
+				font-weight: bold;
+				span,
+				a {
+					font-style: italic;
+				}
+				span {
+					font-weight: normal;
+				}
+			}
+		}
+
+		.map {
+			height: $mapHeight;
+			position: absolute;
+			top: 80px;
+			// 6.5 * $standard-height + $standard-border;
+			bottom: 0;
+			width: $mapWidth;
+		}
+
+		.mapboxgl-canvas {
+			width: 100% !important;
+		}
+	}
+}
+@include media("<=tablet") {
   .flexContainer {
     display: flex; 
     flex-direction: column;

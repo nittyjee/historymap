@@ -19,7 +19,6 @@ h4 {
   color: #23374d;
   font-weight: bold;
   font-size: 17px;
-  padding-bottom: 8px;
   text-align: center;
   border-bottom: 1px solid #ce5c00;
   padding-bottom: 1em; }
@@ -32,11 +31,12 @@ a {
   height: calc(100vh - 164px);
   border-bottom: 2px solid #b0691d; }
 
-.editLayer, .deleteLayer {
+.editLayer,
+.deleteLayer {
   cursor: pointer; }
 
 .highlight {
-  animation: bounce .3s linear;
+  animation: bounce 0.3s linear;
   border: #0f0 solid 2px;
   accent-color: #0f0;
   font-style: italic;
@@ -44,7 +44,7 @@ a {
 
 .hoverPopUp {
   background-color: rgba(255, 255, 0, 0.5);
-  border: solid #FFFF00 2px;
+  border: solid #ffff00 2px;
   padding-left: 5px;
   padding-right: 5px; }
 
@@ -56,6 +56,9 @@ a {
 
 .mapControls::-webkit-scrollbar {
   width: 7px; }
+
+.mapControls::-webkit-scrollbar-track {
+  background: #f1f1f1; }
 
 .mapboxgl-ctrl-zoom-in {
   background-image: "url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z'/%3E%3C/svg%3E);"; }
@@ -85,7 +88,7 @@ a {
     cursor: pointer;
     font-weight: 700;
     text-align: center;
-    margin: auto;
+    margin: auto auto 10px;
     display: block; }
   .mapControls .mapControlsLink::before {
     font-family: "Font Awesome 5 Free";
@@ -93,7 +96,8 @@ a {
     content: "\f0ac";
     color: #555;
     margin-right: 1em; }
-  .mapControls .layerform, .mapControls .styleform {
+  .mapControls .layerform,
+  .mapControls .styleform {
     overflow: scroll !important;
     margin: 0.5em;
     background: #eee;
@@ -118,19 +122,29 @@ a {
   .mapControls .featureGroupName .displayContent {
     margin-left: 1em; }
   .mapControls .layerControls {
-    display: inline-block;
-    padding: 0 1em; }
+    padding: 0 0 10px 10px; }
+    .mapControls .layerControls .layerToggle:first-child .borough {
+      margin: 0; }
+    .mapControls .layerControls .layerToggle:first-child h4 {
+      margin: 1em 0 1.5em; }
+    .mapControls .layerControls .borough {
+      margin: 0 0 10px; }
+      .mapControls .layerControls .borough:first-child {
+        margin: 0; }
+      .mapControls .layerControls .borough * > h4 {
+        font-weight: bold;
+        font-size: 16px; }
     .mapControls .layerControls a {
       text-decoration: none; }
     .mapControls .layerControls i {
-      transition: transform .2s;
-      font-size: 14px; }
+      transition: transform 0.2s;
+      font-size: 16px;
+      margin: 2px 0 0; }
     .mapControls .layerControls label {
-      font-size: 14px; }
+      font-size: 16px; }
     .mapControls .layerControls i:hover {
-      opacity: 0.7;
-      transform: scale(1.2); }
-    .mapControls .layerControls input[type='checkbox'] {
+      opacity: 0.7; }
+    .mapControls .layerControls input[type="checkbox"] {
       cursor: pointer; }
     .mapControls .layerControls h4 {
       margin: 1em 0 0.5em;
@@ -138,16 +152,20 @@ a {
       text-transform: uppercase; }
     .mapControls .layerControls .informationSquareIcon {
       color: #e3ed58; }
-    .mapControls .layerControls .zoomToFeatureGroup, .mapControls .layerControls .zoomToLayer, .mapControls .layerControls .easeToPoint {
+    .mapControls .layerControls .zoomToFeatureGroup,
+    .mapControls .layerControls .zoomToLayer,
+    .mapControls .layerControls .easeToPoint {
       cursor: pointer;
       color: #1d43de;
       float: right; }
-    .mapControls .layerControls .layer, .mapControls .layerControls .borough {
+    .mapControls .layerControls .layer,
+    .mapControls .layerControls .borough {
       width: calc(100% - 1em);
       height: auto;
       width: 100%; }
     .mapControls .layerControls .boroughName {
-      text-align: center; }
+      text-align: center;
+      padding: 0 5px 0 0; }
     .mapControls .layerControls .featureGroupName {
       text-align: left; }
     .mapControls .layerControls .toggleInfo {
@@ -231,7 +249,7 @@ a {
     display: inline-block;
     text-shadow: #717c9b 0px 1px 3px;
     font-size: 1.7em;
-    font-family: 'Consolas';
+    font-family: "Consolas";
     flex-basis: 100%; }
 
 .feature {
@@ -242,14 +260,16 @@ a {
   font-style: italic; }
 
 .datePanel {
+  font-weight: bold;
   position: absolute;
   background-color: #3887be;
-  border: black solid 0.1em;
-  border-radius: 0.5em;
+  border: black solid 0.11764705882em;
+  border-radius: 0.2em;
   font-size: 34px;
   color: white;
   float: right;
   bottom: 3em;
+  text-align: right;
   right: 1em;
   padding: 0.3em; }
 
@@ -261,7 +281,7 @@ a {
     width: 100%; }
   .mapControls {
     min-width: 325px;
-    max-width: 325px;
+    width: 325px;
     transition: 0.3s linear all; }
   .mapContainer {
     display: flex;
@@ -289,7 +309,7 @@ a {
       position: absolute;
       right: 1em;
       background-color: #ffff7f;
-      border: solid #FFFFFF 3px;
+      border: solid #ffffff 3px;
       padding: 0.5em;
       overflow-wrap: break-word;
       word-wrap: break-word;
@@ -309,7 +329,8 @@ a {
         display: block; }
       .mapContainer .sideInfoDisplay .boldItalic {
         font-weight: bold; }
-        .mapContainer .sideInfoDisplay .boldItalic span, .mapContainer .sideInfoDisplay .boldItalic a {
+        .mapContainer .sideInfoDisplay .boldItalic span,
+        .mapContainer .sideInfoDisplay .boldItalic a {
           font-style: italic; }
         .mapContainer .sideInfoDisplay .boldItalic span {
           font-weight: normal; }

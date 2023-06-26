@@ -7,7 +7,7 @@ mixin boroughToggle(boroughData, boroughName, user)
     .boroughName
       i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
       -// .areaList
-      label #{boroughName}
+      b  #{boroughName}
       -// child
       .hiddenContent(name=`${boroughName}-layers`)
         each featureGroup, featureGroupName in boroughData

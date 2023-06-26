@@ -1,101 +1,101 @@
 @include media(">=desktop") {
-  .flexContainer {
-    display: inline-flex; 
-    flex-direction: row;
-    justify-content: center;
-    width: 100%; 
-  }
-  
-  .mapControls  {
-    // n.b. relative units might be better on more devices
-    min-width: $mapControlsWidth;
-    max-width: $mapControlsWidth;
-    transition: 0.3s linear all;
-  }
+	.flexContainer {
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 100%;
+	}
 
-  .mapContainer {
-    display: flex; 
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: $mapWidth;
-    flex-direction: column;
-    overflow-x: hidden;
-    
-    .hiddenContent {
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-    
-    .displayContent {
-      max-height: 76vh;
-      opacity: 1;
-      overflow: scroll;
-    }
+	.mapControls {
+		// n.b. relative units might be better on more devices
+		min-width: $mapControlsWidth;
+		width: $mapControlsWidth;
+		transition: 0.3s linear all;
+	}
 
-    .sideInfoDisplay::-webkit-scrollbar-thumb {
-      background: steelblue;
-    }
-    
-    .sideInfoDisplay::-webkit-scrollbar {
-      width: 7px;
-    }
+	.mapContainer {
+		display: flex;
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: $mapWidth;
+		flex-direction: column;
+		overflow-x: hidden;
 
-    .sideInfoDisplay {
-      z-index: 3;
-      // overflow: scroll;
-      width: 33vw;
-      transition: 0.2s linear all;
-      // height: 75vh;
-      position: absolute;
-      right: 1em;
-      background-color:#ffff7f;
-      border: solid #FFFFFF 3px;
-      padding: 0.5em;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      -ms-word-break: break-all;
-      word-break: break-all;
-      word-break: break-word;
-      -ms-hyphens: auto;
-      -moz-hyphens: auto;
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      margin-top: 1em;
-      overflow-x: hidden;
+		.hiddenContent {
+			height: 0;
+			opacity: 0;
+			overflow: hidden;
+		}
 
-      img {
-        max-width: 100%;
-      }
+		.displayContent {
+			max-height: 76vh;
+			opacity: 1;
+			overflow: scroll;
+		}
 
-      p {
-        line-height: 2em;
-        display: block;
-      }
+		.sideInfoDisplay::-webkit-scrollbar-thumb {
+			background: steelblue;
+		}
 
-      .boldItalic {
-        font-weight: bold;
-        span, a {
-          font-style: italic;
-        }
-        span {
-          font-weight: normal;
-        }
-      }
+		.sideInfoDisplay::-webkit-scrollbar {
+			width: 7px;
+		}
 
-    }
+		.sideInfoDisplay {
+			z-index: 3;
+			// overflow: scroll;
+			width: 33vw;
+			transition: 0.2s linear all;
+			// height: 75vh;
+			position: absolute;
+			right: 1em;
+			background-color: #ffff7f;
+			border: solid #ffffff 3px;
+			padding: 0.5em;
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			-ms-word-break: break-all;
+			word-break: break-all;
+			word-break: break-word;
+			-ms-hyphens: auto;
+			-moz-hyphens: auto;
+			-webkit-hyphens: auto;
+			hyphens: auto;
+			margin-top: 1em;
+			overflow-x: hidden;
 
-    .map {
-      height: $mapHeight;
-      position: absolute;
-      top: 80px; 
-      // 6.5 * $standard-height + $standard-border;
-      bottom: 0;
-      width: $mapWidth;
-    }
+			img {
+				max-width: 100%;
+			}
 
-    .mapboxgl-canvas {
-      width: 100% !important; 
-    }
-  }
+			p {
+				line-height: 2em;
+				display: block;
+			}
+
+			.boldItalic {
+				font-weight: bold;
+				span,
+				a {
+					font-style: italic;
+				}
+				span {
+					font-weight: normal;
+				}
+			}
+		}
+
+		.map {
+			height: $mapHeight;
+			position: absolute;
+			top: 80px;
+			// 6.5 * $standard-height + $standard-border;
+			bottom: 0;
+			width: $mapWidth;
+		}
+
+		.mapboxgl-canvas {
+			width: 100% !important;
+		}
+	}
 }
