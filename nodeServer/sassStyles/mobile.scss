@@ -1,40 +1,48 @@
 @include media("<=tablet") {
-  .flexContainer {
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    width: 100%; 
-  }
-
-  .timelineSlider {
-    margin-top: 60vh;
-  }
-
-  .mapControls  {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 25vw;
-    flex-direction: column;
-  }
-
-  .mapContainer {
-    display: flex; 
-    flex-grow: 1;
-    position: relative; 
-
-    .datePanel {
-      margin-top: 3em;
-      right: auto; 
-      bottom: auto;
-      float: left;
+    .flexContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
     }
 
-    .map {
-      height: $mapHeight;
-      position: absolute;
-      top: 8 * $standard-height + $standard-border;
-      bottom: 0;
-      width: 100%;
+    .timelineSlider {
+        margin-top: 60vh;
     }
-  }
+
+    .mapControls {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 25vw;
+        flex-direction: column;
+    }
+
+    .mapContainer {
+        display: flex;
+        flex-grow: 1;
+        position: relative;
+
+        .datePanel {
+            margin-top: 3em;
+            right: auto;
+            bottom: auto;
+            float: left;
+        }
+
+        .map {
+            height: $mapHeight;
+            position: absolute;
+            top: 8 * $standard-height + $standard-border;
+            bottom: 0;
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 1023px) {
+    .mapContainer {
+        .sideInfoDisplayWrapper {
+            display: none;
+        }
+    }
 }
