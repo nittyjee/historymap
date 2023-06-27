@@ -60,7 +60,8 @@ a {
 
 .mapboxgl-ctrl-bottom-left {
   bottom: 7px !important;
-  left: 467px !important; }
+  right: 630px !important;
+  left: unset !important; }
 
 .mapboxgl-ctrl-logo {
   display: none !important; }
