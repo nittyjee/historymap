@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"file": "scssDerived.css",
-	"sources": [
-		"layerAdd.scss"
-	],
-	"names": [],
-	"mappings": "AAAA,AACE,UADQ,CACR,KAAK,CAAA,AAAA,IAAC,CAAK,MAAM,AAAX,EAAa;EACjB,OAAO,EAAE,KAAK,GAEf;;AAJH,AAKE,UALQ,CAKR,KAAK,CAAA,AAAA,IAAC,CAAK,UAAU,AAAf,EAAiB;EACrB,OAAO,EAAE,YAAY,GACtB;;AAPH,AASE,UATQ,CASR,MAAM,CAAC;EACL,OAAO,EAAE,KAAK,GACf"
-}
