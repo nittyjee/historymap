@@ -11,14 +11,12 @@ function xhr (items, route, callback) {
   xhr.send(JSON.stringify(items));
 
   if (xhr.readyState === 1) {
-    console.log(`blocking ${route}`);
     document.body.style.pointerEvents = 'none';
   }
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       if (xhr.responseText) {
-        console.log(`response for route ${route} should have been received`);
         callback(xhr.responseText);
         document.body.style.pointerEvents = '';
         /* To add a loading gif uncomment the following, add a div that has a gif and obscures the screen */

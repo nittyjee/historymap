@@ -27,7 +27,6 @@ const drupalData = (drupalDataName, mapboxLot) => {
   const promise = new Promise((resolve, reject) => {
     for (let i = 0; i < data.length; i++) {
       const lot = data[i];
-      //console.log(lot);
       let lotTitle;
       if (drupalDataName === 'Dutch_Grants') {
         lotTitle = lot.title;

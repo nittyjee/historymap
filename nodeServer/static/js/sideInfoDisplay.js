@@ -1,6 +1,6 @@
+
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
   const mapboxData = mapFeatureClickEvent.features[0].properties;
-  console.log(mapboxData);
   // corresponding content on Drupal:
   // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
 

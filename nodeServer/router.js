@@ -6,7 +6,6 @@ function isLoggedIn (req, res, next) {
     req.user = req.session.passport.user;
     next();
   } else {
-    console.log('Attempted data insertion');
     return res.sendStatus(503);
   }
 }
@@ -39,7 +38,6 @@ module.exports = (app) => {
       ? req.session.passport.user
       : null;
 
-    console.log(copyOfBoroughs);
     res.render('main.pug', { layers: copyOfBoroughs, styles: copyOfStyles, user });
   });
 
@@ -143,7 +141,6 @@ module.exports = (app) => {
 
   app.post('/deleteLayer', isLoggedIn, (req, res) => {
     mongo.deleteLayer(req.body.id).then((result) => {
-      console.log(result);
       if (result.acknowledged) {
         res.send(`Layer deleted`);
       }

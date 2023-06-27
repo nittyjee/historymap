@@ -17,10 +17,6 @@ function createHoverPopup (data, event) {
   const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
   // Maybe a semantic feature group name will be required:
   const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
-  console.log(mapboxFeatureProperties);
-
-  console.log(lot);
-  console.log(personNameSt);
 
   popUpHTML.classList.add(
     'hoverPopUp'

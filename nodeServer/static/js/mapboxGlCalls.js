@@ -31,3 +31,5 @@ window.setTimeout(() => {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
   });
 }, 1000);
+// End point for editing data on mapbox
+// https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}

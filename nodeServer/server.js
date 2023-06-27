@@ -51,7 +51,6 @@ function generateRandomID (length) {
       return checkCollision();
     }
     */
-    console.log(itemref);
     return itemref;
   }
   return checkCollision();

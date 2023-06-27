@@ -343,7 +343,6 @@ function LayerManager (parentElement) {
           const targetMapText = map.split('/')[map.split('/').length - 1];
           const targetMap = maps[targetMapText];
           if (checkbox.checked) {
-            console.log(map);
             targetMap.setLayoutProperty(map, 'visibility', 'visible');
           } else {
             targetMap.setLayoutProperty(map, 'visibility', 'none');
@@ -364,7 +363,7 @@ function LayerManager (parentElement) {
       /* A map is a style */
       const mapData = {};
 
-      function textInputGenerator (fieldName, target) {
+      function textInputGenerator (fieldName, target, description) {
         const nameLabel = document.createElement('label');
         nameLabel.htmlFor = fieldName;
         nameLabel.innerHTML = `${fieldName}: `;
@@ -374,6 +373,8 @@ function LayerManager (parentElement) {
         name.setAttribute('type', 'text');
         name.id = fieldName.replaceAll(' ', '_');
         target.appendChild(name);
+
+        name.title = description;
 
         name.addEventListener('input', () => {
           mapData[fieldName] = name.value;
@@ -394,8 +395,16 @@ function LayerManager (parentElement) {
       mapForm.appendChild(title);
 
       const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point'];
-      fields.forEach(fieldName => {
-        textInputGenerator(fieldName, mapForm);
+      const titleDescriptors = [
+        'Title is the name of a map e.g. "Stokes Key to Castello Plan"',
+        'Borogh refers to a group of maps "1660|Castello Plan"',
+        'The link to the style e.g. "mapbox://styles/nittyjee/ck7piltib01881ioc5i8bel7m"',
+        'The node id is the drupal node you wish to display in the modal given a click on the info button e.g. "10056"',
+        'Ease to point is a decimal coordinate pair (longitude, latitude) e.g -74.01255,40.704882'
+      ];
+
+      fields.forEach((fieldName, i) => {
+        textInputGenerator(fieldName, mapForm, titleDescriptors[i]);
       });
 
       const submit = document.createElement('input');
@@ -468,7 +477,7 @@ function LayerManager (parentElement) {
 
   this.generateAddLayerForm = () => {
     const promise = new Promise((resolve, reject) => {
-      function textInputGenerator (fieldName, target) {
+      function textInputGenerator (fieldName, target, description) {
         const nameLabel = document.createElement('label');
         nameLabel.htmlFor = fieldName;
         nameLabel.innerHTML = `${fieldName}: `;
@@ -477,6 +486,7 @@ function LayerManager (parentElement) {
         const name = document.createElement('input');
         name.setAttribute('type', 'text');
         name.id = fieldName.replaceAll(' ', '_');
+        name.title = description;
         target.appendChild(name);
 
         name.addEventListener('input', () => {
@@ -603,8 +613,17 @@ function LayerManager (parentElement) {
         'borough'
       ];
 
-      textFields.forEach(fieldName => {
-        textInputGenerator(fieldName, layerForm);
+      const titleDescriptors = [
+        'The name that appears beside the feature group toggle checkbox e.g. "Information", "Lines", "Lenape trails"',
+        'The source layer e.g. lenape_trails-9n6muf',
+        'The source URL e.g. mapbox://nittyjee.4kio957z',
+        'Feature Group: The group to which this layer bellongs e.g. 1609|Manahatta',
+        'The article nid you wish to display in the modal when the info button for the feature group is clicked',
+        'The borough where the feature group resides'
+      ];
+
+      textFields.forEach((fieldName, i) => {
+        textInputGenerator(fieldName, layerForm, titleDescriptors[i]);
       });
 
       const types = ['circle', 'line', 'fill'];
@@ -1201,10 +1220,6 @@ function createHoverPopup (data, event) {
   const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
   // Maybe a semantic feature group name will be required:
   const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
-  console.log(mapboxFeatureProperties);
-
-  console.log(lot);
-  console.log(personNameSt);
 
   popUpHTML.classList.add(
     'hoverPopUp'
@@ -1262,10 +1277,11 @@ window.setTimeout(() => {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
   });
 }, 1000);
+// End point for editing data on mapbox
+// https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}
+
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
-  console.log([...arguments]);
   const mapboxData = mapFeatureClickEvent.features[0].properties;
-  console.log(mapboxData);
   // corresponding content on Drupal:
   // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
 
@@ -1345,7 +1361,6 @@ const drupalData = (drupalDataName, mapboxLot) => {
   const promise = new Promise((resolve, reject) => {
     for (let i = 0; i < data.length; i++) {
       const lot = data[i];
-      //console.log(lot);
       let lotTitle;
       if (drupalDataName === 'Dutch_Grants') {
         lotTitle = lot.title;
@@ -1757,14 +1772,12 @@ function xhr (items, route, callback) {
   xhr.send(JSON.stringify(items));
 
   if (xhr.readyState === 1) {
-    console.log(`blocking ${route}`);
     document.body.style.pointerEvents = 'none';
   }
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       if (xhr.responseText) {
-        console.log(`response for route ${route} should have been received`);
         callback(xhr.responseText);
         document.body.style.pointerEvents = '';
         /* To add a loading gif uncomment the following, add a div that has a gif and obscures the screen */

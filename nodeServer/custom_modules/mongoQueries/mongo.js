@@ -100,7 +100,6 @@ exports.getStyles = async () => {
 };
 
 exports.saveStyle = async (style) => {
-  console.log(style);
   const cleanData = await validate(style);
   const obId = new ObjectId(cleanData._id);
   delete cleanData.id;

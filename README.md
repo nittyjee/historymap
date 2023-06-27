@@ -1,4 +1,4 @@
-This app is not production ready, it is missing things such as setting headers and session control. 
+This app is not production ready, it is missing things such as setting headers.
 
 # Style: 
 I have written in semi-standard and using double spacing (standard with semi-colons). I haven't altered the formatting of the original code. 
@@ -19,6 +19,8 @@ Node also run build tools in development.
 ## MongoDB
 The app is currently configured to use MongoDB. You will have to set up
 a DB for your project, this is very easy using Mongot Atlas. 
+
+You can also quite easilly adapt this to a SQL based backend that supports storing and querying JSON.
 
 Config is as simple as adding a .env file with a user, password, DB name and connection URL. 
 You can use the example given for testing. Note that .env and config files should not *usually* 

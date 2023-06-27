@@ -1,5 +1,4 @@
 mixin boroughToggle(boroughData, boroughName, user)
-  -console.log(boroughData);
   -// parent
   .borough
     -// toggle
@@ -30,6 +29,8 @@ mixin boroughToggle(boroughData, boroughName, user)
                     +layerToggle(layer, user, layer.name)
 
               else
+                if featureGroup[0]['drupal node id']
+                  i.fa.fa-info-circle.toggleInfo(data-nodeId=featureGroup[0]['drupal node id'] title='Toggle more information')
                 -// pass name it layer === featureGroup
                 +layerToggle(featureGroup[0], user, featureGroupName)
               
