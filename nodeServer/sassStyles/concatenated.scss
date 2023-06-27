@@ -1,16 +1,21 @@
 $standard-height: 12px;
 $standard-border: 2px;
 // 12px === standard-height
-$mapHeight: calc(100vh - 164px);
+$mapHeight: calc(100vh - 148px);
 // requested pixel specific value
-$mapControlsWidth: 325px; 
-// $mapWidth: 75vw; 
+$mapControlsWidth: 325px;
+// $mapWidth: 75vw;
 //$mapWidth: calc(100vw - 325px);
-$mapWidth: 100vw; 
-//calc(100vh - (2 * 8 * 12px + 2px)); 
-$breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
+$mapWidth: 100vw;
+//calc(100vh - (2 * 8 * 12px + 2px));
+$breakpoints: (
+	phone: 320px,
+	tablet: 768px,
+	desktop: 1024px,
+);
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap");
 body {
-	font-family: "Source Sans Pro", sans-serif;
+	font-family: "Source Sans 3", sans-serif;
 	margin: 0;
 	overflow-x: hidden;
 }
@@ -18,15 +23,37 @@ body {
 dialog {
 	max-width: 700px;
 	background-color: rgba(255, 255, 255, 0.9);
-	border-style: none;
+	border-style: transparent;
 	border-radius: 0.4em;
-	font-weight: 300;
-	padding: 1em;
-
+	font-weight: 400;
+	outline: none;
+	border-color: transparent;
+	padding: 13px 15px 15px;
 	.close {
 		float: right;
 		font-size: 1.5em;
 		cursor: pointer;
+	}
+	h2 {
+		min-height: 35px;
+		font-size: 20px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	p,
+	div {
+		line-height: 20px;
+	}
+	p {
+		margin: 5px 0;
+	}
+	div {
+		margin: 5px 0 0;
+	}
+	.node__content {
+		.text-formatted {
+			padding: 15px;
+		}
 	}
 }
 
@@ -36,7 +63,6 @@ h4 {
 	font-size: 17px;
 	text-align: center;
 	border-bottom: 1px solid #ce5c00;
-	padding-bottom: 1em;
 }
 
 a {
@@ -61,14 +87,47 @@ a {
 	font-style: italic;
 	line-break: anywhere;
 }
-
+.mapboxgl-ctrl-bottom-left {
+	bottom: 7px !important;
+	left: 467px !important;
+}
+.mapboxgl-ctrl-logo {
+	display: none !important;
+}
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+	display: flex;
+}
 .hoverPopUp {
 	background-color: rgba(255, 255, 0, 0.5);
 	border: solid #ffff00 2px;
 	padding-left: 5px;
 	padding-right: 5px;
 }
+.mapboxgl-popup-content .hoverPopUp {
+	background-color: rgba(255, 255, 0, 0.5);
+	border: solid #ffff00 2px;
 
+	text-align: center;
+	&.red {
+		background-color: rgba(255, 192, 203, 0.3);
+		border: solid pink 2px;
+	}
+	p {
+		margin: 0;
+	}
+}
+.infoLayerFarmsPopUp {
+	font-size: 40px !important;
+}
+.mapboxgl-popup-content .mapboxgl-popup-close-button {
+	display: none !important;
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+	border-top-color: #f15b28 !important;
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+	border-bottom-color: #f15b28 !important;
+}
 .mapboxgl-popup-content {
 	padding: 0px !important;
 }
@@ -90,6 +149,7 @@ a {
 .hiddenControls {
 	min-width: 0px !important;
 	width: 0px !important;
+	padding: 0px !important;
 	opacity: 0;
 	transition: 0.3s linear all;
 }
@@ -97,15 +157,16 @@ a {
 .hideMenuTab {
 	position: absolute;
 	top: 88px;
-	left: $mapControlsWidth;
+	left: $mapControlsWidth + 12px;
 	z-index: 500;
 	cursor: pointer;
-	height: 51px;
+	height: 54px;
 }
 
 .mapControls {
 	min-width: $mapControlsWidth;
 	max-height: $mapHeight;
+	padding: 10px 2px 10px 10px;
 	opacity: 1;
 	overflow-y: scroll;
 	transition: 0.3s linear all;
@@ -159,18 +220,30 @@ a {
 	}
 
 	.featureGroupName .displayContent {
-		margin-left: 1em;
+		.layer {
+			padding-left: 1.2em;
+		}
+
+		i {
+			margin-right: 3px;
+			&:last-of-type {
+				font-size: 16px;
+				margin-right: 3px;
+			}
+			&.slash-icon {
+				font-size: 11px;
+			}
+		}
 	}
 
 	.layerControls {
-		padding: 0 0 10px 10px;
 		.layerToggle {
 			&:first-child {
 				.borough {
 					margin: 0;
 				}
 				h4 {
-					margin: 1em 0 1.5em;
+					margin-bottom: 25px;
 				}
 			}
 		}
@@ -191,7 +264,6 @@ a {
 		i {
 			transition: transform 0.2s;
 			font-size: 16px;
-			margin: 2px 0 0;
 		}
 
 		label {
@@ -204,11 +276,14 @@ a {
 
 		input[type="checkbox"] {
 			cursor: pointer;
+			margin-right: 6px;
 		}
 
 		h4 {
-			margin: 1em 0 0.5em;
-			padding-bottom: 0.5em;
+			padding-bottom: 8px;
+			line-height: 21px;
+			text-align: center;
+			margin: 6px 0 8px;
 			text-transform: uppercase;
 		}
 
@@ -223,6 +298,7 @@ a {
 			color: #1d43de;
 			// padding-left: 1em;
 			float: right;
+			margin-right: 6px;
 		}
 
 		.layer,
@@ -234,23 +310,45 @@ a {
 
 		.boroughName {
 			text-align: center;
-			padding: 0 5px 0 0;
+			& > b {
+				line-height: 20px;
+			}
+			& > i {
+				padding-right: 6px;
+			}
 		}
 
 		.featureGroupName {
 			text-align: left;
+			i {
+				&:first-child {
+					margin: 2px 5px 0 0;
+				}
+			}
 		}
 
 		.toggleInfo {
 			float: right;
 			color: rgb(119, 119, 119);
 			cursor: pointer;
+			margin-right: 3px;
+			margin-left: 3px;
 		}
 
 		.featureGroup.layersInArea {
+			line-height: 20px;
 			overflow: hidden;
 		}
-
+		.featureGroup {
+			i {
+				&.fa-circle {
+					padding-right: 2px;
+				}
+				&:last-of-type {
+					margin-right: 3px;
+				}
+			}
+		}
 		.toggleVisibility {
 			display: inline-block;
 			font-style: normal;
@@ -262,7 +360,7 @@ a {
 			z-index: 1000;
 			position: relative;
 			color: #555;
-			padding-right: 0.5em;
+			padding-right: 4px;
 		}
 
 		.layerToggle {
@@ -352,6 +450,8 @@ a {
 		//2 * $standard-height;
 		font-family: "Consolas";
 		flex-basis: 100%;
+		margin-left: 6px;
+		margin-bottom: 13px;
 	}
 }
 
@@ -373,10 +473,17 @@ a {
 	font-size: 34px;
 	color: white;
 	float: right;
-	bottom: 3em;
+	bottom: 2.35em;
 	text-align: right;
-	right: 1em;
-	padding: 0.3em;
+	right: 0.6em;
+	padding: 2px 0.4em;
+}
+.styleToggle {
+	& > * {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 @charset "UTF-8";
 
@@ -1084,128 +1191,143 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
     }
   }
 }.timelineSlider {
-  height: 2.7em;
-  background-color: rgb(209, 236, 255); 
-  border-radius: 0.5em;
-  border: 1px solid #666;
-  font-family: Segoe UI,Arial,sans-serif;
-  font-weight: 700;
-  font-size: 1.1em;
-  text-align: left;
-  margin-top: 10px;
-  position: absolute;
-  width: calc(100% - 2em);
-  margin: 1em;
-  bottom: 0;
+	height: 2.5em;
+	background-color: rgb(209, 236, 255);
+	border-radius: 6px;
+	border: 1px solid #666;
+	font-family: Segoe UI, Arial, sans-serif;
+	font-weight: 700;
+	font-size: 1.1em;
+	text-align: left;
+	margin-top: 10px;
+	position: absolute;
+	width: calc(100% - 2em);
+	margin: 0.6em 0.8em;
+	bottom: 0;
+	&:hover {
+		background-color: rgb(186, 221, 249);
+	}
+	.timeline {
+		display: flex;
+		position: relative;
+		border-bottom: 2px darkorange solid;
+		padding: 10px 0 7px;
+		width: 100%;
+		bottom: 5px;
+	}
 
-  .timeline {
-    display: flex;
-    position: relative;
-    border-bottom: 2px darkorange solid;
-    padding: 10px 0;
-    width: 100%;
-    bottom: 5px;
-  }
+	.timeline > * {
+		pointer-events: none;
+	}
 
-  .timeline > * {
-    pointer-events: none;
-  }
-  
-  .year {
-    flex: 0 1 20vw;
-    text-align: center;
-    position: relative;
-    padding-right: 5px; 
-  }
-  
-  .year::after {
-    content: '';
-    display: block;
-    width: 50%;
-    position: absolute;
-    height: 5px;
-    bottom: -10px;
-    right: 0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
-    background-size: auto;
-    background-size: calc(100%/5) calc(100%/5);
-    background-size: -o-calc(100%/5) -o-calc(100%/5);
-    background-size: -moz-calc(100%/5) -moz-calc(100%/5);
-    background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
-  }
-  
-  .year::before {
-    content: '';
-    display: block;
-    width: 50%;
-    position: absolute;
-    height: 5px;
-    bottom: -10px;
-    left: 0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 90%,darkorange 95%,rgba(0,0,0,0) 100%);
-      background-size: auto;
-    background-size: calc(100%/5) calc(100%/5);
-    background-size: -o-calc(100%/5) -o-calc(100%/5);
-    background-size: -moz-calc(100%/5) -moz-calc(100%/5);
-    background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
-  }
-  
-  .yearCarat::before {
-    content: '';
-    display: block;
-    width: 50%;
-    position: absolute;
-    height: 10px;
-    bottom: -10px;
-    left: 0px;
-    background: linear-gradient(to right,rgba(0,0,0,0) 95%,darkorange 100%,rgba(0,0,0,0) 100%);
-    background-size: auto;
-    background-size: 100% 100%;
-  }
-  
-  .sliderHandle {
-    position: absolute;
-    z-index: 2;
-    width: 1.2em;
-    height: 3.3em;
-    top: -.3em;
-    top: -5px;
-    background-color: #555;
-    border: 1px solid #666;
-    border-radius: 0.5em;
-    cursor: pointer;
-    overflow: scroll;
-    left: calc(50% - 12px); 
-    overflow: visible;
-  }
-  
-  .sliderHandle:hover {
-    border: 1px solid #59b4d4;
-    background-color: #0078a3;
-  }
-  
-  .sliderHandle:active {
-    cursor: grab;
-  }
-  
-  .redSlider {
-    background-color: #f00;  
-  }
-  
-  .timeLineText {
-    font-weight: 800;
-    position: absolute;
-    top: 0;
-  }
+	.year {
+		flex: 0 1 20vw;
+		text-align: center;
+		position: relative;
+		padding-right: 5px;
+		font-size: 16.5px;
+		padding-bottom: 6px;
+		&.hide {
+			color: transparent;
+		}
+	}
 
-  .left {
-    left: 40%; 
-  }
+	.year::after {
+		content: "";
+		display: block;
+		width: 50%;
+		position: absolute;
+		height: 5px;
+		bottom: -8px;
+		right: 0px;
+		background: linear-gradient(to right, rgba(0, 0, 0, 0) 90%, darkorange 95%, rgba(0, 0, 0, 0) 100%);
+		background-size: auto;
+		background-size: calc(100% / 5) calc(100% / 5);
+		background-size: -o-calc(100%/5) -o-calc(100%/5);
+		background-size: -moz-calc(100%/5) -moz-calc(100%/5);
+		background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
+	}
 
-  .right {
-    right: 40%; 
-  }
-}.admin {
+	.year::before {
+		content: "";
+		display: block;
+		width: 50%;
+		position: absolute;
+		height: 5px;
+		bottom: -8px;
+		left: 0px;
+		background: linear-gradient(to right, rgba(0, 0, 0, 0) 90%, darkorange 95%, rgba(0, 0, 0, 0) 100%);
+		background-size: auto;
+		background-size: calc(100% / 5) calc(100% / 5);
+		background-size: -o-calc(100%/5) -o-calc(100%/5);
+		background-size: -moz-calc(100%/5) -moz-calc(100%/5);
+		background-size: -webkit-calc(100%/5) -webkit-calc(100%/5);
+	}
+
+	.yearCarat::before {
+		content: "";
+		display: block;
+		width: 50%;
+		position: absolute;
+		height: 10px;
+		bottom: -8px;
+		left: 0px;
+		background: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, darkorange 100%, rgba(0, 0, 0, 0) 100%);
+		background-size: auto;
+		background-size: 100% 100%;
+	}
+
+	.sliderHandle {
+		position: absolute;
+		background: #555555 url("../time-slide-icon.png") 50% 50% repeat-x;
+		z-index: 2;
+		width: 1.1em;
+		height: 3em;
+		top: -0.3em;
+		top: -5px;
+		border: 1px solid #666;
+		border-radius: 0.4em;
+		cursor: pointer;
+		overflow: scroll;
+		left: calc(50% - 12px);
+		overflow: visible;
+	}
+
+	.sliderHandle:hover {
+		border: 1px solid #59b4d4;
+		background: #0078a3;
+	}
+
+	.sliderHandle:active {
+		border: 1px solid #ffaf0f;
+		background: #f58400;
+		cursor: grab;
+	}
+
+	.redSlider {
+		background: red;
+	}
+
+	.timeLineText {
+		pointer-events: none;
+		font-weight: 800;
+		font-size: 16.5px;
+		position: absolute;
+		top: 5px;
+		word-spacing: 9px;
+	}
+	.timeLineText.hide {
+		color: transparent;
+	}
+	.left {
+		left: calc(50% - 92px);
+	}
+
+	.right {
+		right: calc(50% - 98px);
+	}
+}
+.admin {
   background-color: rgb(255, 143, 143);
 }
 

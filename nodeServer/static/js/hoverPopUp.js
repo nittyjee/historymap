@@ -9,32 +9,29 @@
  * @returns A HTMLElemnt to use in the pop up
  */
 
-function createHoverPopup (data, event) {
-  const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
-  const layerClass = `${layerName}PopUp`;
-  const popUpHTML = document.createElement('div');
-  const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
-  const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
-  // Maybe a semantic feature group name will be required:
-  const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
-  console.log(mapboxFeatureProperties);
+function createHoverPopup(data, event) {
+	const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
+	const layerClass = `${layerName}PopUp`;
+	const popUpHTML = document.createElement('div');
+	const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
+	const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
+	// Maybe a semantic feature group name will be required:
+	const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
+	popUpHTML.classList.add(
+		'hoverPopUp'
+	);
 
-  console.log(lot);
-  console.log(personNameSt);
+	const personName = document.createElement('p');
+	popUpHTML.appendChild(personName);
+	personName.textContent = personNameSt;
 
-  popUpHTML.classList.add(
-    'hoverPopUp'
-  );
-
-  const personName = document.createElement('p');
-  popUpHTML.appendChild(personName);
-  personName.textContent = personNameSt;
-
-  const lotName = document.createElement('b');
-  popUpHTML.appendChild(lotName);
-  lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
-
-  return popUpHTML;
+	const lotName = document.createElement('b');
+	popUpHTML.appendChild(lotName);
+	lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
+	if (lotName.textContent.includes('Castello')) {
+		popUpHTML.classList.add('red');
+	}
+	return popUpHTML;
 }
 
 /**
@@ -42,6 +39,6 @@ function createHoverPopup (data, event) {
  * @returns The same string with spaces replaced by an undescore
  * @description Small utility to declutter code.
  */
-function removeSpaces (string) {
-  return string.replaceAll(' ', '_');
+function removeSpaces(string) {
+	return string.replaceAll(' ', '_');
 }
