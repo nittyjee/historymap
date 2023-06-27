@@ -5,7 +5,7 @@ mixin boroughToggle(boroughData, boroughName, user)
     -// toggle
     -// new div to center content
     .boroughName
-      i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+      i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
       -// .areaList
       b  #{boroughName}
       -// child
@@ -18,7 +18,7 @@ mixin boroughToggle(boroughData, boroughName, user)
               -// the toggle
               if (featureGroup.length > 1)
                 input(type='checkbox' name=featureGroupName).view.featureGroup 
-                i.toggleVisibility.fa-minus-square.fas.compress-expand-icon
+                i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
                 label #{featureGroupName}
                               -// children
                               -// Drupal node id should be joined to boroughName... 

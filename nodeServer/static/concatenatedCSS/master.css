@@ -1,34 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap");
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Source Sans 3", sans-serif;
   margin: 0;
   overflow-x: hidden; }
 
 dialog {
   max-width: 700px;
   background-color: rgba(255, 255, 255, 0.9);
-  border-style: none;
+  border-style: transparent;
   border-radius: 0.4em;
-  font-weight: 300;
-  padding: 1em; }
+  font-weight: 400;
+  outline: none;
+  border-color: transparent;
+  padding: 13px 15px 15px; }
   dialog .close {
     float: right;
     font-size: 1.5em;
     cursor: pointer; }
+  dialog h2 {
+    min-height: 35px;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0; }
+  dialog p,
+  dialog div {
+    line-height: 20px; }
+  dialog p {
+    margin: 5px 0; }
+  dialog div {
+    margin: 5px 0 0; }
+  dialog .node__content .text-formatted {
+    padding: 15px; }
 
 h4 {
   color: #23374d;
   font-weight: bold;
   font-size: 17px;
   text-align: center;
-  border-bottom: 1px solid #ce5c00;
-  padding-bottom: 1em; }
+  border-bottom: 1px solid #ce5c00; }
 
 a {
   font-weight: 700;
   color: #ce5c00; }
 
 .mainBody {
-  height: calc(100vh - 164px);
+  height: calc(100vh - 148px);
   border-bottom: 2px solid #b0691d; }
 
 .editLayer,
@@ -42,11 +58,44 @@ a {
   font-style: italic;
   line-break: anywhere; }
 
+.mapboxgl-ctrl-bottom-left {
+  bottom: 7px !important;
+  right: 630px !important;
+  left: unset !important; }
+
+.mapboxgl-ctrl-logo {
+  display: none !important; }
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+  display: flex; }
+
 .hoverPopUp {
   background-color: rgba(255, 255, 0, 0.5);
   border: solid #ffff00 2px;
   padding-left: 5px;
   padding-right: 5px; }
+
+.mapboxgl-popup-content .hoverPopUp {
+  background-color: rgba(255, 255, 0, 0.5);
+  border: solid #ffff00 2px;
+  text-align: center; }
+  .mapboxgl-popup-content .hoverPopUp.red {
+    background-color: rgba(255, 192, 203, 0.3);
+    border: solid pink 2px; }
+  .mapboxgl-popup-content .hoverPopUp p {
+    margin: 0; }
+
+.infoLayerFarmsPopUp {
+  font-size: 40px !important; }
+
+.mapboxgl-popup-content .mapboxgl-popup-close-button {
+  display: none !important; }
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #f15b28 !important; }
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #f15b28 !important; }
 
 .mapboxgl-popup-content {
   padding: 0px !important; }
@@ -66,20 +115,22 @@ a {
 .hiddenControls {
   min-width: 0px !important;
   width: 0px !important;
+  padding: 0px !important;
   opacity: 0;
   transition: 0.3s linear all; }
 
 .hideMenuTab {
   position: absolute;
   top: 88px;
-  left: 325px;
+  left: 337px;
   z-index: 500;
   cursor: pointer;
-  height: 51px; }
+  height: 54px; }
 
 .mapControls {
   min-width: 325px;
-  max-height: calc(100vh - 164px);
+  max-height: calc(100vh - 148px);
+  padding: 10px 2px 10px 10px;
   opacity: 1;
   overflow-y: scroll;
   transition: 0.3s linear all; }
@@ -119,75 +170,95 @@ a {
     height: auto;
     opacity: 1;
     overflow: visible; }
-  .mapControls .featureGroupName .displayContent {
-    margin-left: 1em; }
-  .mapControls .layerControls {
-    padding: 0 0 10px 10px; }
-    .mapControls .layerControls .layerToggle:first-child .borough {
-      margin: 0; }
-    .mapControls .layerControls .layerToggle:first-child h4 {
-      margin: 1em 0 1.5em; }
-    .mapControls .layerControls .borough {
-      margin: 0 0 10px; }
-      .mapControls .layerControls .borough:first-child {
-        margin: 0; }
-      .mapControls .layerControls .borough * > h4 {
-        font-weight: bold;
-        font-size: 16px; }
-    .mapControls .layerControls a {
-      text-decoration: none; }
-    .mapControls .layerControls i {
-      transition: transform 0.2s;
+  .mapControls .featureGroupName .displayContent .layer {
+    padding-left: 1.2em; }
+  .mapControls .featureGroupName .displayContent i {
+    margin-right: 3px; }
+    .mapControls .featureGroupName .displayContent i:last-of-type {
       font-size: 16px;
-      margin: 2px 0 0; }
-    .mapControls .layerControls label {
+      margin-right: 3px; }
+    .mapControls .featureGroupName .displayContent i.slash-icon {
+      font-size: 11px; }
+  .mapControls .layerControls .layerToggle:first-child .borough {
+    margin: 0; }
+  .mapControls .layerControls .layerToggle:first-child h4 {
+    margin-bottom: 25px; }
+  .mapControls .layerControls .borough {
+    margin: 0 0 10px; }
+    .mapControls .layerControls .borough:first-child {
+      margin: 0; }
+    .mapControls .layerControls .borough * > h4 {
+      font-weight: bold;
       font-size: 16px; }
-    .mapControls .layerControls i:hover {
-      opacity: 0.7; }
-    .mapControls .layerControls input[type="checkbox"] {
-      cursor: pointer; }
-    .mapControls .layerControls h4 {
-      margin: 1em 0 0.5em;
-      padding-bottom: 0.5em;
-      text-transform: uppercase; }
-    .mapControls .layerControls .informationSquareIcon {
-      color: #e3ed58; }
-    .mapControls .layerControls .zoomToFeatureGroup,
-    .mapControls .layerControls .zoomToLayer,
-    .mapControls .layerControls .easeToPoint {
-      cursor: pointer;
-      color: #1d43de;
-      float: right; }
-    .mapControls .layerControls .layer,
-    .mapControls .layerControls .borough {
-      width: calc(100% - 1em);
-      height: auto;
-      width: 100%; }
-    .mapControls .layerControls .boroughName {
-      text-align: center;
-      padding: 0 5px 0 0; }
-    .mapControls .layerControls .featureGroupName {
-      text-align: left; }
-    .mapControls .layerControls .toggleInfo {
-      float: right;
-      color: #777777;
-      cursor: pointer; }
-    .mapControls .layerControls .featureGroup.layersInArea {
-      overflow: hidden; }
-    .mapControls .layerControls .toggleVisibility {
-      display: inline-block;
-      font-style: normal;
-      font-variant: normal;
-      text-rendering: auto;
-      line-height: 1;
-      cursor: pointer;
-      z-index: 1000;
-      position: relative;
-      color: #555;
-      padding-right: 0.5em; }
-    .mapControls .layerControls .layerToggle {
-      border-bottom: 1px solid #ce5c00;
-      padding-bottom: 2.5em; }
+  .mapControls .layerControls a {
+    text-decoration: none; }
+  .mapControls .layerControls i {
+    transition: transform 0.2s;
+    font-size: 16px; }
+  .mapControls .layerControls label {
+    font-size: 16px; }
+  .mapControls .layerControls i:hover {
+    opacity: 0.7; }
+  .mapControls .layerControls input[type="checkbox"] {
+    cursor: pointer;
+    margin-right: 6px; }
+  .mapControls .layerControls h4 {
+    padding-bottom: 8px;
+    line-height: 21px;
+    text-align: center;
+    margin: 6px 0 8px;
+    text-transform: uppercase; }
+  .mapControls .layerControls .informationSquareIcon {
+    color: #e3ed58; }
+  .mapControls .layerControls .zoomToFeatureGroup,
+  .mapControls .layerControls .zoomToLayer,
+  .mapControls .layerControls .easeToPoint {
+    cursor: pointer;
+    color: #1d43de;
+    float: right;
+    margin-right: 6px; }
+  .mapControls .layerControls .layer,
+  .mapControls .layerControls .borough {
+    width: calc(100% - 1em);
+    height: auto;
+    width: 100%; }
+  .mapControls .layerControls .boroughName {
+    text-align: center; }
+    .mapControls .layerControls .boroughName > b {
+      line-height: 20px; }
+    .mapControls .layerControls .boroughName > i {
+      padding-right: 6px; }
+  .mapControls .layerControls .featureGroupName {
+    text-align: left; }
+    .mapControls .layerControls .featureGroupName i:first-child {
+      margin: 2px 5px 0 0; }
+  .mapControls .layerControls .toggleInfo {
+    float: right;
+    color: #777777;
+    cursor: pointer;
+    margin-right: 3px;
+    margin-left: 3px; }
+  .mapControls .layerControls .featureGroup.layersInArea {
+    line-height: 20px;
+    overflow: hidden; }
+  .mapControls .layerControls .featureGroup i.fa-circle {
+    padding-right: 2px; }
+  .mapControls .layerControls .featureGroup i:last-of-type {
+    margin-right: 3px; }
+  .mapControls .layerControls .toggleVisibility {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
+    color: #555;
+    padding-right: 4px; }
+  .mapControls .layerControls .layerToggle {
+    border-bottom: 1px solid #ce5c00;
+    padding-bottom: 2.5em; }
 
 .topMenu {
   flex-direction: row;
@@ -250,7 +321,9 @@ a {
     text-shadow: #717c9b 0px 1px 3px;
     font-size: 1.7em;
     font-family: "Consolas";
-    flex-basis: 100%; }
+    flex-basis: 100%;
+    margin-left: 6px;
+    margin-bottom: 13px; }
 
 .feature {
   padding-left: 1em; }
@@ -268,10 +341,13 @@ a {
   font-size: 34px;
   color: white;
   float: right;
-  bottom: 3em;
+  bottom: 2.35em;
   text-align: right;
-  right: 1em;
-  padding: 0.3em; }
+  right: 0.6em;
+  padding: 2px 0.4em; }
+
+.styleToggle > *:last-child {
+  margin-bottom: 0; }
 
 @media (min-width: 1024px) {
   .flexContainer {
@@ -335,7 +411,7 @@ a {
         .mapContainer .sideInfoDisplay .boldItalic span {
           font-weight: normal; }
     .mapContainer .map {
-      height: calc(100vh - 164px);
+      height: calc(100vh - 148px);
       position: absolute;
       top: 80px;
       bottom: 0;
@@ -366,31 +442,33 @@ a {
       bottom: auto;
       float: left; }
     .mapContainer .map {
-      height: calc(100vh - 164px);
+      height: calc(100vh - 148px);
       position: absolute;
       top: 98px;
       bottom: 0;
       width: 100%; } }
 
 .timelineSlider {
-  height: 2.7em;
+  height: 2.5em;
   background-color: #d1ecff;
-  border-radius: 0.5em;
+  border-radius: 6px;
   border: 1px solid #666;
-  font-family: Segoe UI,Arial,sans-serif;
+  font-family: Segoe UI, Arial, sans-serif;
   font-weight: 700;
   font-size: 1.1em;
   text-align: left;
   margin-top: 10px;
   position: absolute;
   width: calc(100% - 2em);
-  margin: 1em;
+  margin: 0.6em 0.8em;
   bottom: 0; }
+  .timelineSlider:hover {
+    background-color: #baddf9; }
   .timelineSlider .timeline {
     display: flex;
     position: relative;
     border-bottom: 2px darkorange solid;
-    padding: 10px 0;
+    padding: 10px 0 7px;
     width: 100%;
     bottom: 5px; }
   .timelineSlider .timeline > * {
@@ -399,75 +477,86 @@ a {
     flex: 0 1 20vw;
     text-align: center;
     position: relative;
-    padding-right: 5px; }
+    padding-right: 5px;
+    font-size: 16.5px;
+    padding-bottom: 6px; }
+    .timelineSlider .year.hide {
+      color: transparent; }
   .timelineSlider .year::after {
-    content: '';
+    content: "";
     display: block;
     width: 50%;
     position: absolute;
     height: 5px;
-    bottom: -10px;
+    bottom: -8px;
     right: 0px;
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 90%, darkorange 95%, rgba(0, 0, 0, 0) 100%);
     background-size: auto;
-    background-size: calc(100%/5) calc(100%/5);
+    background-size: calc(100% / 5) calc(100% / 5);
     background-size: -o-calc(100%/5) -o-calc(100%/5);
     background-size: -moz-calc(100%/5) -moz-calc(100%/5);
     background-size: -webkit-calc(100%/5) -webkit-calc(100%/5); }
   .timelineSlider .year::before {
-    content: '';
+    content: "";
     display: block;
     width: 50%;
     position: absolute;
     height: 5px;
-    bottom: -10px;
+    bottom: -8px;
     left: 0px;
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 90%, darkorange 95%, rgba(0, 0, 0, 0) 100%);
     background-size: auto;
-    background-size: calc(100%/5) calc(100%/5);
+    background-size: calc(100% / 5) calc(100% / 5);
     background-size: -o-calc(100%/5) -o-calc(100%/5);
     background-size: -moz-calc(100%/5) -moz-calc(100%/5);
     background-size: -webkit-calc(100%/5) -webkit-calc(100%/5); }
   .timelineSlider .yearCarat::before {
-    content: '';
+    content: "";
     display: block;
     width: 50%;
     position: absolute;
     height: 10px;
-    bottom: -10px;
+    bottom: -8px;
     left: 0px;
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, darkorange 100%, rgba(0, 0, 0, 0) 100%);
     background-size: auto;
     background-size: 100% 100%; }
   .timelineSlider .sliderHandle {
     position: absolute;
+    background: #555555 url("../time-slide-icon.png") 50% 50% repeat-x;
     z-index: 2;
-    width: 1.2em;
-    height: 3.3em;
-    top: -.3em;
+    width: 1.1em;
+    height: 3em;
+    top: -0.3em;
     top: -5px;
-    background-color: #555;
     border: 1px solid #666;
-    border-radius: 0.5em;
+    border-radius: 0.4em;
     cursor: pointer;
     overflow: scroll;
     left: calc(50% - 12px);
     overflow: visible; }
   .timelineSlider .sliderHandle:hover {
     border: 1px solid #59b4d4;
-    background-color: #0078a3; }
+    background: #0078a3; }
   .timelineSlider .sliderHandle:active {
+    border: 1px solid #ffaf0f;
+    background: #f58400;
     cursor: grab; }
   .timelineSlider .redSlider {
-    background-color: #f00; }
+    background: red; }
   .timelineSlider .timeLineText {
+    pointer-events: none;
     font-weight: 800;
+    font-size: 16.5px;
     position: absolute;
-    top: 0; }
+    top: 5px;
+    word-spacing: 9px; }
+  .timelineSlider .timeLineText.hide {
+    color: transparent; }
   .timelineSlider .left {
-    left: 40%; }
+    left: calc(50% - 92px); }
   .timelineSlider .right {
-    right: 40%; }
+    right: calc(50% - 98px); }
 
 .admin {
   background-color: #ff8f8f; }

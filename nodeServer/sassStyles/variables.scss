@@ -1,11 +1,15 @@
 $standard-height: 12px;
 $standard-border: 2px;
 // 12px === standard-height
-$mapHeight: calc(100vh - 164px);
+$mapHeight: calc(100vh - 148px);
 // requested pixel specific value
-$mapControlsWidth: 325px; 
-// $mapWidth: 75vw; 
+$mapControlsWidth: 325px;
+// $mapWidth: 75vw;
 //$mapWidth: calc(100vw - 325px);
-$mapWidth: 100vw; 
-//calc(100vh - (2 * 8 * 12px + 2px)); 
-$breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
+$mapWidth: 100vw;
+//calc(100vh - (2 * 8 * 12px + 2px));
+$breakpoints: (
+	phone: 320px,
+	tablet: 768px,
+	desktop: 1024px,
+);
