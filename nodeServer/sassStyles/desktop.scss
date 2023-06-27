@@ -1,101 +1,121 @@
 @include media(">=desktop") {
-	.flexContainer {
-		display: inline-flex;
-		flex-direction: row;
-		justify-content: center;
-		width: 100%;
-	}
+    .flexContainer {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
 
-	.mapControls {
-		// n.b. relative units might be better on more devices
-		min-width: $mapControlsWidth;
-		width: $mapControlsWidth;
-		transition: 0.3s linear all;
-	}
+    .mapControls {
+        // n.b. relative units might be better on more devices
+        min-width: $mapControlsWidth;
+        width: $mapControlsWidth;
+        transition: 0.3s linear all;
+    }
 
-	.mapContainer {
-		display: flex;
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: $mapWidth;
-		flex-direction: column;
-		overflow-x: hidden;
+    .mapContainer {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: $mapWidth;
+        flex-direction: column;
+        overflow-x: hidden;
 
-		.hiddenContent {
-			height: 0;
-			opacity: 0;
-			overflow: hidden;
-		}
+        .hiddenContent {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
 
-		.displayContent {
-			max-height: 76vh;
-			opacity: 1;
-			overflow: scroll;
-		}
+        .displayContent {
+            opacity: 1;
+            overflow: scroll;
+        }
 
-		.sideInfoDisplay::-webkit-scrollbar-thumb {
-			background: steelblue;
-		}
+        .sideInfoDisplayWrapper {
+            position: absolute;
+            right: 0;
+            top: 80px;
+            z-index: 100;
+            border: solid 3px #fff;
+            background-color: #fff;
+            max-height: calc(100% - 230px);
+            overflow: auto;
 
-		.sideInfoDisplay::-webkit-scrollbar {
-			width: 7px;
-		}
+            &::-webkit-scrollbar-thumb {
+                background: steelblue;
+            }
 
-		.sideInfoDisplay {
-			z-index: 3;
-			// overflow: scroll;
-			width: 33vw;
-			transition: 0.2s linear all;
-			// height: 75vh;
-			position: absolute;
-			right: 1em;
-			background-color: #ffff7f;
-			border: solid #ffffff 3px;
-			padding: 0.5em;
-			overflow-wrap: break-word;
-			word-wrap: break-word;
-			-ms-word-break: break-all;
-			word-break: break-all;
-			word-break: break-word;
-			-ms-hyphens: auto;
-			-moz-hyphens: auto;
-			-webkit-hyphens: auto;
-			hyphens: auto;
-			margin-top: 1em;
-			overflow-x: hidden;
+            &::-webkit-scrollbar {
+                width: 7px;
+            }
 
-			img {
-				max-width: 100%;
-			}
+            .sideInfoDisplay {
+                padding: 5px;
+                width: 270px;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+                -ms-word-break: break-all;
+                word-break: break-word;
+                -ms-hyphens: auto;
+                -moz-hyphens: auto;
+                -webkit-hyphens: auto;
+                hyphens: auto;
+                overflow: hidden;
 
-			p {
-				line-height: 2em;
-				display: block;
-			}
+                h3 {
+                    padding: 20px 0;
+                    margin: 0;
+                    border-bottom: 1px solid #ce5c00;
+                }
 
-			.boldItalic {
-				font-weight: bold;
-				span,
-				a {
-					font-style: italic;
-				}
-				span {
-					font-weight: normal;
-				}
-			}
-		}
+                img {
+                    max-width: 100%;
+                }
 
-		.map {
-			height: $mapHeight;
-			position: absolute;
-			top: 80px;
-			// 6.5 * $standard-height + $standard-border;
-			bottom: 0;
-			width: $mapWidth;
-		}
+                p {
+                    display: block;
+                }
 
-		.mapboxgl-canvas {
-			width: 100% !important;
-		}
-	}
+                .boldItalic {
+                    font-weight: bold;
+
+                    &.startDate {
+                        margin-bottom: 0;
+                    }
+
+                    &.endDate {
+                        margin-top: 0;
+                    }
+
+                    &.description {
+                        span {
+                            display: block;
+                        }
+                    }
+
+                    span,
+                    a {
+                        font-style: italic;
+                    }
+                    span {
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+
+        .map {
+            height: $mapHeight;
+            position: absolute;
+            top: 80px;
+            // 6.5 * $standard-height + $standard-border;
+            bottom: 0;
+            width: $mapWidth;
+        }
+
+        .mapboxgl-canvas {
+            width: 100% !important;
+        }
+    }
 }

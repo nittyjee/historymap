@@ -371,45 +371,54 @@ a {
       opacity: 0;
       overflow: hidden; }
     .mapContainer .displayContent {
-      max-height: 76vh;
       opacity: 1;
       overflow: scroll; }
-    .mapContainer .sideInfoDisplay::-webkit-scrollbar-thumb {
-      background: steelblue; }
-    .mapContainer .sideInfoDisplay::-webkit-scrollbar {
-      width: 7px; }
-    .mapContainer .sideInfoDisplay {
-      z-index: 3;
-      width: 33vw;
-      transition: 0.2s linear all;
+    .mapContainer .sideInfoDisplayWrapper {
       position: absolute;
-      right: 1em;
-      background-color: #ffff7f;
-      border: solid #ffffff 3px;
-      padding: 0.5em;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      -ms-word-break: break-all;
-      word-break: break-all;
-      word-break: break-word;
-      -ms-hyphens: auto;
-      -moz-hyphens: auto;
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      margin-top: 1em;
-      overflow-x: hidden; }
-      .mapContainer .sideInfoDisplay img {
-        max-width: 100%; }
-      .mapContainer .sideInfoDisplay p {
-        line-height: 2em;
-        display: block; }
-      .mapContainer .sideInfoDisplay .boldItalic {
-        font-weight: bold; }
-        .mapContainer .sideInfoDisplay .boldItalic span,
-        .mapContainer .sideInfoDisplay .boldItalic a {
-          font-style: italic; }
-        .mapContainer .sideInfoDisplay .boldItalic span {
-          font-weight: normal; }
+      right: 0;
+      top: 80px;
+      z-index: 100;
+      border: solid 3px #fff;
+      background-color: #fff;
+      max-height: calc(100% - 230px);
+      overflow: auto; }
+      .mapContainer .sideInfoDisplayWrapper::-webkit-scrollbar-thumb {
+        background: steelblue; }
+      .mapContainer .sideInfoDisplayWrapper::-webkit-scrollbar {
+        width: 7px; }
+      .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay {
+        padding: 5px;
+        width: 270px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        overflow: hidden; }
+        .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay h3 {
+          padding: 20px 0;
+          margin: 0;
+          border-bottom: 1px solid #ce5c00; }
+        .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay img {
+          max-width: 100%; }
+        .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay p {
+          display: block; }
+        .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic {
+          font-weight: bold; }
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic.startDate {
+            margin-bottom: 0; }
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic.endDate {
+            margin-top: 0; }
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic.description span {
+            display: block; }
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic span,
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic a {
+            font-style: italic; }
+          .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .boldItalic span {
+            font-weight: normal; }
     .mapContainer .map {
       height: calc(100vh - 148px);
       position: absolute;
@@ -447,6 +456,10 @@ a {
       top: 98px;
       bottom: 0;
       width: 100%; } }
+
+@media (max-width: 1023px) {
+  .mapContainer .sideInfoDisplayWrapper {
+    display: none; } }
 
 .timelineSlider {
   height: 2.5em;
