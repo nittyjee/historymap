@@ -106,8 +106,8 @@ function SliderConstructor (minDate, maxDate) {
     const month = prettyPrint.getMonth();
     const year = prettyPrint.getFullYear();
     // this should be placed outside this constructor:
-    document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
-    //getDate(selection, 'string');
+    // document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+    document.querySelector('.datePanel').textContent = `${day} ${months[month]} ${year}`;
     // ditto
     layerControls.addDateFilter(getDate(selection), getDate(maxDate));
     return selection;
@@ -162,7 +162,8 @@ function SliderConstructor (minDate, maxDate) {
       ? `0${rawDay}`
       : `${rawDay}`;
     if (returnIntOrSt === 'string') {
-      return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+      //return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+      return `${rawDay} ${months[rawMonth]} ${date.getFullYear()}`;
     }
     return parseInt(`${date.getFullYear()}${month}${day}`);
   }
