@@ -8,9 +8,11 @@
   
   .mapControls  {
     // n.b. relative units might be better on more devices
-    min-width: $mapControlsWidth;
-    max-width: $mapControlsWidth;
+    width: $mapControlsWidth;
     transition: 0.3s linear all;
+    background-color: white;
+    position: fixed;
+    left: 0;
   }
 
   .mapContainer {

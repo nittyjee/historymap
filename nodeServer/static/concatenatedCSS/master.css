@@ -61,8 +61,7 @@ a {
   background-image: "url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z'/%3E%3C/svg%3E);"; }
 
 .hiddenControls {
-  min-width: 0px !important;
-  width: 0px !important;
+  margin-left: -325px;
   opacity: 0;
   transition: 0.3s linear all; }
 
@@ -72,7 +71,8 @@ a {
   left: 325px;
   z-index: 500;
   cursor: pointer;
-  height: 51px; }
+  height: 51px;
+  transition: 0.3s linear all; }
 
 .mapControls {
   min-width: 325px;
@@ -260,9 +260,11 @@ a {
     justify-content: center;
     width: 100%; }
   .mapControls {
-    min-width: 325px;
-    max-width: 325px;
-    transition: 0.3s linear all; }
+    width: 325px;
+    transition: 0.3s linear all;
+    background-color: white;
+    position: fixed;
+    left: 0; }
   .mapContainer {
     display: flex;
     flex-grow: 1;

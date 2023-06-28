@@ -29,6 +29,11 @@ html(lang='en-EU' xml:lang='en-EU')
         .about(title='Open') ABOUT
 
     .mainBody.flexContainer
+      .mapContainer
+        .sideInfoDisplay.hiddenContent
+        #before.map
+        #after.map
+        .datePanel
       .mapControls
         .layerControls
           .layerToggle
@@ -53,11 +58,7 @@ html(lang='en-EU' xml:lang='en-EU')
                 button.admin.displayStyleEditor Display Style Edit Form
                 button.admin.displayLayerEditor Display Layer Edit Form
       button.hideMenuTab «
-      .mapContainer
-        .sideInfoDisplay.hiddenContent
-        #before.map
-        #after.map
-        .datePanel
+
     .timelineSlider
       .timeline
       .sliderHandle

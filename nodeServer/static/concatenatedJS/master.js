@@ -1188,10 +1188,6 @@ document.querySelector('body').addEventListener('click', (e) => {
     });
   }
 
-  if (e.target.classList.contains('mapboxgl-canvas')) {
- 
-  }
-
   if (e.target.classList.contains('displayStyleEditor')) {
     document.querySelector('.styleform').classList.remove('hiddenContent');
   }
@@ -1208,12 +1204,16 @@ document.querySelector('body').addEventListener('click', (e) => {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';
       e.target.style.left = '0px';
+      changePosition = compare._x + 325;
+      //compare._setPosition(changePosition);
     } else {
       controlsDiv.classList.remove('hiddenControls');
       e.target.textContent = '«';
       //e.target.style.left = controlsDiv.offsetWidth;
       e.target.style.left = '325px';
     }
+
+    Object.values(maps).forEach(map => map.resize());
   }
 
   if (e.target.classList.contains('close')) {
@@ -1297,7 +1297,7 @@ window.setTimeout(() => {
     /**
      * @description An event when the map is clicked, but not a feature.
      * It's using a hack (checking the type of cursor). Seems to work with touch events in
-     * preliminary tests.
+     * preliminary tests. As per https://github.com/mapbox/mapbox-gl-js/issues/1209
      */
     map.on('click', (e) => {
       const cursorType = map.getCanvas().style.cursor;

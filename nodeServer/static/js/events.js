@@ -71,10 +71,6 @@ document.querySelector('body').addEventListener('click', (e) => {
     });
   }
 
-  if (e.target.classList.contains('mapboxgl-canvas')) {
- 
-  }
-
   if (e.target.classList.contains('displayStyleEditor')) {
     document.querySelector('.styleform').classList.remove('hiddenContent');
   }
@@ -91,12 +87,16 @@ document.querySelector('body').addEventListener('click', (e) => {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';
       e.target.style.left = '0px';
+      changePosition = compare._x + 325;
+      //compare._setPosition(changePosition);
     } else {
       controlsDiv.classList.remove('hiddenControls');
       e.target.textContent = '«';
       //e.target.style.left = controlsDiv.offsetWidth;
       e.target.style.left = '325px';
     }
+
+    Object.values(maps).forEach(map => map.resize());
   }
 
   if (e.target.classList.contains('close')) {

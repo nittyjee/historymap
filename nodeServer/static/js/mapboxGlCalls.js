@@ -32,7 +32,7 @@ window.setTimeout(() => {
     /**
      * @description An event when the map is clicked, but not a feature.
      * It's using a hack (checking the type of cursor). Seems to work with touch events in
-     * preliminary tests.
+     * preliminary tests. As per https://github.com/mapbox/mapbox-gl-js/issues/1209
      */
     map.on('click', (e) => {
       const cursorType = map.getCanvas().style.cursor;

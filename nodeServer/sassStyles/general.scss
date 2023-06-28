@@ -75,8 +75,7 @@ a {
 }
 
 .hiddenControls {
-  min-width: 0px !important;
-  width: 0px !important;
+  margin-left: -$mapControlsWidth;
   opacity: 0;
   transition: 0.3s linear all;
 }
@@ -88,6 +87,7 @@ a {
   z-index: 500;
   cursor: pointer;
   height: 51px;
+  transition: 0.3s linear all;
 }
 
 .mapControls {
