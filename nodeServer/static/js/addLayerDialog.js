@@ -10,6 +10,7 @@ function LayerManager (parentElement) {
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
   let eventsAdded = false;
+  let hoveredFeature = null;
 
   let layerForm;
   let mapForm;
@@ -830,7 +831,9 @@ function LayerManager (parentElement) {
         'source-layer': '',
         paint: {
           [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
-          [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
+          [`${type.type}-opacity`]: (type.opacity)
+            ? ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, parseFloat(type.opacity)]
+            : ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, 0.5]
         }
         // filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
       };
@@ -850,6 +853,20 @@ function LayerManager (parentElement) {
           hoverPopUp
             .setLngLat(event.lngLat)
             .setDOMContent(createHoverPopup(data, event));
+
+          if (event.features.length > 0) {
+            if (hoveredFeature !== null) {
+              map.setFeatureState(
+                { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+                { hover: false }
+              );
+            }
+            hoveredFeature = event.features[0].id;
+            map.setFeatureState(
+              { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+              { hover: true }
+            );
+          }
         });
 
         map.on('mouseleave', data.id, () => {

@@ -29,7 +29,6 @@ function createHoverPopup (data, event) {
   const lotName = document.createElement('b');
   popUpHTML.appendChild(lotName);
   lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
-
   return popUpHTML;
 }
 

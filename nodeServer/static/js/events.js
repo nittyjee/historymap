@@ -71,6 +71,10 @@ document.querySelector('body').addEventListener('click', (e) => {
     });
   }
 
+  if (e.target.classList.contains('mapboxgl-canvas')) {
+ 
+  }
+
   if (e.target.classList.contains('displayStyleEditor')) {
     document.querySelector('.styleform').classList.remove('hiddenContent');
   }
@@ -83,7 +87,6 @@ document.querySelector('body').addEventListener('click', (e) => {
     // bad code trying to deal with hard code values
     const controlsDiv = document.querySelector('.mapControls');
     const mapContainer = document.querySelector('.mapContainer');
-    const mapsInContainter = mapContainer.querySelectorAll('.map');
     if (e.target.textContent === '«') {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';

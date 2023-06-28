@@ -29,6 +29,24 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 window.setTimeout(() => {
   Object.values(maps).forEach((map) => {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    /**
+     * @description An event when the map is clicked, but not a feature.
+     * It's using a hack (checking the type of cursor). Seems to work with touch events in
+     * preliminary tests.
+     */
+    map.on('click', (e) => {
+      const cursorType = map.getCanvas().style.cursor;
+      const controlsDiv = document.querySelector('.mapControls');
+      const hideTab = document.querySelector('.hideMenuTab');
+      const sideInfoDisplay = document.querySelector('.sideInfoDisplay');
+      if (cursorType !== 'pointer') {
+        controlsDiv.classList.add('hiddenControls');
+        hideTab.textContent = '»';
+        hideTab.style.left = '0px';
+        sideInfoDisplay.classList.remove('displayContent');
+        sideInfoDisplay.classList.add('hiddenContent');
+      }
+    });
   });
 }, 1000);
 // End point for editing data on mapbox

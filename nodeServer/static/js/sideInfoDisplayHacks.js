@@ -49,12 +49,12 @@ const drupalData = (drupalDataName, mapboxLot) => {
   return promise;
 };
 
-function populateSideInfoDisplayHack (event, data) {
-  const target = document.querySelector('.sideInfoDisplay');
+function populateSideInfoDisplayHack (event, data, target) {
+/*  const target = document.querySelector('.sideInfoDisplay');
   target.classList.add('displayContent');
   target.classList.remove('hiddenContent');
   target.innerHTML = '';
-
+*/
   const close = document.createElement('i');
   close.classList.add('fa', 'fa-window-close');
   close.style.float = 'right';

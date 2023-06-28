@@ -10,6 +10,7 @@ function LayerManager (parentElement) {
   const mapNames = Object.keys(maps);
   const layerControls = document.querySelector('.layerControls');
   let eventsAdded = false;
+  let hoveredFeature = null;
 
   let layerForm;
   let mapForm;
@@ -830,7 +831,9 @@ function LayerManager (parentElement) {
         'source-layer': '',
         paint: {
           [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
-          [`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
+          [`${type.type}-opacity`]: (type.opacity)
+            ? ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, parseFloat(type.opacity)]
+            : ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, 0.5]
         }
         // filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
       };
@@ -850,6 +853,20 @@ function LayerManager (parentElement) {
           hoverPopUp
             .setLngLat(event.lngLat)
             .setDOMContent(createHoverPopup(data, event));
+
+          if (event.features.length > 0) {
+            if (hoveredFeature !== null) {
+              map.setFeatureState(
+                { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+                { hover: false }
+              );
+            }
+            hoveredFeature = event.features[0].id;
+            map.setFeatureState(
+              { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+              { hover: true }
+            );
+          }
         });
 
         map.on('mouseleave', data.id, () => {
@@ -1171,6 +1188,10 @@ document.querySelector('body').addEventListener('click', (e) => {
     });
   }
 
+  if (e.target.classList.contains('mapboxgl-canvas')) {
+ 
+  }
+
   if (e.target.classList.contains('displayStyleEditor')) {
     document.querySelector('.styleform').classList.remove('hiddenContent');
   }
@@ -1183,7 +1204,6 @@ document.querySelector('body').addEventListener('click', (e) => {
     // bad code trying to deal with hard code values
     const controlsDiv = document.querySelector('.mapControls');
     const mapContainer = document.querySelector('.mapContainer');
-    const mapsInContainter = mapContainer.querySelectorAll('.map');
     if (e.target.textContent === '«') {
       controlsDiv.classList.add('hiddenControls');
       e.target.textContent = '»';
@@ -1232,7 +1252,6 @@ function createHoverPopup (data, event) {
   const lotName = document.createElement('b');
   popUpHTML.appendChild(lotName);
   lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
-
   return popUpHTML;
 }
 
@@ -1275,38 +1294,80 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 window.setTimeout(() => {
   Object.values(maps).forEach((map) => {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    /**
+     * @description An event when the map is clicked, but not a feature.
+     * It's using a hack (checking the type of cursor). Seems to work with touch events in
+     * preliminary tests.
+     */
+    map.on('click', (e) => {
+      const cursorType = map.getCanvas().style.cursor;
+      const controlsDiv = document.querySelector('.mapControls');
+      const hideTab = document.querySelector('.hideMenuTab');
+      const sideInfoDisplay = document.querySelector('.sideInfoDisplay');
+      if (cursorType !== 'pointer') {
+        controlsDiv.classList.add('hiddenControls');
+        hideTab.textContent = '»';
+        hideTab.style.left = '0px';
+        sideInfoDisplay.classList.remove('displayContent');
+        sideInfoDisplay.classList.add('hiddenContent');
+      }
+    });
   });
 }, 1000);
 // End point for editing data on mapbox
 // https://api.mapbox.com/datasets/v1/{username}/{dataset_id}/features/{feature_id}
+let layersExplored = [];
+let layerContainers = [];
 
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
+  let target;
+  /**
+   * The original code I wrote didn't contemplate multiple data (for each feature group)
+   * as I though it was a bug. Two global variables were added, this could scoped in a constructor.
+   */
+  const infoDisplay = document.querySelector('.sideInfoDisplay');
+  infoDisplay.classList.add('displayContent');
+  infoDisplay.classList.remove('hiddenContent');
+
+  // this block adds a single div per feature group:
+  const featureGroup = layerData['feature group'];
+  if (!layersExplored.includes(featureGroup)) {
+    layersExplored.push(featureGroup);
+    const newLayerContainer = document.createElement('div');
+    layerContainers.push(newLayerContainer);
+    infoDisplay.appendChild(newLayerContainer);
+    target = newLayerContainer;
+  } else {
+    const index = layersExplored.indexOf(featureGroup);
+    target = layerContainers[index];
+  }
+
+  target.innerHTML = '';
+
+  while (target.firstChild) {
+    target.removeChild(target.lastChild);
+  }
+
   const mapboxData = mapFeatureClickEvent.features[0].properties;
   // corresponding content on Drupal:
   // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
 
   /* HACKS START */
   // All fields should have the same nid name:
+
   const drupalNid = mapboxData.drupalNid || mapboxData.nid || mapboxData.node_id || mapboxData.node || mapboxData.NID_num || null;
   // Lot name hack:
   const mapboxLot = mapboxData.Lot || null;
   if (!drupalNid && mapboxLot) {
-    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData);
+    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData, target);
   }
 
   const cleanNid = drupalNid.replace(/[/a-z]/gi, '');
-  /* HACKS END */
 
   if (!cleanNid) { return; }
+  /* HACKS END */
 
-  const target = document.querySelector('.sideInfoDisplay');
-  target.classList.add('displayContent');
-  target.classList.remove('hiddenContent');
-  target.innerHTML = '';
 
-  while (target.firstChild) {
-    target.removeChild(target.lastChild);
-  }
 
   const url = `https://encyclopedia.nahc-mapping.org/rendered-export-single?nid=${cleanNid}`;
 
@@ -1383,12 +1444,12 @@ const drupalData = (drupalDataName, mapboxLot) => {
   return promise;
 };
 
-function populateSideInfoDisplayHack (event, data) {
-  const target = document.querySelector('.sideInfoDisplay');
+function populateSideInfoDisplayHack (event, data, target) {
+/*  const target = document.querySelector('.sideInfoDisplay');
   target.classList.add('displayContent');
   target.classList.remove('hiddenContent');
   target.innerHTML = '';
-
+*/
   const close = document.createElement('i');
   close.classList.add('fa', 'fa-window-close');
   close.style.float = 'right';
