@@ -5,13 +5,97 @@ html(lang='en-EU' xml:lang='en-EU')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     meta(name='theme-color' content='#3366cc')
     link(rel='stylesheet' href='/static/concatenatedCSS/master.css' async)
+
+
+<!--  NEW STYLING - REINCORPORATE INTO MASTER.CSS -->
+
+
+<style>
+  | body {
+  |   font-family: "Helvetica Neue", Arial, sans-serif;
+  |   margin: 0;
+  |   padding: 0;
+  |   background-color: #ededed;
+  |   color: #ffffff;
+  | }
+
+  | .topMenu {
+  |   background-color: #ffffff;
+  |   color: #000000;
+  | }
+
+
+  | .content-wrapper {
+  |   min-height: calc(100vh - 100px);
+  |   display: flex;
+  |   flex-direction: column;
+  |   justify-content: center;
+  |   align-items: center;
+  | }
+  
+
+  | .login {
+  |   display: flex;
+  |   flex-direction: column;
+  |   align-items: center;
+  |   border: 4px solid #444444;
+  |   padding: 20px;
+  |   background-color: #222222;
+  |   border-radius: 10px;
+  |   max-width: 400px;
+  |   width: 100%;
+  |   margin-top: 80px;
+  |   margin-left: auto;
+  |   margin-right: auto;
+  | }
+  | .login h2 {
+  |   font-size: 24px;
+  |   margin-bottom: 15px;
+  |   font-weight: bold;
+  |   color: #ffffff;
+  |   text-transform: uppercase;
+  | }
+  | form {
+  |   display: flex;
+  |   flex-direction: column;
+  |   align-items: center;
+  | }
+  | label {
+  |   margin-bottom: 10px;
+  |   font-size: 18px;
+  |   color: #ffffff;
+  |   font-weight: bold;
+  | }
+  | input, button {
+  |   margin-bottom: 15px;
+  |   padding: 8px;
+  |   font-size: 16px;
+  |   border-radius: 5px;
+  |   border: 2px solid #cccccc;
+  |   width: 100%;
+  | }
+  | button {
+  |   background-color: #3366cc;
+  |   color: #ffffff;
+  |   cursor: pointer;
+  |   margin-top: 10px;
+  | }
+  | .loginError {
+  |   color: red;
+  |   margin-top: 10px;
+  |   font-size: 16px;
+  | }
+</style>
+
+
+
   body    
     .topMenu
       a(href='http://newamsterdamhistorycenter.org' class='logo')
         img(id='logo-img-wide' src='http://newamsterdamhistorycenter.org/wp-content/uploads/2018/02/cropped-cropped-sprite-1.png' align='middle')
       div#header_text.headerText | Mapping Early New York
     .login.flexColumn
-      h2 Backend login
+      h2 MapStructor Login
       br
       form(id='loginform' action='/authenticate', method='post').flexColumn
         label(for="username") Username:
