@@ -438,8 +438,15 @@ a {
   opacity: 0;
   visibility: hidden; }
 
-.layer:hover, .featureContent:hover {
-  background-color: #DDD; }
+.layer, .featureContent {
+  min-height: 20px;
+  display: flex;
+  align-items: center; }
+  .layer label, .featureContent label {
+    text-align: left;
+    flex: 1 1 auto; }
+  .layer:hover, .featureContent:hover {
+    background-color: #DDD; }
 
 @media (max-width: 768px) {
   .flexContainer {

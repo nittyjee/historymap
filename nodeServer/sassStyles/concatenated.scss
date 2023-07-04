@@ -1183,6 +1183,13 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 	visibility: hidden;
 }
 .layer,.featureContent{
+	min-height: 20px;
+	display: flex;
+	align-items: center;
+	label{
+		text-align: left;
+		flex: 1 1 auto;
+	}
 	&:hover{
 		background-color: #DDD;
 	}
