@@ -434,7 +434,9 @@ a {
   padding: 3px 10px;
   border: 4px solid #dedede;
   position: absolute;
-  z-index: 9999; }
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden; }
 
 @media (max-width: 768px) {
   .flexContainer {
