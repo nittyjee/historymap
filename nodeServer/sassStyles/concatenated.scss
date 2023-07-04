@@ -1182,7 +1182,11 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 	opacity: 0;
 	visibility: hidden;
 }
-@include media("<=tablet") {
+.layer,.featureContent{
+	&:hover{
+		background-color: #DDD;
+	}
+}@include media("<=tablet") {
     .flexContainer {
         display: flex;
         flex-direction: column;

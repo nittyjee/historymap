@@ -129,3 +129,8 @@
 	opacity: 0;
 	visibility: hidden;
 }
+.layer,.featureContent{
+	&:hover{
+		background-color: #DDD;
+	}
+}
