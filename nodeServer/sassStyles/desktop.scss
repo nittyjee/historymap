@@ -119,3 +119,11 @@
         }
     }
 }
+.custom-tooltip {
+	color: #fff;
+	background-color: #23579b;
+	padding: 3px 10px;
+	border: 4px solid #dedede;
+	position: absolute;
+	z-index: 9999;
+}

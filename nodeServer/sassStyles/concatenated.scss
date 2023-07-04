@@ -1172,6 +1172,14 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
         }
     }
 }
+.custom-tooltip {
+	color: #fff;
+	background-color: #23579b;
+	padding: 3px 10px;
+	border: 4px solid #dedede;
+	position: absolute;
+	z-index: 9999;
+}
 @include media("<=tablet") {
     .flexContainer {
         display: flex;
@@ -1340,7 +1348,7 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 
 	.timeLineText {
 		pointer-events: none;
-		font-weight: 800;
+		font-weight: bold;
 		font-size: 16.5px;
 		position: absolute;
 		top: 5px;

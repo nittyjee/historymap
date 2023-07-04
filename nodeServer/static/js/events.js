@@ -101,3 +101,53 @@ document.querySelector('body').addEventListener('click', (e) => {
 		modal.close();
 	}
 });
+function createTooltips() {
+	let zoomIcons = document.querySelectorAll('.fa-crosshairs');
+	let infoIcons = document.querySelectorAll('.fa-info-circle')
+	let documentBody = document.querySelector('body');
+	let div = document.createElement('div');
+	div.textContent = "Zoom to Layer";
+	div.classList.add('custom-tooltip');
+	documentBody.append(div);
+	for (let icon of zoomIcons) {
+
+		icon.onmousemove = function (e) {
+			var x = e.clientX,
+				y = e.clientY;
+			div.textContent = "Zoom to Layer";
+			div.style.top = (y + 20) + 'px';
+			div.style.left = (x + 20) + 'px';
+			div.style.opacity = '1';
+			div.style.visibility = 'visible';
+		};
+		icon.onmouseleave = function (e) {
+			var x = e.clientX,
+				y = e.clientY;
+			div.style.top = (y + 20) + 'px';
+			div.style.left = (x + 20) + 'px';
+			div.style.opacity = '0';
+			div.style.visibility = 'hidden';
+		};
+	}
+	for (let icon of infoIcons) {
+
+		icon.onmousemove = function (e) {
+			var x = e.clientX,
+				y = e.clientY;
+			div.textContent = "Layer Info";
+			div.style.top = (y + 20) + 'px';
+			div.style.left = (x + 20) + 'px';
+			div.style.opacity = '1';
+			div.style.visibility = 'visible';
+		};
+		icon.onmouseleave = function (e) {
+			var x = e.clientX,
+				y = e.clientY;
+			div.style.top = (y + 20) + 'px';
+			div.style.left = (x + 20) + 'px';
+			div.style.opacity = '0';
+			div.style.visibility = 'hidden';
+		};
+	}
+}
+createTooltips();
