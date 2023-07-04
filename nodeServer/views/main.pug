@@ -16,6 +16,45 @@ html(lang='en-EU' xml:lang='en-EU')
     link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css')  
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
     link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css')
+
+<style>
+
+  | button.admin.displayStyleEditor {
+  |   background-color: #d4ebf2;
+  |   padding: 10px;
+  |   cursor: pointer;
+  |   border-radius: 0.3em;
+  |   margin: 10px;
+  |   font-size: 16px;
+  |   font-weight: bold;
+  | }
+
+  | button.admin.displayStyleEditor:hover {
+  |   background-color: #008CBA;
+  |   color: white;
+  | }
+
+  | button.admin.displayLayerEditor {
+  |   background-color: #ffffe0;
+  |   padding: 10px;
+  |   cursor: pointer;
+  |   border-radius: 0.3em;
+  |   font-size: 16px;
+  |   font-weight: bold;
+  | }
+
+  | button.admin.displayLayerEditor:hover {
+  |   background-color: #8B8000;
+  |   color: white;
+  | }
+
+  | h2 {
+  |   color: #000000;
+  |   text-align: center;
+  | }
+
+</style>
+
   body    
     .topMenu
       a(href='http://newamsterdamhistorycenter.org' class='logo')
@@ -49,8 +88,13 @@ html(lang='en-EU' xml:lang='en-EU')
               -//img(src='https://encyclopedia.nahc-mapping.org/sites/default/files/inline-images/external_link_icon.png')      
           if user
             .adminControls
-              h3 Admin Controls:
+              br
+              hr
+              
+              h2 Admin Controls:
+                br
                 button.admin.displayStyleEditor Display Style Edit Form
+                br
                 button.admin.displayLayerEditor Display Layer Edit Form
       button.hideMenuTab ⏴
       .mapContainer
