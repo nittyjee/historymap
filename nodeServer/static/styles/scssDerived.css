@@ -155,7 +155,8 @@ a {
     padding: 0.5em;
     border: solid 2px;
     border-radius: 0.5em;
-    max-height: 25vh; }
+    /*max-height: 25vh;*/
+   }
   .mapControls .hiddenContent {
     height: 0;
     opacity: 0;

@@ -1242,6 +1242,8 @@ createTooltips();/**
  * @returns A HTMLElemnt to use in the pop up
  */
 
+//*THIS IS WHERE WE CAN CHANGE THE MAP PROPERTIES!!
+
 function createHoverPopup(data, event) {
 	const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
 	const layerClass = `${layerName}PopUp`;
@@ -1249,7 +1251,8 @@ function createHoverPopup(data, event) {
 	const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
 	const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
 	// Maybe a semantic feature group name will be required:
-	const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.To || null;
+//THIS WAS THE TEST WITH "Name" vs "name"
+	const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
 	popUpHTML.classList.add(
 		'hoverPopUp'
 	);
