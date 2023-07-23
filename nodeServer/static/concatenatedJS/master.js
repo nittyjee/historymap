@@ -794,7 +794,6 @@ function LayerManager(parentElement) {
 			const map = maps[targetMap];
 			const layerId = `${data.borough}/${data['feature group']}/${data.name}/${type.type}/${targetMap}`;
 			data.id = layerId;
-      let hoveredPolygonId = null;
 
 			const transpilledOptions = {
 				id: layerId,
@@ -887,66 +886,6 @@ function LayerManager(parentElement) {
 			} else {
 				layersMapboxId.push([layerId]);
 			}
-
-      const overlayLayer = {
-        ...transpilledOptions,
-        paint: {
-          "fill-color": "#e3ed58",
-          "fill-opacity": [
-            "case",
-            ["boolean", ["feature-state", "hover"], false],
-            0.8,
-            0,
-          ],
-          "fill-outline-color": "#FF0000",
-        },
-
-        id: "grants1-5sp9tb-right",
-        "source-layer": "grants1-5sp9tb",
-        type: "fill",
-        layersMapboxId: 1231231,
-      };
-      map.addLayer(overlayLayer);
-
-      map.on("mousemove", "grants1-5sp9tb-right", (e) => {
-        if (e.features.length > 0) {
-          if (hoveredPolygonId !== null) {
-            map.setFeatureState(
-              {
-                source: "grants1-5sp9tb-right",
-                sourceLayer: "grants1-5sp9tb",
-                id: hoveredPolygonId,
-              },
-              { hover: false }
-            );
-          }
-          hoveredPolygonId = e.features[0].id;
-          map.setFeatureState(
-            {
-              source: "grants1-5sp9tb-right",
-              sourceLayer: "grants1-5sp9tb",
-              id: hoveredPolygonId,
-            },
-            { hover: true }
-          );
-        }
-      });
-
-      // When the mouse leaves the state-fill layer, update the feature state of the
-      // previously hovered feature.
-      map.on("mouseleave", "grants1-5sp9tb-right", () => {
-        if (hoveredPolygonId !== null) {
-          map.setFeatureState(
-            {
-              source: "grants1-5sp9tb-right",
-              sourceLayer: "grants1-5sp9tb",
-              id: hoveredPolygonId,
-            },
-            { hover: false }
-          );
-        }
-        hoveredPolygonId = null;
-      });
 
 			map.addLayer(transpilledOptions);
 			map.on('sourcedata', () => {
