@@ -1226,13 +1226,13 @@ document.querySelector('body').addEventListener('click', (e) => {
 		const controlsDiv = document.querySelector('.mapControls');
 		const mapContainer = document.querySelector('.mapContainer');
 		const mapsInContainter = mapContainer.querySelectorAll('.map');
-		if (e.target.textContent === '«') {
+		if (e.target.textContent === '⏴') {
 			controlsDiv.classList.add('hiddenControls');
-			e.target.textContent = '»';
+			e.target.textContent = '⏵';
 			e.target.style.left = '0px';
 		} else {
 			controlsDiv.classList.remove('hiddenControls');
-			e.target.textContent = '«';
+			e.target.textContent = '⏴';
 			//e.target.style.left = controlsDiv.offsetWidth;
 			e.target.style.left = '337px';
 		}
@@ -1367,41 +1367,9 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 	// mousemove: true
 });
 
-function toggleSideInfo () {
-	const infoDisplay = document.querySelector('.sideInfoDisplay');
-
-	const $sideInfoDisplayWrapper = document.querySelector('.sideInfoDisplayWrapper');
-	const $sideInfoDisplayChild = $sideInfoDisplayWrapper.children[0];
-	if ($sideInfoDisplayChild.classList.contains('displayContent') || $sideInfoDisplayChild.innerHTML === '') {
-		$sideInfoDisplayWrapper.style.backgroundColor = 'transparent';
-		$sideInfoDisplayWrapper.style.borderColor = 'transparent';
-	  } else {
-		$sideInfoDisplayWrapper.style.backgroundColor = '#fff';
-		$sideInfoDisplayWrapper.style.borderColor = '#fff';
-	  }
-
-	if (infoDisplay.classList.contains('displayContent') || infoDisplay.innerHTML === '') {
-	  infoDisplay.classList.remove('displayContent');
-	  infoDisplay.classList.add('hiddenContent');
-	} else {
-	  infoDisplay.classList.add('displayContent');
-	  infoDisplay.classList.remove('hiddenContent');
-	}
-  }
-
 window.setTimeout(() => {
 	Object.values(maps).forEach((map) => {
 		map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
-		map.on('click', (e) => {
-			const cursorType = map.getCanvas().style.cursor;
-			const hideTab = document.querySelector('.hideMenuTab');
-			toggleSideInfo();
-			if (cursorType !== 'pointer') {
-				console.log('hide menu tab2');
-			  hideTab.click();
-			}
-		  });
-
 	});
 }, 1000);
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
@@ -1516,12 +1484,8 @@ const drupalData = (drupalDataName, mapboxLot) => {
 };
 
 function populateSideInfoDisplayHack(event, data) {
-	console.log('populateSideInfoDisplayHack')
     const target = document.querySelector(".sideInfoDisplay");
-	const $sideInfoDisplayWrapper = document.querySelector('.sideInfoDisplayWrapper');
     target.classList.add("displayContent");
-	$sideInfoDisplayWrapper.style.backgroundColor = '#fff';
-	$sideInfoDisplayWrapper.style.borderColor = '#fff';
     target.classList.remove("hiddenContent");
     target.innerHTML = "";
 
@@ -1534,9 +1498,6 @@ function populateSideInfoDisplayHack(event, data) {
     close.addEventListener("click", () => {
         target.classList.remove("displayContent");
         target.classList.add("hiddenContent");
-		const $sideInfoDisplayWrapper = document.querySelector('.sideInfoDisplayWrapper');
-		$sideInfoDisplayWrapper.style.backgroundColor = 'transparent';
-		$sideInfoDisplayWrapper.style.borderColor = 'transparent';
     });
     target.appendChild(close);
 
