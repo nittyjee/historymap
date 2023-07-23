@@ -125,7 +125,8 @@ a {
   left: 337px;
   z-index: 500;
   cursor: pointer;
-  height: 54px; }
+  height: 54px;
+  transition: 0.3s linear all; }
 
 .mapControls {
   min-width: 325px;
@@ -357,9 +358,14 @@ a {
     justify-content: center;
     width: 100%; }
   .mapControls {
+    z-index: 9;
     min-width: 325px;
     width: 325px;
-    transition: 0.3s linear all; }
+    transition: 0.3s linear all;
+    background-color: #ffffff;
+    position: fixed;
+    left: 0;
+    height: 100%; }
   .mapContainer {
     display: flex;
     flex-grow: 1;
@@ -379,8 +385,8 @@ a {
       right: 0;
       top: 80px;
       z-index: 100;
-      border: solid 3px #fff;
-      background-color: #fff;
+      border: solid 3px transparent;
+      background-color: transparent;
       max-height: calc(100% - 230px);
       overflow: auto; }
       .mapContainer .sideInfoDisplayWrapper::-webkit-scrollbar-thumb {
