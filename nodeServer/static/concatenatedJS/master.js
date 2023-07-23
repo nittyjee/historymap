@@ -1728,7 +1728,7 @@ function SliderConstructor(minDate, maxDate) {
 		const month = prettyPrint.getMonth();
 		const year = prettyPrint.getFullYear();
 		// this should be placed outside this constructor:
-		document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+		document.querySelector('.datePanel').textContent = `${("0" + day).slice(-2)}${stNdRdTh(day)} ${months[month]} ${year}`;
 
 		//getDate(selection, 'string');
 		// ditto
@@ -1741,6 +1741,9 @@ function SliderConstructor(minDate, maxDate) {
 		const postFix = ['st', 'nd', 'rd', 'th'];
 		const exceptions = [11, 12, 13, 0];
 		const length = number.toString().length;
+		if(length === 1 ) {
+			return ''
+		}
 		if (length > 1) {
 			const lastDigit = parseInt(number.toString()[1]);
 			if (exceptions.includes(lastDigit) || lastDigit > 3) {
