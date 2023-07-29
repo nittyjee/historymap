@@ -544,7 +544,7 @@ function LayerManager(parentElement) {
 				typeBoxText.classList.add('typeBoxText');
 				wrapper.appendChild(typeBoxText);
 
-				const appearance = ['color', 'opacity', 'width'];
+				const appearance = ['color', 'opacity', 'width', 'blur'];
 				appearance.forEach((fieldName) => {
 					const nameLabel = document.createElement('label');
 					nameLabel.htmlFor = fieldName;
@@ -699,7 +699,8 @@ function LayerManager(parentElement) {
 							type: type.dataset.layerType,
 							color: type.parentElement.querySelector('[data-type-style="color"]').value,
 							opacity: type.parentElement.querySelector('[data-type-style="opacity"]').value,
-							width: type.parentElement.querySelector('[data-type-style="width"]').value
+							width: type.parentElement.querySelector('[data-type-style="width"]').value,
+							blur: type.parentElement.querySelector('[data-type-style="blur"]').value
 						};
 						data.type.push(typeFeature);
 					}
@@ -811,7 +812,8 @@ function LayerManager(parentElement) {
 				'source-layer': '',
 				paint: {
 					[`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
-					[`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
+					[`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5,
+					[`${type.type}-blur`]: (type.blur) ? parseFloat(type.blur) : 0
 				}
 				// filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
 			};

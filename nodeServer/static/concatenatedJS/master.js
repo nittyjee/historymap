@@ -466,9 +466,61 @@ function LayerManager(parentElement) {
 		return promise;
 	};
 
+
+
+	function layerTypeCheckbox (checkboxName) {
+		const wrapper = document.createElement('div');
+		wrapper.classList.add('typeBox');
+		layerForm.appendChild(wrapper);
+		const nameLabel = document.createElement('label');
+		nameLabel.htmlFor = checkboxName;
+		nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
+		wrapper.appendChild(nameLabel);
+		const name = document.createElement('input');
+		name.setAttribute('type', 'checkbox');
+		name.classList.add('layerType');
+		name.id = checkboxName;
+		name.dataset.layerType = checkboxName;
+		wrapper.appendChild(name);
+		const br = document.createElement('br');
+		wrapper.appendChild(br);
+		const typeBoxText = document.createElement('div');
+		typeBoxText.classList.add('typeBoxText');
+		wrapper.appendChild(typeBoxText);
+	
+		return typeBoxText;
+	  }
+	
+	  function generateLabelLayerInputs (checkboxName) {
+		const typeBoxText = layerTypeCheckbox(checkboxName);
+		// anywhere an expression or function is used, the text will have to be interpolated as parsed json
+		const paintProperties = ['color', 'text-color', 'text-halo-color', 'text-halo-width', 'text-halo-blur', 'text-opacity'];
+		paintProperties.forEach((fieldName) => {
+		  const nameLabel = document.createElement('label');
+		  nameLabel.htmlFor = fieldName;
+		  nameLabel.innerHTML = `${fieldName}: `;
+		  typeBoxText.appendChild(nameLabel);
+	
+		  const name = document.createElement('input');
+		  name.setAttribute('type', 'text');
+		  name.dataset.typeStyle = fieldName.replaceAll(' ', '_');
+		  name.classList.add(fieldName.replaceAll(' ', '_'));
+		  typeBoxText.appendChild(name);
+		  /* these options are not added dynamically to the data.object,
+		  but onsubmit */
+		  const br = document.createElement('br');
+		  typeBoxText.appendChild(br);
+		});
+	  }
+	
+
+
+
+
+
 	this.generateAddLayerForm = () => {
 		const promise = new Promise((resolve, reject) => {
-			function textInputGenerator(fieldName, target) {
+			function textInputGenerator (fieldName, target, description) {
 				const nameLabel = document.createElement('label');
 				nameLabel.htmlFor = fieldName;
 				nameLabel.innerHTML = `${fieldName}: `;
@@ -477,6 +529,7 @@ function LayerManager(parentElement) {
 				const name = document.createElement('input');
 				name.setAttribute('type', 'text');
 				name.id = fieldName.replaceAll(' ', '_');
+				name.title = description;
 				target.appendChild(name);
 
 				name.addEventListener('input', () => {
@@ -525,24 +578,7 @@ function LayerManager(parentElement) {
 			}
 
 			function generateLayersTypeCheckbox(checkboxName) {
-				const wrapper = document.createElement('div');
-				wrapper.classList.add('typeBox');
-				layerForm.appendChild(wrapper);
-				const nameLabel = document.createElement('label');
-				nameLabel.htmlFor = checkboxName;
-				nameLabel.innerHTML = `Add as "${checkboxName}" layer type: `;
-				wrapper.appendChild(nameLabel);
-				const name = document.createElement('input');
-				name.setAttribute('type', 'checkbox');
-				name.classList.add('layerType');
-				name.id = checkboxName;
-				name.dataset.layerType = checkboxName;
-				wrapper.appendChild(name);
-				const br = document.createElement('br');
-				wrapper.appendChild(br);
-				const typeBoxText = document.createElement('div');
-				typeBoxText.classList.add('typeBoxText');
-				wrapper.appendChild(typeBoxText);
+				const typeBoxText = layerTypeCheckbox(checkboxName);
 
 				const appearance = ['color', 'opacity', 'width'];
 				appearance.forEach((fieldName) => {
@@ -599,18 +635,43 @@ function LayerManager(parentElement) {
 				'layer source url',
 				'feature group',
 				'drupal node id',
-				// 'borough to which the layer belongs'
-				'borough'
+				'borough',
+				'pop up color',
+				'pop up border color',
+				'info div color',
+				'info div border color',
+				'padding',
+				'bearing',
+				'zoom'
 			];
 
-			textFields.forEach(fieldName => {
-				textInputGenerator(fieldName, layerForm);
+			const titleDescriptors = [
+				'The name that appears beside the feature group toggle checkbox e.g. "Information", "Lines", "Lenape trails"',
+				'The source layer e.g. lenape_trails-9n6muf',
+				'The source URL e.g. mapbox://nittyjee.4kio957z',
+				'Feature Group: The group to which this layer bellongs e.g. 1609|Manahatta',
+				'The article nid you wish to display in the modal when the info button for the feature group is clicked',
+				'The borough where the feature group resides',
+				'The color for (typically a hex value) for the pop up',
+				'The color for (typically a hex value) for the border on the pop up',
+				'The color for (typically a hex value) for the info slider',
+				'The color for (typically a hex value) for the border on the info slider',
+				'The bearing to display the feature group - a decimal representation of degrees, e.g. -51.4',
+				'Padding can be ignored if using zoom, otherwise provides a minimum spacing from any edge of the map, to the group',
+				'The zoom level 0-22, accepts decimals'
+		
+			  ];
+		
+			  textFields.forEach((fieldName, i) => {
+				textInputGenerator(fieldName, layerForm, titleDescriptors[i]);
 			});
 
 			const types = ['circle', 'line', 'fill'];
 			types.forEach((type) => {
 				generateLayersTypeCheckbox(type);
 			});
+
+			generateLabelLayerInputs('labels');
 
 			// Maps are defined in the "Layer Manager" constuctor scope.
 			mapNames.forEach((map) => {
@@ -694,13 +755,24 @@ function LayerManager(parentElement) {
 					if (i === 0) {
 						data.type.length = 0;
 					}
+
+					function typeCompile (type) {
+						const typeObj = {};
+						typeObj.type = type.dataset.layerType;
+						const values = type.parentElement.querySelector('.typeBoxText').querySelectorAll('[type="text"]');
+						for (let i = 0; i < values.length; i++) {
+						  const input = values[i];
+						  // checks is text is a number
+						  const value = (input.value === !null || isFinite(input.value)) ? parseFloat(input.value) : input.value;
+						  typeObj[input.dataset.typeStyle] = value;
+						  if (i === values.length - 1) {
+							return typeObj;
+						  }
+						}
+					  }
+
 					if (type.checked) {
-						const typeFeature = {
-							type: type.dataset.layerType,
-							color: type.parentElement.querySelector('[data-type-style="color"]').value,
-							opacity: type.parentElement.querySelector('[data-type-style="opacity"]').value,
-							width: type.parentElement.querySelector('[data-type-style="width"]').value
-						};
+						const typeFeature = typeCompile(type);
 						data.type.push(typeFeature);
 					}
 				});
@@ -756,7 +828,7 @@ function LayerManager(parentElement) {
 
 	/**
 	 * @param {*} data Can accept partial data for updates, but requires an bson _id for updates.
-	 * @returns The same date saved in the DB after rendering a layer toggle widget. 
+	 * @returns The same date saved in the DB after rendering a layer toggle widget.
 	 */
 	function saveLayer(data) {
 		const promise = new Promise((resolve, reject) => {
@@ -773,7 +845,12 @@ function LayerManager(parentElement) {
 	};
 
 	this.addDateFilter = (minDate, maxDate) => {
-		const filter = ['all', ['<=', 'DayStart', minDate], ['>=', 'DayEnd', minDate]];
+		// const filter = ['all', ['<=', 'DayStart', minDate], ['>=', 'DayEnd', minDate]];
+
+		const filter = ['all',
+		['<=', 'DayStart', minDate],
+		['>=', 'DayEnd', minDate]
+		];
 		for (let j = 0; j < layersMapboxId.length; j++) {
 			for (let i = 0; i < layersMapboxId[j].length; i++) {
 				const mapboxId = layersMapboxId[j][i];
@@ -789,6 +866,27 @@ function LayerManager(parentElement) {
 		}
 	};
 
+	function paintOptions (type) {
+		if (type.type === 'labels') {
+		  const paint = {
+			'text-color': type['text-color'],
+			'text-halo-color': type['text-halo-color'],
+			'text-halo-width': type['text-halo-width'],
+			'text-halo-blur': type['text-halo-blur'],
+			'text-opacity': type['text-opacity']
+		  };
+		  return paint;
+		}
+		const defaultPaint = {
+		  [`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
+		  [`${type.type}-opacity`]: (type.opacity)
+			? ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, parseFloat(type.opacity)]
+			: ['case', ['boolean', ['feature-state', 'hover'], false], 0.8, 0.5]
+		};
+		return defaultPaint;
+	  }
+
+
 	function tanspileAndAddLayer(targetMap, type, data) {
 		const promise = new Promise((resolve, reject) => {
 			const map = maps[targetMap];
@@ -797,7 +895,7 @@ function LayerManager(parentElement) {
 
 			const transpilledOptions = {
 				id: layerId,
-				type: '',
+				type: (type.type === 'labels') ? 'symbol' : type.type,
 				metadata: { _id: '' },
 				source: {
 					// url is tileset ID in mapbox:
@@ -809,12 +907,19 @@ function LayerManager(parentElement) {
 				},
 				// called 'source name'
 				'source-layer': '',
-				paint: {
-					[`${type.type}-color`]: (type.color) ? type.color : '#AAAAAA',
-					[`${type.type}-opacity`]: (type.opacity) ? parseFloat(type.opacity) : 0.5
-				}
-				// filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
+				paint: paintOptions(type)
+					// filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
 			};
+
+			if (type.type === 'labels') {
+				transpilledOptions.layout['text-field'] = '{name}';
+				// transpilledOptions.layout['text-offset'] = [0,1],
+				// transpilledOptions.layout['text-size'] = { stops: [ [0, 4], [22, 34] ] }
+			  }
+
+
+			//NOTE - DID NOT IMPORT MANY CHANGES BELOW YET - APPEARS TO BE MOSTLY AROUND HOVERING AND TIMELINE - 07/28/2023
+
 
 			if (data.hover) {
 				const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
@@ -860,8 +965,9 @@ function LayerManager(parentElement) {
 				transpilledOptions.metadata._id = data._id;
 			}
 			// type of map graphic: line, fill, circle
+			// THIS MAY BE WHERE YOU CAN ADD MORE CONDITIONS FOR STYLING
 			if (data.type) {
-				transpilledOptions.type = type.type;
+				//transpilledOptions.type = type.type;
 				if (type.type === 'circle') {
 					transpilledOptions.paint[`circle-radius`] = parseFloat(type.width);
 				}
@@ -1111,6 +1217,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	layerControls.layerControlEvents();
 
 	sliderConstructor = new SliderConstructor(1625, 1701);
+	//TRIED INCORPORATING ON 7/29/2023 - BROKE THE TIMELINE. LIKELY NEED TO INVOLVE OTHER CODE:
+	//sliderConstructor = new SliderConstructor('1625-01-01T01:00:00.000Z', '1701-01-01T01:00:00.000Z', '1663-01-01T01:00:00.000Z');
 	sliderConstructor.getDate();
 	document.querySelectorAll('[data-featuregroup="Current Satellite"').forEach((radio) => {
 		radio.click();
@@ -1244,31 +1352,65 @@ createTooltips();/**
 
 //*THIS IS WHERE WE CAN CHANGE THE MAP PROPERTIES!!
 
+/*These are the properties:
+
+prop1: To, name, [link], LOT2, OwnerName, Name, Label
+prop2: Lot, [day1, year1], Address, corr_label
+prop3: [day2, year2]
+prop4: dutchlot
+
+*/
 function createHoverPopup(data, event) {
-	const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
-	const layerClass = `${layerName}PopUp`;
-	const popUpHTML = document.createElement('div');
-	const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
-	const lot = mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
-	// Maybe a semantic feature group name will be required:
-//THIS WAS THE TEST WITH "Name" vs "name"
-	const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
-	popUpHTML.classList.add(
-		'hoverPopUp'
-	);
+    const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
+    const layerClass = `${layerName}PopUp`;
+    const popUpHTML = document.createElement('div');
+    const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
+    const lot = mapboxFeatureProperties.LOT2 || mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
+    
+    popUpHTML.classList.add('hoverPopUp');
 
-	const personName = document.createElement('p');
-	popUpHTML.appendChild(personName);
-	personName.textContent = personNameSt;
+    if (layerName.includes("testing")) { // Check if layerName contains "divisions"
+        const name = mapboxFeatureProperties.name || null;
+        const day1 = mapboxFeatureProperties.day1 || null;
+        const year1 = mapboxFeatureProperties.year1 || null;
+        const day2 = mapboxFeatureProperties.day2 || null;
+        const year2 = mapboxFeatureProperties.year2 || null;
+        const dutchlot = mapboxFeatureProperties.dutchlot || null;
 
-	const lotName = document.createElement('b');
-	popUpHTML.appendChild(lotName);
-	lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
-	if (lotName.textContent.includes('Castello')) {
-		popUpHTML.classList.add('red');
-	}
-	return popUpHTML;
+        const nameElement = document.createElement('p');
+        popUpHTML.appendChild(nameElement);
+        nameElement.innerHTML = name + "<br>" +
+                                "<b>Start:</b> " + day1 + ", " + year1 + "<br>" +
+                                "<b>End:</b> " + day2 + ", " + year2 + "<br>" +
+                                "<b>Lot Division:</b> " + dutchlot;
+    } else {
+        const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
+
+        const personName = document.createElement('p');
+        popUpHTML.appendChild(personName);
+        personName.textContent = personNameSt;
+
+        const lotName = document.createElement('b');
+        popUpHTML.appendChild(lotName);
+        lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
+
+        if (lotName.textContent.includes('Castello')) {
+            popUpHTML.classList.add('red');
+        }
+    }
+
+    return popUpHTML;
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @param {string} string
@@ -1309,6 +1451,8 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 window.setTimeout(() => {
 	Object.values(maps).forEach((map) => {
 		map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+		//ATTEPT TO INCORPORATE NEW CODE HERE ON 7/29/2023 - MADE IT SO SIDEBAR DIDN'T APPEAR AT ALL
+		//LIKELY NEED TO ADD MORE CODE
 	});
 }, 1000);
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
@@ -1728,7 +1872,10 @@ function SliderConstructor(minDate, maxDate) {
 		const month = prettyPrint.getMonth();
 		const year = prettyPrint.getFullYear();
 		// this should be placed outside this constructor:
-		document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+		//OLD: THIS DID NOT HAVE format: DD (eg 01), it had format: D (eg 1):
+		//document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+		document.querySelector('.datePanel').textContent = `${String(day).padStart(2, "0")} ${months[month]} ${year}`;
+
 
 		//getDate(selection, 'string');
 		// ditto
