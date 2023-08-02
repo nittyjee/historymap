@@ -491,6 +491,8 @@ function LayerManager(parentElement) {
 		return typeBoxText;
 	  }
 	
+
+	  // LIKE YOU DO WITH PAINT OPTIONS BELOW, MAYBE YOU CAN DO FOR LAYOUT OPTIONS FOR TEXT-SIZES
 	  function generateLabelLayerInputs (checkboxName) {
 		const typeBoxText = layerTypeCheckbox(checkboxName);
 		// anywhere an expression or function is used, the text will have to be interpolated as parsed json
@@ -866,6 +868,8 @@ function LayerManager(parentElement) {
 		}
 	};
 
+
+	//LIKE YOU DO WITH PAINT OPTIONS HERE, MAYBE YOU CAN DO LAYOUT OPTIONS FOR TEXT-SIZE FOR LABELS LAYERS
 	function paintOptions (type) {
 		if (type.type === 'labels') {
 		  const paint = {
@@ -902,6 +906,7 @@ function LayerManager(parentElement) {
 					url: '',
 					type: 'vector'
 				},
+				//THIS MAY BE WHERE YOU CAN HAVE "LAYOUT" OPTIONS FOR TEXT-SIZE FOR LABELS LAYERS, LIKE YOU DO FOR "PAINT" OPTIONS BELOW
 				layout: {
 					visibility: 'visible' // || none
 				},
@@ -911,12 +916,35 @@ function LayerManager(parentElement) {
 					// filter: ["all", ["<=", "DayStart", sliderConstructor.returnMinDate()], [">=", "DayEnd", sliderConstructor.returnMaxDate()]]
 			};
 
+
+			/*ONLY ONE OF THESE WORK AT A TIME. FIGURE OUT HOW TO MAKE ALL OF THEM WORK*/
+
+			//Native Labels
 			if (type.type === 'labels') {
 				transpilledOptions.layout['text-field'] = '{name}';
-				// transpilledOptions.layout['text-offset'] = [0,1],
-				// transpilledOptions.layout['text-size'] = { stops: [ [0, 4], [22, 34] ] }
+				 transpilledOptions.layout['text-offset'] = [0,1],
+				 transpilledOptions.layout['text-size'] = { stops: [ [0, 4], [22, 34] ] }
 			  }
+			
+			/*
 
+			//Settlements
+			if (type.type === 'labels') {
+			transpilledOptions.layout['text-field'] = '{corr_label}';
+				transpilledOptions.layout['text-offset'] = [0,1],
+				transpilledOptions.layout['text-size'] = { stops: [ [0, 4], [22, 21] ] }
+			}
+			
+			//Information of Interest
+			if (type.type === 'labels') {
+			transpilledOptions.layout['text-field'] = '{Label}';
+				transpilledOptions.layout['text-offset'] = [0,1],
+				transpilledOptions.layout['text-size'] = { stops: [ [0, 4], [22, 21] ] }
+			}
+
+
+			
+			*/
 
 			//NOTE - DID NOT IMPORT MANY CHANGES BELOW YET - APPEARS TO BE MOSTLY AROUND HOVERING AND TIMELINE - 07/28/2023
 
@@ -1369,7 +1397,7 @@ function createHoverPopup(data, event) {
     
     popUpHTML.classList.add('hoverPopUp');
 
-    if (layerName.includes("testing")) { // Check if layerName contains "divisions"
+    if (layerName.includes("testing")) { // Check if layerName contains "testing"
         const name = mapboxFeatureProperties.name || null;
         const day1 = mapboxFeatureProperties.day1 || null;
         const year1 = mapboxFeatureProperties.year1 || null;
