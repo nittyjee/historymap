@@ -42,7 +42,7 @@ mixin layerToggle(layer, user, name)
 	-const layerId = layer._id;
 	-const mapboxId = `${layer.borough}/${layer['feature group']}/${layer.name}/${layer.type[0].type}/${layer['target map'][0]}`;
 
-	if layer && layer.borough && layer.name && layer.type[0]
+	if layer && layer.borough && layer.name && geometryType
 		.layer
 			input(type='checkbox' name=layer._id).fetchLayer
 			if geometryType === 'circle'
@@ -60,5 +60,10 @@ mixin layerToggle(layer, user, name)
 					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
 					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
 				i.fas.fa-slash.slash-icon(style=geometryColor)
+			if geometryType === 'labels'
+				if user
+					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
+					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
+				i.fas.fa-comment-dots(style=geometryColor)
 			label(for=layer._id) #{name}
 			i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')
