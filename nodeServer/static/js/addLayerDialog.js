@@ -6,6 +6,7 @@ function LayerManager(parentElement) {
 	// Arrays to store and manage layers:
 	const layersMongoId = [];
 	const layersMapboxId = [];
+  const layerDatas = [];
 	// Maps is defined in ~/historymap/nodeServer/static/js/mapboxGlCalls.js
 	const mapNames = Object.keys(maps);
 	const layerControls = document.querySelector('.layerControls');
@@ -23,6 +24,7 @@ function LayerManager(parentElement) {
 			} else {
 				xhrPostInPromise({ _id: layerId }, './getLayerById').then((layerData) => {
 					const parsedLayerData = JSON.parse(layerData);
+          layerDatas.push(parsedLayerData);
 					createLayer(parsedLayerData).then(() => {
 						// layer added
 						resolve();
@@ -42,21 +44,42 @@ function LayerManager(parentElement) {
 		}, 500);
 	}
 
-	function zoomToFeatureGroup(layers) {
-		const group = [];
-		layers.forEach((layer, i) => {
-			const mapboxId = layer.parentElement.querySelector('.zoomToLayer').dataset.id;
-			const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
-			const bounds = maps[map].getSource(mapboxId).bounds;
-			if (bounds) {
-				group.push(bounds.slice(0, 2));
-				group.push(bounds.slice(2));
-			}
-			if (i === layers.length - 1) {
-				const groupBounds = determineBounds(group);
-				maps[map].fitBounds(groupBounds, { bearing: 0, padding: 15 });
-			}
-		});
+  function getSourceCenter (bounds) {
+    return [((bounds[2] + bounds[0]) / 2), ((bounds[3] + bounds[1]) / 2)];
+  }
+
+  function zoomToFeatureGroup (layers) {
+    const group = [];
+    layers.forEach((layer, i) => {
+      const mapboxId = layer.parentElement.querySelector('.zoomToLayer').dataset.id;
+      const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+      const bounds = maps[map].getSource(mapboxId).bounds;
+
+      let zoom;
+      let bearing;
+      let padding;
+      layerDatas.forEach((layer) => {
+        if (layer['feature group'] === mapboxId.split('/')[1]) {
+          zoom = layer.zoom || 16.34;
+          bearing = layer.bearing || -51.3;
+          padding = layer.padding || 0;
+        }
+      });
+
+      if (bounds) {
+        group.push(bounds.slice(0, 2));
+        group.push(bounds.slice(2));
+      }
+      if (i === layers.length - 1) {
+        const groupBounds = determineBounds(group);
+        maps[map].flyTo({
+          center: getSourceCenter(groupBounds),
+          zoom: zoom,
+          speed: 0.5,
+          bearing: bearing
+        });
+      }
+    });
 
 		function determineBounds(coords) {
 			const bounds = {};
@@ -134,20 +157,47 @@ function LayerManager(parentElement) {
 					});
 				}
 
-				if (e.target.classList.contains('zoomToLayer')) {
-					const mapboxId = e.target.parentElement.querySelector('.zoomToLayer').dataset.id;
-					const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
-					/* Both maps are the same size, so it makes no difference which map the function is
-					called on */
-					maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: 0, padding: 15 });
-				}
+        if (e.target.classList.contains('zoomToLayer')) {
+          const mapboxId = e.target.parentElement.querySelector('.zoomToLayer').dataset.id;
+          const map = mapboxId.split('/')[mapboxId.split('/').length - 1];
+          const bounds = maps[map].getSource(mapboxId).bounds;
 
-				if (e.target.classList.contains('easeToPoint')) {
-					const point = JSON.parse(e.target.dataset.easetopoint);
-					/* Both maps are the same size, so it makes no difference which map the function is
-					called on */
-					maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
-				}
+          /* Both maps are the same size, so it makes no difference which map the function is
+          called on */
+          layerDatas.forEach((layer) => {
+            if (layer['feature group'] === mapboxId.split('/')[1]) {
+              maps[map].flyTo({
+                center: getSourceCenter(bounds),
+                zoom: layer.zoom,
+                speed: 0.5,
+                bearing: layer.bearing
+              });
+              /*
+              maps[map].fitBounds(maps[map].getSource(mapboxId).bounds, { bearing: layer.bearing || 0, padding: layer.padding || 0 });
+              //if (layer.zoom) { maps[map].setZoom(layer.zoom); }
+              setTimeout(() => {
+                if (zoom) { maps[map].setZoom(zoom); }
+              }, 500);
+
+              maps[map].getSource(mapboxId).getCenter
+              */
+            }
+          });
+        }
+
+        if (e.target.classList.contains('easeToPoint')) {
+          const point = JSON.parse(e.target.dataset.easetopoint);
+          const bearing = (e.target.dataset.bearing || isFinite(e.target.dataset.bearing)) ? parseFloat(e.target.dataset.bearing) : 0;
+          const zoom = (e.target.dataset.zoom || isFinite(e.target.dataset.zoom)) ? parseFloat(e.target.dataset.zoom) : 16;
+          /* Both maps are the same size, so it makes no difference which map the function is
+          called on */
+          maps.beforeMap.flyTo({
+            center: point,
+            zoom,
+            speed: 0.5,
+            bearing
+          });
+        }
 
 				if (e.target.classList.contains('zoomToFeatureGroup')) {
 					const layers = e.target.parentElement.querySelectorAll('.fetchLayer');
@@ -163,9 +213,6 @@ function LayerManager(parentElement) {
 					}
 					maps[targetMap].setStyle(url);
 					const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
-					/* Both maps are the same size, so it makes no difference which map the function is
-					called on */
-					maps.beforeMap.easeTo({ center: point, zoom: 16, pitch: 0 });
 				}
 
 				if (e.target.classList.contains('editLayer')) {
@@ -393,10 +440,20 @@ function LayerManager(parentElement) {
 			title.textContent = 'Add Map';
 			mapForm.appendChild(title);
 
-			const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point'];
-			fields.forEach(fieldName => {
-				textInputGenerator(fieldName, mapForm);
-			});
+      const fields = ['title', 'borough', 'style link', 'drupal node id', 'ease to point', 'bearing', 'zoom'];
+      const titleDescriptors = [
+        'Title is the name of a map e.g. "Stokes Key to Castello Plan"',
+        'Borogh refers to a group of maps "1660|Castello Plan"',
+        'The link to the style e.g. "mapbox://styles/nittyjee/ck7piltib01881ioc5i8bel7m"',
+        'The node id is the drupal node you wish to display in the modal given a click on the info button e.g. "10056"',
+        'Ease to point is a decimal coordinate pair (longitude, latitude) e.g -74.01255,40.704882',
+        'Bearing in decimal degrees e.g. -51.3',
+        'Zoom level 0-22'
+      ];
+
+      fields.forEach((fieldName, i) => {
+        textInputGenerator(fieldName, mapForm, titleDescriptors[i]);
+      });
 
 			const submit = document.createElement('input');
 			submit.setAttribute('type', 'submit');
