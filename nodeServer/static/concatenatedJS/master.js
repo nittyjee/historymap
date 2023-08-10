@@ -1349,9 +1349,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	layerControls.generateAddMapForm();
 	layerControls.layerControlEvents();
 
-	sliderConstructor = new SliderConstructor(1625, 1701);
 	//TRIED INCORPORATING ON 7/29/2023 - BROKE THE TIMELINE. LIKELY NEED TO INVOLVE OTHER CODE:
-	//sliderConstructor = new SliderConstructor('1625-01-01T01:00:00.000Z', '1701-01-01T01:00:00.000Z', '1663-01-01T01:00:00.000Z');
+  sliderConstructor = new SliderConstructor('1625-01-01T01:00:00.000Z', '1701-01-01T01:00:00.000Z', '1663-01-01T01:00:00.000Z');
 	sliderConstructor.getDate();
 	document.querySelectorAll('[data-featuregroup="Current Satellite"').forEach((radio) => {
 		radio.click();
@@ -1869,133 +1868,152 @@ function populateSideInfoDisplayHack (event, data, target) {
                 makeParagraph("From party: ", lotInDrupal.from_party);
             }
         }
-        // DATES NEED TO BE STORED AS DATE OBJECTS OR TIMESTAMPS!
-        const start = lotInDrupal.start
-            ? lotInDrupal.start
-            : mapboxData.day1 && mapboxData.year1
-            ? `${mapboxData.day1} ${mapboxData.year1}`
-            : "no date";
-        makeParagraph("Start: ", start, "startDate");
+    // DATES NEED TO BE STORED AS DATE OBJECTS OR TIMESTAMPS!
+    const start = (lotInDrupal.start)
+      ? lotInDrupal.start
+      : (mapboxData.day1 && mapboxData.year1) ? `${mapboxData.day1} ${mapboxData.year1}` : 'no date';
+    makeParagraph('Start: ', start);
 
-        const end = lotInDrupal.end
-            ? lotInDrupal.end
-            : mapboxData.day2 && mapboxData.year2
-            ? `${mapboxData.day2} ${mapboxData.year2}`
-            : "no date";
-        makeParagraph("End: ", end, "endDate");
+    const end = (lotInDrupal.end)
+      ? lotInDrupal.end
+      : (mapboxData.day2 && mapboxData.year2) ? `${mapboxData.day2} ${mapboxData.year2}` : 'no date';
+    makeParagraph('End: ', end);
 
-        const description =
-            lotInDrupal.description ||
-            mapboxData.descriptio ||
-            "no description";
-        makeParagraph("Description: ", description, "description");
-        // Images are stored at yet another location...
-        // Images should be progressive jpeg of webp...
-        const images = lotInDrupal.images.split(",");
-        // split always creates an array
-        if (images) {
-            images.forEach((image) => {
-                // if empty string
-                if (image) {
-                    //console.log(`${baseURL}${image.trim()}`);
-                    makeImage(`${baseURL}${image.trim()}`);
-                }
-            });
+    const description = lotInDrupal.description || mapboxData.descriptio || 'no description';
+    makeParagraph('Description: ', description);
+    // Images are stored at yet another location...
+    // Images should be progressive jpeg of webp...
+    const images = lotInDrupal.images.split(',');
+    // split always creates an array
+    if (images) {
+      images.forEach((image) => {
+        // if empty string
+        if (image) {
+          //console.log(`${baseURL}${image.trim()}`);
+          makeImage(`${baseURL}${image.trim()}`);
         }
+      });
     }
+  }
 
-    function makeLink(link, textContent, descriptor) {
-        const p = document.createElement("p");
-        p.textContent = `${descriptor}`;
-        p.classList.add("boldItalic");
-        const a = document.createElement("a");
-        a.setAttribute("href", `${baseURL}${link}`);
-        a.setAttribute("target", "_blank");
-        a.textContent = textContent;
-        p.appendChild(a);
-        target.appendChild(p);
-    }
+  function makeLink (link, textContent, descriptor) {
+    const p = document.createElement('p');
+    p.textContent = `${descriptor}`;
+    p.classList.add('boldItalic');
+    const a = document.createElement('a');
+    a.setAttribute('href', `${baseURL}${link}`);
+    a.setAttribute('target', '_blank');
+    a.textContent = textContent;
+    p.appendChild(a);
+    target.appendChild(p);
+  }
 
-    function linkFromRawHTML(textContent, html) {
-        const p = document.createElement("p");
-        p.classList.add("boldItalic");
-        p.textContent = textContent;
-        p.insertAdjacentHTML("beforeend", html);
-        const link = p.querySelector("a");
-        const path = new URL(link.href).pathname;
-        link.setAttribute("target", "_blank");
-        link.href = `${baseURL}${path}`;
-        target.appendChild(p);
-    }
+  function linkFromRawHTML (textContent, html) {
+    const p = document.createElement('p');
+    p.classList.add('boldItalic');
+    p.textContent = textContent;
+    p.insertAdjacentHTML('beforeend', html);
+    const link = p.querySelector('a');
+    const path = new URL(link.href).pathname;
+    link.setAttribute('target', '_blank');
+    link.href = `${baseURL}${path}`;
+    target.appendChild(p);
+  }
 
-    function makeImage(link, textContent) {
-        const img = document.createElement("img");
-        img.setAttribute("src", link);
-        target.appendChild(img);
-    }
+  function makeImage (link, textContent) {
+    const img = document.createElement('img');
+    img.setAttribute('src', link);
+    target.appendChild(img);
+  }
 
-    function makeParagraph(descriptor, data, extraClass = null) {
-        const p = document.createElement("p");
-        p.textContent = `${descriptor}`;
-        p.classList.add("boldItalic");
-        if (extraClass) {
-            p.classList.add(extraClass);
-        }
-
-        const span = document.createElement("span");
-        p.appendChild(span);
-        span.textContent = data;
-        target.appendChild(p);
-    }
+  function makeParagraph (descriptor, data) {
+    const p = document.createElement('p');
+    p.textContent = `${descriptor}`;
+    p.classList.add('boldItalic');
+    const span = document.createElement('span');
+    p.appendChild(span);
+    span.textContent = data;
+    target.appendChild(p);
+  }
 }
-function SliderConstructor(minDate, maxDate) {
-	this.getDate = () => {
-		const selection = getSelection();
-		return getDate(selection);
-	};
+function SliderConstructor (min, max, preSelection) {
+  [...arguments].forEach((date) => {
+    if (typeof date !== 'string' || date.length !== 24) {
+      const err = new Error('One or more of the dates provided does not appear to be an ISO-8601 string e.g. "1643-01-01T01:00:00.000Z"');
+      throw err;
+    }
+  });
 
-	this.dateTransform = (date) => {
-		return getDate(date);
-	};
+  const minDate = new Date(min);
+  const minDateYear = minDate.getFullYear();
 
-	this.returnMinDate = () => {
-		// whatever position the selector is at:
-		return getDate();
-	};
+  const maxDate = new Date(max);
+  const maxDateYear = maxDate.getFullYear();
 
-	this.returnMaxDate = () => {
-		return getDate(maxDate);
-	};
-	// check rounding
-	const step = (maxDate - minDate) / 10;
-	const timeline = document.querySelector('.timeline');
-	const slider = document.querySelector('.sliderHandle');
-	const timeLineText = document.querySelectorAll('.timeLineText');
-	let isDown = false;
-	let startX;
-	let scrollLeft;
+  const checkBounds = new Date(preSelection);
+  if (checkBounds < minDate || checkBounds > maxDate) {
+    const err = new Error('Your preselected date is not between your min and max dates');
+    throw err;
+  }
 
-	timeline.addEventListener('mouseover', (e) => {
-		slider.classList.add('redSlider');
-	});
+  let load = false;
+  // check rounding
+  const step = (maxDateYear - minDateYear) / 10;
+  const timeline = document.querySelector('.timeline');
+  const slider = document.querySelector('.sliderHandle');
+  const datePanel = document.querySelector('.datePanel');
 
-	timeline.addEventListener('mouseout', (e) => {
-		slider.classList.remove('redSlider');
-	});
+  // REGARDING MOVING ACTION
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let moveEvent;
 
-	makeYears(minDate, maxDate, step);
+  // REGARING DATE SELECTION ON MOVE
+  const rulerPositionDimensions = () => {
+    return document.querySelector('.timelineSlider').getBoundingClientRect();
+  };
+  const sliderPositionDimensions = () => {
+    return slider.getBoundingClientRect();
+  };
+  const rulerWidth = () => {
+    return rulerPositionDimensions().width;
+  };
 
-	function makeYears(minDate, maxDate, step) {
-		const steps = [];
-		steps.push(Math.round(minDate += step));
-		for (let i = 1; i < 10; i++) {
-			if (i % 2 === 0) {
-				steps.push(Math.round(minDate += step * 2));
-			}
-			if (i === 9) {
-				makeDivs(steps);
-			}
-		}
+  const dateRange = dateDiffInDays(minDate, maxDate);
+
+  const dayWidth = rulerWidth() / dateRange;
+
+  const sliderCenterSelectionPosition = () => {
+    return (sliderPositionDimensions().left - rulerPositionDimensions().x) + (sliderPositionDimensions().width / 2);
+  };
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  let selectedDateTimestamp;
+
+  let selectedDate;
+
+  /* PUBLIC METHODS */
+  this.getDate = () => {
+    return getSelection();
+  };
+  /* PUBLIC METHODS END */
+
+  /* RENDER WIDGET */
+  renderWidget(minDateYear, maxDateYear, step);
+
+  function renderWidget (minDateYear, maxDateYear, step) {
+    const steps = [];
+    steps.push(Math.round(minDateYear += step));
+    for (let i = 1; i < 10; i++) {
+      if (i % 2 === 0) {
+        steps.push(Math.round(minDateYear += step * 2));
+      }
+      if (i === 9) {
+        makeDivs(steps);
+      }
+    }
 
 		function makeDivs(steps) {
 			for (let i = 0; i < steps.length; i++) {
@@ -2004,92 +2022,127 @@ function SliderConstructor(minDate, maxDate) {
 				year.textContent = steps[i];
 				timeline.appendChild(year);
 
-				const yearCarat = document.createElement('span');
-				yearCarat.classList.add('yearCarat');
-				year.appendChild(yearCarat);
-			}
-			timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.add('hide');
-		}
-	}
+        const yearCarat = document.createElement('span');
+        yearCarat.classList.add('yearCarat');
+        year.appendChild(yearCarat);
+      }
+    }
+  }
+  /* RENDER WIDGET  END */
 
-	const MS_PER_SEC = 1000;
-	const SEC_PER_HR = 60 * 60;
-	const HR_PER_DAY = 24;
-	const MS_PER_DAY = MS_PER_SEC * SEC_PER_HR * HR_PER_DAY;
+  /* PRIVATE METHODS */
 
-	function dateDiffInDays(date1, date2) {
-		const date1Time = getUTCTime(date1);
-		const date2Time = getUTCTime(date2);
-		if (!date1Time || !date2Time) return 0;
-		return Math.round((date2Time - date1Time) / MS_PER_DAY);
-	}
+  function dateDiffInDays (date1, date2) {
+    function getUTCTime (dateStr) {
+      const date = new Date(dateStr.toString());
+      /* If use 'Date.getTime()' it doesn't compute the right amount of days
+      if there is a 'day saving time' change between dates. */
+      return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+    }
 
-	function getUTCTime(dateStr) {
-		const date = new Date(dateStr.toString());
-		// If use 'Date.getTime()' it doesn't compute the right amount of days
-		// if there is a 'day saving time' change between dates
-		return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-	}
+    const date1Time = getUTCTime(date1);
+    const date2Time = getUTCTime(date2);
+    if (!date1Time || !date2Time) return 0;
+    return Math.round((date2Time - date1Time) / (24 * 60 * 60 * 1000));
+  }
 
-	function addDays(date, days) {
-		const result = new Date(date);
-		result.setDate(result.getDate() + days);
-		return result;
-	}
+  function getSelection (key) {
+    // gets the currently selected day from start:
+    const currentSelection = () => {
+      return sliderCenterSelectionPosition() / dayWidth;
+    };
 
-	function getSelection() {
-		const width = document.querySelector('.timelineSlider').clientWidth;
-		const position = parseFloat(slider.offsetLeft);
+    // sets the slider position:
+    function setSliderSliderPosition () {
+      const daysSinceStart = dateDiffInDays(minDate, selectedDate);
+      const px = (dayWidth * daysSinceStart) - (sliderPositionDimensions().width / 2);
+      slider.style.left = `${px}px`;
+    }
 
-		const dateRange = maxDate - minDate;
-		const dateRangeDisplay = dateDiffInDays(minDate, maxDate);
+    // writes date to date panel
+    function writeToDiv (selection) {
+      datePanel.textContent = formatDate(selection, 'string');
+    }
+    // if a mouse or a touch event:
+    if (!key) {
+      // onload, if a pre selected value is chosen;
+      if (preSelection && !load) {
+        selectedDateTimestamp = new Date(preSelection).getTime();
+        load = true;
+      } else {
+        selectedDateTimestamp = new Date(min).setDate(currentSelection());
+      }
+    // if a keyboard event:
+    } else {
+      selectedDateTimestamp += (key * 24 * 60 * 60 * 1000);
+    }
 
-		const dayWidth = width / dateRange;
-		const dayWidthDisplay = width / dateRangeDisplay;
+    selectedDate = new Date(selectedDateTimestamp);
 
-		const selectionDisplay = Math.round(minDate + (position / dayWidthDisplay));
-		const prettyPrint = addDays(minDate.toString(), selectionDisplay);
+    if (selectedDate > maxDate || selectedDate < minDate) {
+      return;
+    }
+    const dateFormatMapbox = formatDate(selectedDate);
+    setSliderSliderPosition();
+    writeToDiv(dateFormatMapbox);
+    layerControls.addDateFilter(dateFormatMapbox, dateFormatMapbox);
+    return dateFormatMapbox;
+  }
 
-		// internal
-		const selection = Math.round(minDate + (position / dayWidth));
+  function toggleMove () {
+    if (moveEvent) {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      moveEvent = true;
+    }
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move);
+    moveEvent = false;
+  }
 
-		const day = prettyPrint.getDate();
-		const month = prettyPrint.getMonth();
-		const year = prettyPrint.getFullYear();
-		// this should be placed outside this constructor:
-		//OLD: THIS DID NOT HAVE format: DD (eg 01), it had format: D (eg 1):
-		//document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
-		document.querySelector('.datePanel').textContent = `${String(day).padStart(2, "0")} ${months[month]} ${year}`;
 
 
-		//getDate(selection, 'string');
-		// ditto
-		layerControls.addDateFilter(getDate(selection), getDate(maxDate));
-		return selection;
-	}
 
-	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	const stNdRdTh = (number) => {
-		const postFix = ['st', 'nd', 'rd', 'th'];
-		const exceptions = [11, 12, 13, 0];
-		const length = number.toString().length;
-		if (length > 1) {
-			const lastDigit = parseInt(number.toString()[1]);
-			if (exceptions.includes(lastDigit) || lastDigit > 3) {
-				return postFix[3];
-			}
-			return postFix[parseInt(number.toString()[1]) - 1];
-		}
-		if (parseInt(number.toString()[0]) > 4) {
-			return postFix[3];
-		}
-		return postFix[parseInt(number.toString()[0]) - 1];
-	};
+  // On drag start
+  function start (e) {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+    scrollLeft = slider.offsetLeft;
+    // attach event
+    toggleMove();
+  }
 
-	function getDate(selection, returnIntOrSt) {
-		selection = (typeof selection === 'number')
-			? selection.toString()
-			: selection;
+  function move (e) {
+    // if mouse is moving but not dragging slider
+    if (!isDown) return;
+    const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+    const y = e.pageY || e.touches[0].pageY;
+    const dist = (x - startX);
+    const px = scrollLeft + dist;
+    // if (px > -14) {
+    if (x > rulerPositionDimensions().left &&
+      x < rulerPositionDimensions().right &&
+      y < rulerPositionDimensions().bottom &&
+      y > rulerPositionDimensions().top) {
+      slider.style.left = `${px}px`;
+      getSelection();
+    }
+  }
+
+  /* On drag end */
+  function end (e) {
+    // remove event:
+    toggleMove();
+    isDown = false;
+    slider.classList.remove('active');
+  }
+
+  // formats the date to the required form to query map features:
+  function formatDate (selection, returnIntOrSt) {
+    selection = (typeof selection === 'number')
+      ? selection.toString()
+      : selection;
 
 		let format;
 		if (selection.length > 4) {
@@ -2112,74 +2165,60 @@ function SliderConstructor(minDate, maxDate) {
 			? `0${rawMonth + 1}`
 			: `${rawMonth + 1}`;
 
-		const rawDay = date.getDate();
-		const day = ((rawDay).toString().length === 1)
-			? `0${rawDay}`
-			: `${rawDay}`;
-		if (returnIntOrSt === 'string') {
-			return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
-		}
-		return parseInt(`${date.getFullYear()}${month}${day}`);
-	}
+    const rawDay = date.getDate();
+    const day = ((rawDay).toString().length === 1)
+      ? `0${rawDay}`
+      : `${rawDay}`;
+    if (returnIntOrSt === 'string') {
+      // return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+      return `${rawDay} ${months[rawMonth]} ${date.getFullYear()}`;
+    }
+    return parseInt(`${date.getFullYear()}${month}${day}`);
+  }
 
-	let moveEvent;
-	function toggleMove() {
-		if (moveEvent) {
-			document.removeEventListener('mousemove', move);
-			document.removeEventListener('touchmove', move);
-			moveEvent = true;
-		}
-		document.addEventListener('mousemove', move);
-		document.addEventListener('touchmove', move);
-		moveEvent = false;
-	}
+    //HERE I FIXED SOME TIME FORMATTING - MAY NEED TO REINSTATE
+    /*
+		const day = prettyPrint.getDate();
+		const month = prettyPrint.getMonth();
+		const year = prettyPrint.getFullYear();
+		// this should be placed outside this constructor:
+		//OLD: THIS DID NOT HAVE format: DD (eg 01), it had format: D (eg 1):
+		//document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
+		document.querySelector('.datePanel').textContent = `${String(day).padStart(2, "0")} ${months[month]} ${year}`;
+    */
 
-	const start = (e) => {
-		isDown = true;
-		slider.classList.add('active');
-		startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-		scrollLeft = slider.offsetLeft;
-		toggleMove();
-	};
-
-	const move = (e) => {
-		if (!isDown) return;
-		const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-		const dist = (x - startX);
-		slider.style.left = `${scrollLeft + dist}px`;
-		timeLineText.forEach(element => {
-			element.classList.add('hide');
-
-		});
-		timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.remove('hide');
-		getSelection();
-
-	};
-
-	const end = (e) => {
-		toggleMove();
-		isDown = false;
-		slider.classList.remove('active');
-	};
-
-	timeline.addEventListener('click', (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		slider.classList.add('active');
-		startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-		slider.style.left = `${startX - 30}px`;
-		timeLineText.forEach(element => {
-			element.classList.add('hide')
-		});
-		timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.remove('hide');
-		getSelection();
-	});
+  timeline.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    slider.classList.add('active');
+    startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+    slider.style.left = `${startX - 30}px`;
+    getSelection();
+  });
 
 	slider.addEventListener('mousedown', start);
 	slider.addEventListener('touchstart', start);
 
-	slider.addEventListener('mouseup', end);
-	slider.addEventListener('touchend', end);
+  slider.addEventListener('mouseup', end);
+  slider.addEventListener('touchend', end);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      getSelection(1);
+    }
+    if (e.key === 'ArrowLeft') {
+      getSelection(-1);
+    }
+  });
+
+  timeline.addEventListener('mouseover', (e) => {
+    slider.classList.add('redSlider');
+  });
+
+  timeline.addEventListener('mouseout', (e) => {
+    slider.classList.remove('redSlider');
+  });
+  /* EVENTS END */
 }
 /**
  * @param {Object|string} items What you want to send to the server.
@@ -2194,14 +2233,12 @@ function xhr (items, route, callback) {
   xhr.send(JSON.stringify(items));
 
   if (xhr.readyState === 1) {
-    //console.log(`blocking ${route}`);
     document.body.style.pointerEvents = 'none';
   }
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       if (xhr.responseText) {
-        //console.log(`response for route ${route} should have been received`);
         callback(xhr.responseText);
         document.body.style.pointerEvents = '';
         /* To add a loading gif uncomment the following, add a div that has a gif and obscures the screen */
