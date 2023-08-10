@@ -2138,43 +2138,38 @@ function SliderConstructor (min, max, preSelection) {
     slider.classList.remove('active');
   }
 
-  // formats the date to the required form to query map features:
-  function formatDate (selection, returnIntOrSt) {
-    selection = (typeof selection === 'number')
-      ? selection.toString()
-      : selection;
-
-		let format;
-		if (selection.length > 4) {
-			format = selection.split('');
-			format.splice(4, 0, '/');
-			format.splice(7, 0, '/');
-			format = format.join('');
-		} else {
-			format = selection;
-		}
-
-		const date = new Date(format);
-		if (!date.valueOf()) {
-			console.error(`Invalid date ${selection} passed to "getDate()"
-      getDate() expects a string formated YYYYMMDD.`);
-			return;
-		}
-		const rawMonth = date.getMonth();
-		const month = ((rawMonth + 1).toString().length === 1)
-			? `0${rawMonth + 1}`
-			: `${rawMonth + 1}`;
-
-    const rawDay = date.getDate();
-    const day = ((rawDay).toString().length === 1)
-      ? `0${rawDay}`
-      : `${rawDay}`;
-    if (returnIntOrSt === 'string') {
-      // return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
-      return `${rawDay} ${months[rawMonth]} ${date.getFullYear()}`;
-    }
-    return parseInt(`${date.getFullYear()}${month}${day}`);
+// formats the date to the required form to query map features:
+function formatDate(selection, returnIntOrSt) {
+	selection = typeof selection === 'number' ? selection.toString() : selection;
+  
+	let format;
+	if (selection.length > 4) {
+	  format = selection.split('');
+	  format.splice(4, 0, '/');
+	  format.splice(7, 0, '/');
+	  format = format.join('');
+	} else {
+	  format = selection;
+	}
+  
+	const date = new Date(format);
+	if (!date.valueOf()) {
+	  console.error(`Invalid date ${selection} passed to "getDate()"
+		getDate() expects a string formatted YYYYMMDD.`);
+	  return;
+	}
+	const rawMonth = date.getMonth();
+	const month = (rawMonth + 1).toString().padStart(2, '0');
+  
+	const rawDay = date.getDate();
+	const day = rawDay.toString().padStart(2, '0');
+	if (returnIntOrSt === 'string') {
+	  // return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+	  return `${day} ${months[rawMonth]} ${date.getFullYear()}`;
+	}
+	return parseInt(`${date.getFullYear()}${month}${day}`);
   }
+  
 
     //HERE I FIXED SOME TIME FORMATTING - MAY NEED TO REINSTATE
     /*
