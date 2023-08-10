@@ -27,7 +27,20 @@ const compare = new mapboxgl.Compare(beforeMap, afterMap, container, {
 });
 
 window.setTimeout(() => {
-	Object.values(maps).forEach((map) => {
-		map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
-	});
+  Object.values(maps).forEach((map) => {
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    /**
+     * @description An event when the map is clicked, but not a feature.
+     * It's using a hack (checking the type of cursor). Seems to work with touch events in
+     * preliminary tests. As per https://github.com/mapbox/mapbox-gl-js/issues/1209
+     */
+    map.on('click', (e) => {
+      const cursorType = map.getCanvas().style.cursor;
+      const hideTab = document.querySelector('.hideMenuTab');
+      toggleSideInfo();
+      if (cursorType !== 'pointer') {
+        hideTab.click();
+      }
+    });
+  });
 }, 1000);

@@ -412,16 +412,17 @@ function LayerManager(parentElement) {
 			/* A map is a style */
 			const mapData = {};
 
-			function textInputGenerator(fieldName, target) {
-				const nameLabel = document.createElement('label');
-				nameLabel.htmlFor = fieldName;
-				nameLabel.innerHTML = `${fieldName}: `;
-				target.appendChild(nameLabel);
+      function textInputGenerator (fieldName, target, description) {
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = fieldName;
+        nameLabel.innerHTML = `${fieldName}: `;
+        target.appendChild(nameLabel);
 
 				const name = document.createElement('input');
 				name.setAttribute('type', 'text');
 				name.id = fieldName.replaceAll(' ', '_');
 				target.appendChild(name);
+        name.title = description;
 
 				name.addEventListener('input', () => {
 					mapData[fieldName] = name.value;
@@ -640,7 +641,7 @@ function LayerManager(parentElement) {
 			function generateLayersTypeCheckbox(checkboxName) {
 				const typeBoxText = layerTypeCheckbox(checkboxName);
 
-				const appearance = ['color', 'opacity', 'width'];
+				const appearance = ['color', 'opacity', 'width', 'blur'];
 				appearance.forEach((fieldName) => {
 					const nameLabel = document.createElement('label');
 					nameLabel.htmlFor = fieldName;
@@ -949,6 +950,8 @@ function LayerManager(parentElement) {
 	  }
 
 
+
+
 	function tanspileAndAddLayer(targetMap, type, data) {
 		const promise = new Promise((resolve, reject) => {
 			const map = maps[targetMap];
@@ -1006,42 +1009,84 @@ function LayerManager(parentElement) {
 
 			//NOTE - DID NOT IMPORT MANY CHANGES BELOW YET - APPEARS TO BE MOSTLY AROUND HOVERING AND TIMELINE - 07/28/2023
 
+if (data.hover) {
+  let hoveredFeature = null; // Initialize a variable to keep track of the currently hovered feature
+  const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-			if (data.hover) {
-				const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
-				map.on('mouseenter', data.id, (event) => {
-					map.getCanvas().style.cursor = 'pointer';
-					hoverPopUp
-						.setLngLat(event.lngLat)
-						.setDOMContent(createHoverPopup(data, event))
-						.addTo(map);
-				});
+  map.on('mouseenter', data.id, (event) => {
+    map.getCanvas().style.cursor = 'pointer';
+    hoverPopUp
+      .setLngLat(event.lngLat)
+      .setDOMContent(createHoverPopup(data, event))
+      .addTo(map);
+  });
 
-				map.on('mousemove', data.id, (event) => {
-					map.getCanvas().style.cursor = 'pointer';
-					hoverPopUp
-						.setLngLat(event.lngLat)
-						.setDOMContent(createHoverPopup(data, event));
-				});
+  map.on('mousemove', data.id, (event) => {
+    map.getCanvas().style.cursor = 'pointer';
+    hoverPopUp
+      .setLngLat(event.lngLat)
+      .setDOMContent(createHoverPopup(data, event));
 
-				map.on('mouseleave', data.id, () => {
-					map.getCanvas().style.cursor = '';
-					if (hoverPopUp.isOpen()) {
-						hoverPopUp.remove();
-					}
-				});
-			}
+    if (event.features.length > 0) {
+      if (hoveredFeature !== null && hoveredFeature !== event.features[0].id) {
+        map.setFeatureState(
+          { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+          { hover: false }
+        );
+      }
+      hoveredFeature = event.features[0].id;
+      map.setFeatureState(
+        { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+        { hover: true }
+      );
+    }
+  });
 
-			if (data.click) {
-				const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
-				map.on('click', data.id, (event) => {
-					populateSideInfoDisplay(event, data);
-					clickPopUp
-						.setLngLat(event.lngLat)
-						.setDOMContent(createHoverPopup(data, event))
-						.addTo(map);
-				});
-			}
+  map.on('mouseleave', data.id, () => {
+    map.getCanvas().style.cursor = '';
+    if (hoveredFeature !== null) {
+      map.setFeatureState(
+        { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
+        { hover: false }
+      );
+    }
+    hoveredFeature = null; // Reset the hovered feature
+    if (hoverPopUp.isOpen()) {
+      hoverPopUp.remove();
+    }
+  });
+}
+
+
+if (data.click) {
+  const clickPopUpA = new mapboxgl.Popup();
+  const clickPopUpB = new mapboxgl.Popup();
+  
+  const closePopups = () => {
+    clickPopUpA.remove();
+    clickPopUpB.remove();
+  };
+  
+  map.on('click', data.id, (event) => {
+    console.log(data);
+    
+    populateSideInfoDisplay(event, data);
+    
+    clickPopUpB
+      .setLngLat(event.lngLat)
+      .setDOMContent(createHoverPopup(data, event))
+      .addTo(maps.beforeMap);
+      
+    clickPopUpA
+      .setLngLat(event.lngLat)
+      .setDOMContent(createHoverPopup(data, event))
+      .addTo(maps.afterMap);
+  });
+  
+  clickPopUpA.on('close', closePopups);
+  clickPopUpB.on('close', closePopups);
+}
+
 
 			if (data.name) {
 				transpilledOptions.name = data.name;
@@ -1059,6 +1104,7 @@ function LayerManager(parentElement) {
 				}
 				if (type.type === 'line') {
 					transpilledOptions.paint[`line-width`] = parseFloat(type.width);
+					transpilledOptions.paint[`line-blur`] = parseFloat(type.blur);
 				}
 			}
 
@@ -1079,13 +1125,14 @@ function LayerManager(parentElement) {
 				layersMapboxId.push([layerId]);
 			}
 
-			map.addLayer(transpilledOptions);
-			map.on('sourcedata', () => {
-				resolve();
-			});
-		});
-		return promise;
-	}
+      console.log(transpilledOptions);
+      map.addLayer(transpilledOptions);
+      map.on('sourcedata', () => {
+        resolve();
+      });
+    });
+    return promise;
+  }
 }
 /**
  * Future clicked popup function that renders mapbox feature properties that can be altered:
@@ -1539,9 +1586,73 @@ window.setTimeout(() => {
 		map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
 		//ATTEPT TO INCORPORATE NEW CODE HERE ON 7/29/2023 - MADE IT SO SIDEBAR DIDN'T APPEAR AT ALL
 		//LIKELY NEED TO ADD MORE CODE
-	});
+    /**
+     * @description An event when the map is clicked, but not a feature.
+     * It's using a hack (checking the type of cursor). Seems to work with touch events in
+     * preliminary tests. As per https://github.com/mapbox/mapbox-gl-js/issues/1209
+     */
+    map.on('click', (e) => {
+      const cursorType = map.getCanvas().style.cursor;
+      const hideTab = document.querySelector('.hideMenuTab');
+      toggleSideInfo();
+      if (cursorType !== 'pointer') {
+        hideTab.click();
+      }
+    });
+  });
 }, 1000);
+layersExplored = [];
+layerContainers = [];
+function toggleSideInfo () {
+  const infoDisplay = document.querySelector('.sideInfoDisplay');
+  if (infoDisplay.classList.contains('displayContent') || infoDisplay.innerHTML === '') {
+    infoDisplay.classList.remove('displayContent');
+    infoDisplay.classList.add('hiddenContent');
+  } else {
+    infoDisplay.classList.add('displayContent');
+    infoDisplay.classList.remove('hiddenContent');
+  }
+}
+
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
+  let target;
+  /**
+   * The original code I wrote didn't contemplate multiple data (for each feature group)
+   * as I though it was a bug. Two global variables were added, this could scoped in a constructor.
+   */
+  const infoDisplay = document.querySelector('.sideInfoDisplay');
+  infoDisplay.classList.add('displayContent');
+  infoDisplay.classList.remove('hiddenContent');
+
+  if (layerData['info div color']) { infoDisplay.style.backgroundColor = layerData['info div color']; }
+  if (layerData['info div border color']) { infoDisplay.style.borderColor = layerData['info div border color']; }
+
+  infoDisplay.querySelectorAll('.infoDivAdded').forEach((div, i) => {
+    div.style.order = 2;
+  });
+  // this block adds a single div per feature group:
+  const featureGroup = layerData['feature group'];
+  if (!layersExplored.includes(featureGroup)) {
+    layersExplored.push(featureGroup);
+    const newLayerContainer = document.createElement('div');
+    newLayerContainer.classList.add('infoDivAdded');
+    layerContainers.push(newLayerContainer);
+    // infoDisplay.appendChild(newLayerContainer);
+    target = newLayerContainer;
+    infoDisplay.insertBefore(target, infoDisplay.children[0]);
+  } else {
+	//This error message sucked.
+    //alert('writing to preexisting');
+    const index = layersExplored.indexOf(featureGroup);
+    target = layerContainers[index];
+  }
+
+  target.style.order = 1;
+
+  while (target.firstChild) {
+    target.removeChild(target.lastChild);
+  }
+
   const mapboxData = mapFeatureClickEvent.features[0].properties;
   // corresponding content on Drupal:
   // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
@@ -1552,32 +1663,25 @@ function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
   // Lot name hack:
   const mapboxLot = mapboxData.Lot || null;
   if (!drupalNid && mapboxLot) {
-    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData);
+    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData, target);
   }
 
   const cleanNid = drupalNid.replace(/[/a-z]/gi, '');
-  /* HACKS END */
 
   if (!cleanNid) { return; }
+  /* HACKS END */
 
-  const target = document.querySelector('.sideInfoDisplay');
-  target.classList.add('displayContent');
-  target.classList.remove('hiddenContent');
-  target.innerHTML = '';
 
-  while (target.firstChild) {
-    target.removeChild(target.lastChild);
-  }
 
   const url = `https://encyclopedia.nahc-mapping.org/rendered-export-single?nid=${cleanNid}`;
 
   xhrGetInPromise(null, url).then((content) => {
     let rmNewlines = JSON.parse(content)[0].rendered_entity.replace(/\n/g, '');
     rmNewlines = rmNewlines.replace(/<a (.*?)>/g, '');
-    target.insertAdjacentHTML('beforeEnd', JSON.parse(content)[0].rendered_entity);
+    target.insertAdjacentHTML('afterbegin', JSON.parse(content)[0].rendered_entity);
   });
 
-  makeCloseButton(target);
+  // makeCloseButton(target);
 }
 
 function makeCloseButton (target) {
@@ -1602,22 +1706,16 @@ function makeCloseButton (target) {
 let Dutch_Grants;
 // Self instantiating on start up:
 (async () => {
-    // const result = await xhrGetInPromise({}, '/dutchLots');
-    const result = await xhrGetInPromise(
-        {},
-        "https://encyclopedia.nahc-mapping.org/grant-lots-export-properly"
-    );
-    Dutch_Grants = JSON.parse(result);
+  // const result = await xhrGetInPromise({}, '/dutchLots');
+  const result = await xhrGetInPromise({}, 'https://encyclopedia.nahc-mapping.org/grant-lots-export-properly');
+  Dutch_Grants = JSON.parse(result);
 })();
 
 // Called taxlot_event_entities_info in the original project:
 let Castello_Taxlots;
 (async () => {
-    const result = await xhrGetInPromise(
-        {},
-        "https://encyclopedia.nahc-mapping.org/taxlot-entities-export"
-    );
-    Castello_Taxlots = JSON.parse(result);
+  const result = await xhrGetInPromise({}, 'https://encyclopedia.nahc-mapping.org/taxlot-entities-export');
+  Castello_Taxlots = JSON.parse(result);
 })();
 
 // drupal feature data
@@ -1651,32 +1749,31 @@ const drupalData = (drupalDataName, mapboxLot) => {
     return promise;
 };
 
-function populateSideInfoDisplayHack(event, data) {
-    const target = document.querySelector(".sideInfoDisplay");
-    target.classList.add("displayContent");
-    target.classList.remove("hiddenContent");
-    target.innerHTML = "";
-
-    const close = document.createElement("i");
-    close.classList.add("fa", "fa-window-close");
-    close.style.float = "right";
-    close.style.cursor = "pointer";
-    close.title = "Close";
-    close.setAttribute("aria-hidden", "true");
-    close.addEventListener("click", () => {
-        target.classList.remove("displayContent");
-        target.classList.add("hiddenContent");
-    });
-    target.appendChild(close);
+function populateSideInfoDisplayHack (event, data, target) {
+/*  const target = document.querySelector('.sideInfoDisplay');
+  target.classList.add('displayContent');
+  target.classList.remove('hiddenContent');
+  target.innerHTML = '';
+/*
+  const close = document.createElement('i');
+  close.classList.add('fa', 'fa-window-close');
+  close.style.float = 'right';
+  close.style.cursor = 'pointer';
+  close.title = 'Close';
+  close.setAttribute('aria-hidden', 'true');
+  close.addEventListener('click', () => {
+    target.classList.remove('displayContent');
+    target.classList.add('hiddenContent');
+  });
+  target.appendChild(close);*/
 
     // mapbox feature data
     const mapboxData = event.features[0].properties;
 
     const mapboxLot = mapboxData.Lot;
     // REGEXING labels shouldn't be necesssary
-    const drupalDataName = data["feature group"]
-        .replace(/[^a-z ]/gi, "")
-        .replace(" ", "_");
+  const drupalDataName = data['feature group'].replace(/[^a-z ]/gi, '').replace(' ', '_');
+
 
     // drupalDataTaxLots().then((res) => console.log(res));
 
@@ -1695,6 +1792,9 @@ function populateSideInfoDisplayHack(event, data) {
             makeTaxLotsInfo(drupalDataName, mapboxLot, lotInDrupal, mapboxData);
         }
     });
+
+
+
 
     function makeTaxLotsInfo(
         drupalDataName,
@@ -2094,14 +2194,14 @@ function xhr (items, route, callback) {
   xhr.send(JSON.stringify(items));
 
   if (xhr.readyState === 1) {
-    console.log(`blocking ${route}`);
+    //console.log(`blocking ${route}`);
     document.body.style.pointerEvents = 'none';
   }
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       if (xhr.responseText) {
-        console.log(`response for route ${route} should have been received`);
+        //console.log(`response for route ${route} should have been received`);
         callback(xhr.responseText);
         document.body.style.pointerEvents = '';
         /* To add a loading gif uncomment the following, add a div that has a gif and obscures the screen */
@@ -2210,3 +2310,25 @@ function xhrPostInPromise (items, route) {
   });
   return promise;
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+	const labels = document.querySelectorAll(".field__label");
+	labels.forEach(label => {
+	  if (label.textContent.trim() === "Date Start") {
+		label.textContent = "Date: ";
+	  }
+	});
+  });
+
+  $(document).ready(function() {
+	$('.field__label').each(function() {
+	  if ($(this).text().trim() === 'Date Start') {
+		$(this).text('Date: ');
+	  }
+	});
+  });
+  
+  
+
+

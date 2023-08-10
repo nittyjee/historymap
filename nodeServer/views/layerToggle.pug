@@ -1,69 +1,74 @@
 mixin boroughToggle(boroughData, boroughName, user)
-	-console.log(boroughData);
-	-// parent
-	.borough
-		-// toggle
-		-// new div to center content
-		.boroughName
-			i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
-			-// .areaList
-			b  #{boroughName}
-			-// child
-			.hiddenContent(name=`${boroughName}-layers`)
-				each featureGroup, featureGroupName in boroughData
-					-// new div to keep toggle action
-					.featureGroupName
-						-// the parent
-						.featureGroup.layersInArea
-							-// the toggle
-							if (featureGroup.length > 1)
-								.featureContent 
-									input(type='checkbox' name=featureGroupName).view.featureGroup 
-									i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
-									label #{featureGroupName}
-										-// children
-										-// Drupal node id should be joined to boroughName... 
-									if featureGroup[0]['drupal node id']
-										i.fa.fa-info-circle.toggleInfo(data-nodeId=featureGroup[0]['drupal node id'] title='Toggle more information')
-									i.fa.fa-crosshairs.zoomToFeatureGroup.hiddenZoom(data-featureGroup=featureGroupName title='Zoom to feature group')
-								.hiddenContent
-									each layer in featureGroup
-										+layerToggle(layer, user, layer.name)
+  -// parent
+  .borough
+    -// toggle
+    -// new div to center content
+    .boroughName
+      i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
+      -// .areaList
+      label #{boroughName}
+      -// child
+      .hiddenContent(name=`${boroughName}-layers`)
+        each featureGroup, featureGroupName in boroughData
+          -// new div to keep toggle action
+          .featureGroupName
+            -// the parent
+            .featureGroup.layersInArea
+              -// the toggle
+              if (featureGroup.length > 1)
+                input(type='checkbox' name=featureGroupName).view.featureGroup 
+                i.toggleVisibility.fa-plus-square.fas.compress-expand-icon
+                label #{featureGroupName}
+                              -// children
+                              -// Drupal node id should be joined to boroughName... 
+                if featureGroup[0]['drupal node id']
+                  i.fa.fa-info-circle.toggleInfo(data-nodeId=featureGroup[0]['drupal node id'] title='Toggle more information')
+                i.fa.fa-crosshairs.zoomToFeatureGroup.hiddenZoom(data-featureGroup=featureGroupName title='Zoom to feature group')
+                .hiddenContent
+                  each layer in featureGroup
+                    +layerToggle(layer, user, layer.name)
 
-							else
-								-// pass name it layer === featureGroup
-								+layerToggle(featureGroup[0], user, featureGroupName)
-
+              else
+                if featureGroup[0]['drupal node id']
+                  i.fa.fa-info-circle.toggleInfo(data-nodeId=featureGroup[0]['drupal node id'] title='Toggle more information')
+                -// pass name it layer === featureGroup
+                +layerToggle(featureGroup[0], user, featureGroupName)
+              
 
 -// name refers to the name to use -either layer name or feature group if the group contains 1 layer
 mixin layerToggle(layer, user, name)
-	-const geometryType = layer.type[0].type;
-	-const geometryColor = `color:${layer.type[0].color}`;
-	-const layerId = layer._id;
-	-const mapboxId = `${layer.borough}/${layer['feature group']}/${layer.name}/${layer.type[0].type}/${layer['target map'][0]}`;
+  -const geometryType = layer && layer.type && layer.type[0] && layer.type[0].type || null;
+  -const geometryColor = layer && layer.type && layer.type[0] && layer.type[0].color || null;
+  -const layerId = layer && layer._id || null;
+  -const borough = layer && layer.borough || null;
+  -const featureGroup = layer && layer['feature group'] || null;
+  -const layerName = layer && layer.name || null;
+  -const targetMap = layer && layer['target map'] && layer['target map'][0] || null;
+  -const mapboxId = `${borough}/${featureGroup}/${layerName}/${geometryType}/${targetMap}`;
 
-	if layer && layer.borough && layer.name && geometryType
-		.layer
-			input(type='checkbox' name=layer._id).fetchLayer
-			if geometryType === 'circle'
-				if user 
-					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
-					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
-				i.fas.fa-circle(style=geometryColor)
-			if geometryType === 'fill'
-				if user
-					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
-					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
-				i.fas.fa-square(style=geometryColor)
-			if geometryType === 'line'
-				if user
-					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
-					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
-				i.fas.fa-slash.slash-icon(style=geometryColor)
-			if geometryType === 'labels'
-				if user
-					i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
-					i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
-				i.fas.fa-comment-dots(style=geometryColor)
-			label(for=layer._id) #{name}
-			i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')
+  -console.log(layer)
+  if layer && borough && layerName && geometryType
+    .layer
+      input(type='checkbox' name=layer._id).fetchLayer
+      if geometryType === 'circle'
+        if user 
+          i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
+          i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
+        i.fas.fa-circle(style=`color:${geometryColor}`)
+      if geometryType === 'fill'
+        if user
+          i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
+          i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
+        i.fas.fa-square(style=`color:${geometryColor}`)
+      if geometryType === 'line'
+        if user
+          i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
+          i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
+        i.fas.fa-slash.slash-icon(style=`color:${geometryColor}`)
+      if geometryType === 'labels'
+        if user
+          i.editLayer.fa-pencil-alt.fas.compress-expand-icon(title='Edit this layer?' data-_id=layerId)
+          i.mapMaster.deleteLayer.fa-trash.fas.compress-expand-icon(title='Delete this layer?' data-_id=layerId)
+        i.fas.fa-comment-dots(style=`color:${geometryColor}`)
+      label(for=layer._id) #{name}
+      i.fa.fa-crosshairs.zoomToLayer.hiddenZoom(data-id=mapboxId title='Zoom to layer')
