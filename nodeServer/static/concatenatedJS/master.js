@@ -1486,22 +1486,67 @@ createTooltips();/**
 
 /*These are the properties:
 
-prop1: To, name, [link], LOT2, OwnerName, Name, Label
-prop2: Lot, [day1, year1], Address, corr_label
+prop1: To, name, [link], LOT2, OwnerName, Name, Label, corr_label
+prop2: Lot, [day1, year1], Address
 prop3: [day2, year2]
 prop4: dutchlot
+
+Castello: LOT2
+Current Lots: OwnerName, Address
+Information of Interest: Label
+Dutch Grant Lot: name, Lot
+Long Island Towns: corr_label
+Demo Taxlot C7: [link]
+
+*/
+
+
+
+
+/*
+//CASTELLO TAXLOT NEEDS LABEL
+const castelloLot = mapboxFeatureProperties.LOT2 || null;
+
+const lotName = document.createElement('p');
+popUpHTML.appendChild(lotName);
+lotName.innerHTML = "Taxlot (1660): " + "<br>" + castelloLot;
+
+
+//HARDCODING BUBBLE COLORS
+if (lotName.textContent.includes('Taxlot')) {
+	popUpHTML.classList.add('red');
+}
+
+//CURRENT LOTS
+const currentAddress = mapboxFeatureProperties.Address || null;
+const currentName = mapboxFeatureProperties.OwnerName || null;
+
+const currentLot = document.createElement('p');
+popUpHTML.appendChild(currentLot);
+currentLot.innerHTML = currentName + "<br>" + currentAddress;
+
+
+//DUTCH GRANTS: Dutch Grant Lot: name, Lot
+//Demo Taxlot C7: [link]
 
 */
 function createHoverPopup(data, event) {
     const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
-    const layerClass = `${layerName}PopUp`;
     const popUpHTML = document.createElement('div');
     const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
-    const lot = mapboxFeatureProperties.LOT2 || mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
-    
+
     popUpHTML.classList.add('hoverPopUp');
 
-    if (layerName.includes("testing")) { // Check if layerName contains "testing"
+	//HERE YOU CAN ADD COLOR CONDITIONS!
+	if (layerName.includes("Dutch Grants")) {
+		popUpHTML.classList.add('green');
+	}	
+
+	//BELOW ARE ALL THE BUBBLE FILLINGS
+	//The ones with more than one line, or specific labels had their own separate code
+	//while the ones with only one line and no labels were listed in a group below
+
+    if (layerName.includes("Divisions")) { // Check if layerName contains "Divisions"
         const name = mapboxFeatureProperties.name || null;
         const day1 = mapboxFeatureProperties.day1 || null;
         const year1 = mapboxFeatureProperties.year1 || null;
@@ -1515,28 +1560,46 @@ function createHoverPopup(data, event) {
                                 "<b>Start:</b> " + day1 + ", " + year1 + "<br>" +
                                 "<b>End:</b> " + day2 + ", " + year2 + "<br>" +
                                 "<b>Lot Division:</b> " + dutchlot;
+        popUpHTML.classList.add('green');
+
+    } else if (layerName.includes("Taxlots")) { // Check if layerName contains "Taxlots"
+        const castelloLot = mapboxFeatureProperties.LOT2 || null;
+
+        const lotName = document.createElement('p');
+        popUpHTML.appendChild(lotName);
+        lotName.innerHTML = "Taxlot (1660): " + "<br>" + castelloLot;
+
+        popUpHTML.classList.add('red');
+
+    } else if (layerName.includes("Current Lots")) { // Check if layerName contains "Current Lots"
+        const currentAddress = mapboxFeatureProperties.Address || null;
+        const currentName = mapboxFeatureProperties.OwnerName || null;
+
+        const currentLot = document.createElement('p');
+        popUpHTML.appendChild(currentLot);
+        currentLot.innerHTML = currentName + "<br>" + currentAddress;
+
+        popUpHTML.classList.add('red');
+
+    } else if (layerName.includes("Dutch Grants")) { // Check if layerName contains "Dutch Grants"
+        const dutchName = mapboxFeatureProperties.name || null;
+        const dutchLot = mapboxFeatureProperties.Lot || null;
+
+        const dutchLotElement = document.createElement('p');
+        popUpHTML.appendChild(dutchLotElement);
+        dutchLotElement.innerHTML = dutchName + "<br>" + " Dutch Grant Lot: " + dutchLot;
+
+        popUpHTML.classList.add('red');
     } else {
-        const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
+        const personNameSt = mapboxFeatureProperties.Label || mapboxFeatureProperties.corr_label || mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
 
         const personName = document.createElement('p');
         popUpHTML.appendChild(personName);
         personName.textContent = personNameSt;
-
-        const lotName = document.createElement('b');
-        popUpHTML.appendChild(lotName);
-        lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
-
-        if (lotName.textContent.includes('Castello')) {
-            popUpHTML.classList.add('red');
-        }
     }
 
     return popUpHTML;
 }
-
-
-
-
 
 
 

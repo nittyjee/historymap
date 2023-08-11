@@ -82,6 +82,11 @@ a {
   .mapboxgl-popup-content .hoverPopUp.red {
     background-color: rgba(255, 192, 203, 0.3);
     border: solid pink 2px; }
+  .mapboxgl-popup-content .hoverPopUp.green {
+    background-color: rgb(0, 136, 136, 0.3);
+    border: solid rgb(0, 136, 136) 2px; }
+
+
   .mapboxgl-popup-content .hoverPopUp p {
     margin: 0; }
 
@@ -363,7 +368,7 @@ a {
     
     /* This is a line where the sidebar floating above map was sort of isolated */
     /* position: fixed; */
-    
+
     }
   .mapContainer {
     display: flex;
