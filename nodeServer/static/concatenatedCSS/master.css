@@ -133,12 +133,18 @@ a {
   height: 54px; }
 
 .mapControls {
+	position: absolute;
+	display:block;
+	left: 0;
   min-width: 325px;
-  max-height: calc(100vh - 148px);
+  max-height: calc(100vh - 168px);
   padding: 10px 2px 10px 10px;
   opacity: 1;
   overflow-y: scroll;
-  transition: 0.3s linear all; }
+  transition: 0.3s linear all; 
+  background-color: #ffffff;
+  z-index: 100;
+  }
   .mapControls .mapControlsLink {
     padding: 0.5em 1em;
     cursor: pointer;
@@ -364,19 +370,23 @@ a {
   .mapControls {
     min-width: 325px;
     width: 325px;
-    transition: 0.3s linear all; 
-    
-    /* This is a line where the sidebar floating above map was sort of isolated */
-    /* position: fixed; */
-
-    }
+    transition: 0.3s linear all; }
   .mapContainer {
-    display: flex;
+    /*
+	display: flex;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 100vw;
     flex-direction: column;
-    overflow-x: hidden; }
+    overflow-x: hidden; 
+	*/
+	    position: absolute;
+		display:block;
+		top:0;
+		bottom: 67px;
+		width: 100%;
+		z-index: 0;
+	}
     .mapContainer .hiddenContent {
       height: 0;
       opacity: 0;
@@ -408,19 +418,7 @@ a {
         -moz-hyphens: auto;
         -webkit-hyphens: auto;
         hyphens: auto;
-        field__label: bold;
         overflow: hidden; }
-
-        .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay .field__label {
-          font-weight: bold;
-        }
-
-        .field--name-field-to-party + .field--name-field-to-party-unlinked- {
-          display: none
-        }
-
-
-
         .mapContainer .sideInfoDisplayWrapper .sideInfoDisplay h3 {
           padding: 20px 0;
           margin: 0;
@@ -483,7 +481,8 @@ a {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 25vw;
-    flex-direction: column; }
+    flex-direction: column; 
+	}
   .mapContainer {
     display: flex;
     flex-grow: 1;
