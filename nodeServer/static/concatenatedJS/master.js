@@ -208,10 +208,16 @@ function LayerManager(parentElement) {
 					const targetMap = e.target.dataset.target;
 					const url = e.target.dataset.url;
 					const name = e.target.parentElement.querySelector('label').textContent;
+					/*
+					console.log("style.event");
 					if (e.target.dataset.featuregroup === 'Current Satellite') {
-						return;
-					}
+						//return;
+						//A*
+						maps[targetMap].setStyle('mapbox://styles/nittyjee/cjooubzup2kx52sqdf9zmmv2j');
+					} 
+					*/
 					maps[targetMap].setStyle(url);
+					
 					const point = JSON.parse(e.target.parentElement.querySelector('.easeToPoint').dataset.easetopoint);
 					/* Both maps are the same size, so it makes no difference which map the function is
 					called on */
@@ -408,21 +414,21 @@ function LayerManager(parentElement) {
 	 * 'Title', 'Borough', 'Style link', 'Drupal node id'
 	 */
 	this.generateAddMapForm = () => {
+		console.log("-----------------");
 		const promise = new Promise((resolve, reject) => {
 			/* A map is a style */
 			const mapData = {};
 
-      function textInputGenerator (fieldName, target, description) {
-        const nameLabel = document.createElement('label');
-        nameLabel.htmlFor = fieldName;
-        nameLabel.innerHTML = `${fieldName}: `;
-        target.appendChild(nameLabel);
+			function textInputGenerator(fieldName, target) {
+				const nameLabel = document.createElement('label');
+				nameLabel.htmlFor = fieldName;
+				nameLabel.innerHTML = `${fieldName}: `;
+				target.appendChild(nameLabel);
 
 				const name = document.createElement('input');
 				name.setAttribute('type', 'text');
 				name.id = fieldName.replaceAll(' ', '_');
 				target.appendChild(name);
-        name.title = description;
 
 				name.addEventListener('input', () => {
 					mapData[fieldName] = name.value;
@@ -641,7 +647,7 @@ function LayerManager(parentElement) {
 			function generateLayersTypeCheckbox(checkboxName) {
 				const typeBoxText = layerTypeCheckbox(checkboxName);
 
-				const appearance = ['color', 'opacity', 'width', 'blur'];
+				const appearance = ['color', 'opacity', 'width'];
 				appearance.forEach((fieldName) => {
 					const nameLabel = document.createElement('label');
 					nameLabel.htmlFor = fieldName;
@@ -950,8 +956,6 @@ function LayerManager(parentElement) {
 	  }
 
 
-
-
 	function tanspileAndAddLayer(targetMap, type, data) {
 		const promise = new Promise((resolve, reject) => {
 			const map = maps[targetMap];
@@ -1009,84 +1013,42 @@ function LayerManager(parentElement) {
 
 			//NOTE - DID NOT IMPORT MANY CHANGES BELOW YET - APPEARS TO BE MOSTLY AROUND HOVERING AND TIMELINE - 07/28/2023
 
-if (data.hover) {
-  let hoveredFeature = null; // Initialize a variable to keep track of the currently hovered feature
-  const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
 
-  map.on('mouseenter', data.id, (event) => {
-    map.getCanvas().style.cursor = 'pointer';
-    hoverPopUp
-      .setLngLat(event.lngLat)
-      .setDOMContent(createHoverPopup(data, event))
-      .addTo(map);
-  });
+			if (data.hover) {
+				const hoverPopUp = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: 5 });
+				map.on('mouseenter', data.id, (event) => {
+					map.getCanvas().style.cursor = 'pointer';
+					hoverPopUp
+						.setLngLat(event.lngLat)
+						.setDOMContent(createHoverPopup(data, event))
+						.addTo(map);
+				});
 
-  map.on('mousemove', data.id, (event) => {
-    map.getCanvas().style.cursor = 'pointer';
-    hoverPopUp
-      .setLngLat(event.lngLat)
-      .setDOMContent(createHoverPopup(data, event));
+				map.on('mousemove', data.id, (event) => {
+					map.getCanvas().style.cursor = 'pointer';
+					hoverPopUp
+						.setLngLat(event.lngLat)
+						.setDOMContent(createHoverPopup(data, event));
+				});
 
-    if (event.features.length > 0) {
-      if (hoveredFeature !== null && hoveredFeature !== event.features[0].id) {
-        map.setFeatureState(
-          { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
-          { hover: false }
-        );
-      }
-      hoveredFeature = event.features[0].id;
-      map.setFeatureState(
-        { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
-        { hover: true }
-      );
-    }
-  });
+				map.on('mouseleave', data.id, () => {
+					map.getCanvas().style.cursor = '';
+					if (hoverPopUp.isOpen()) {
+						hoverPopUp.remove();
+					}
+				});
+			}
 
-  map.on('mouseleave', data.id, () => {
-    map.getCanvas().style.cursor = '';
-    if (hoveredFeature !== null) {
-      map.setFeatureState(
-        { source: layerId, sourceLayer: data['source layer'], id: hoveredFeature },
-        { hover: false }
-      );
-    }
-    hoveredFeature = null; // Reset the hovered feature
-    if (hoverPopUp.isOpen()) {
-      hoverPopUp.remove();
-    }
-  });
-}
-
-
-if (data.click) {
-  const clickPopUpA = new mapboxgl.Popup();
-  const clickPopUpB = new mapboxgl.Popup();
-  
-  const closePopups = () => {
-    clickPopUpA.remove();
-    clickPopUpB.remove();
-  };
-  
-  map.on('click', data.id, (event) => {
-    console.log(data);
-    
-    populateSideInfoDisplay(event, data);
-    
-    clickPopUpB
-      .setLngLat(event.lngLat)
-      .setDOMContent(createHoverPopup(data, event))
-      .addTo(maps.beforeMap);
-      
-    clickPopUpA
-      .setLngLat(event.lngLat)
-      .setDOMContent(createHoverPopup(data, event))
-      .addTo(maps.afterMap);
-  });
-  
-  clickPopUpA.on('close', closePopups);
-  clickPopUpB.on('close', closePopups);
-}
-
+			if (data.click) {
+				const clickPopUp = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, offset: 5 });
+				map.on('click', data.id, (event) => {
+					populateSideInfoDisplay(event, data);
+					clickPopUp
+						.setLngLat(event.lngLat)
+						.setDOMContent(createHoverPopup(data, event))
+						.addTo(map);
+				});
+			}
 
 			if (data.name) {
 				transpilledOptions.name = data.name;
@@ -1104,7 +1066,6 @@ if (data.click) {
 				}
 				if (type.type === 'line') {
 					transpilledOptions.paint[`line-width`] = parseFloat(type.width);
-					transpilledOptions.paint[`line-blur`] = parseFloat(type.blur);
 				}
 			}
 
@@ -1125,14 +1086,13 @@ if (data.click) {
 				layersMapboxId.push([layerId]);
 			}
 
-      console.log(transpilledOptions);
-      map.addLayer(transpilledOptions);
-      map.on('sourcedata', () => {
-        resolve();
-      });
-    });
-    return promise;
-  }
+			map.addLayer(transpilledOptions);
+			map.on('sourcedata', () => {
+				resolve();
+			});
+		});
+		return promise;
+	}
 }
 /**
  * Future clicked popup function that renders mapbox feature properties that can be altered:
@@ -1348,11 +1308,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	layerControls.generateAddLayerForm();
 	layerControls.generateAddMapForm();
 	layerControls.layerControlEvents();
+	
 
+	sliderConstructor = new SliderConstructor(1625, 1701);
 	//TRIED INCORPORATING ON 7/29/2023 - BROKE THE TIMELINE. LIKELY NEED TO INVOLVE OTHER CODE:
-  sliderConstructor = new SliderConstructor('1625-01-01T01:00:00.000Z', '1701-01-01T01:00:00.000Z', '1663-01-01T01:00:00.000Z');
+	//sliderConstructor = new SliderConstructor('1625-01-01T01:00:00.000Z', '1701-01-01T01:00:00.000Z', '1663-01-01T01:00:00.000Z');
 	sliderConstructor.getDate();
-	document.querySelectorAll('[data-featuregroup="Current Satellite"').forEach((radio) => {
+	document.querySelectorAll('[data-featuregroup="Current Satellite"][data-target="beforeMap"]').forEach((radio) => {
+		radio.click();
+	});
+	document.querySelectorAll('[data-featuregroup="Castello Redrawn (Default)"][data-target="afterMap" ]').forEach((radio) => {
 		radio.click();
 	});
 	// For Firefox where checkboxes remain checked after reload:
@@ -1361,8 +1326,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		const checkboxes = layerControlsDiv.querySelectorAll('input[type="checkbox"]');
 		checkboxes.forEach((checkbox, i) => {
 			checkbox.checked = false;
+			//console.log(i)
 		});
 		document.querySelector('.layerToggle').querySelector('.toggleVisibility').click();
+		document.querySelector('.styleToggle').querySelectorAll('.toggleVisibility')[1].click();
 	}
 });
 
@@ -1486,67 +1453,22 @@ createTooltips();/**
 
 /*These are the properties:
 
-prop1: To, name, [link], LOT2, OwnerName, Name, Label, corr_label
-prop2: Lot, [day1, year1], Address
+prop1: To, name, [link], LOT2, OwnerName, Name, Label
+prop2: Lot, [day1, year1], Address, corr_label
 prop3: [day2, year2]
 prop4: dutchlot
-
-Castello: LOT2
-Current Lots: OwnerName, Address
-Information of Interest: Label
-Dutch Grant Lot: name, Lot
-Long Island Towns: corr_label
-Demo Taxlot C7: [link]
-
-*/
-
-
-
-
-/*
-//CASTELLO TAXLOT NEEDS LABEL
-const castelloLot = mapboxFeatureProperties.LOT2 || null;
-
-const lotName = document.createElement('p');
-popUpHTML.appendChild(lotName);
-lotName.innerHTML = "Taxlot (1660): " + "<br>" + castelloLot;
-
-
-//HARDCODING BUBBLE COLORS
-if (lotName.textContent.includes('Taxlot')) {
-	popUpHTML.classList.add('red');
-}
-
-//CURRENT LOTS
-const currentAddress = mapboxFeatureProperties.Address || null;
-const currentName = mapboxFeatureProperties.OwnerName || null;
-
-const currentLot = document.createElement('p');
-popUpHTML.appendChild(currentLot);
-currentLot.innerHTML = currentName + "<br>" + currentAddress;
-
-
-//DUTCH GRANTS: Dutch Grant Lot: name, Lot
-//Demo Taxlot C7: [link]
 
 */
 function createHoverPopup(data, event) {
     const layerName = data['feature group'].replace(/[0-9|-]/gi, '');
+    const layerClass = `${layerName}PopUp`;
     const popUpHTML = document.createElement('div');
     const mapboxFeatureProperties = ((event && event.features) && event.features[0].properties) || null;
-
+    const lot = mapboxFeatureProperties.LOT2 || mapboxFeatureProperties.Lot || mapboxFeatureProperties.TAXLOT || null;
+    
     popUpHTML.classList.add('hoverPopUp');
 
-	//HERE YOU CAN ADD COLOR CONDITIONS!
-	if (layerName.includes("Dutch Grants")) {
-		popUpHTML.classList.add('green');
-	}	
-
-	//BELOW ARE ALL THE BUBBLE FILLINGS
-	//The ones with more than one line, or specific labels had their own separate code
-	//while the ones with only one line and no labels were listed in a group below
-
-    if (layerName.includes("Divisions")) { // Check if layerName contains "Divisions"
+    if (layerName.includes("testing")) { // Check if layerName contains "testing"
         const name = mapboxFeatureProperties.name || null;
         const day1 = mapboxFeatureProperties.day1 || null;
         const year1 = mapboxFeatureProperties.year1 || null;
@@ -1560,46 +1482,28 @@ function createHoverPopup(data, event) {
                                 "<b>Start:</b> " + day1 + ", " + year1 + "<br>" +
                                 "<b>End:</b> " + day2 + ", " + year2 + "<br>" +
                                 "<b>Lot Division:</b> " + dutchlot;
-        popUpHTML.classList.add('green');
-
-    } else if (layerName.includes("Taxlots")) { // Check if layerName contains "Taxlots"
-        const castelloLot = mapboxFeatureProperties.LOT2 || null;
-
-        const lotName = document.createElement('p');
-        popUpHTML.appendChild(lotName);
-        lotName.innerHTML = "Taxlot (1660): " + "<br>" + castelloLot;
-
-        popUpHTML.classList.add('red');
-
-    } else if (layerName.includes("Current Lots")) { // Check if layerName contains "Current Lots"
-        const currentAddress = mapboxFeatureProperties.Address || null;
-        const currentName = mapboxFeatureProperties.OwnerName || null;
-
-        const currentLot = document.createElement('p');
-        popUpHTML.appendChild(currentLot);
-        currentLot.innerHTML = currentName + "<br>" + currentAddress;
-
-        popUpHTML.classList.add('red');
-
-    } else if (layerName.includes("Dutch Grants")) { // Check if layerName contains "Dutch Grants"
-        const dutchName = mapboxFeatureProperties.name || null;
-        const dutchLot = mapboxFeatureProperties.Lot || null;
-
-        const dutchLotElement = document.createElement('p');
-        popUpHTML.appendChild(dutchLotElement);
-        dutchLotElement.innerHTML = dutchName + "<br>" + " Dutch Grant Lot: " + dutchLot;
-
-        popUpHTML.classList.add('red');
     } else {
-        const personNameSt = mapboxFeatureProperties.Label || mapboxFeatureProperties.corr_label || mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
+        const personNameSt = mapboxFeatureProperties.name || mapboxFeatureProperties.Name || mapboxFeatureProperties.To || null;
 
         const personName = document.createElement('p');
         popUpHTML.appendChild(personName);
         personName.textContent = personNameSt;
+
+        const lotName = document.createElement('b');
+        popUpHTML.appendChild(lotName);
+        lotName.textContent = (lot) ? `${layerName} Lot: ${lot}` : lot;
+
+        if (lotName.textContent.includes('Castello')) {
+            popUpHTML.classList.add('red');
+        }
     }
 
     return popUpHTML;
 }
+
+
+
+
 
 
 
@@ -1648,73 +1552,9 @@ window.setTimeout(() => {
 		map.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
 		//ATTEPT TO INCORPORATE NEW CODE HERE ON 7/29/2023 - MADE IT SO SIDEBAR DIDN'T APPEAR AT ALL
 		//LIKELY NEED TO ADD MORE CODE
-    /**
-     * @description An event when the map is clicked, but not a feature.
-     * It's using a hack (checking the type of cursor). Seems to work with touch events in
-     * preliminary tests. As per https://github.com/mapbox/mapbox-gl-js/issues/1209
-     */
-    map.on('click', (e) => {
-      const cursorType = map.getCanvas().style.cursor;
-      const hideTab = document.querySelector('.hideMenuTab');
-      toggleSideInfo();
-      if (cursorType !== 'pointer') {
-        hideTab.click();
-      }
-    });
-  });
+	});
 }, 1000);
-layersExplored = [];
-layerContainers = [];
-function toggleSideInfo () {
-  const infoDisplay = document.querySelector('.sideInfoDisplay');
-  if (infoDisplay.classList.contains('displayContent') || infoDisplay.innerHTML === '') {
-    infoDisplay.classList.remove('displayContent');
-    infoDisplay.classList.add('hiddenContent');
-  } else {
-    infoDisplay.classList.add('displayContent');
-    infoDisplay.classList.remove('hiddenContent');
-  }
-}
-
 function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
-  let target;
-  /**
-   * The original code I wrote didn't contemplate multiple data (for each feature group)
-   * as I though it was a bug. Two global variables were added, this could scoped in a constructor.
-   */
-  const infoDisplay = document.querySelector('.sideInfoDisplay');
-  infoDisplay.classList.add('displayContent');
-  infoDisplay.classList.remove('hiddenContent');
-
-  if (layerData['info div color']) { infoDisplay.style.backgroundColor = layerData['info div color']; }
-  if (layerData['info div border color']) { infoDisplay.style.borderColor = layerData['info div border color']; }
-
-  infoDisplay.querySelectorAll('.infoDivAdded').forEach((div, i) => {
-    div.style.order = 2;
-  });
-  // this block adds a single div per feature group:
-  const featureGroup = layerData['feature group'];
-  if (!layersExplored.includes(featureGroup)) {
-    layersExplored.push(featureGroup);
-    const newLayerContainer = document.createElement('div');
-    newLayerContainer.classList.add('infoDivAdded');
-    layerContainers.push(newLayerContainer);
-    // infoDisplay.appendChild(newLayerContainer);
-    target = newLayerContainer;
-    infoDisplay.insertBefore(target, infoDisplay.children[0]);
-  } else {
-	//This error message sucked.
-    //alert('writing to preexisting');
-    const index = layersExplored.indexOf(featureGroup);
-    target = layerContainers[index];
-  }
-
-  target.style.order = 1;
-
-  while (target.firstChild) {
-    target.removeChild(target.lastChild);
-  }
-
   const mapboxData = mapFeatureClickEvent.features[0].properties;
   // corresponding content on Drupal:
   // nid names from : https://docs.google.com/spreadsheets/d/1aUzBGzVV2_kINSlCZ1d4lLrhdVZe3deU9AVSJ24IDOc/edit#gid=0 23/6/2023
@@ -1725,25 +1565,32 @@ function populateSideInfoDisplay (mapFeatureClickEvent, layerData) {
   // Lot name hack:
   const mapboxLot = mapboxData.Lot || null;
   if (!drupalNid && mapboxLot) {
-    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData, target);
+    return populateSideInfoDisplayHack(mapFeatureClickEvent, layerData);
   }
 
   const cleanNid = drupalNid.replace(/[/a-z]/gi, '');
-
-  if (!cleanNid) { return; }
   /* HACKS END */
 
+  if (!cleanNid) { return; }
 
+  const target = document.querySelector('.sideInfoDisplay');
+  target.classList.add('displayContent');
+  target.classList.remove('hiddenContent');
+  target.innerHTML = '';
+
+  while (target.firstChild) {
+    target.removeChild(target.lastChild);
+  }
 
   const url = `https://encyclopedia.nahc-mapping.org/rendered-export-single?nid=${cleanNid}`;
 
   xhrGetInPromise(null, url).then((content) => {
     let rmNewlines = JSON.parse(content)[0].rendered_entity.replace(/\n/g, '');
     rmNewlines = rmNewlines.replace(/<a (.*?)>/g, '');
-    target.insertAdjacentHTML('afterbegin', JSON.parse(content)[0].rendered_entity);
+    target.insertAdjacentHTML('beforeEnd', JSON.parse(content)[0].rendered_entity);
   });
 
-  // makeCloseButton(target);
+  makeCloseButton(target);
 }
 
 function makeCloseButton (target) {
@@ -1768,16 +1615,22 @@ function makeCloseButton (target) {
 let Dutch_Grants;
 // Self instantiating on start up:
 (async () => {
-  // const result = await xhrGetInPromise({}, '/dutchLots');
-  const result = await xhrGetInPromise({}, 'https://encyclopedia.nahc-mapping.org/grant-lots-export-properly');
-  Dutch_Grants = JSON.parse(result);
+    // const result = await xhrGetInPromise({}, '/dutchLots');
+    const result = await xhrGetInPromise(
+        {},
+        "https://encyclopedia.nahc-mapping.org/grant-lots-export-properly"
+    );
+    Dutch_Grants = JSON.parse(result);
 })();
 
 // Called taxlot_event_entities_info in the original project:
 let Castello_Taxlots;
 (async () => {
-  const result = await xhrGetInPromise({}, 'https://encyclopedia.nahc-mapping.org/taxlot-entities-export');
-  Castello_Taxlots = JSON.parse(result);
+    const result = await xhrGetInPromise(
+        {},
+        "https://encyclopedia.nahc-mapping.org/taxlot-entities-export"
+    );
+    Castello_Taxlots = JSON.parse(result);
 })();
 
 // drupal feature data
@@ -1811,31 +1664,32 @@ const drupalData = (drupalDataName, mapboxLot) => {
     return promise;
 };
 
-function populateSideInfoDisplayHack (event, data, target) {
-/*  const target = document.querySelector('.sideInfoDisplay');
-  target.classList.add('displayContent');
-  target.classList.remove('hiddenContent');
-  target.innerHTML = '';
-/*
-  const close = document.createElement('i');
-  close.classList.add('fa', 'fa-window-close');
-  close.style.float = 'right';
-  close.style.cursor = 'pointer';
-  close.title = 'Close';
-  close.setAttribute('aria-hidden', 'true');
-  close.addEventListener('click', () => {
-    target.classList.remove('displayContent');
-    target.classList.add('hiddenContent');
-  });
-  target.appendChild(close);*/
+function populateSideInfoDisplayHack(event, data) {
+    const target = document.querySelector(".sideInfoDisplay");
+    target.classList.add("displayContent");
+    target.classList.remove("hiddenContent");
+    target.innerHTML = "";
+
+    const close = document.createElement("i");
+    close.classList.add("fa", "fa-window-close");
+    close.style.float = "right";
+    close.style.cursor = "pointer";
+    close.title = "Close";
+    close.setAttribute("aria-hidden", "true");
+    close.addEventListener("click", () => {
+        target.classList.remove("displayContent");
+        target.classList.add("hiddenContent");
+    });
+    target.appendChild(close);
 
     // mapbox feature data
     const mapboxData = event.features[0].properties;
 
     const mapboxLot = mapboxData.Lot;
     // REGEXING labels shouldn't be necesssary
-  const drupalDataName = data['feature group'].replace(/[^a-z ]/gi, '').replace(' ', '_');
-
+    const drupalDataName = data["feature group"]
+        .replace(/[^a-z ]/gi, "")
+        .replace(" ", "_");
 
     // drupalDataTaxLots().then((res) => console.log(res));
 
@@ -1854,9 +1708,6 @@ function populateSideInfoDisplayHack (event, data, target) {
             makeTaxLotsInfo(drupalDataName, mapboxLot, lotInDrupal, mapboxData);
         }
     });
-
-
-
 
     function makeTaxLotsInfo(
         drupalDataName,
@@ -1931,152 +1782,133 @@ function populateSideInfoDisplayHack (event, data, target) {
                 makeParagraph("From party: ", lotInDrupal.from_party);
             }
         }
-    // DATES NEED TO BE STORED AS DATE OBJECTS OR TIMESTAMPS!
-    const start = (lotInDrupal.start)
-      ? lotInDrupal.start
-      : (mapboxData.day1 && mapboxData.year1) ? `${mapboxData.day1} ${mapboxData.year1}` : 'no date';
-    makeParagraph('Start: ', start);
+        // DATES NEED TO BE STORED AS DATE OBJECTS OR TIMESTAMPS!
+        const start = lotInDrupal.start
+            ? lotInDrupal.start
+            : mapboxData.day1 && mapboxData.year1
+            ? `${mapboxData.day1} ${mapboxData.year1}`
+            : "no date";
+        makeParagraph("Start: ", start, "startDate");
 
-    const end = (lotInDrupal.end)
-      ? lotInDrupal.end
-      : (mapboxData.day2 && mapboxData.year2) ? `${mapboxData.day2} ${mapboxData.year2}` : 'no date';
-    makeParagraph('End: ', end);
+        const end = lotInDrupal.end
+            ? lotInDrupal.end
+            : mapboxData.day2 && mapboxData.year2
+            ? `${mapboxData.day2} ${mapboxData.year2}`
+            : "no date";
+        makeParagraph("End: ", end, "endDate");
 
-    const description = lotInDrupal.description || mapboxData.descriptio || 'no description';
-    makeParagraph('Description: ', description);
-    // Images are stored at yet another location...
-    // Images should be progressive jpeg of webp...
-    const images = lotInDrupal.images.split(',');
-    // split always creates an array
-    if (images) {
-      images.forEach((image) => {
-        // if empty string
-        if (image) {
-          //console.log(`${baseURL}${image.trim()}`);
-          makeImage(`${baseURL}${image.trim()}`);
+        const description =
+            lotInDrupal.description ||
+            mapboxData.descriptio ||
+            "no description";
+        makeParagraph("Description: ", description, "description");
+        // Images are stored at yet another location...
+        // Images should be progressive jpeg of webp...
+        const images = lotInDrupal.images.split(",");
+        // split always creates an array
+        if (images) {
+            images.forEach((image) => {
+                // if empty string
+                if (image) {
+                    //console.log(`${baseURL}${image.trim()}`);
+                    makeImage(`${baseURL}${image.trim()}`);
+                }
+            });
         }
-      });
     }
-  }
 
-  function makeLink (link, textContent, descriptor) {
-    const p = document.createElement('p');
-    p.textContent = `${descriptor}`;
-    p.classList.add('boldItalic');
-    const a = document.createElement('a');
-    a.setAttribute('href', `${baseURL}${link}`);
-    a.setAttribute('target', '_blank');
-    a.textContent = textContent;
-    p.appendChild(a);
-    target.appendChild(p);
-  }
+    function makeLink(link, textContent, descriptor) {
+        const p = document.createElement("p");
+        p.textContent = `${descriptor}`;
+        p.classList.add("boldItalic");
+        const a = document.createElement("a");
+        a.setAttribute("href", `${baseURL}${link}`);
+        a.setAttribute("target", "_blank");
+        a.textContent = textContent;
+        p.appendChild(a);
+        target.appendChild(p);
+    }
 
-  function linkFromRawHTML (textContent, html) {
-    const p = document.createElement('p');
-    p.classList.add('boldItalic');
-    p.textContent = textContent;
-    p.insertAdjacentHTML('beforeend', html);
-    const link = p.querySelector('a');
-    const path = new URL(link.href).pathname;
-    link.setAttribute('target', '_blank');
-    link.href = `${baseURL}${path}`;
-    target.appendChild(p);
-  }
+    function linkFromRawHTML(textContent, html) {
+        const p = document.createElement("p");
+        p.classList.add("boldItalic");
+        p.textContent = textContent;
+        p.insertAdjacentHTML("beforeend", html);
+        const link = p.querySelector("a");
+        const path = new URL(link.href).pathname;
+        link.setAttribute("target", "_blank");
+        link.href = `${baseURL}${path}`;
+        target.appendChild(p);
+    }
 
-  function makeImage (link, textContent) {
-    const img = document.createElement('img');
-    img.setAttribute('src', link);
-    target.appendChild(img);
-  }
+    function makeImage(link, textContent) {
+        const img = document.createElement("img");
+        img.setAttribute("src", link);
+        target.appendChild(img);
+    }
 
-  function makeParagraph (descriptor, data) {
-    const p = document.createElement('p');
-    p.textContent = `${descriptor}`;
-    p.classList.add('boldItalic');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.textContent = data;
-    target.appendChild(p);
-  }
+    function makeParagraph(descriptor, data, extraClass = null) {
+        const p = document.createElement("p");
+        p.textContent = `${descriptor}`;
+        p.classList.add("boldItalic");
+        if (extraClass) {
+            p.classList.add(extraClass);
+        }
+
+        const span = document.createElement("span");
+        p.appendChild(span);
+        span.textContent = data;
+        target.appendChild(p);
+    }
 }
-function SliderConstructor (min, max, preSelection) {
-  [...arguments].forEach((date) => {
-    if (typeof date !== 'string' || date.length !== 24) {
-      const err = new Error('One or more of the dates provided does not appear to be an ISO-8601 string e.g. "1643-01-01T01:00:00.000Z"');
-      throw err;
-    }
-  });
+function SliderConstructor(minDate, maxDate) {
+	this.getDate = () => {
+		const selection = getSelection();
+		return getDate(selection);
+	};
 
-  const minDate = new Date(min);
-  const minDateYear = minDate.getFullYear();
+	this.dateTransform = (date) => {
+		return getDate(date);
+	};
 
-  const maxDate = new Date(max);
-  const maxDateYear = maxDate.getFullYear();
+	this.returnMinDate = () => {
+		// whatever position the selector is at:
+		return getDate();
+	};
 
-  const checkBounds = new Date(preSelection);
-  if (checkBounds < minDate || checkBounds > maxDate) {
-    const err = new Error('Your preselected date is not between your min and max dates');
-    throw err;
-  }
+	this.returnMaxDate = () => {
+		return getDate(maxDate);
+	};
+	// check rounding
+	const step = (maxDate - minDate) / 10;
+	const timeline = document.querySelector('.timeline');
+	const slider = document.querySelector('.sliderHandle');
+	const timeLineText = document.querySelectorAll('.timeLineText');
+	let isDown = false;
+	let startX;
+	let scrollLeft;
 
-  let load = false;
-  // check rounding
-  const step = (maxDateYear - minDateYear) / 10;
-  const timeline = document.querySelector('.timeline');
-  const slider = document.querySelector('.sliderHandle');
-  const datePanel = document.querySelector('.datePanel');
+	timeline.addEventListener('mouseover', (e) => {
+		slider.classList.add('redSlider');
+	});
 
-  // REGARDING MOVING ACTION
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  let moveEvent;
+	timeline.addEventListener('mouseout', (e) => {
+		slider.classList.remove('redSlider');
+	});
 
-  // REGARING DATE SELECTION ON MOVE
-  const rulerPositionDimensions = () => {
-    return document.querySelector('.timelineSlider').getBoundingClientRect();
-  };
-  const sliderPositionDimensions = () => {
-    return slider.getBoundingClientRect();
-  };
-  const rulerWidth = () => {
-    return rulerPositionDimensions().width;
-  };
+	makeYears(minDate, maxDate, step);
 
-  const dateRange = dateDiffInDays(minDate, maxDate);
-
-  const dayWidth = rulerWidth() / dateRange;
-
-  const sliderCenterSelectionPosition = () => {
-    return (sliderPositionDimensions().left - rulerPositionDimensions().x) + (sliderPositionDimensions().width / 2);
-  };
-
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  let selectedDateTimestamp;
-
-  let selectedDate;
-
-  /* PUBLIC METHODS */
-  this.getDate = () => {
-    return getSelection();
-  };
-  /* PUBLIC METHODS END */
-
-  /* RENDER WIDGET */
-  renderWidget(minDateYear, maxDateYear, step);
-
-  function renderWidget (minDateYear, maxDateYear, step) {
-    const steps = [];
-    steps.push(Math.round(minDateYear += step));
-    for (let i = 1; i < 10; i++) {
-      if (i % 2 === 0) {
-        steps.push(Math.round(minDateYear += step * 2));
-      }
-      if (i === 9) {
-        makeDivs(steps);
-      }
-    }
+	function makeYears(minDate, maxDate, step) {
+		const steps = [];
+		steps.push(Math.round(minDate += step));
+		for (let i = 1; i < 10; i++) {
+			if (i % 2 === 0) {
+				steps.push(Math.round(minDate += step * 2));
+			}
+			if (i === 9) {
+				makeDivs(steps);
+			}
+		}
 
 		function makeDivs(steps) {
 			for (let i = 0; i < steps.length; i++) {
@@ -2085,157 +1917,55 @@ function SliderConstructor (min, max, preSelection) {
 				year.textContent = steps[i];
 				timeline.appendChild(year);
 
-        const yearCarat = document.createElement('span');
-        yearCarat.classList.add('yearCarat');
-        year.appendChild(yearCarat);
-      }
-    }
-  }
-  /* RENDER WIDGET  END */
-
-  /* PRIVATE METHODS */
-
-  function dateDiffInDays (date1, date2) {
-    function getUTCTime (dateStr) {
-      const date = new Date(dateStr.toString());
-      /* If use 'Date.getTime()' it doesn't compute the right amount of days
-      if there is a 'day saving time' change between dates. */
-      return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-    }
-
-    const date1Time = getUTCTime(date1);
-    const date2Time = getUTCTime(date2);
-    if (!date1Time || !date2Time) return 0;
-    return Math.round((date2Time - date1Time) / (24 * 60 * 60 * 1000));
-  }
-
-  function getSelection (key) {
-    // gets the currently selected day from start:
-    const currentSelection = () => {
-      return sliderCenterSelectionPosition() / dayWidth;
-    };
-
-    // sets the slider position:
-    function setSliderSliderPosition () {
-      const daysSinceStart = dateDiffInDays(minDate, selectedDate);
-      const px = (dayWidth * daysSinceStart) - (sliderPositionDimensions().width / 2);
-      slider.style.left = `${px}px`;
-    }
-
-    // writes date to date panel
-    function writeToDiv (selection) {
-      datePanel.textContent = formatDate(selection, 'string');
-    }
-    // if a mouse or a touch event:
-    if (!key) {
-      // onload, if a pre selected value is chosen;
-      if (preSelection && !load) {
-        selectedDateTimestamp = new Date(preSelection).getTime();
-        load = true;
-      } else {
-        selectedDateTimestamp = new Date(min).setDate(currentSelection());
-      }
-    // if a keyboard event:
-    } else {
-      selectedDateTimestamp += (key * 24 * 60 * 60 * 1000);
-    }
-
-    selectedDate = new Date(selectedDateTimestamp);
-
-    if (selectedDate > maxDate || selectedDate < minDate) {
-      return;
-    }
-    const dateFormatMapbox = formatDate(selectedDate);
-    setSliderSliderPosition();
-    writeToDiv(dateFormatMapbox);
-    layerControls.addDateFilter(dateFormatMapbox, dateFormatMapbox);
-    return dateFormatMapbox;
-  }
-
-  function toggleMove () {
-    if (moveEvent) {
-      document.removeEventListener('mousemove', move);
-      document.removeEventListener('touchmove', move);
-      moveEvent = true;
-    }
-    document.addEventListener('mousemove', move);
-    document.addEventListener('touchmove', move);
-    moveEvent = false;
-  }
-
-
-
-
-  // On drag start
-  function start (e) {
-    isDown = true;
-    slider.classList.add('active');
-    startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-    scrollLeft = slider.offsetLeft;
-    // attach event
-    toggleMove();
-  }
-
-  function move (e) {
-    // if mouse is moving but not dragging slider
-    if (!isDown) return;
-    const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-    const y = e.pageY || e.touches[0].pageY;
-    const dist = (x - startX);
-    const px = scrollLeft + dist;
-    // if (px > -14) {
-    if (x > rulerPositionDimensions().left &&
-      x < rulerPositionDimensions().right &&
-      y < rulerPositionDimensions().bottom &&
-      y > rulerPositionDimensions().top) {
-      slider.style.left = `${px}px`;
-      getSelection();
-    }
-  }
-
-  /* On drag end */
-  function end (e) {
-    // remove event:
-    toggleMove();
-    isDown = false;
-    slider.classList.remove('active');
-  }
-
-// formats the date to the required form to query map features:
-function formatDate(selection, returnIntOrSt) {
-	selection = typeof selection === 'number' ? selection.toString() : selection;
-  
-	let format;
-	if (selection.length > 4) {
-	  format = selection.split('');
-	  format.splice(4, 0, '/');
-	  format.splice(7, 0, '/');
-	  format = format.join('');
-	} else {
-	  format = selection;
+				const yearCarat = document.createElement('span');
+				yearCarat.classList.add('yearCarat');
+				year.appendChild(yearCarat);
+			}
+			timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.add('hide');
+		}
 	}
-  
-	const date = new Date(format);
-	if (!date.valueOf()) {
-	  console.error(`Invalid date ${selection} passed to "getDate()"
-		getDate() expects a string formatted YYYYMMDD.`);
-	  return;
-	}
-	const rawMonth = date.getMonth();
-	const month = (rawMonth + 1).toString().padStart(2, '0');
-  
-	const rawDay = date.getDate();
-	const day = rawDay.toString().padStart(2, '0');
-	if (returnIntOrSt === 'string') {
-	  // return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
-	  return `${day} ${months[rawMonth]} ${date.getFullYear()}`;
-	}
-	return parseInt(`${date.getFullYear()}${month}${day}`);
-  }
-  
 
-    //HERE I FIXED SOME TIME FORMATTING - MAY NEED TO REINSTATE
-    /*
+	const MS_PER_SEC = 1000;
+	const SEC_PER_HR = 60 * 60;
+	const HR_PER_DAY = 24;
+	const MS_PER_DAY = MS_PER_SEC * SEC_PER_HR * HR_PER_DAY;
+
+	function dateDiffInDays(date1, date2) {
+		const date1Time = getUTCTime(date1);
+		const date2Time = getUTCTime(date2);
+		if (!date1Time || !date2Time) return 0;
+		return Math.round((date2Time - date1Time) / MS_PER_DAY);
+	}
+
+	function getUTCTime(dateStr) {
+		const date = new Date(dateStr.toString());
+		// If use 'Date.getTime()' it doesn't compute the right amount of days
+		// if there is a 'day saving time' change between dates
+		return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+	}
+
+	function addDays(date, days) {
+		const result = new Date(date);
+		result.setDate(result.getDate() + days);
+		return result;
+	}
+
+	function getSelection() {
+		const width = document.querySelector('.timelineSlider').clientWidth;
+		const position = parseFloat(slider.offsetLeft);
+
+		const dateRange = maxDate - minDate;
+		const dateRangeDisplay = dateDiffInDays(minDate, maxDate);
+
+		const dayWidth = width / dateRange;
+		const dayWidthDisplay = width / dateRangeDisplay;
+
+		const selectionDisplay = Math.round(minDate + (position / dayWidthDisplay));
+		const prettyPrint = addDays(minDate.toString(), selectionDisplay);
+
+		// internal
+		const selection = Math.round(minDate + (position / dayWidth));
+
 		const day = prettyPrint.getDate();
 		const month = prettyPrint.getMonth();
 		const year = prettyPrint.getFullYear();
@@ -2243,40 +1973,126 @@ function formatDate(selection, returnIntOrSt) {
 		//OLD: THIS DID NOT HAVE format: DD (eg 01), it had format: D (eg 1):
 		//document.querySelector('.datePanel').textContent = `${day}${stNdRdTh(day)} ${months[month]} ${year}`;
 		document.querySelector('.datePanel').textContent = `${String(day).padStart(2, "0")} ${months[month]} ${year}`;
-    */
 
-  timeline.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    slider.classList.add('active');
-    startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
-    slider.style.left = `${startX - 30}px`;
-    getSelection();
-  });
+
+		//getDate(selection, 'string');
+		// ditto
+		layerControls.addDateFilter(getDate(selection), getDate(maxDate));
+		return selection;
+	}
+
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	const stNdRdTh = (number) => {
+		const postFix = ['st', 'nd', 'rd', 'th'];
+		const exceptions = [11, 12, 13, 0];
+		const length = number.toString().length;
+		if (length > 1) {
+			const lastDigit = parseInt(number.toString()[1]);
+			if (exceptions.includes(lastDigit) || lastDigit > 3) {
+				return postFix[3];
+			}
+			return postFix[parseInt(number.toString()[1]) - 1];
+		}
+		if (parseInt(number.toString()[0]) > 4) {
+			return postFix[3];
+		}
+		return postFix[parseInt(number.toString()[0]) - 1];
+	};
+
+	function getDate(selection, returnIntOrSt) {
+		selection = (typeof selection === 'number')
+			? selection.toString()
+			: selection;
+
+		let format;
+		if (selection.length > 4) {
+			format = selection.split('');
+			format.splice(4, 0, '/');
+			format.splice(7, 0, '/');
+			format = format.join('');
+		} else {
+			format = selection;
+		}
+
+		const date = new Date(format);
+		if (!date.valueOf()) {
+			console.error(`Invalid date ${selection} passed to "getDate()"
+      getDate() expects a string formated YYYYMMDD.`);
+			return;
+		}
+		const rawMonth = date.getMonth();
+		const month = ((rawMonth + 1).toString().length === 1)
+			? `0${rawMonth + 1}`
+			: `${rawMonth + 1}`;
+
+		const rawDay = date.getDate();
+		const day = ((rawDay).toString().length === 1)
+			? `0${rawDay}`
+			: `${rawDay}`;
+		if (returnIntOrSt === 'string') {
+			return `${rawDay}${stNdRdTh(rawDay)} ${months[rawMonth]} ${date.getFullYear()}`;
+		}
+		return parseInt(`${date.getFullYear()}${month}${day}`);
+	}
+
+	let moveEvent;
+	function toggleMove() {
+		if (moveEvent) {
+			document.removeEventListener('mousemove', move);
+			document.removeEventListener('touchmove', move);
+			moveEvent = true;
+		}
+		document.addEventListener('mousemove', move);
+		document.addEventListener('touchmove', move);
+		moveEvent = false;
+	}
+
+	const start = (e) => {
+		isDown = true;
+		slider.classList.add('active');
+		startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+		scrollLeft = slider.offsetLeft;
+		toggleMove();
+	};
+
+	const move = (e) => {
+		if (!isDown) return;
+		const x = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+		const dist = (x - startX);
+		slider.style.left = `${scrollLeft + dist}px`;
+		timeLineText.forEach(element => {
+			element.classList.add('hide');
+
+		});
+		timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.remove('hide');
+		getSelection();
+
+	};
+
+	const end = (e) => {
+		toggleMove();
+		isDown = false;
+		slider.classList.remove('active');
+	};
+
+	timeline.addEventListener('click', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		slider.classList.add('active');
+		startX = e.pageX || e.touches[0].pageX - slider.offsetLeft;
+		slider.style.left = `${startX - 30}px`;
+		timeLineText.forEach(element => {
+			element.classList.add('hide')
+		});
+		timeline.childNodes[Math.floor((timeline.childNodes.length - 1) / 2)].classList.remove('hide');
+		getSelection();
+	});
 
 	slider.addEventListener('mousedown', start);
 	slider.addEventListener('touchstart', start);
 
-  slider.addEventListener('mouseup', end);
-  slider.addEventListener('touchend', end);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-      getSelection(1);
-    }
-    if (e.key === 'ArrowLeft') {
-      getSelection(-1);
-    }
-  });
-
-  timeline.addEventListener('mouseover', (e) => {
-    slider.classList.add('redSlider');
-  });
-
-  timeline.addEventListener('mouseout', (e) => {
-    slider.classList.remove('redSlider');
-  });
-  /* EVENTS END */
+	slider.addEventListener('mouseup', end);
+	slider.addEventListener('touchend', end);
 }
 /**
  * @param {Object|string} items What you want to send to the server.
@@ -2291,12 +2107,14 @@ function xhr (items, route, callback) {
   xhr.send(JSON.stringify(items));
 
   if (xhr.readyState === 1) {
+    console.log(`blocking ${route}`);
     document.body.style.pointerEvents = 'none';
   }
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       if (xhr.responseText) {
+        console.log(`response for route ${route} should have been received`);
         callback(xhr.responseText);
         document.body.style.pointerEvents = '';
         /* To add a loading gif uncomment the following, add a div that has a gif and obscures the screen */
@@ -2405,25 +2223,3 @@ function xhrPostInPromise (items, route) {
   });
   return promise;
 }
-
-
-document.addEventListener("DOMContentLoaded", function() {
-	const labels = document.querySelectorAll(".field__label");
-	labels.forEach(label => {
-	  if (label.textContent.trim() === "Date Start") {
-		label.textContent = "Date: ";
-	  }
-	});
-  });
-
-  $(document).ready(function() {
-	$('.field__label').each(function() {
-	  if ($(this).text().trim() === 'Date Start') {
-		$(this).text('Date: ');
-	  }
-	});
-  });
-  
-  
-
-
